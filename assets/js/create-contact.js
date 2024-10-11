@@ -1,3 +1,12 @@
+function init() {
+  let formElement = document.getElementById('create-contact-form');
+
+  formElement.addEventListener("submit", function (e) {
+      e.preventDefault();
+      createContact();
+  });
+}
+
 async function createContact() {
   let name = document.getElementById('name').value;
   let email = document.getElementById('email').value;

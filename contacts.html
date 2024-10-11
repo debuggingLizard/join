@@ -11,7 +11,7 @@
     <title>Contacts</title>
 </head>
 
-<body>
+<body onload="init()">
 
     <main>
         <div class="add-contact-wrapper">
@@ -29,32 +29,32 @@
                             <img src="./assets/img/person.svg" alt="person">
                         </div>
                     </div>
-                    <div class="form-elements">
+                    <form class="form-elements" id="create-contact-form">
                         <div class="close-button-container">
                             <img src="./assets/img/close.svg" alt="close">
                         </div>
 
                         <label for="name" class="form-label">
-                            <input type="text" id="name" name="name" placeholder="Name">
+                            <input type="text" id="name" name="name" placeholder="Name" required>
                             <img src="./assets/img/person-gray.svg" alt="person">
                         </label>
 
                         <label for="email" class="form-label">
-                            <input type="text" id="email" name="email" placeholder="Email">
+                            <input type="email" id="email" name="email" placeholder="Email" required>
                             <img src="./assets/img/mail.svg" alt="person">
                         </label>
 
                         <label for="phone" class="form-label">
-                            <input type="text" id="phone" name="phone" placeholder="Phone">
+                            <input type="tel" id="phone" name="phone" placeholder="Phone" required>
                             <img src="./assets/img/call.svg" alt="person">
                         </label>
                         
                         <div class="buttons">
                             <button class="cancel-button">Cancel</button>
-                            <button class="create-contact-button" onclick="createContact()">Create contact</button>
+                            <button class="create-contact-button" type="submit">Create contact</button>
                         </div>
 
-                    </div>
+                    </form>
 
                 </div>
             </div>
