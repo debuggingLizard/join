@@ -5,28 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/css/contact-list.css">
     <link rel="stylesheet" href="./assets/css/contact.css">
     <script src="./assets/js/firebase-connect.js"></script>
     <script src="./assets/js/create-contact.js"></script>
     <title>Kontakte | JOIN</title>
 </head>
 
-<body onload="init()">
+<body onload="init()" style="background-color: mediumpurple;">
 
+    <!-- background-color am Ende entfernen vor merge!!! -->
     <main>
+        <!-- Contact List -->
         <section class="contact-list-wrapper">
-            <button class="contact-list-add-btn">Add new contact</button>
-            <div class="contact-list-section">
-                <div>A</div>
-                <hr/>
-                <div class="contact-list-contact">
-                    <div class="contact-list-profile"></div>
-                    <p>Name Name</p>
-                    <a href="">email@example.com</a>
+            <button class="contact-list-add-btn">
+                <span>Add new contact</span>
+                <img src="./assets/img/person_add.svg" alt="">
+            </button>
+            <div class="contact-list-list">
+                <div class="contact-list-item">
+                    <div>A</div>
+                    <hr />
+                    <div class="contact-list-contact">
+                        <div class="contact-list-profile"></div>
+                        <p>Name Name</p>
+                        <a href="">email@example.com</a>
+                    </div>
                 </div>
+
             </div>
         </section>
 
+        <!-- Contact Overlay -->
         <div style="display: none;" class="add-contact-wrapper">
             <div class="add-contact-container">
                 <div class="left-side">
@@ -61,7 +71,7 @@
                             <input type="tel" id="phone" name="phone" placeholder="Phone" required>
                             <img src="./assets/img/call.svg" alt="person">
                         </label>
-                        
+
                         <div class="buttons">
                             <button class="cancel-button">Cancel</button>
                             <button class="create-contact-button" type="submit">Create contact</button>

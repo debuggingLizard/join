@@ -1,0 +1,26 @@
+.contact-list-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-list-add-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 352px;
+    border-radius: 10px;
+    padding: 12px 16px;
+    border: 1px;
+    background-color: #2A3647;
+    color: white;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 25.2px;
+}
+
+.contact-list-add-btn img {
+    width: 32px;
+    height: 32px;
+}
