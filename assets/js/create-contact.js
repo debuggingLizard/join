@@ -2,8 +2,8 @@ function init() {
   let formElement = document.getElementById('create-contact-form');
 
   formElement.addEventListener("submit", function (e) {
-      e.preventDefault();
-      createContact();
+    e.preventDefault();
+    createContact();
   });
 }
 
@@ -19,6 +19,7 @@ async function createContact() {
       name: name,
       mobile: mobile,
       email: email,
+      color: getRandomColor()
     };
 
     postData("users", data);
@@ -43,3 +44,11 @@ async function isEmailExist(email) {
   return foundUsers.length > 0 ? true : false;
 }
 
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  const color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
