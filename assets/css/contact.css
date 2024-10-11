@@ -113,6 +113,10 @@
     padding: 7px 15px;
 }
 
+.form-elements input:hover {
+    border: 1px solid #29ABE2;
+}
+
 .form-elements input::placeholder{
     color: #D1D1D1;
 }
@@ -139,8 +143,14 @@
 
 .form-elements .create-contact-button:hover {
     background-color: #29ABE2;
-    border: none;
-    box-shadow: 0px 2px 2px 1px #00000038;
+    border: solid 1px #29ABE2;
+    box-shadow: 0px 3px 4px 0px rgb(0 0 0 / 30%);
+}
+
+.form-elements .create-contact-button:active {
+    background-color: #2a3647;
+    border: solid 1px #2a3647;
+    box-shadow: 0px 3px 4px 0px rgb(0 0 0 / 30%);
 }
 
 .form-elements .create-contact-button::after{
@@ -167,6 +177,12 @@
     border: 1px solid #29ABE2;
     box-shadow: 0px 1px #00000024;
     box-shadow: 0px 2px 2px 1px #00000038;
+}
+
+.form-elements .cancel-button:active  {
+    background-color: #29ABE2;
+    border: solid 1px #29ABE2;
+    box-shadow: 0px 3px 4px 0px rgb(0 0 0 / 30%);
 }
 
 .form-elements .cancel-button::after {
