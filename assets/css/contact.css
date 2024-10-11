@@ -1,0 +1,182 @@
+.add-contact-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+.add-contact-container {
+    display: flex;
+}
+
+.add-contact-container .left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: #2A3647;
+    border-radius: 20px 0 0 20px;
+    padding: 0 48px 85px 48px;
+    gap: 9px;
+}
+
+.add-contact-container .left-side img {
+    width: 55px;
+}
+
+.add-contact-container .left-side h2 {
+    color: #ffffff;
+    font-size: 61px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.add-contact-container .left-side span {
+    color: #ffffff;
+    font-weight: 300;
+    font-size: 27px;
+}
+
+.add-contact-container .left-side .border-line {
+    border-top: 3px solid #29ABE2;
+    width: 90px;
+    margin-top: 2px;
+}
+
+/* right-container  */
+
+.add-contact-container .right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 0 20px 20px 0;
+    padding: 45px 48px 110px 0;
+}
+
+.person-img-container {
+    padding: 0 75px;
+}
+
+.person-img {
+    background: rgb(0 0 0 / 17%);
+    border-radius: 50%;
+    padding: 25px;
+    border: 3px solid #ffffff;
+    box-shadow: 0px 0px 5px #00000024;
+}
+
+.person-img img {
+    height: 64px;
+}
+
+.form-elements {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 27px;
+}
+
+.form-elements .close-button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 30px;
+}
+
+.form-elements img {
+    width: 24px;
+}
+
+.form-elements .form-label{
+    position: relative;
+}
+
+.form-elements .form-label img {
+    width: 16px;
+    position: absolute;
+    right: 18px;
+    top: 15px;
+}
+
+.form-elements input {
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    height: 30px;
+    width: 350px;
+    font-size: 16px;
+    outline: none;
+    padding: 7px 15px;
+}
+
+.form-elements input::placeholder{
+    color: #D1D1D1;
+}
+
+.form-elements .buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.form-elements .create-contact-button {
+    background: #2a3647;
+    color: #fff;
+    border-radius: 7px;
+    padding: 11px 19px 11px 12px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    border: solid 1px #2a3647;
+    transition: all 0.1s ease;
+}
+
+.form-elements .create-contact-button:hover {
+    background-color: #29ABE2;
+    border: none;
+    box-shadow: 0px 2px 2px 1px #00000038;
+}
+
+.form-elements .create-contact-button::after{
+    content: url('../img/check.svg');
+    position: relative;
+    top: 1px;
+    left: 6px;
+    display: inline-block;
+    transform: scale(.8);
+}
+
+.form-elements .cancel-button {
+    background: #fff;
+    border-radius: 7px;
+    padding: 11px 19px 11px 12px;
+    border: 1px solid black;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.form-elements .cancel-button:hover {
+    color: #29ABE2;
+    border: 1px solid #29ABE2;
+    box-shadow: 0px 1px #00000024;
+    box-shadow: 0px 2px 2px 1px #00000038;
+}
+
+.form-elements .cancel-button::after {
+    content: url('../img/cancel.svg');
+    position: relative;
+    top: 1px;
+    left: 6px;
+    display: inline-block;
+    transform: scale(.8);
+}
+.form-elements .cancel-button:hover::after {
+    content: url('../img/cancel-blue.svg');
+}
