@@ -90,6 +90,7 @@
 
 .form-elements img {
     width: 24px;
+    cursor: pointer;
 }
 
 .form-elements .form-label {
