@@ -22,15 +22,21 @@
                 <span>Add new contact</span>
                 <img src="./assets/img/person_add.svg" alt="">
             </button>
+        
             <div class="contact-list-list">
+                <!-- item für Buchstabe, das wird reingerendert für jeden Buchstaben den es gibt -->
                 <div class="contact-list-item">
-                    <div>A</div>
-                    <hr />
-                    <div class="contact-list-contact">
-                        <div class="contact-list-profile"></div>
-                        <p>Name Name</p>
-                        <a href="">email@example.com</a>
+                    <div class="contact-list-letter">A</div>
+                    <div class="contact-list-hr"></div>
+                    <!-- Namen passend zum Buchstaben werden gerendert -->
+                    <div class="contact-list-contact" onclick="contactListUpdateActiveState()">
+                        <div class="contact-list-profile">AM</div>
+                        <div class="contact-list-contact-info">
+                            <p>Name Name</p>
+                            <a href="">email@example.com</a>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
