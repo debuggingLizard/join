@@ -175,13 +175,12 @@
 .form-elements .cancel-button:hover {
     color: #29ABE2;
     border: 1px solid #29ABE2;
-    box-shadow: 0px 1px #00000024;
-    box-shadow: 0px 2px 2px 1px #00000038;
+    box-shadow: 0px 3px 4px 0px rgb(0 0 0 / 30%);
 }
 
 .form-elements .cancel-button:active  {
-    background-color: #29ABE2;
-    border: solid 1px #29ABE2;
+    color: black;
+    border: 1px solid black;
     box-shadow: 0px 3px 4px 0px rgb(0 0 0 / 30%);
 }
 
@@ -193,6 +192,11 @@
     display: inline-block;
     transform: scale(.8);
 }
+
 .form-elements .cancel-button:hover::after {
     content: url('../img/cancel-blue.svg');
+}
+
+.form-elements .cancel-button:active::after {
+    content: url('../img/cancel.svg');
 }
