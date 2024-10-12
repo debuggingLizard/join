@@ -35,9 +35,9 @@ body {
 
 .sidebar nav ul li {
     padding-top: 8px;
-    padding-bottom: 8px;
-    padding-right: 56px;
-    padding-left: 56px;
+    padding-bottom: 4px;
+    padding-right: 60px;
+    padding-left: 60px;
     gap: 8px;
 }
 
@@ -55,20 +55,40 @@ body {
     width: 30px;
 }
 
-.sidebar nav ul li a:hover {
-    background-color: #34495e;
+.sidebar nav ul li:hover {
+    background-color: #2A3D59;
 }
 
-.sidebar footer {
+.sidebar nav ul li:focus {
+    background-color: #091931;
+}
+
+
+footer {
     display: flex;
     flex-direction: column;
     padding: 8px;
-    gap: 8px;
+    gap: 13px;
 }
 
 footer a {
     color: #A8A8A8;
     text-decoration: none;
+    font-size: 16px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+footer a:hover {
+    transform: scale(1.05);
+    color: #00BEE8;
+}
+
+footer a:focus {
+    background-color: #091931;
+    color: #CDCDCD;
 }
 
 .main-content {
@@ -102,13 +122,25 @@ footer a {
     gap: 16px;
 }
 
-.user-info a:hover {
-    cursor: pointer;
+
+.header .user-info span {
+    color: #00BEE8;
+    padding: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid black;
 }
 
-.username-icon:hover {
-    background-color: aqua;
+.user-info a:hover {
+    transform: scale(1.2);
 }
+
+.user-info span:hover {
+    cursor: pointer;
+    background-color: #ebebeb;
+}
+
+
 
 
 .content {
