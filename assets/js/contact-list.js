@@ -4,14 +4,16 @@ async function renderContactList() {
   let users = await getData("users");
   getFirstLetter(users);
   displayContactList();
-  console.log(groupedUsers);
 }
 
 function getFirstLetter(users) {
-  Object.keys(users).forEach((key) => {
+  let sortedUsers = Object.keys(users).sort((a, b) => {
+    return users[a].name.localeCompare(users[b].name);
+  });
+  sortedUsers.forEach((key) => {
     let user = users[key];
     let firstLetter = user.name[0].toUpperCase();
-    let initials = user.name.split("").map((name, index, array) => {
+    let initials = user.name.split(" ").map((name, index, array) => {
         if (index === 0 || index === array.length - 1) {
           return name[0].toUpperCase();
         }
@@ -20,7 +22,7 @@ function getFirstLetter(users) {
     if (!groupedUsers[firstLetter]) {
       groupedUsers[firstLetter] = [];
     }
-    groupedUsers[firstLetter].push({...user, initials});
+    groupedUsers[firstLetter].push({ ...user, initials });
   });
 }
 
@@ -46,7 +48,7 @@ function getLetterGroupTemplate(letter) {
 
 function getUserContactListTemplate(user) {
   return /*html*/ `
-        <div id="contact-list-user-${user.id}" class="contact-list-contact" onclick="contactListUpdateActiveState()">
+        <div id="contact-list-user-${user.id}" class="contact-list-contact" onclick="console.log('Open Contact with id ${user.id}')">
                         <div class="contact-list-profile" style="background-color: ${user.color};">${user.initials}</div>
                         <div class="contact-list-contact-info">
                             <p>${user.name}</p>
