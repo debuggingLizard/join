@@ -1,0 +1,107 @@
+
+.contact-details-header{
+    display: flex;
+    align-items: center;
+    margin-top: 63px;
+    margin: 30px;
+    margin-top: 90px;
+}
+
+.contacts{
+    font-size: 61px; 
+    font-weight: 700; 
+    margin-left: 30px; 
+    margin-right: 25px; 
+    line-height: 73.2px;
+}
+
+.contact-details-sep-line {
+    border-left: 3px solid #29ABE2; 
+    height: 58px; 
+    display: inline-block; 
+    margin-right: 25px;
+}
+
+.contact-details-slogan {
+    font-size: 27px; 
+    line-height: 32.4px; 
+    font-weight: 400; 
+    padding-top: 5px;
+}
+
+.contact-information{
+    display: flex;
+    gap: 50px;
+    margin: 30px;
+}
+.contact-detail-profile {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid white;
+    border-radius: 50%;
+    color: white;
+    font-size: 47px;
+    line-height: 56.4px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.contact-name {
+    font-size: 47px;
+    font-weight: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-detail-btn-img {
+    height: 24px;
+    width: 24px;
+   margin-right: 10px;
+}
+.contact-detail-btn-wrapper{
+    display: flex;
+    
+}
+
+.contact-detail-btn{
+    font-size: 16px;
+    font-weight: 400;
+    margin-right: 15px;
+    border: unset;
+    display: flex;
+    background-color: #F6F7F8;
+    font-family: 'Inter';
+    
+
+    align-items: center;
+}
+
+.contact-access{
+    margin-left: 60px;
+}
+
+
+
+.contact-access h3 {
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.contact-details-access p {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom:10px;
+    margin-top: 10px;
+}
+
+.contact-details-access a{
+    text-decoration: none;
+    color: #007CEE;
+}
+
