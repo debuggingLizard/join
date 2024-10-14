@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/css/contact-list.css">
     <link rel="stylesheet" href="./assets/css/contact.css">
     <script src="./assets/js/firebase-connect.js"></script>
+    <script src="./assets/js/contact-list.js"></script>
     <script src="./assets/js/create-contact.js"></script>
     <script src="script.js"></script>
     <title>Kontakte | JOIN</title>
 </head>
 
-<body onload="renderSidebarHeader(); eventListenerCreateContact();">
+<body onload="renderSidebarHeader(); eventListenerCreateContact(); renderContactList()">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -26,6 +28,20 @@
 
         <!-- Hier kommt der restliche Inhalt hin -->
         <main class="main">
+            <!-- Contact List -->
+            <section class="contact-list">
+                <div class="contact-list-add-button-wrapper">
+                    <button class="contact-list-add-btn"
+                        onclick="console.log('I will open the modal to add a new contact')">
+                        <span>Add new contact</span>
+                        <img src="./assets/img/person_add.svg" alt="">
+                    </button>
+                </div>
+                <div class="contact-list-wrapper">
+                    <div id="contact-list-list" class="contact-list-list">
+                    </div>
+                </div>
+            </section>
 
             <!-- Contact Overlay Create Contact -->
             <div class="add-contact-wrapper d-none">
@@ -35,7 +51,7 @@
                         <h2>Add contact</h2>
                         <span>Task are better with a team!</span>
                         <span class="border-line"></span>
-    
+
                     </div>
                     <div class="right-side">
                         <div class="person-img-container">
@@ -47,37 +63,33 @@
                             <div class="close-button-container">
                                 <img src="./assets/img/close.svg" alt="close">
                             </div>
-    
+
                             <label for="name" class="form-label">
                                 <input type="text" id="name" name="name" placeholder="Name" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                             </label>
-    
+
                             <label for="email" class="form-label">
                                 <input type="email" id="email" name="email" placeholder="Email" required>
                                 <img src="./assets/img/mail.svg" alt="person">
                             </label>
-    
+
                             <label for="phone" class="form-label">
                                 <input type="tel" id="phone" name="phone" placeholder="Phone" required>
                                 <img src="./assets/img/call.svg" alt="person">
                             </label>
-    
+
                             <div class="buttons">
                                 <button class="cancel-button">Cancel</button>
                                 <button class="create-contact-button" type="submit">Create contact</button>
                             </div>
-    
                         </form>
-    
                     </div>
                 </div>
             </div>
+
         </main>
     </div>
-
-
-    
 
 </body>
 
