@@ -23,8 +23,9 @@ async function createContact() {
       profileImage: getProfileImage(name)
     };
 
-    postData("users", data);
+    await postData("users", data);
     resetCreateContactForm();
+    renderContactList();
   }
 }
 
@@ -62,4 +63,9 @@ function resetCreateContactForm() {
   document.getElementById('name').value = '';
   document.getElementById('email').value = '';
   document.getElementById('phone').value = '';
+}
+
+function cancelForm(event) {
+  event.preventDefault();
+  toggleAddContactOverlay(); 
 }

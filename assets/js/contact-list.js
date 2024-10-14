@@ -6,8 +6,11 @@ let groupedUsers = {};
  */
 async function renderContactList() {
   let users = await getData("users");
+  groupedUsers = {};
   getFirstLetters(users);
-  displayContactList();
+  let listRef = document.getElementById("contact-list-list");
+  listRef.innerHTML = "";
+  displayContactList(listRef);
 }
 
 /**
@@ -44,9 +47,8 @@ function getFirstLetters(users) {
  * It first gets the template for the basic HTML structure for the letter category.
  * Then, it gets the template for every user, placing these within the respective letter category that they belong to.
  */
-function displayContactList() {
+function displayContactList(listRef) {
   Object.keys(groupedUsers).forEach((letter) => {
-    let listRef = document.getElementById("contact-list-list");
     listRef.innerHTML += getLetterGroupTemplate(letter);
     groupedUsers[letter].forEach((user) => {
       let letterRef = document.getElementById("contact-list-item-" + letter);
@@ -88,4 +90,8 @@ function getUserContactListTemplate(user) {
                         </div>
                     </div>
     `;
+}
+
+function toggleAddContactOverlay() {
+  document.getElementById('add-contact-overlay').classList.toggle('d-none');
 }
