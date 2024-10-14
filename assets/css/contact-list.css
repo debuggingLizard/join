@@ -1,11 +1,6 @@
-body {
-    height: 100%;
-    margin: 0;
-}
-
 .contact-list {
     width: 440px;
-    height: 100vh;
+    height: calc(100vh - 92px);
     overflow-y: auto;
     background-color: white;
 }
@@ -100,7 +95,6 @@ body {
 
 .contact-list-contact {
     display: flex;
-    width: 304px;
     border-radius: 10px;
     padding: 15px 24px;
     gap: 35px;
@@ -126,7 +120,6 @@ body {
     align-items: center;
     border: 2px solid white;
     border-radius: 50%;
-    background-color: #FF7A00;
     color: white;
     font-size: 12px;
     line-height: 14.4px;
