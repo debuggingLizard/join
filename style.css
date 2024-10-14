@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(./assets/fonts/inter/Inter-VariableFont_opsz\,wght.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +12,7 @@
 body {
     display: flex;
     height: 100vh;
+    font-family: 'Inter';
 }
 
 .sidebar {
@@ -139,9 +145,6 @@ footer a:focus {
     cursor: pointer;
     background-color: #ebebeb;
 }
-
-
-
 
 .content {
     background-color: #F6F7F8;
