@@ -19,14 +19,12 @@ async function createContact() {
       name: name,
       mobile: mobile,
       email: email,
-      color: getRandomColor()
+      color: getRandomColor(),
+      profileImage: getProfileImage(name)
     };
 
     postData("users", data);
-
-    document.getElementById('name').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('phone').value = '';
+    resetCreateContactForm();
   }
 }
 
@@ -51,4 +49,17 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
+}
+
+function getProfileImage(name) {
+  const parts = name.trim().split(" ");
+  const firstInitial = parts[0].charAt(0).toUpperCase();
+  const lastInitial = parts.length < 2 ? parts[0].charAt(0).toUpperCase() : parts[1].charAt(0).toUpperCase();
+  return firstInitial + lastInitial;
+}
+
+function resetCreateContactForm() {
+  document.getElementById('name').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('phone').value = '';
 }
