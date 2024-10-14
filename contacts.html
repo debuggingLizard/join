@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./assets/css/contact-details.css">
     <link rel="stylesheet" href="./assets/css/contact-responsive.css">
     <script src="./assets/js/firebase-connect.js"></script>
-    <script src="./assets/js/contact-list.js"></script>
+    <script src="./assets/js/contact-list-detail.js"></script>
     <script src="./assets/js/create-contact.js"></script>
     <script src="script.js"></script>
     <title>Kontakte | JOIN</title>
@@ -24,13 +24,13 @@
 
     <!-- Main Content Bereich -->
     <div class="container">
-        <!-- Header -->
+        <!-- HEADER -->
         <header id="header" class="header-wrapper">
         </header>
 
         <!-- Hier kommt der restliche Inhalt hin -->
         <main class="main contact-container">
-            <!-- Contact List -->
+            <!-- CONTACT LIST -->
             <section class="contact-list">
                 <div class="contact-list-add-button-wrapper">
                     <button class="contact-list-add-btn" onclick="toggleAddContactOverlay()">
@@ -44,41 +44,19 @@
                 </div>
             </section>
 
-            <!-- Contact Detail View -->
+            <!-- CONTACT DETAIL VIEW-->
             <section class="contact-detail">
                 <div class="contact-details-header">
                     <div class="contacts">Contacts</div>
                     <div class="contact-details-sep-line"></div>
                     <div class="contact-details-slogan">Better with a team</div>
                 </div>
-                <div class="toggle-div">
-                    <div class="contact-information">
-                        <div class="contact-detail-profile"></div>
-                        <div class="contact-name">
-                            <p>Anton Mayer</p>
-                            <div class="contact-detail-btn-wrapper">
-                                <button class="contact-detail-btn"><img class="contact-detail-btn-img"
-                                        src="./assets/img/edit.svg" alt=""><span>Edit</span></button>
-                                <button class="contact-detail-btn"><img class="contact-detail-btn-img"
-                                        src="./assets/img/delete.svg" alt=""><span>Delete</span></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-access">
-                        <h3>Contact Information</h3>
-                        <div class="contact-details-access">
-                            <p>Email</p>
-                            <a href="mailto:example@email.com">example@email.com</a>
-                        </div>
-                        <div class="contact-details-access">
-                            <p>Phone</p>
-                            <p style="font-weight: 400;">+1234567890</p>
-                        </div>
-                    </div>
+                <!-- detail view render here -->
+                <div id="contact-detail-view" class="toggle-div">
                 </div>
             </section>
 
-            <!-- Contact Overlay Create Contact -->
+            <!-- CONTACT OVERLAY CREATE CONTACT -->
             <div id="add-contact-overlay" class="add-contact-wrapper d-none">
                 <div class="add-contact-container">
                     <div class="left-side">
