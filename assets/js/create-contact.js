@@ -1,4 +1,4 @@
-function init() {
+function eventListenerCreateContact() {
   let formElement = document.getElementById('create-contact-form');
 
   formElement.addEventListener("submit", function (e) {

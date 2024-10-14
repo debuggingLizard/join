@@ -8,59 +8,76 @@
     <link rel="stylesheet" href="./assets/css/contact.css">
     <script src="./assets/js/firebase-connect.js"></script>
     <script src="./assets/js/create-contact.js"></script>
-    <title>Contacts</title>
+    <script src="script.js"></script>
+    <title>Kontakte | JOIN</title>
 </head>
 
-<body onload="init()">
+<body onload="renderSidebarHeader(); eventListenerCreateContact();">
 
-    <main>
-        <div class="add-contact-wrapper">
-            <div class="add-contact-container">
-                <div class="left-side">
-                    <img src="./assets/img/logo-white.svg" alt="logo">
-                    <h2>Add contact</h2>
-                    <span>Task are better with a team!</span>
-                    <span class="border-line"></span>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+    </aside>
 
-                </div>
-                <div class="right-side">
-                    <div class="person-img-container">
-                        <div class="person-img">
-                            <img src="./assets/img/person.svg" alt="person">
-                        </div>
+    <!-- Main Content Bereich -->
+    <div class="container">
+        <!-- Header -->
+        <header id="header" class="header-wrapper">
+        </header>
+
+        <!-- Hier kommt der restliche Inhalt hin -->
+        <main class="main">
+
+            <!-- Contact Overlay Create Contact -->
+            <div class="add-contact-wrapper d-none">
+                <div class="add-contact-container">
+                    <div class="left-side">
+                        <img src="./assets/img/logo-white.svg" alt="logo">
+                        <h2>Add contact</h2>
+                        <span>Task are better with a team!</span>
+                        <span class="border-line"></span>
+    
                     </div>
-                    <form class="form-elements" id="create-contact-form">
-                        <div class="close-button-container">
-                            <img src="./assets/img/close.svg" alt="close">
+                    <div class="right-side">
+                        <div class="person-img-container">
+                            <div class="person-img">
+                                <img src="./assets/img/person.svg" alt="person">
+                            </div>
                         </div>
-
-                        <label for="name" class="form-label">
-                            <input type="text" id="name" name="name" placeholder="Name" required>
-                            <img src="./assets/img/person-gray.svg" alt="person">
-                        </label>
-
-                        <label for="email" class="form-label">
-                            <input type="email" id="email" name="email" placeholder="Email" required>
-                            <img src="./assets/img/mail.svg" alt="person">
-                        </label>
-
-                        <label for="phone" class="form-label">
-                            <input type="tel" id="phone" name="phone" placeholder="Phone" required>
-                            <img src="./assets/img/call.svg" alt="person">
-                        </label>
-                        
-                        <div class="buttons">
-                            <button class="cancel-button">Cancel</button>
-                            <button class="create-contact-button" type="submit">Create contact</button>
-                        </div>
-
-                    </form>
-
+                        <form class="form-elements" id="create-contact-form">
+                            <div class="close-button-container">
+                                <img src="./assets/img/close.svg" alt="close">
+                            </div>
+    
+                            <label for="name" class="form-label">
+                                <input type="text" id="name" name="name" placeholder="Name" required>
+                                <img src="./assets/img/person-gray.svg" alt="person">
+                            </label>
+    
+                            <label for="email" class="form-label">
+                                <input type="email" id="email" name="email" placeholder="Email" required>
+                                <img src="./assets/img/mail.svg" alt="person">
+                            </label>
+    
+                            <label for="phone" class="form-label">
+                                <input type="tel" id="phone" name="phone" placeholder="Phone" required>
+                                <img src="./assets/img/call.svg" alt="person">
+                            </label>
+    
+                            <div class="buttons">
+                                <button class="cancel-button">Cancel</button>
+                                <button class="create-contact-button" type="submit">Create contact</button>
+                            </div>
+    
+                        </form>
+    
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+    </div>
 
-    </main>
+
+    
 
 </body>
 
