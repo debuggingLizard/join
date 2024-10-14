@@ -2,31 +2,60 @@
     .contact-list-add-button-wrapper {
         justify-content: left;
     }
-
     .contact-list-wrapper {
         left: 0;
     }
-
     .contact-details-header{
         flex-direction: column;
         align-items: start;
     }
-
     .contacts {
         margin: 0;
     }
-
     .contact-details-sep-line {
         display: none;
     }
-
+    .contact-details-sep-line-responsive {
+        display: block; 
+        border-bottom: 3px solid #29ABE2; 
+        width: 35%;  
+        margin: 15px 0;  
+    }
     .contact-detail-profile {
         width: 80px;
         height: 80px;
+        font-size: 27px;
     }
-
     .contact-name {
         font-size: 36px;
     }
 }
+
+@media (max-width: 1067px){
+
+    .contact-list-wrapper{
+        width: auto;
+    }
+    .contact-list{
+        width: auto;
+    }
+    .contact-list-list{
+        width: 300px;
+    }
+    .contact-list-hr {
+        width: 250px;
+    }
+    .contact-list-contact {
+        padding: 0;
+        gap: 5px;
+    }
+    .contact-list-add-btn{
+        width: auto;
+    }
+    .contact-list-letter {
+        padding: 17px 46px;
+    }
+}
+
+
 
