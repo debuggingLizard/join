@@ -185,5 +185,4 @@ footer a:focus {
     background-color: #F6F7F8;
     flex-grow: 1;
     height: calc(100vh - 92px);
-    display: flex;
 }

@@ -1,0 +1,31 @@
+@media (max-width: 1240px) {
+    .contact-list-add-button-wrapper {
+        justify-content: left;
+    }
+
+    .contact-list-wrapper {
+        left: 0;
+    }
+
+    .contact-details-header{
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .contacts {
+        margin: 0;
+    }
+
+    .contact-details-sep-line {
+        display: none;
+    }
+
+    .contact-detail-profile {
+        width: 80px;
+        height: 80px;
+    }
+
+    .contact-name {
+        font-size: 36px;
+    }
+}
