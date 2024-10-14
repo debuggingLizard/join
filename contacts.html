@@ -5,16 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/css/contact-list.css">
     <link rel="stylesheet" href="./assets/css/contact.css">
     <script src="./assets/js/firebase-connect.js"></script>
+    <script src="./assets/js/contact-list.js"></script>
     <script src="./assets/js/create-contact.js"></script>
-    <title>Contacts</title>
+    <title>Kontakte | JOIN</title>
 </head>
 
-<body onload="init()">
+<body onload="init(); renderContactList()">
 
     <main>
-        <div class="add-contact-wrapper">
+        <!-- Contact List -->
+        <section class="contact-list">
+            <div class="contact-list-add-button-wrapper">
+                <button class="contact-list-add-btn"
+                    onclick="console.log('I will open the modal to add a new contact')">
+                    <span>Add new contact</span>
+                    <img src="./assets/img/person_add.svg" alt="">
+                </button>
+            </div>
+            <div class="contact-list-wrapper">
+                <div id="contact-list-list" class="contact-list-list">
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Overlay -->
+        <div style="display: none;" class="add-contact-wrapper">
             <div class="add-contact-container">
                 <div class="left-side">
                     <img src="./assets/img/logo-white.svg" alt="logo">
@@ -48,7 +66,7 @@
                             <input type="tel" id="phone" name="phone" placeholder="Phone" required>
                             <img src="./assets/img/call.svg" alt="person">
                         </label>
-                        
+
                         <div class="buttons">
                             <button class="cancel-button">Cancel</button>
                             <button class="create-contact-button" type="submit">Create contact</button>
