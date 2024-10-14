@@ -1,26 +1,10 @@
-async function init() {
+function init() {
   let formElement = document.getElementById('create-contact-form');
 
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
     createContact();
   });
-
-
-  let users = await getData("users");
-
-  console.log(users);
-  
-
-  Object.entries(users).forEach(user => {
-    const userId = user[0];
-    const userInfo = user[1];
-
-    console.log(userId);
-    console.log(userInfo.name);
-    console.log(userInfo.email);
-  });
-
 }
 
 async function createContact() {
