@@ -32,7 +32,7 @@
             <section class="contact-list">
                 <div class="contact-list-add-button-wrapper">
                     <button class="contact-list-add-btn"
-                        onclick="console.log('I will open the modal to add a new contact')">
+                        onclick="toggleAddContactOverlay()">
                         <span>Add new contact</span>
                         <img src="./assets/img/person_add.svg" alt="">
                     </button>
@@ -44,7 +44,7 @@
             </section>
 
             <!-- Contact Overlay Create Contact -->
-            <div class="add-contact-wrapper d-none">
+            <div id="add-contact-overlay" class="add-contact-wrapper d-none">
                 <div class="add-contact-container">
                     <div class="left-side">
                         <img src="./assets/img/logo-white.svg" alt="logo">
@@ -61,7 +61,7 @@
                         </div>
                         <form class="form-elements" id="create-contact-form">
                             <div class="close-button-container">
-                                <img src="./assets/img/close.svg" alt="close">
+                                <img onclick="toggleAddContactOverlay()" src="./assets/img/close.svg" alt="close">
                             </div>
 
                             <label for="name" class="form-label">
@@ -80,7 +80,7 @@
                             </label>
 
                             <div class="buttons">
-                                <button class="cancel-button">Cancel</button>
+                                <button onclick="cancelForm(event)" class="cancel-button">Cancel</button>
                                 <button class="create-contact-button" type="submit">Create contact</button>
                             </div>
                         </form>
