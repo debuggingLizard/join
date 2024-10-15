@@ -29,31 +29,55 @@
     .contact-name {
         font-size: 36px;
     }
-}
 
-@media (max-width: 1067px){
+    .contact-list {
+        width: 100%; 
+    }
+    .contact-detail {
+        display: none; 
+    }
+    
+     
+    .contact-list-hidden {
+        display: none; 
+    }
+    
+      
+    .contact-detail-visible {
+        display: block; 
+        width: 100%;
+    }
+    
+    .contact-list-add-button-wrapper{
+        display: none;
+    }
 
-    .contact-list-wrapper{
-        width: auto;
+    .contact-detail-arrow-left-responsive {
+        display: block;
+        align-items: center;
     }
-    .contact-list{
-        width: auto;
+    .add-contact-responsive-btn{
+        position: fixed;            
+        bottom: 100px;              
+        right: 20px;     
+        background-color: rgb(42,54,71);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;                 
+        justify-content: center;        
+        align-items: center;  
     }
-    .contact-list-list{
-        width: 300px;
-    }
-    .contact-list-hr {
-        width: 250px;
-    }
-    .contact-list-contact {
-        padding: 0;
-        gap: 5px;
-    }
-    .contact-list-add-btn{
-        width: auto;
-    }
-    .contact-list-letter {
-        padding: 17px 46px;
+
+    .edit-delete-btn-responsive{
+        background-color: rgb(42,54,71);
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        position: fixed;            
+        bottom: 100px;              
+        right: 20px;
+
     }
 }
 

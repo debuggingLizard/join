@@ -91,6 +91,20 @@ async function renderContactDetail(id) {
   let detailUser = await getData("users/" + id);
   detailRef.innerHTML = "";
   detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
+
+  if (window.innerWidth <= 1240) {
+    document.querySelector('.contact-list').classList.add('contact-list-hidden');
+    document.querySelector('.contact-detail').classList.add('contact-detail-visible');
+    document.querySelector('.contact-list').style.display = 'none'; 
+    document.querySelector('.contact-detail').style.display = 'block'; 
+}
+}
+
+function showContactList() {
+  document.querySelector('.contact-list').classList.remove('contact-list-hidden');
+  document.querySelector('.contact-detail').classList.remove('contact-detail-visible');
+  document.querySelector('.contact-detail').style.display = 'none'; 
+  document.querySelector('.contact-list').style.display = 'block';  
 }
 
 function updateActiveStateContactList(contact) {

@@ -65,6 +65,13 @@
     gap: 8px;
 }
 
+.contact-detail-arrow-left-responsive{
+    height: 100px;
+    display: none;
+    position: fixed;
+    right: 25px;
+}
+
 .contact-detail-btn-wrapper {
     display: flex;
 
