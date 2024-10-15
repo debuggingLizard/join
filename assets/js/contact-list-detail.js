@@ -86,6 +86,10 @@ function getUserContactListTemplate(user) {
     `;
 }
 
+/**
+ * Renders the contact details for a given contact ID.
+ * @param {string} id - The ID of the contact to render details for.
+ */
 async function renderContactDetail(id) {
   let detailRef = document.getElementById("contact-detail-view");
   let detailUser = await getData("users/" + id);
@@ -93,11 +97,21 @@ async function renderContactDetail(id) {
   detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
 }
 
+/**
+ * Updates the active state of the contact list.
+ * @param {Element} contact - The contact element to activate.
+ */
 function updateActiveStateContactList(contact) {
   document.querySelectorAll('.contact-list-contact').forEach(contactInList => contactInList.classList.remove('contact-list-contact-active'));
   contact.classList.add('contact-list-contact-active');
 }
 
+/**
+ * Returns the template for the contact details.
+ * @param {string} id - The ID of the contact.
+ * @param {Object} detailUser - The contact details.
+ * @returns {string} The HTML template for the contact details.
+ */
 function getContactDetailTemplate(id, detailUser) {
   return /*html*/ `
       <div class="contact-information">
