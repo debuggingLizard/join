@@ -1,9 +1,22 @@
+let editFormErrors = {
+  name: 0,
+  email: 0,
+  phone: 0
+};
+
 function eventListenerEditContact() {
   let formElement = document.getElementById('edit-contact-form');
 
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
-    editContact();
+
+    checkEditInputValidation('name');
+    checkEditInputValidation('email');
+    checkEditInputValidation('phone');
+
+    if (editFormErrors.name === 0 && editFormErrors.email === 0 && editFormErrors.phone === 0) {
+      editContact();
+    }
   });
 
   document.getElementById('edit-contact-overlay').addEventListener('click', function (e) {
@@ -61,4 +74,20 @@ function hideEditContactOverlay(){
   document.getElementById('edit-contact-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
   document.getElementById('edit-contact-overlay-container').style.transform = 'translateX(200%)';
   document.getElementById('edit-contact-overlay').style.zIndex = -1;
+}
+
+function checkEditInputValidation(inputName) {
+  let inputElement = document.querySelector(`#edit-contact-form input[name = ${inputName}]`);
+  let errorMessageElement = document.querySelector(`#edit-contact-form .${inputName}-error`);
+
+  if (!inputElement.checkValidity()) {
+    inputElement.classList.add("input-error");
+    errorMessageElement.classList.remove("d-none");
+    editFormErrors[inputName] = 1;
+  } else {
+    inputElement.classList.remove("input-error");
+    errorMessageElement.classList.add("d-none");
+    editFormErrors[inputName] = 0;
+  }
+
 }

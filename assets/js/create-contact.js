@@ -1,4 +1,4 @@
-let errors = {
+let createFormErrors = {
   name: 0,
   email: 0,
   phone: 0
@@ -13,7 +13,7 @@ function eventListenerCreateContact() {
     checkCreateInputValidation('email');
     checkCreateInputValidation('phone');
 
-    if (errors.name === 0 && errors.email === 0 && errors.phone === 0) {
+    if (createFormErrors.name === 0 && createFormErrors.email === 0 && createFormErrors.phone === 0) {
       createContact();
     }
 
@@ -74,11 +74,11 @@ function checkCreateInputValidation(inputName) {
   if (!inputElement.checkValidity()) {
     inputElement.classList.add("input-error");
     errorMessageElement.classList.remove("d-none");
-    errors[inputName] = 1;
+    createFormErrors[inputName] = 1;
   } else {
     inputElement.classList.remove("input-error");
     errorMessageElement.classList.add("d-none");
-    errors[inputName] = 0;
+    createFormErrors[inputName] = 0;
   }
 
 }

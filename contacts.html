@@ -83,19 +83,19 @@
                             <label for="name" class="form-label">
                                 <input type="text" name="name" placeholder="Name" onkeyup="checkCreateInputValidation('name')" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
-                                <span class="error-message name-error d-none">Check your name</span>
+                                <span class="error-message name-error d-none">Enter name & surname.</span>
                             </label>
 
                             <label for="email" class="form-label">
                                 <input type="email" name="email" placeholder="Email" onkeyup="checkCreateInputValidation('email')" required>
-                                <img src="./assets/img/mail.svg" alt="mail">
-                                <span class="error-message email-error d-none">Check your email. please try again.</span>
+                                <img src="./assets/img/mail.svg" alt="Email">
+                                <span class="error-message email-error d-none">Enter a valid email address.</span>
                             </label>
 
                             <label for="phone" class="form-label">
                                 <input type="tel" name="phone" placeholder="Phone" onkeyup="checkCreateInputValidation('phone')" required>
                                 <img src="./assets/img/call.svg" alt="call">
-                                <span class="error-message phone-error d-none">Check your phonenumber. please try again.</span>
+                                <span class="error-message phone-error d-none">Enter a valid phone number with country code.</span>
                                
                             </label>
 
@@ -121,7 +121,7 @@
                         <div class="person-img-container">
                             <div class="person-img contact-detail-profile"></div>
                         </div>
-                        <form class="form-elements" id="edit-contact-form">
+                        <form class="form-elements" id="edit-contact-form" novalidate>
                             <input type="hidden" name="id">
                             
                             <div class="close-button-container" onclick="hideEditContactOverlay()">
@@ -129,18 +129,21 @@
                             </div>
     
                             <label for="name" class="form-label">
-                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="text" name="name" placeholder="Name" onkeyup="checkEditInputValidation('name')" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
+                                <span class="error-message name-error d-none">Enter name & surname.</span>
                             </label>
     
                             <label for="email" class="form-label">
-                                <input type="email" name="email" placeholder="Email" required>
+                                <input type="email" name="email" placeholder="Email" onkeyup="checkEditInputValidation('email')" required>
                                 <img src="./assets/img/mail.svg" alt="mail">
+                                <span class="error-message email-error d-none">Enter a valid email address.</span>
                             </label>
     
                             <label for="phone" class="form-label">
-                                <input type="tel" name="phone" placeholder="phone" required>
+                                <input type="tel" name="phone" placeholder="phone" onkeyup="checkEditInputValidation('phone')" required>
                                 <img src="./assets/img/call.svg" alt="call">
+                                <span class="error-message phone-error d-none">Enter a valid phone number with country code.</span>
                             </label>
                             
                             <div class="buttons">
