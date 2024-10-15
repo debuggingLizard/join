@@ -173,6 +173,10 @@ footer a:focus {
     background-color: #334969;
 }
 
+.user-info-links-help {
+    display: none;
+}
+
 .main {
     background-color: #F6F7F8;
     flex-grow: 1;

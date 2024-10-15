@@ -34,6 +34,7 @@ function getHeaderTemplate() {
                 <div class="user-info-profile" onclick="openHeaderProfileInfo()">SM</div>
             </div>
             <div id="user-info-links" class="user-info-links d-none">
+                <p class="user-info-links-help">Help</p>
                 <p>Legal Notice</p>
                 <p>Privacy Policy</p>
                 <p>Log Out</p>

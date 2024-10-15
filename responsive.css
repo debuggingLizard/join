@@ -35,6 +35,19 @@
     footer {
         display: none;
     }
+
+    .container {
+        height: calc(100vh - 80px);
+    }
+
+    .main {
+        height: calc(100vh - 92px - 80px);
+    }
+
+    /* muss in eine andere kleinere media query */
+    .user-info-links-help {
+        display: block;
+    }
 }
 
 @media (max-width: 360px) {
