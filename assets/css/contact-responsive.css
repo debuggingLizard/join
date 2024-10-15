@@ -50,8 +50,6 @@
 
 @media (max-width: 1024px) {
     .add-edit-contact-container {
-        height: 90%;
-        /* max-height: ; */
         flex-direction: column;
         width: 351px;
     }
@@ -63,7 +61,11 @@
         border-radius: 20px 20px 0px 0px;
     }
 
-    .add-edit-contact-container .left-side img {
+    .add-edit-contact-container .left-side .close-button-container {
+        display: block;
+     }
+
+    .add-edit-contact-container .left-side .overlay-logo {
         display: none;
     }
 
@@ -76,14 +78,28 @@
     }
 
     .add-edit-contact-container .right-side {
-        padding: 20px;
+        padding: 92px 20px 20px;
         border-radius: 0px 0px 20px 20px;
+        flex-direction: column;
     }
 
     .add-edit-contact-container .right-side .person-img-container {
-        position: relative;
-        bottom: 200px;
-        left: 185px;
+        position: absolute;
+        top: -58px;
+    }
+
+    .add-edit-contact-container .right-side .form-elements {
+        gap: 24px;
+        width:100%;
+    }
+
+    .add-edit-contact-container .right-side .form-elements .close-button-container {
+        display: none;
+    }
+
+    .add-edit-contact-container .right-side .form-elements .buttons {
+        padding-top: 0;
+        justify-content: center;
     }
 
     .add-edit-contact-container .right-side .form-elements .cancel-button {
@@ -91,6 +107,18 @@
     }
 
     .add-edit-contact-container .right-side .form-elements input {
-        width:unset;
+        width: calc(100% - 32px);
+    }
+}
+
+@media (max-width: 369px) {
+    .add-edit-contact-container {
+        width: unset;
+    }
+}
+
+@media (max-height: 780px) {
+    .add-edit-contact-container {
+        height: 90%;
     }
 }
