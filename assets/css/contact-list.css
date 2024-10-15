@@ -1,6 +1,5 @@
 .contact-list {
     width: 440px;
-    height: calc(100vh - 92px);
     overflow-y: auto;
     background-color: white;
 }

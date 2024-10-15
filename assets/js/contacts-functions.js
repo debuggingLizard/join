@@ -1,3 +1,8 @@
+/**
+ * Checks if an email already exists in the users database.
+ * @param {string} email - The email to check.
+ * @returns {Promise<boolean>} True if the email exists, false otherwise.
+ */
 async function isEmailExist(email) {
   const users = await getData("users");
 
@@ -12,6 +17,10 @@ async function isEmailExist(email) {
   return foundUsers.length > 0 ? true : false;
 }
 
+/**
+ * Returns a random color from a predefined set of colors.
+ * @returns {string} A random color.
+ */
 function getRandomColor() {
   const colors = [
     '#FF7A00',
@@ -35,6 +44,11 @@ function getRandomColor() {
   return colors[rndInt];
 }
 
+/**
+ * Generates a profile image string based on a user's name.
+ * @param {string} name - The user's name.
+ * @returns {string} The profile image string.
+ */
 function getProfileImage(name) {
   const parts = name.trim().split(" ");
   const firstInitial = parts[0].charAt(0).toUpperCase();
@@ -42,6 +56,12 @@ function getProfileImage(name) {
   return firstInitial + lastInitial;
 }
 
+/**
+ * Returns a random integer between the specified min and max values, inclusive.
+ * @param {number} min - The minimum value.
+ * @param {number} max - The maximum value.
+ * @returns {number} A random integer between min and max.
+ */
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }

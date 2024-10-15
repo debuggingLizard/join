@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakte | JOIN</title>
+    <link rel="shortcut icon" href="./assets/img/JoinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/contact-list.css">
     <link rel="stylesheet" href="./assets/css/contact.css">
     <link rel="stylesheet" href="./assets/css/contact-details.css">
@@ -16,7 +19,6 @@
     <script src="./assets/js/edit-contact.js"></script>
     <script src="./assets/js/delete-contact.js"></script>
     <script src="script.js"></script>
-    <title>Kontakte | JOIN</title>
 </head>
 
 <body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-contacts'); renderContactList(); eventListenerCreateContact(); eventListenerEditContact();">
@@ -100,7 +102,8 @@
                             </label>
 
                             <div class="buttons">
-                                <button onclick="hideAddContactOverlay()" type="button" class="cancel-button">Cancel</button>
+                                <button onclick="hideAddContactOverlay()" type="button"
+                                    class="cancel-button">Cancel</button>
                                 <button class="create-contact-button" type="submit">Create contact</button>
                             </div>
                         </form>
@@ -115,7 +118,7 @@
                         <img src="./assets/img/logo-white.svg" alt="logo">
                         <h2>Edit contact</h2>
                         <span class="border-line"></span>
-    
+
                     </div>
                     <div class="right-side">
                         <div class="person-img-container">
@@ -123,36 +126,37 @@
                         </div>
                         <form class="form-elements" id="edit-contact-form" novalidate>
                             <input type="hidden" name="id">
-                            
+
                             <div class="close-button-container" onclick="hideEditContactOverlay()">
                                 <img src="./assets/img/close.svg" alt="close">
                             </div>
-    
+
                             <label for="name" class="form-label">
                                 <input type="text" name="name" placeholder="Name" onkeyup="hideValidationByTyping('name')" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                                 <span class="error-message name-error d-none">Enter name & surname.</span>
                             </label>
-    
+
                             <label for="email" class="form-label">
                                 <input type="email" name="email" placeholder="Email" onkeyup="hideValidationByTyping('email')" required>
                                 <img src="./assets/img/mail.svg" alt="mail">
                                 <span class="error-message email-error d-none">Enter a valid email address.</span>
                             </label>
-    
+
                             <label for="phone" class="form-label">
                                 <input type="tel" name="phone" placeholder="phone" onkeyup="hideValidationByTyping('phone')" required>
                                 <img src="./assets/img/call.svg" alt="call">
                                 <span class="error-message phone-error d-none">Enter a valid phone number with country code.</span>
                             </label>
-                            
+
                             <div class="buttons">
-                                <button class="cancel-button" type="button" onclick="deleteContactFromEditForm()">Delete</button>
+                                <button class="cancel-button" type="button"
+                                    onclick="deleteContactFromEditForm()">Delete</button>
                                 <button class="create-contact-button" type="submit">Save</button>
                             </div>
-    
+
                         </form>
-    
+
                     </div>
                 </div>
             </div>
