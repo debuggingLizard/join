@@ -98,10 +98,7 @@ footer a:focus {
 .header-wrapper {
     height: 96px;
     display: flex;
-    padding-top: 20px;
-    padding-right: 40px;
-    padding-bottom: 20px;
-    padding-left: 100px;
+    padding: 20px 40px 20px 100px;
     background-color: white;
     z-index: 1;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
@@ -120,6 +117,12 @@ footer a:focus {
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
+}
+
+.header-responsive-logo {
+    width: 32px;
+    height: auto;
+    display:none;
 }
 
 .user-info {

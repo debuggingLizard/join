@@ -28,6 +28,7 @@ function getSidebarTemplate() {
 function getHeaderTemplate() {
   return /*html*/ `
          <div class="header-content">
+            <img class="header-responsive-logo" src="./assets/img/JoinLogoResponsive.svg" alt="">
             <h2>Kanban Project Management Tool</h2>
             <div class="user-info">
                 <a href="#" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>

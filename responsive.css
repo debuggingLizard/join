@@ -44,7 +44,24 @@
         height: calc(100vh - 92px - 80px);
     }
 
-    /* muss in eine andere kleinere media query */
+    .header-wrapper {
+        padding: 20px 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-responsive-logo {
+        display:block;
+    }
+
+    .header-content h2 {
+        display: none;
+    }
+
+    .help-icon {
+        display: none;
+    }
+
     .user-info-links-help {
         display: block;
     }
@@ -53,5 +70,9 @@
 @media (max-width: 360px) {
     .sidebar {
         padding: 2px 4px;
+    }
+
+    .header-wrapper {
+        padding: 20px 16px;
     }
 }
