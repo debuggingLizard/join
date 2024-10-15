@@ -144,7 +144,18 @@ function getContactDetailTemplate(id, detailUser) {
   `;
 }
 
-function openSlideIn() {
+function openSlideIn(id) {
+  const slideInContent = document.querySelector('.slide-in-content');
+  slideInContent.innerHTML = `
+      <button class="contact-detail-btn" onclick="openEditContactModal('${id}')">
+          <img src="./assets/img/edit.svg" alt="">
+          <span>Edit</span>
+      </button>
+      <button class="contact-detail-btn" onclick="deleteContact('${id}')">
+          <img src="./assets/img/delete.svg" alt="">
+          <span>Delete</span>
+      </button>
+  `;
   const slideIn = document.getElementById('slideIn');
   slideIn.classList.add('visible');
 }
@@ -154,11 +165,9 @@ function closeSlideIn() {
   slideIn.classList.remove('visible');
 }
 
-
 document.addEventListener('click', function(event) {
   const slideIn = document.getElementById('slideIn');
   const button = document.querySelector('.edit-delete-btn-responsive');
-
   
   if (slideIn.classList.contains('visible') && !slideIn.contains(event.target) && !button.contains(event.target)) {
     closeSlideIn();

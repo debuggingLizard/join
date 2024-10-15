@@ -89,6 +89,7 @@
     font-family: 'Inter';
     align-items: center;
     cursor: pointer;
+    display: inline-block;
 }
 
 .contact-detail-btn:hover {

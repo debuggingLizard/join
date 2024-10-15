@@ -39,6 +39,9 @@
     .contact-detail-btn {
         display: none;
     }
+    .slide-in.visible .contact-detail-btn {
+        display: block;
+    }
      
     .contact-list-hidden {
         display: none; 
