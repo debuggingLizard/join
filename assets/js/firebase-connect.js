@@ -25,3 +25,27 @@ async function postData(source, data = {}) {
         console.error("Problem beim Speichern der Daten in der Datenbank");
     }
 }
+
+async function putData(source, id, data = {}) {
+    try {
+        return await fetch(BASE_URL + source + "/" + id + "/.json", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+    } catch (error) {
+        console.error("Problem beim Bearbeiten von Daten in der Datenbank");
+    }
+}
+
+async function deleteData(source, id) {
+    try {
+        return await fetch(BASE_URL + source + "/" + id + "/.json", {
+            method: "DELETE"
+        });
+    } catch (error) {
+        console.error("Problem beim Löschen von Daten in der Datenbank");
+    }
+}

@@ -10,13 +10,16 @@
     <link rel="stylesheet" href="./assets/css/contact-details.css">
     <link rel="stylesheet" href="./assets/css/contact-responsive.css">
     <script src="./assets/js/firebase-connect.js"></script>
+    <script src="./assets/js/contacts-functions.js"></script>
     <script src="./assets/js/contact-list-detail.js"></script>
     <script src="./assets/js/create-contact.js"></script>
+    <script src="./assets/js/edit-contact.js"></script>
+    <script src="./assets/js/delete-contact.js"></script>
     <script src="script.js"></script>
     <title>Kontakte | JOIN</title>
 </head>
 
-<body onload="renderSidebarHeader(); eventListenerCreateContact(); renderContactList()">
+<body onload="renderSidebarHeader(); eventListenerCreateContact(); renderContactList(); eventListenerEditContact();">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -33,7 +36,7 @@
             <!-- CONTACT LIST -->
             <section class="contact-list">
                 <div class="contact-list-add-button-wrapper">
-                    <button class="contact-list-add-btn" onclick="toggleAddContactOverlay()">
+                    <button class="contact-list-add-btn" onclick="showAddContactOverlay()">
                         <span>Add new contact</span>
                         <img src="./assets/img/person_add.svg" alt="">
                     </button>
@@ -57,8 +60,8 @@
             </section>
 
             <!-- CONTACT OVERLAY CREATE CONTACT -->
-            <div id="add-contact-overlay" class="add-contact-wrapper d-none">
-                <div class="add-contact-container">
+            <div id="add-contact-overlay" class="add-contact-wrapper">
+                <div class="add-edit-contact-container" id="add-contact-overlay-container">
                     <div class="left-side">
                         <img src="./assets/img/logo-white.svg" alt="logo">
                         <h2>Add contact</h2>
@@ -74,29 +77,75 @@
                         </div>
                         <form class="form-elements" id="create-contact-form">
                             <div class="close-button-container">
-                                <img onclick="toggleAddContactOverlay()" src="./assets/img/close.svg" alt="close">
+                                <img onclick="hideAddContactOverlay()" src="./assets/img/close.svg" alt="close">
                             </div>
 
                             <label for="name" class="form-label">
-                                <input type="text" id="name" name="name" placeholder="Name" required>
+                                <input type="text" name="name" placeholder="Name" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                             </label>
 
                             <label for="email" class="form-label">
-                                <input type="email" id="email" name="email" placeholder="Email" required>
-                                <img src="./assets/img/mail.svg" alt="person">
+                                <input type="email" name="email" placeholder="Email" required>
+                                <img src="./assets/img/mail.svg" alt="mail">
                             </label>
 
                             <label for="phone" class="form-label">
-                                <input type="tel" id="phone" name="phone" placeholder="Phone" required>
-                                <img src="./assets/img/call.svg" alt="person">
+                                <input type="tel" name="phone" placeholder="Phone" required>
+                                <img src="./assets/img/call.svg" alt="call">
                             </label>
 
                             <div class="buttons">
-                                <button onclick="cancelForm(event)" class="cancel-button">Cancel</button>
+                                <button onclick="hideAddContactOverlay()" type="button" class="cancel-button">Cancel</button>
                                 <button class="create-contact-button" type="submit">Create contact</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACT OVERLAY EDIT CONTACT -->
+            <div id="edit-contact-overlay" class="edit-contact-wrapper">
+                <div class="add-edit-contact-container" id="edit-contact-overlay-container">
+                    <div class="left-side">
+                        <img src="./assets/img/logo-white.svg" alt="logo">
+                        <h2>Edit contact</h2>
+                        <span class="border-line"></span>
+    
+                    </div>
+                    <div class="right-side">
+                        <div class="person-img-container">
+                            <div class="person-img contact-detail-profile"></div>
+                        </div>
+                        <form class="form-elements" id="edit-contact-form">
+                            <input type="hidden" name="id">
+                            
+                            <div class="close-button-container" onclick="hideEditContactOverlay()">
+                                <img src="./assets/img/close.svg" alt="close">
+                            </div>
+    
+                            <label for="name" class="form-label">
+                                <input type="text" name="name" placeholder="Name" required>
+                                <img src="./assets/img/person-gray.svg" alt="person">
+                            </label>
+    
+                            <label for="email" class="form-label">
+                                <input type="email" name="email" placeholder="Email" required>
+                                <img src="./assets/img/mail.svg" alt="mail">
+                            </label>
+    
+                            <label for="phone" class="form-label">
+                                <input type="tel" name="phone" placeholder="phone" required>
+                                <img src="./assets/img/call.svg" alt="call">
+                            </label>
+                            
+                            <div class="buttons">
+                                <button class="cancel-button" type="button" onclick="deleteContactFromEditForm()">Delete</button>
+                                <button class="create-contact-button" type="submit">Save</button>
+                            </div>
+    
+                        </form>
+    
                     </div>
                 </div>
             </div>
