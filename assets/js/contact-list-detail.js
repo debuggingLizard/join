@@ -76,7 +76,7 @@ function getLetterGroupTemplate(letter) {
  */
 function getUserContactListTemplate(user) {
   return /*html*/ `
-        <div id="contact-list-user-${user.key}" class="contact-list-contact" onclick="renderContactDetail('${user.key}')">
+        <div id="contact-list-user-${user.key}" class="contact-list-contact" onclick="updateActiveStateContactList(this); renderContactDetail('${user.key}')">
                         <div class="contact-list-profile" style="background-color: ${user.color};">${user.profileImage}</div>
                         <div class="contact-list-contact-info">
                             <p>${user.name}</p>
@@ -91,6 +91,11 @@ async function renderContactDetail(id) {
   let detailUser = await getData("users/" + id);
   detailRef.innerHTML = "";
   detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
+}
+
+function updateActiveStateContactList(contact) {
+  document.querySelectorAll('.contact-list-contact').forEach(contactInList => contactInList.classList.remove('contact-list-contact-active'));
+  contact.classList.add('contact-list-contact-active');
 }
 
 function getContactDetailTemplate(id, detailUser) {
