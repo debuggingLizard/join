@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Renders the sidebar and header content.
+ */
+function renderSidebarHeader() {
+  let sidebarRef = document.getElementById("sidebar");
+  sidebarRef.innerHTML = "";
+  sidebarRef.innerHTML = getSidebarTemplate();
+  let headerRef = document.getElementById("header");
+  headerRef.innerHTML = "";
+  headerRef.innerHTML = getHeaderTemplate();
+}
+
+/**
+ * Returns the template for the sidebar.
+ * @returns {string} The HTML template for the sidebar.
+ */
+function getSidebarTemplate() {
+  return /*html*/ `
+        &lt;div class="logo">
+            &lt;img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
+        &lt;/div>
+        &lt;nav>
+            &lt;a href="#" id="sidebar-nav-summary" class="sidebar-nav-a">&lt;img src="./assets/buttons/summary.svg" alt="SummaryButton">&lt;span>Summary&lt;/span>&lt;/a>
+               &lt;a href=" #" id="sidebar-nav-task" class="sidebar-nav-a">&lt;img src="./assets/buttons/addTask.svg" alt="AddTask">&lt;span>Add Task&lt;/span>&lt;/a>
+               &lt;a href="#" id="sidebar-nav-board" class="sidebar-nav-a">&lt;img src="./assets/buttons/board.svg" alt="Board">&lt;span>Board&lt;/span>&lt;/a>
+              &lt;a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a">&lt;img src="./assets/buttons/contacts.svg" alt="Contacts">&lt;span>Contacts&lt;/span>&lt;/a>
+        &lt;/nav>
+        &lt;footer>
+            &lt;a tabindex="0" href="#">Privacy Policy&lt;/a>
+            &lt;a tabindex="0" href="#">Legal notice&lt;/a>
+        &lt;/footer>
+    `;
+}
+
+/**
+ * Returns the template for the header.
+ * @returns {string} The HTML template for the header.
+ */
+function getHeaderTemplate() {
+  return /*html*/ `
+         &lt;div class="header-content">
+            &lt;img class="header-responsive-logo" src="./assets/img/JoinLogoResponsive.svg" alt="">
+            &lt;h2>Kanban Project Management Tool&lt;/h2>
+            &lt;div class="user-info">
+                &lt;a href="#" class="help-icon">&lt;img src="./assets/buttons/help.svg" alt="Help">&lt;/a>
+                &lt;div class="user-info-profile" onclick="openHeaderProfileInfo()">SM&lt;/div>
+            &lt;/div>
+            &lt;div id="user-info-links" class="user-info-links d-none">
+                &lt;p class="user-info-links-help">Help&lt;/p>
+                &lt;p>Legal Notice&lt;/p>
+                &lt;p>Privacy Policy&lt;/p>
+                &lt;p>Log Out&lt;/p>
+            &lt;/div>
+        &lt;/div>
+    `;
+}
+
+/**
+ * Toggles the visibility of the header profile info dropdown.
+ */
+function openHeaderProfileInfo() {
+  document.getElementById("user-info-links").classList.toggle("d-none");
+}
+
+// muss in render-funktion von jeder HTML-Seite aufgerufen werden (bzw. im onload), damit die Nav-Links entsprechend optisch angepasst werden.
+// Der Parameter ist die ID des Links, z.B. 'sidebar-nav-board'
+/**
+ * Updates the active state of the navigation links.
+ * @param {string} navLinkID - The ID of the navigation link to activate.
+ */
+function updateActiveStateNavLink(navLinkID) {
+  document
+    .querySelectorAll("sidebar-nav-a")
+    .forEach((link) => link.classList.remove("nav-a-active"));
+  document.getElementById(navLinkID).classList.add("nav-a-active");
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Oct 15 2024 20:11:55 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

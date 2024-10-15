@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: assets/js/contact-list-detail.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: assets/js/contact-list-detail.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let groupedUsers = {};
+
+/**
+ * This function is called onload in body of contacts.html.
+ * It fetches the user data from the database, writing it into users, and renders the contact list by calling two other functions
+ */
+async function renderContactList() {
+  let users = await getData("users");
+  groupedUsers = {};
+  getFirstLetters(users);
+  let listRef = document.getElementById("contact-list-list");
+  listRef.innerHTML = "";
+  displayContactList(listRef);
+}
+
+/**
+ * This function sorts the users alphabetically (this is necessary because the contact list must be sorted alphabetically).
+ * From these sortedUsers, it extracts the first letter of every name and creates an empty array in the groupedUsers object if that array doesn't exist already.
+ * It also extracts the initials of the first and last name of a user and assigns them to initials.
+ * Finally, it creates a copy of each user and adds the initials to it, pushing each user object with their initials into groupedUsers.
+ * The keys of groupedUsers are the first letters that exist in the user database (for grouping), the values are the respective user objects that start with that letter.
+ *
+ * @param {object} users
+ */
+function getFirstLetters(users) {
+  let sortedUsers = Object.keys(users).sort((a, b) => {
+    return users[a].name.localeCompare(users[b].name);
+  });
+  sortedUsers.forEach((key) => {
+    let user = users[key];
+    let firstLetter = user.name[0].toUpperCase();
+    if (!groupedUsers[firstLetter]) {
+      groupedUsers[firstLetter] = [];
+    }
+    groupedUsers[firstLetter].push({ ...user, key });
+  });
+}
+
+/**
+ * This function uses the global groupedUsers object and creates HTML for every key-value pair of that object, i.e. displaying the users.
+ * It first gets the template for the basic HTML structure for the letter category.
+ * Then, it gets the template for every user, placing these within the respective letter category that they belong to.
+ */
+function displayContactList(listRef) {
+  Object.keys(groupedUsers).forEach((letter) => {
+    listRef.innerHTML += getLetterGroupTemplate(letter);
+    groupedUsers[letter].forEach((user) => {
+      let letterRef = document.getElementById("contact-list-item-" + letter);
+      letterRef.innerHTML += getUserContactListTemplate(user);
+    });
+  });
+}
+
+/**
+ * This template function returns the HTML structure for a letter category.
+ * It takes a letter (i.e. 'A') and returns the HTML accordingly
+ *
+ * @param {string} letter
+ * @returns HTML Structure
+ */
+function getLetterGroupTemplate(letter) {
+  return /*html*/ `
+        &lt;div id="contact-list-item-${letter}" class="contact-list-item">
+                    &lt;div class="contact-list-letter">${letter}&lt;/div>
+                    &lt;div class="contact-list-hr">&lt;/div>
+            &lt;/div>
+    `;
+}
+
+/**
+ * This template function returns the HTML structure for a user.
+ * It takes the user object and returns the HTML accordingly.
+ *
+ * @param {object} user
+ * @returns HTML Structure
+ */
+function getUserContactListTemplate(user) {
+  return /*html*/ `
+        &lt;div id="contact-list-user-${user.key}" class="contact-list-contact" onclick="updateActiveStateContactList(this); renderContactDetail('${user.key}')">
+                        &lt;div class="contact-list-profile" style="background-color: ${user.color};">${user.profileImage}&lt;/div>
+                        &lt;div class="contact-list-contact-info">
+                            &lt;p>${user.name}&lt;/p>
+                            &lt;a href="mailto:${user.email}">${user.email}&lt;/a>
+                        &lt;/div>
+                    &lt;/div>
+    `;
+}
+
+/**
+ * Renders the contact details for a given contact ID.
+ * @param {string} id - The ID of the contact to render details for.
+ */
+async function renderContactDetail(id) {
+  let detailRef = document.getElementById("contact-detail-view");
+  let detailUser = await getData("users/" + id);
+  detailRef.innerHTML = "";
+  detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
+}
+
+/**
+ * Updates the active state of the contact list.
+ * @param {Element} contact - The contact element to activate.
+ */
+function updateActiveStateContactList(contact) {
+  document.querySelectorAll('.contact-list-contact').forEach(contactInList => contactInList.classList.remove('contact-list-contact-active'));
+  contact.classList.add('contact-list-contact-active');
+}
+
+/**
+ * Returns the template for the contact details.
+ * @param {string} id - The ID of the contact.
+ * @param {Object} detailUser - The contact details.
+ * @returns {string} The HTML template for the contact details.
+ */
+function getContactDetailTemplate(id, detailUser) {
+  return /*html*/ `
+      &lt;div class="contact-information">
+                        &lt;div class="contact-detail-profile" style="background-color: ${detailUser.color};">${detailUser.profileImage}&lt;/div>
+                        &lt;div class="contact-name">
+                            &lt;p>${detailUser.name}&lt;/p>
+                            &lt;div class="contact-detail-btn-wrapper">
+                                &lt;button class="contact-detail-btn" onclick="openEditContactModal('${id}')">
+                                  &lt;img src="./assets/img/edit.svg" alt="">
+                                  &lt;span>Edit&lt;/span>
+                                &lt;/button>
+                                &lt;button class="contact-detail-btn" onclick="deleteContact('${id}')">
+                                  &lt;img src="./assets/img/delete.svg" alt="">
+                                  &lt;span>Delete&lt;/span>
+                                &lt;/button>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div class="contact-access">
+                        &lt;h3>Contact Information&lt;/h3>
+                        &lt;div class="contact-details-access">
+                            &lt;p>Email&lt;/p>
+                            &lt;a href="mailto:${detailUser.email}">${detailUser.email}&lt;/a>
+                        &lt;/div>
+                        &lt;div class="contact-details-access">
+                            &lt;p>Phone&lt;/p>
+                            &lt;p style="font-weight: 400;">${detailUser.mobile}&lt;/p>
+                        &lt;/div>
+                    &lt;/div>
+  `;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Oct 15 2024 20:11:55 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
