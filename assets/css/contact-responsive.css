@@ -7,7 +7,7 @@
         left: 0;
     }
 
-    .contact-details-header{
+    .contact-details-header {
         flex-direction: column;
         align-items: start;
     }
@@ -27,5 +27,98 @@
 
     .contact-name {
         font-size: 36px;
+    }
+}
+
+@media (max-width: 1180px) {
+    .add-edit-contact-container .left-side {
+        padding: 0 32px 85px 32px;
+    }
+
+    .add-edit-contact-container .left-side h2 {
+        font-size: 47px;
+    }
+
+    .add-edit-contact-container .left-side span {
+        font-size: 20px;
+    }
+
+    .add-edit-contact-container .right-side .person-img-container {
+        padding: 0 48px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .add-edit-contact-container {
+        flex-direction: column;
+        width: 351px;
+    }
+
+    .add-edit-contact-container .left-side {
+        height: 352px;
+        padding: 20px;
+        align-items: flex-start;
+        border-radius: 20px 20px 0px 0px;
+    }
+
+    .add-edit-contact-container .left-side .close-button-container {
+        display: block;
+     }
+
+    .add-edit-contact-container .left-side .overlay-logo {
+        display: none;
+    }
+
+    .add-edit-contact-container .left-side h2 {
+        font-size: 47px;
+    }
+
+    .add-edit-contact-container .left-side span {
+        font-size: 20px;
+    }
+
+    .add-edit-contact-container .right-side {
+        padding: 92px 20px 20px;
+        border-radius: 0px 0px 20px 20px;
+        flex-direction: column;
+    }
+
+    .add-edit-contact-container .right-side .person-img-container {
+        position: absolute;
+        top: -58px;
+    }
+
+    .add-edit-contact-container .right-side .form-elements {
+        gap: 24px;
+        width:100%;
+    }
+
+    .add-edit-contact-container .right-side .form-elements .close-button-container {
+        display: none;
+    }
+
+    .add-edit-contact-container .right-side .form-elements .buttons {
+        padding-top: 0;
+        justify-content: center;
+    }
+
+    .add-edit-contact-container .right-side .form-elements .cancel-button {
+        display: none;
+    }
+
+    .add-edit-contact-container .right-side .form-elements input {
+        width: calc(100% - 32px);
+    }
+}
+
+@media (max-width: 369px) {
+    .add-edit-contact-container {
+        width: unset;
+    }
+}
+
+@media (max-height: 780px) {
+    .add-edit-contact-container {
+        height: 90%;
     }
 }

@@ -21,7 +21,8 @@
     <script src="script.js"></script>
 </head>
 
-<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-contacts'); renderContactList(); eventListenerCreateContact(); eventListenerEditContact();">
+<body
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-contacts'); renderContactList(); eventListenerCreateContact(); eventListenerEditContact();">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -65,9 +66,12 @@
             <div id="add-contact-overlay" class="add-contact-wrapper">
                 <div class="add-edit-contact-container" id="add-contact-overlay-container">
                     <div class="left-side">
-                        <img src="./assets/img/logo-white.svg" alt="logo">
+                        <div class="close-button-container">
+                            <img onclick="hideAddContactOverlay()" src="./assets/img/close-white.svg" alt="close">
+                        </div>
+                        <img class="overlay-logo" src="./assets/img/logo-white.svg" alt="logo">
                         <h2>Add contact</h2>
-                        <span>Task are better with a team!</span>
+                        <span>Tasks are better with a team!</span>
                         <span class="border-line"></span>
 
                     </div>
@@ -115,7 +119,7 @@
             <div id="edit-contact-overlay" class="edit-contact-wrapper">
                 <div class="add-edit-contact-container" id="edit-contact-overlay-container">
                     <div class="left-side">
-                        <img src="./assets/img/logo-white.svg" alt="logo">
+                        <img class="overlay-logo" src="./assets/img/logo-white.svg" alt="logo">
                         <h2>Edit contact</h2>
                         <span class="border-line"></span>
 
