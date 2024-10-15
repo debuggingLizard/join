@@ -1,3 +1,9 @@
+let createFormErrors = {
+  name: 0,
+  email: 0,
+  phone: 0
+};
+
 /**
  * Adds event listeners to the create contact form and overlay.
  */
@@ -6,11 +12,18 @@ function eventListenerCreateContact() {
 
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
-    createContact();
+    checkCreateInputValidation('name');
+    checkCreateInputValidation('email');
+    checkCreateInputValidation('phone');
+
+    if (createFormErrors.name === 0 && createFormErrors.email === 0 && createFormErrors.phone === 0) {
+      createContact();
+    }
+
   });
 
   document.getElementById('add-contact-overlay').addEventListener('click', function (e) {
-    if(e.target !== e.currentTarget) return;
+    if (e.target !== e.currentTarget) return;
     hideAddContactOverlay();
   });
 
@@ -71,4 +84,22 @@ function hideAddContactOverlay() {
   document.getElementById('add-contact-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
   document.getElementById('add-contact-overlay-container').style.transform = 'translateX(200%)';
   document.getElementById('add-contact-overlay').style.zIndex = -1;
+
+  resetCreateContactForm();
+  removeAllErrors();
+}
+
+function checkCreateInputValidation(inputName) {
+  let inputElement = document.querySelector(`#create-contact-form input[name = ${inputName}]`);
+  let errorMessageElement = document.querySelector(`#create-contact-form .${inputName}-error`);
+
+  if (!inputElement.checkValidity()) {
+    inputElement.classList.add("input-error");
+    errorMessageElement.classList.remove("d-none");
+    createFormErrors[inputName] = 1;
+  } else {
+    inputElement.classList.remove("input-error");
+    errorMessageElement.classList.add("d-none");
+    createFormErrors[inputName] = 0;
+  }
 }

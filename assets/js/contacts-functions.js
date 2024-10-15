@@ -65,3 +65,37 @@ function getProfileImage(name) {
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+function removeAllErrors(){
+  let createInputElements = document.querySelectorAll(`#create-contact-form input`);
+  createInputElements.forEach((element) => {
+    element.classList.remove("input-error");
+  });
+
+  let editInputElements = document.querySelectorAll(`#edit-contact-form input`);
+  editInputElements.forEach((element) => {
+    element.classList.remove("input-error");
+  });
+
+  let createErrorMessageElements = document.querySelectorAll("#create-contact-form [class$='-error']");
+  createErrorMessageElements.forEach((element) => {
+    element.classList.add("d-none");
+  });
+
+  let editErrorMessageElements = document.querySelectorAll("#edit-contact-form [class$='-error']");
+  editErrorMessageElements.forEach((element) => {
+    element.classList.add("d-none");
+  });
+}
+
+function hideValidationByTyping(inputName) {
+  let createInputElement = document.querySelector(`#create-contact-form input[name = ${inputName}]`);
+  let editInputElement = document.querySelector(`#edit-contact-form input[name = ${inputName}]`);
+  let createErrorMessageElement = document.querySelector(`#create-contact-form .${inputName}-error`);
+  let editErrorMessageElement = document.querySelector(`#edit-contact-form .${inputName}-error`);
+  
+  createInputElement.classList.remove("input-error");
+  editInputElement.classList.remove("input-error");
+  createErrorMessageElement.classList.add("d-none");
+  editErrorMessageElement.classList.add("d-none");
+}

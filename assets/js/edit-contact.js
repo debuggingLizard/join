@@ -1,3 +1,9 @@
+let editFormErrors = {
+  name: 0,
+  email: 0,
+  phone: 0
+};
+
 /**
  * Adds event listeners to the edit contact form and overlay.
  */
@@ -6,7 +12,14 @@ function eventListenerEditContact() {
 
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
-    editContact();
+
+    checkEditInputValidation('name');
+    checkEditInputValidation('email');
+    checkEditInputValidation('phone');
+
+    if (editFormErrors.name === 0 && editFormErrors.email === 0 && editFormErrors.phone === 0) {
+      editContact();
+    }
   });
 
   document
@@ -89,10 +102,26 @@ function showEditContactOverlay() {
 /**
  * Hides the edit contact overlay.
  */
-function hideEditContactOverlay() {
-  document.getElementById("edit-contact-overlay").style.backgroundColor =
-    "rgb(0 0 0 / 0%)";
-  document.getElementById("edit-contact-overlay-container").style.transform =
-    "translateX(200%)";
-  document.getElementById("edit-contact-overlay").style.zIndex = -1;
+function hideEditContactOverlay(){
+  document.getElementById('edit-contact-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
+  document.getElementById('edit-contact-overlay-container').style.transform = 'translateX(200%)';
+  document.getElementById('edit-contact-overlay').style.zIndex = -1;
+
+  removeAllErrors();
+}
+
+function checkEditInputValidation(inputName) {
+  let inputElement = document.querySelector(`#edit-contact-form input[name = ${inputName}]`);
+  let errorMessageElement = document.querySelector(`#edit-contact-form .${inputName}-error`);
+
+  if (!inputElement.checkValidity()) {
+    inputElement.classList.add("input-error");
+    errorMessageElement.classList.remove("d-none");
+    editFormErrors[inputName] = 1;
+  } else {
+    inputElement.classList.remove("input-error");
+    errorMessageElement.classList.add("d-none");
+    editFormErrors[inputName] = 0;
+  }
+
 }
