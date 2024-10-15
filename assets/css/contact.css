@@ -129,11 +129,6 @@
 
 .add-edit-contact-container .right-side .form-elements .form-label {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    color: red;
-    font-size: 13px;
 }
 /* test commit */
 
@@ -153,11 +148,6 @@
     outline: none;
     padding: 7px 15px;
 }
-
-.add-edit-contact-container .right-side .form-elements input.input-error {
-    border: 1px solid red;
-}
-
 
 .add-edit-contact-container .right-side .form-elements input:focus {
     border: 1px solid #29ABE2;
