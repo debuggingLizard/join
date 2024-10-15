@@ -66,7 +66,7 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function removeAllErrors(){
+function removeAllErrors() {
   let createInputElements = document.querySelectorAll(`#create-contact-form input`);
   createInputElements.forEach((element) => {
     element.classList.remove("input-error");
@@ -88,14 +88,28 @@ function removeAllErrors(){
   });
 }
 
-function hideValidationByTyping(inputName) {
-  let createInputElement = document.querySelector(`#create-contact-form input[name = ${inputName}]`);
-  let editInputElement = document.querySelector(`#edit-contact-form input[name = ${inputName}]`);
-  let createErrorMessageElement = document.querySelector(`#create-contact-form .${inputName}-error`);
-  let editErrorMessageElement = document.querySelector(`#edit-contact-form .${inputName}-error`);
-  
-  createInputElement.classList.remove("input-error");
-  editInputElement.classList.remove("input-error");
-  createErrorMessageElement.classList.add("d-none");
-  editErrorMessageElement.classList.add("d-none");
+function showInputValidationError(form, inputName, message) {
+  let inputElement = document.querySelector(`${form} input[name = ${inputName}]`);
+  let errorMessageElement = document.querySelector(`${form} .${inputName}-error`);
+
+  inputElement.classList.add("input-error");
+  errorMessageElement.innerHTML = message;
+  errorMessageElement.classList.remove("d-none");
+}
+
+function hideInputValidationError(form, inputName) {
+  let inputElement = document.querySelector(`${form} input[name = ${inputName}]`);
+  let errorMessageElement = document.querySelector(`${form} .${inputName}-error`);
+
+  inputElement.classList.remove("input-error");
+  errorMessageElement.innerHTML = '';
+  errorMessageElement.classList.add("d-none");
+}
+
+function showNotification(message) {
+  document.getElementById('notification').innerHTML = message;
+  document.getElementById('notification').style.transform = 'translateX(0)';
+  setTimeout(function () {
+    document.getElementById('notification').style.transform = 'translateX(2000px)';
+  }, 2000);
 }

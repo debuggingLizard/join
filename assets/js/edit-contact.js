@@ -13,9 +13,9 @@ function eventListenerEditContact() {
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    checkEditInputValidation('name');
-    checkEditInputValidation('email');
-    checkEditInputValidation('phone');
+    checkEditInputValidation('name', 'Enter name & surname.');
+    checkEditInputValidation('email', 'Enter a valid email address.');
+    checkEditInputValidation('phone', 'Enter a valid phone number with country code.');
 
     if (editFormErrors.name === 0 && editFormErrors.email === 0 && editFormErrors.phone === 0) {
       editContact();
@@ -71,7 +71,7 @@ async function editContact() {
   let currentUserDetail = await getData("users/" + id);
 
   if ((await isEmailExist(email)) && currentUserDetail.email != email) {
-    console.error("this email already exist");
+    showInputValidationError('#edit-contact-form', 'email', 'Email already exists, please choose another!');
   } else {
     const data = {
       name: name,
@@ -85,6 +85,7 @@ async function editContact() {
     renderContactDetail(id);
     renderContactList();
     hideEditContactOverlay();
+    showNotification('Contact succesfully updated');
   }
 }
 
@@ -102,7 +103,7 @@ function showEditContactOverlay() {
 /**
  * Hides the edit contact overlay.
  */
-function hideEditContactOverlay(){
+function hideEditContactOverlay() {
   document.getElementById('edit-contact-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
   document.getElementById('edit-contact-overlay-container').style.transform = 'translateX(200%)';
   document.getElementById('edit-contact-overlay').style.zIndex = -1;
@@ -110,18 +111,17 @@ function hideEditContactOverlay(){
   removeAllErrors();
 }
 
-function checkEditInputValidation(inputName) {
+/**
+ * Check edit form input field validation
+ */
+function checkEditInputValidation(inputName, message) {
   let inputElement = document.querySelector(`#edit-contact-form input[name = ${inputName}]`);
-  let errorMessageElement = document.querySelector(`#edit-contact-form .${inputName}-error`);
 
   if (!inputElement.checkValidity()) {
-    inputElement.classList.add("input-error");
-    errorMessageElement.classList.remove("d-none");
+    showInputValidationError('#edit-contact-form', inputName, message)
     editFormErrors[inputName] = 1;
   } else {
-    inputElement.classList.remove("input-error");
-    errorMessageElement.classList.add("d-none");
+    hideInputValidationError('#edit-contact-form', inputName)
     editFormErrors[inputName] = 0;
   }
-
 }

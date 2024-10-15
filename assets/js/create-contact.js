@@ -12,9 +12,9 @@ function eventListenerCreateContact() {
 
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
-    checkCreateInputValidation('name');
-    checkCreateInputValidation('email');
-    checkCreateInputValidation('phone');
+    checkCreateInputValidation('name', 'Enter name & surname.');
+    checkCreateInputValidation('email', 'Enter a valid email address.');
+    checkCreateInputValidation('phone', 'Enter a valid phone number with country code.');
 
     if (createFormErrors.name === 0 && createFormErrors.email === 0 && createFormErrors.phone === 0) {
       createContact();
@@ -42,7 +42,7 @@ async function createContact() {
   let mobile = document.querySelector('#create-contact-form input[name = phone]').value
 
   if (await isEmailExist(email)) {
-    console.error("this email already exist");
+    showInputValidationError('#create-contact-form', 'email', 'Email already exists, please choose another!');
   } else {
     const data = {
       name: name,
@@ -56,6 +56,7 @@ async function createContact() {
     resetCreateContactForm();
     renderContactList();
     hideAddContactOverlay();
+    showNotification('Contact succesfully created');
   }
 }
 
@@ -89,17 +90,17 @@ function hideAddContactOverlay() {
   removeAllErrors();
 }
 
-function checkCreateInputValidation(inputName) {
+/**
+ * Check create form input field validation
+ */
+function checkCreateInputValidation(inputName, message) {
   let inputElement = document.querySelector(`#create-contact-form input[name = ${inputName}]`);
-  let errorMessageElement = document.querySelector(`#create-contact-form .${inputName}-error`);
 
   if (!inputElement.checkValidity()) {
-    inputElement.classList.add("input-error");
-    errorMessageElement.classList.remove("d-none");
+    showInputValidationError('#create-contact-form', inputName, message)
     createFormErrors[inputName] = 1;
   } else {
-    inputElement.classList.remove("input-error");
-    errorMessageElement.classList.add("d-none");
+    hideInputValidationError('#create-contact-form', inputName)
     createFormErrors[inputName] = 0;
   }
 }

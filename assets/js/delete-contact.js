@@ -7,6 +7,7 @@ async function deleteContact(id) {
     await renderContactList();
     document.getElementById('contact-detail-view').innerHTML = '';
     hideEditContactOverlay();
+    showNotification('Contact succesfully deleted');
 }
 
 /**
