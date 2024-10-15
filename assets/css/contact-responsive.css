@@ -30,6 +30,12 @@
     }
 }
 
+@media (max-width: 1180px) {
+    /* .add-edit-contact-container .left-side {
+        padding: 0  
+    } */
+}
+
 @media (max-width: 970px) {
     .add-edit-contact-container {
         height: 90%;
