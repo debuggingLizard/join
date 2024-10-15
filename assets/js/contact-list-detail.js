@@ -86,28 +86,24 @@ function getUserContactListTemplate(user) {
     `;
 }
 
-function toggleAddContactOverlay() {
-  document.getElementById('add-contact-overlay').classList.toggle('d-none');
-}
-
 async function renderContactDetail(id) {
   let detailRef = document.getElementById('contact-detail-view');
   let detailUser = await getData("users/" + id);
   detailRef.innerHTML = "";
-  detailRef.innerHTML = getContactDetailTemplate(detailUser);
+  detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
 
 }
 
-function getContactDetailTemplate(detailUser) {
+function getContactDetailTemplate(id, detailUser) {
   return /*html*/`
       <div class="contact-information">
                         <div class="contact-detail-profile" style="background-color: ${detailUser.color};">${detailUser.profileImage}</div>
                         <div class="contact-name">
                             <p>${detailUser.name}</p>
                             <div class="contact-detail-btn-wrapper">
-                                <button class="contact-detail-btn"><img class="contact-detail-btn-img"
+                                <button class="contact-detail-btn" onclick="openEditContactModal('${id}')"><img class="contact-detail-btn-img"
                                         src="./assets/img/edit.svg" alt=""><span>Edit</span></button>
-                                <button class="contact-detail-btn"><img class="contact-detail-btn-img"
+                                <button class="contact-detail-btn" onclick="deleteContact('${id}')"><img class="contact-detail-btn-img"
                                         src="./assets/img/delete.svg" alt=""><span>Delete</span></button>
                             </div>
                         </div>
