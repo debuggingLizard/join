@@ -17,6 +17,7 @@
     nav {
         flex-direction: row;
         justify-content: space-between;
+        gap:0;
     }
 
     nav a {
@@ -33,5 +34,11 @@
 
     footer {
         display: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .sidebar {
+        padding: 2px 4px;
     }
 }
