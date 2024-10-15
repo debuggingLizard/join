@@ -75,24 +75,28 @@
                                 <img src="./assets/img/person.svg" alt="person">
                             </div>
                         </div>
-                        <form class="form-elements" id="create-contact-form">
+                        <form class="form-elements" id="create-contact-form" novalidate>
                             <div class="close-button-container">
                                 <img onclick="hideAddContactOverlay()" src="./assets/img/close.svg" alt="close">
                             </div>
 
                             <label for="name" class="form-label">
-                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="text" name="name" placeholder="Name" onkeyup="checkCreateInputValidation('name')" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
+                                <span class="error-message name-error d-none">Check your name</span>
                             </label>
 
                             <label for="email" class="form-label">
-                                <input type="email" name="email" placeholder="Email" required>
+                                <input type="email" name="email" placeholder="Email" onkeyup="checkCreateInputValidation('email')" required>
                                 <img src="./assets/img/mail.svg" alt="mail">
+                                <span class="error-message email-error d-none">Check your email. please try again.</span>
                             </label>
 
                             <label for="phone" class="form-label">
-                                <input type="tel" name="phone" placeholder="Phone" required>
+                                <input type="tel" name="phone" placeholder="Phone" onkeyup="checkCreateInputValidation('phone')" required>
                                 <img src="./assets/img/call.svg" alt="call">
+                                <span class="error-message phone-error d-none">Check your phonenumber. please try again.</span>
+                               
                             </label>
 
                             <div class="buttons">

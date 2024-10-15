@@ -1,13 +1,26 @@
+let errors = {
+  name: 0,
+  email: 0,
+  phone: 0
+};
+
 function eventListenerCreateContact() {
   let formElement = document.getElementById('create-contact-form');
 
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
-    createContact();
+    checkCreateInputValidation('name');
+    checkCreateInputValidation('email');
+    checkCreateInputValidation('phone');
+
+    if (errors.name === 0 && errors.email === 0 && errors.phone === 0) {
+      createContact();
+    }
+
   });
 
   document.getElementById('add-contact-overlay').addEventListener('click', function (e) {
-    if(e.target !== e.currentTarget) return;
+    if (e.target !== e.currentTarget) return;
     hideAddContactOverlay();
   });
 
@@ -52,4 +65,20 @@ function hideAddContactOverlay() {
   document.getElementById('add-contact-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
   document.getElementById('add-contact-overlay-container').style.transform = 'translateX(200%)';
   document.getElementById('add-contact-overlay').style.zIndex = -1;
+}
+
+function checkCreateInputValidation(inputName) {
+  let inputElement = document.querySelector(`#create-contact-form input[name = ${inputName}]`);
+  let errorMessageElement = document.querySelector(`#create-contact-form .${inputName}-error`);
+
+  if (!inputElement.checkValidity()) {
+    inputElement.classList.add("input-error");
+    errorMessageElement.classList.remove("d-none");
+    errors[inputName] = 1;
+  } else {
+    inputElement.classList.remove("input-error");
+    errorMessageElement.classList.add("d-none");
+    errors[inputName] = 0;
+  }
+
 }
