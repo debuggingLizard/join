@@ -29,7 +29,6 @@
     .contact-name {
         font-size: 36px;
     }
-
     .contact-list {
         width: 100%; 
     }
@@ -42,21 +41,16 @@
     .slide-in.visible .contact-detail-btn {
         display: block;
     }
-     
     .contact-list-hidden {
         display: none; 
     }
-    
-      
     .contact-detail-visible {
         display: block; 
         width: 100%;
     }
-    
     .contact-list-add-button-wrapper{
         display: none;
     }
-
     .contact-detail-arrow-left-responsive {
         display: block;
         align-items: center;
@@ -73,7 +67,6 @@
         justify-content: center;        
         align-items: center;  
     }
-
     .edit-delete-btn-responsive{
         display: block;
         display: flex;
@@ -87,9 +80,7 @@
         position: fixed;
         bottom: 100px;
         right: 20px;
-
     }
-
     .dot {
         display: block;
         height: 5px;
@@ -98,8 +89,6 @@
         border-radius: 50%; 
         margin: 2px 0; 
     }
-   
-    
     .slide-in {
         position: fixed;
         border-top-left-radius: 15px; 
@@ -113,17 +102,15 @@
         z-index: 1000;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-        
     .slide-in.visible {
         right: 10px;
     }
-           
     .slide-in-content {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: start;
+        gap: 20px;
         justify-content: center;
-        padding: 30px;
+        padding: 20px;
     }
-
 }

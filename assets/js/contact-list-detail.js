@@ -144,6 +144,11 @@ function getContactDetailTemplate(id, detailUser) {
   `;
 }
 
+/**
+ * Opens the slide-in menu and populates it with edit and delete buttons for the specified contact.
+ * 
+ * @param {string} id - The unique identifier of the contact for which the edit and delete actions will be performed.
+ */
 function openSlideIn(id) {
   const slideInContent = document.querySelector('.slide-in-content');
   slideInContent.innerHTML = `
@@ -160,11 +165,19 @@ function openSlideIn(id) {
   slideIn.classList.add('visible');
 }
 
+/**
+ * Closes the slide-in menu by removing the 'visible' class.
+ */
 function closeSlideIn() {
   const slideIn = document.getElementById('slideIn');
   slideIn.classList.remove('visible');
 }
 
+/**
+ * Closes the slide-in menu if a click occurs outside of it or the designated button.
+ * 
+ * @param {MouseEvent} event - The click event object.
+ */
 document.addEventListener('click', function(event) {
   const slideIn = document.getElementById('slideIn');
   const button = document.querySelector('.edit-delete-btn-responsive');
