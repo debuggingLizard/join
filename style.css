@@ -48,6 +48,7 @@ nav {
 
 nav a {
    padding: 8px 56px; 
+   height: 46px;
    cursor: pointer;
    display: flex;
    gap: 8px;
