@@ -143,3 +143,25 @@ function getContactDetailTemplate(id, detailUser) {
                     </div>
   `;
 }
+
+function openSlideIn() {
+  const slideIn = document.getElementById('slideIn');
+  slideIn.classList.add('visible');
+}
+
+function closeSlideIn() {
+  const slideIn = document.getElementById('slideIn');
+  slideIn.classList.remove('visible');
+}
+
+
+document.addEventListener('click', function(event) {
+  const slideIn = document.getElementById('slideIn');
+  const button = document.querySelector('.edit-delete-btn-responsive');
+
+  
+  if (slideIn.classList.contains('visible') && !slideIn.contains(event.target) && !button.contains(event.target)) {
+    closeSlideIn();
+  }
+});
+

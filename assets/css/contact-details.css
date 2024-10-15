@@ -121,3 +121,10 @@
     text-decoration: none;
     color: #007CEE;
 }
+
+.edit-delete-btn-responsive{
+    display: none;
+}
+.slide-in-content{
+    display: none;
+}
