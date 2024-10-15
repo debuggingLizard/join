@@ -263,3 +263,16 @@
 .edit-contact-wrapper .add-edit-contact-container .right-side .form-elements .cancel-button:active::after {
     content: '';
 }
+
+.notification {
+    background-color: #2A3647;
+    color: white;
+    position: fixed;
+    bottom: 120px;
+    padding: 25px;
+    border-radius: 20px;
+    z-index: 100;
+    left: 70%;
+    transition: all 0.5s ease;
+    transform: translateX(2000px);
+}
