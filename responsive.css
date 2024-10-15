@@ -17,12 +17,12 @@
     nav {
         flex-direction: row;
         justify-content: space-between;
-        gap:0;
+        gap: 0;
     }
 
     nav a {
         flex-direction: column;
-        justify-content:end;
+        justify-content: end;
         font-size: 12px;
         width: 76px;
         height: 76px;
@@ -51,7 +51,7 @@
 
 @media (max-width: 600px) {
     .header-responsive-logo {
-        display:block;
+        display: block;
     }
 
     .header-content h2 {

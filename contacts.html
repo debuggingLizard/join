@@ -98,7 +98,8 @@
                             </label>
 
                             <div class="buttons">
-                                <button onclick="hideAddContactOverlay()" type="button" class="cancel-button">Cancel</button>
+                                <button onclick="hideAddContactOverlay()" type="button"
+                                    class="cancel-button">Cancel</button>
                                 <button class="create-contact-button" type="submit">Create contact</button>
                             </div>
                         </form>
@@ -113,7 +114,7 @@
                         <img src="./assets/img/logo-white.svg" alt="logo">
                         <h2>Edit contact</h2>
                         <span class="border-line"></span>
-    
+
                     </div>
                     <div class="right-side">
                         <div class="person-img-container">
@@ -121,33 +122,34 @@
                         </div>
                         <form class="form-elements" id="edit-contact-form">
                             <input type="hidden" name="id">
-                            
+
                             <div class="close-button-container" onclick="hideEditContactOverlay()">
                                 <img src="./assets/img/close.svg" alt="close">
                             </div>
-    
+
                             <label for="name" class="form-label">
                                 <input type="text" name="name" placeholder="Name" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                             </label>
-    
+
                             <label for="email" class="form-label">
                                 <input type="email" name="email" placeholder="Email" required>
                                 <img src="./assets/img/mail.svg" alt="mail">
                             </label>
-    
+
                             <label for="phone" class="form-label">
                                 <input type="tel" name="phone" placeholder="phone" required>
                                 <img src="./assets/img/call.svg" alt="call">
                             </label>
-                            
+
                             <div class="buttons">
-                                <button class="cancel-button" type="button" onclick="deleteContactFromEditForm()">Delete</button>
+                                <button class="cancel-button" type="button"
+                                    onclick="deleteContactFromEditForm()">Delete</button>
                                 <button class="create-contact-button" type="submit">Save</button>
                             </div>
-    
+
                         </form>
-    
+
                     </div>
                 </div>
             </div>

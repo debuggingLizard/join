@@ -48,9 +48,11 @@ function openHeaderProfileInfo() {
   document.getElementById("user-info-links").classList.toggle("d-none");
 }
 
-// muss in render-funktion von jeder HTML-Seite aufgerufen werden (bzw. im onload), damit die Nav-Links entsprechend optisch angepasst werden. 
+// muss in render-funktion von jeder HTML-Seite aufgerufen werden (bzw. im onload), damit die Nav-Links entsprechend optisch angepasst werden.
 // Der Parameter ist die ID des Links, z.B. 'sidebar-nav-board'
 function updateActiveStateNavLink(navLinkID) {
-    document.querySelectorAll('sidebar-nav-a').forEach(link => link.classList.remove('nav-a-active'));
-    document.getElementById(navLinkID).classList.add('nav-a-active');
-  }
+  document
+    .querySelectorAll("sidebar-nav-a")
+    .forEach((link) => link.classList.remove("nav-a-active"));
+  document.getElementById(navLinkID).classList.add("nav-a-active");
+}
