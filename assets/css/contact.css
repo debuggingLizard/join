@@ -123,8 +123,9 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     color: red;
+    font-size: 13px;
 }
 
 .add-edit-contact-container .right-side .form-elements .form-label img {

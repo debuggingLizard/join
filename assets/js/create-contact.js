@@ -65,6 +65,9 @@ function hideAddContactOverlay() {
   document.getElementById('add-contact-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
   document.getElementById('add-contact-overlay-container').style.transform = 'translateX(200%)';
   document.getElementById('add-contact-overlay').style.zIndex = -1;
+
+  resetCreateContactForm();
+  removeAllErrors();
 }
 
 function checkCreateInputValidation(inputName) {
@@ -80,5 +83,4 @@ function checkCreateInputValidation(inputName) {
     errorMessageElement.classList.add("d-none");
     createFormErrors[inputName] = 0;
   }
-
 }

@@ -74,6 +74,8 @@ function hideEditContactOverlay(){
   document.getElementById('edit-contact-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
   document.getElementById('edit-contact-overlay-container').style.transform = 'translateX(200%)';
   document.getElementById('edit-contact-overlay').style.zIndex = -1;
+
+  removeAllErrors();
 }
 
 function checkEditInputValidation(inputName) {
