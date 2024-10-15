@@ -17,12 +17,12 @@
     nav {
         flex-direction: row;
         justify-content: space-between;
-        gap:0;
+        gap: 0;
     }
 
     nav a {
         flex-direction: column;
-        justify-content:end;
+        justify-content: end;
         font-size: 12px;
         width: 76px;
         height: 76px;
@@ -35,10 +35,44 @@
     footer {
         display: none;
     }
+
+    .container {
+        height: calc(100vh - 80px);
+    }
+
+    .main {
+        height: calc(100vh - 92px - 80px);
+    }
+
+    .header-wrapper {
+        padding: 20px 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-responsive-logo {
+        display: block;
+    }
+
+    .header-content h2 {
+        display: none;
+    }
+
+    .help-icon {
+        display: none;
+    }
+
+    .user-info-links-help {
+        display: block;
+    }
 }
 
 @media (max-width: 360px) {
     .sidebar {
         padding: 2px 4px;
+    }
+
+    .header-wrapper {
+        padding: 20px 16px;
     }
 }
