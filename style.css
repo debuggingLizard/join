@@ -39,40 +39,31 @@ body {
 
 }
 
-.sidebar nav ul {
-    list-style: none;
-}
-
-.sidebar nav ul li {
-    padding-top: 8px;
-    padding-bottom: 4px;
-    padding-right: 60px;
-    padding-left: 60px;
-    gap: 8px;
-}
-
-.sidebar nav ul li a {
-    color: #CDCDCD;
-    text-decoration: none;
+nav {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding-bottom: 8px;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
 }
 
-.sidebar nav ul li a img {
-    height: 30px;
-    width: 30px;
+nav a {
+   padding: 8px 56px; 
+   cursor: pointer;
+   display: flex;
+   gap: 8px;
+   align-items: center;
+   text-decoration: none;
+   color: #CDCDCD;
 }
 
-.sidebar nav ul li:hover {
+nav a:hover {
     background-color: #2A3D59;
 }
 
-.sidebar nav ul li:focus {
+nav a:active {
     background-color: #091931;
+    color: #FFFFFF;
 }
-
 
 footer {
     display: flex;

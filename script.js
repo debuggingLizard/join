@@ -13,13 +13,16 @@ function getSidebarTemplate() {
             <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
         </div>
         <nav>
-            <ul>
-                <li tabindex="0"><a href="#"><img src="./assets/buttons/summary.svg" alt="SummaryButton">Summary</a>
-                </li>
+        <a href="#"><img src="./assets/buttons/summary.svg" alt="SummaryButton">Summary</a>
+               <a href=" #"><img src="./assets/buttons/addTask.svg" alt="AddTask">Add Task</a>
+               <a href="#"><img src="./assets/buttons/board.svg" alt="Board">Board</a>
+              <a href="contacts.html"><img src="./assets/buttons/contacts.svg" alt="Contacts">Contacts</a>
+            <!-- <ul>
+                <li tabindex="0"><a href="#"><img src="./assets/buttons/summary.svg" alt="SummaryButton">Summary</a></li>
                 <li tabindex="0"><a href=" #"><img src="./assets/buttons/addTask.svg" alt="AddTask">Add Task</a></li>
                 <li tabindex="0"><a href="#"><img src="./assets/buttons/board.svg" alt="Board">Board</a></li>
-                <li tabindex="0"><a href="#"><img src="./assets/buttons/contacts.svg" alt="Contacts">Contacts</a></li>
-            </ul>
+                <li tabindex="0"><a href="contacts.html"><img src="./assets/buttons/contacts.svg" alt="Contacts">Contacts</a></li>
+            </ul> -->
         </nav>
         <footer>
             <a tabindex="0" href="#">Privacy Policy</a>
