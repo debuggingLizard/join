@@ -41,13 +41,30 @@
     border-radius: 20px 0 0 20px;
     padding: 0 48px 85px 48px;
     gap: 9px;
+    position: relative;
 }
 
-.add-edit-contact-container .left-side img {
+.add-edit-contact-container .left-side .close-button-container {
+   position: absolute;
+   top: 24px;
+   right: 24px;
+   padding: 3px;
+   width: 24px;
+   height: 24px;
+   display: none;
+}
+
+.add-edit-contact-container .left-side .close-button-container:hover {
+    cursor: pointer;
+    background-color: hsla(0, 0%, 100%, 0.164);
+    border-radius: 50%;
+ }
+
+.add-edit-contact-container .left-side .overlay-logo {
     width: 55px;
 }
 
-.edit-contact-wrapper .add-edit-contact-container .left-side img {
+.edit-contact-wrapper .add-edit-contact-container .left-side .overlay-logo {
     margin-bottom: 20px;
 }
 
@@ -79,6 +96,7 @@
     background: #fff;
     border-radius: 0 20px 20px 0;
     padding: 45px 48px 110px 0;
+    position: relative;
 }
 
 .add-edit-contact-container .right-side .person-img-container {
@@ -86,7 +104,7 @@
 }
 
 .add-edit-contact-container .right-side .person-img {
-    background: rgb(0 0 0 / 17%);
+    background: #D1D1D1;
     border-radius: 50%;
     padding: 25px;
     border: 3px solid #ffffff;
@@ -156,7 +174,6 @@
 .add-edit-contact-container .right-side .form-elements input.input-error {
     border: 1px solid red;
 }
-
 
 .add-edit-contact-container .right-side .form-elements input:focus {
     border: 1px solid #29ABE2;
