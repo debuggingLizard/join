@@ -4,24 +4,24 @@
     height: calc(100vh - 92px);
 }
 
-.contact-details-header{
+.contact-details-header {
     display: flex;
     align-items: center;
     padding: 90px 30px 30px;
 }
 
-.contacts{
-    font-size: 61px; 
-    font-weight: 700; 
-    margin-left: 30px; 
-    margin-right: 25px; 
+.contacts {
+    font-size: 61px;
+    font-weight: 700;
+    margin-left: 30px;
+    margin-right: 25px;
     line-height: 73.2px;
 }
 
 .contact-details-sep-line {
-    border-left: 3px solid #29ABE2; 
-    height: 58px; 
-    display: inline-block; 
+    border-left: 3px solid #29ABE2;
+    height: 58px;
+    display: inline-block;
     margin-right: 25px;
 }
 
@@ -30,17 +30,18 @@
 }
 
 .contact-details-slogan {
-    font-size: 27px; 
-    line-height: 32.4px; 
-    font-weight: 400; 
+    font-size: 27px;
+    line-height: 32.4px;
+    font-weight: 400;
     padding-top: 5px;
 }
 
-.contact-information{
+.contact-information {
     display: flex;
     gap: 50px;
     margin: 30px;
 }
+
 .contact-detail-profile {
     width: 120px;
     aspect-ratio: 1/1;
@@ -64,32 +65,36 @@
     gap: 8px;
 }
 
-.contact-detail-btn-img {
-    height: 24px;
-    width: 24px;
-   margin-right: 10px;
-}
-.contact-detail-btn-wrapper{
+.contact-detail-btn-wrapper {
     display: flex;
-    
+
 }
 
-.contact-detail-btn{
+.contact-detail-btn {
     font-size: 16px;
     font-weight: 400;
     margin-right: 15px;
+    height: 24px;
     border: unset;
     display: flex;
+    gap: 8px;
     background-color: #F6F7F8;
     font-family: 'Inter';
     align-items: center;
+    cursor: pointer;
 }
 
-.contact-access{
+.contact-detail-btn:hover {
+    color: #29ABE2;
+}
+
+.contact-detail-btn:hover img {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(35%) saturate(971%) hue-rotate(155deg) brightness(90%) contrast(95%);
+}
+
+.contact-access {
     margin-left: 60px;
 }
-
-
 
 .contact-access h3 {
     font-size: 20px;
@@ -101,12 +106,11 @@
 .contact-details-access p {
     font-size: 16px;
     font-weight: 700;
-    margin-bottom:10px;
+    margin-bottom: 10px;
     margin-top: 10px;
 }
 
-.contact-details-access a{
+.contact-details-access a {
     text-decoration: none;
     color: #007CEE;
 }
-

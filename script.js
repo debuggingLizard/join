@@ -13,13 +13,10 @@ function getSidebarTemplate() {
             <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
         </div>
         <nav>
-            <ul>
-                <li tabindex="0"><a href="#"><img src="./assets/buttons/summary.svg" alt="SummaryButton">Summary</a>
-                </li>
-                <li tabindex="0"><a href=" #"><img src="./assets/buttons/addTask.svg" alt="AddTask">Add Task</a></li>
-                <li tabindex="0"><a href="#"><img src="./assets/buttons/board.svg" alt="Board">Board</a></li>
-                <li tabindex="0"><a href="#"><img src="./assets/buttons/contacts.svg" alt="Contacts">Contacts</a></li>
-            </ul>
+            <a href="#" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/summary.svg" alt="SummaryButton"><span>Summary</span></a>
+               <a href=" #" id="sidebar-nav-task" class="sidebar-nav-a"><img src="./assets/buttons/addTask.svg" alt="AddTask"><span>Add Task</span></a>
+               <a href="#" id="sidebar-nav-board" class="sidebar-nav-a"><img src="./assets/buttons/board.svg" alt="Board"><span>Board</span></a>
+              <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/contacts.svg" alt="Contacts"><span>Contacts</span></a>
         </nav>
         <footer>
             <a tabindex="0" href="#">Privacy Policy</a>
@@ -46,5 +43,12 @@ function getHeaderTemplate() {
 }
 
 function openHeaderProfileInfo() {
-    document.getElementById("user-info-links").classList.toggle("d-none");
+  document.getElementById("user-info-links").classList.toggle("d-none");
+}
+
+// muss in render-funktion von jeder HTML-Seite aufgerufen werden (bzw. im onload), damit die Nav-Links entsprechend optisch angepasst werden. 
+// Der Parameter ist die ID des Links, z.B. 'sidebar-nav-board'
+function updateActiveStateNavLink(navLinkID) {
+    document.querySelectorAll('sidebar-nav-a').forEach(link => link.classList.remove('nav-a-active'));
+    document.getElementById(navLinkID).classList.add('nav-a-active');
   }

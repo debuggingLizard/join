@@ -32,7 +32,7 @@ function getFirstLetters(users) {
     if (!groupedUsers[firstLetter]) {
       groupedUsers[firstLetter] = [];
     }
-    groupedUsers[firstLetter].push({ ...user, key});
+    groupedUsers[firstLetter].push({ ...user, key });
   });
 }
 
@@ -76,7 +76,7 @@ function getLetterGroupTemplate(letter) {
  */
 function getUserContactListTemplate(user) {
   return /*html*/ `
-        <div id="contact-list-user-${user.key}" class="contact-list-contact" onclick="console.log('Open Contact with id ${user.key}')">
+        <div id="contact-list-user-${user.key}" class="contact-list-contact" onclick="updateActiveStateContactList(this); renderContactDetail('${user.key}')">
                         <div class="contact-list-profile" style="background-color: ${user.color};">${user.profileImage}</div>
                         <div class="contact-list-contact-info">
                             <p>${user.name}</p>
@@ -86,6 +86,46 @@ function getUserContactListTemplate(user) {
     `;
 }
 
-function toggleAddContactOverlay() {
-  document.getElementById('add-contact-overlay').classList.toggle('d-none');
+async function renderContactDetail(id) {
+  let detailRef = document.getElementById("contact-detail-view");
+  let detailUser = await getData("users/" + id);
+  detailRef.innerHTML = "";
+  detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
+}
+
+function updateActiveStateContactList(contact) {
+  document.querySelectorAll('.contact-list-contact').forEach(contactInList => contactInList.classList.remove('contact-list-contact-active'));
+  contact.classList.add('contact-list-contact-active');
+}
+
+function getContactDetailTemplate(id, detailUser) {
+  return /*html*/ `
+      <div class="contact-information">
+                        <div class="contact-detail-profile" style="background-color: ${detailUser.color};">${detailUser.profileImage}</div>
+                        <div class="contact-name">
+                            <p>${detailUser.name}</p>
+                            <div class="contact-detail-btn-wrapper">
+                                <button class="contact-detail-btn" onclick="openEditContactModal('${id}')">
+                                  <img src="./assets/img/edit.svg" alt="">
+                                  <span>Edit</span>
+                                </button>
+                                <button class="contact-detail-btn" onclick="deleteContact('${id}')">
+                                  <img src="./assets/img/delete.svg" alt="">
+                                  <span>Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-access">
+                        <h3>Contact Information</h3>
+                        <div class="contact-details-access">
+                            <p>Email</p>
+                            <a href="mailto:${detailUser.email}">${detailUser.email}</a>
+                        </div>
+                        <div class="contact-details-access">
+                            <p>Phone</p>
+                            <p style="font-weight: 400;">${detailUser.mobile}</p>
+                        </div>
+                    </div>
+  `;
 }

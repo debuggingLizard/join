@@ -5,18 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/contact-list.css">
     <link rel="stylesheet" href="./assets/css/contact.css">
     <link rel="stylesheet" href="./assets/css/contact-details.css">
     <link rel="stylesheet" href="./assets/css/contact-responsive.css">
     <script src="./assets/js/firebase-connect.js"></script>
-    <script src="./assets/js/contact-list.js"></script>
+    <script src="./assets/js/contacts-functions.js"></script>
+    <script src="./assets/js/contact-list-detail.js"></script>
     <script src="./assets/js/create-contact.js"></script>
+    <script src="./assets/js/edit-contact.js"></script>
+    <script src="./assets/js/delete-contact.js"></script>
     <script src="script.js"></script>
     <title>Kontakte | JOIN</title>
 </head>
 
-<body onload="renderSidebarHeader(); eventListenerCreateContact(); renderContactList()">
+<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-contacts'); renderContactList(); eventListenerCreateContact(); eventListenerEditContact();">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -24,16 +28,16 @@
 
     <!-- Main Content Bereich -->
     <div class="container">
-        <!-- Header -->
+        <!-- HEADER -->
         <header id="header" class="header-wrapper">
         </header>
 
         <!-- Hier kommt der restliche Inhalt hin -->
         <main class="main contact-container">
-            <!-- Contact List -->
+            <!-- CONTACT LIST -->
             <section class="contact-list">
                 <div class="contact-list-add-button-wrapper">
-                    <button class="contact-list-add-btn" onclick="toggleAddContactOverlay()">
+                    <button class="contact-list-add-btn" onclick="showAddContactOverlay()">
                         <span>Add new contact</span>
                         <img src="./assets/img/person_add.svg" alt="">
                     </button>
@@ -44,7 +48,7 @@
                 </div>
             </section>
 
-            <!-- Contact Detail View -->
+            <!-- CONTACT DETAIL VIEW-->
             <section class="contact-detail">
                 <div class="contact-details-header">
                     <div class="contacts">Contacts</div>
@@ -53,36 +57,14 @@
                     <div class="contact-details-sep-line-responsive"></div>
 
                 </div>
-                <div class="toggle-div">
-                    <div class="contact-information">
-                        <div class="contact-detail-profile"></div>
-                        <div class="contact-name">
-                            <p>Anton Mayer</p>
-                            <div class="contact-detail-btn-wrapper">
-                                <button class="contact-detail-btn"><img class="contact-detail-btn-img"
-                                        src="./assets/img/edit.svg" alt=""><span>Edit</span></button>
-                                <button class="contact-detail-btn"><img class="contact-detail-btn-img"
-                                        src="./assets/img/delete.svg" alt=""><span>Delete</span></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-access">
-                        <h3>Contact Information</h3>
-                        <div class="contact-details-access">
-                            <p>Email</p>
-                            <a href="mailto:example@email.com">example@email.com</a>
-                        </div>
-                        <div class="contact-details-access">
-                            <p>Phone</p>
-                            <p style="font-weight: 400;">+1234567890</p>
-                        </div>
-                    </div>
+                <!-- detail view render here -->
+                <div id="contact-detail-view" class="toggle-div">
                 </div>
             </section>
 
-            <!-- Contact Overlay Create Contact -->
-            <div id="add-contact-overlay" class="add-contact-wrapper d-none">
-                <div class="add-contact-container">
+            <!-- CONTACT OVERLAY CREATE CONTACT -->
+            <div id="add-contact-overlay" class="add-contact-wrapper">
+                <div class="add-edit-contact-container" id="add-contact-overlay-container">
                     <div class="left-side">
                         <img src="./assets/img/logo-white.svg" alt="logo">
                         <h2>Add contact</h2>
@@ -98,29 +80,75 @@
                         </div>
                         <form class="form-elements" id="create-contact-form">
                             <div class="close-button-container">
-                                <img onclick="toggleAddContactOverlay()" src="./assets/img/close.svg" alt="close">
+                                <img onclick="hideAddContactOverlay()" src="./assets/img/close.svg" alt="close">
                             </div>
 
                             <label for="name" class="form-label">
-                                <input type="text" id="name" name="name" placeholder="Name" required>
+                                <input type="text" name="name" placeholder="Name" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                             </label>
 
                             <label for="email" class="form-label">
-                                <input type="email" id="email" name="email" placeholder="Email" required>
-                                <img src="./assets/img/mail.svg" alt="person">
+                                <input type="email" name="email" placeholder="Email" required>
+                                <img src="./assets/img/mail.svg" alt="mail">
                             </label>
 
                             <label for="phone" class="form-label">
-                                <input type="tel" id="phone" name="phone" placeholder="Phone" required>
-                                <img src="./assets/img/call.svg" alt="person">
+                                <input type="tel" name="phone" placeholder="Phone" required>
+                                <img src="./assets/img/call.svg" alt="call">
                             </label>
 
                             <div class="buttons">
-                                <button onclick="cancelForm(event)" class="cancel-button">Cancel</button>
+                                <button onclick="hideAddContactOverlay()" type="button" class="cancel-button">Cancel</button>
                                 <button class="create-contact-button" type="submit">Create contact</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACT OVERLAY EDIT CONTACT -->
+            <div id="edit-contact-overlay" class="edit-contact-wrapper">
+                <div class="add-edit-contact-container" id="edit-contact-overlay-container">
+                    <div class="left-side">
+                        <img src="./assets/img/logo-white.svg" alt="logo">
+                        <h2>Edit contact</h2>
+                        <span class="border-line"></span>
+    
+                    </div>
+                    <div class="right-side">
+                        <div class="person-img-container">
+                            <div class="person-img contact-detail-profile"></div>
+                        </div>
+                        <form class="form-elements" id="edit-contact-form">
+                            <input type="hidden" name="id">
+                            
+                            <div class="close-button-container" onclick="hideEditContactOverlay()">
+                                <img src="./assets/img/close.svg" alt="close">
+                            </div>
+    
+                            <label for="name" class="form-label">
+                                <input type="text" name="name" placeholder="Name" required>
+                                <img src="./assets/img/person-gray.svg" alt="person">
+                            </label>
+    
+                            <label for="email" class="form-label">
+                                <input type="email" name="email" placeholder="Email" required>
+                                <img src="./assets/img/mail.svg" alt="mail">
+                            </label>
+    
+                            <label for="phone" class="form-label">
+                                <input type="tel" name="phone" placeholder="phone" required>
+                                <img src="./assets/img/call.svg" alt="call">
+                            </label>
+                            
+                            <div class="buttons">
+                                <button class="cancel-button" type="button" onclick="deleteContactFromEditForm()">Delete</button>
+                                <button class="create-contact-button" type="submit">Save</button>
+                            </div>
+    
+                        </form>
+    
                     </div>
                 </div>
             </div>
