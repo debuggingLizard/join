@@ -37,7 +37,7 @@
         <!-- Hier kommt der restliche Inhalt hin -->
         <main class="main contact-container">
             <!-- CONTACT LIST -->
-            <section class="contact-list">
+            <section id="contact-list" class="contact-list">
                 <div class="contact-list-add-button-wrapper">
                     <button class="contact-list-add-btn" onclick="showAddContactOverlay()">
                         <span>Add new contact</span>
@@ -48,33 +48,27 @@
                     <div id="contact-list-list" class="contact-list-list">
                     </div>
                 </div>
-                <div class="add-contact-responsive-btn" onclick="showAddContactOverlay()"><img src="./assets/img/person_add.svg" alt=""></div>
+                <div class="add-contact-responsive-btn" onclick="showAddContactOverlay()"><img
+                        src="./assets/img/person_add.svg" alt=""></div>
             </section>
 
             <!-- CONTACT DETAIL VIEW-->
-            <section class="contact-detail">
+            <section id="contact-detail" class="contact-detail">
                 <div class="contact-details-header">
                     <div class="contacts">Contacts</div>
                     <div class="contact-details-sep-line"></div>
                     <div class="contact-details-slogan">Better with a team</div>
                     <div class="contact-details-sep-line-responsive"></div>
-                    <div class="contact-detail-arrow-left-responsive" onclick="showContactList()">
-                        <img src="./assets/img/Vector.svg" alt=""></div>
-                </div>
-                                
-                <!-- detail view render here -->
-                <div id="contact-detail-view" class="toggle-div"></div>
-                    
-                <div class="edit-delete-btn-responsive" onclick="openSlideIn('${id}')">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
+                    <div class="contact-detail-arrow-left-responsive"
+                        onclick="toggleResponsiveVisibilityContact('list')">
+                        <img src="./assets/img/Vector.svg" alt="">
+                    </div>
                 </div>
 
-                <div class="slide-in" id="slideIn">
-                  <div class="slide-in-content"></div>
-                </div>
-                
+                <!-- detail view render here -->
+                <div id="contact-detail-view" class="toggle-div"></div>
+
+                <div id="contact-detail-responsive-edit-delete-wrapper"></div>
             </section>
 
             <!-- CONTACT OVERLAY CREATE CONTACT -->
@@ -102,22 +96,26 @@
                             </div>
 
                             <label for="name" class="form-label">
-                                <input type="text" name="name" placeholder="Name" onkeyup="hideInputValidationError('#create-contact-form', 'name')" required>
+                                <input type="text" name="name" placeholder="Name"
+                                    onkeyup="hideInputValidationError('#create-contact-form', 'name')" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                                 <span class="error-message name-error d-none">Enter name & surname.</span>
                             </label>
 
                             <label for="email" class="form-label">
-                                <input type="email" name="email" placeholder="Email" onkeyup="hideInputValidationError('#create-contact-form', 'email')" required>
+                                <input type="email" name="email" placeholder="Email"
+                                    onkeyup="hideInputValidationError('#create-contact-form', 'email')" required>
                                 <img src="./assets/img/mail.svg" alt="Email">
                                 <span class="error-message email-error d-none">Enter a valid email address.</span>
                             </label>
 
                             <label for="phone" class="form-label">
-                                <input type="tel" name="phone" placeholder="Phone" onkeyup="hideInputValidationError('#create-contact-form', 'phone')" required>
+                                <input type="tel" name="phone" placeholder="Phone"
+                                    onkeyup="hideInputValidationError('#create-contact-form', 'phone')" required>
                                 <img src="./assets/img/call.svg" alt="call">
-                                <span class="error-message phone-error d-none">Enter a valid phone number with country code.</span>
-                               
+                                <span class="error-message phone-error d-none">Enter a valid phone number with country
+                                    code.</span>
+
                             </label>
 
                             <div class="buttons">
@@ -151,19 +149,22 @@
                             </div>
 
                             <label for="name" class="form-label">
-                                <input type="text" name="name" placeholder="Name" onkeyup="hideInputValidationError('#edit-contact-form', 'name')" required>
+                                <input type="text" name="name" placeholder="Name"
+                                    onkeyup="hideInputValidationError('#edit-contact-form', 'name')" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                                 <span class="error-message name-error d-none"></span>
                             </label>
 
                             <label for="email" class="form-label">
-                                <input type="email" name="email" placeholder="Email" onkeyup="hideInputValidationError('#edit-contact-form', 'email')" required>
+                                <input type="email" name="email" placeholder="Email"
+                                    onkeyup="hideInputValidationError('#edit-contact-form', 'email')" required>
                                 <img src="./assets/img/mail.svg" alt="mail">
                                 <span class="error-message email-error d-none"></span>
                             </label>
 
                             <label for="phone" class="form-label">
-                                <input type="tel" name="phone" placeholder="phone" onkeyup="hideInputValidationError('#edit-contact-form', 'phone')" required>
+                                <input type="tel" name="phone" placeholder="phone"
+                                    onkeyup="hideInputValidationError('#edit-contact-form', 'phone')" required>
                                 <img src="./assets/img/call.svg" alt="call">
                                 <span class="error-message phone-error d-none"></span>
                             </label>
@@ -183,7 +184,7 @@
             <div class="notification" id="notification"></div>
 
         </main>
-     </div>
-   </body>
+    </div>
+</body>
 
 </html>

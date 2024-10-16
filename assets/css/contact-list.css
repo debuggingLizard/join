@@ -2,6 +2,8 @@
     width: 440px;
     overflow-y: auto;
     background-color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .contact-list::-webkit-scrollbar {

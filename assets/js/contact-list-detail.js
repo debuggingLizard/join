@@ -76,7 +76,7 @@ function getLetterGroupTemplate(letter) {
  */
 function getUserContactListTemplate(user) {
   return /*html*/ `
-        <div id="contact-list-user-${user.key}" class="contact-list-contact" onclick="updateActiveStateContactList(this); renderContactDetail('${user.key}')">
+        <div id="contact-list-user-${user.key}" class="contact-list-contact" onclick="updateActiveStateContactList(this); renderContactDetail('${user.key}', 'detail')">
                         <div class="contact-list-profile" style="background-color: ${user.color};">${user.profileImage}</div>
                         <div class="contact-list-contact-info">
                             <p>${user.name}</p>
@@ -90,25 +90,44 @@ function getUserContactListTemplate(user) {
  * Renders the contact details for a given contact ID.
  * @param {string} id - The ID of the contact to render details for.
  */
-async function renderContactDetail(id) {
+async function renderContactDetail(id, showElement) {
   let detailRef = document.getElementById("contact-detail-view");
   let detailUser = await getData("users/" + id);
   detailRef.innerHTML = "";
   detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
 
-  if (window.innerWidth <= 1240) {
-    document.querySelector('.contact-list').classList.add('contact-list-hidden');
-    document.querySelector('.contact-detail').classList.add('contact-detail-visible');
-    document.querySelector('.contact-list').style.display = 'none'; 
-    document.querySelector('.contact-detail').style.display = 'block'; 
-}
+  if (window.innerWidth <= 860) {
+    renderResponsiveEditButtons(id);
+    activateCloseSlideIn();
+    toggleResponsiveVisibilityContact(showElement);
+  }
 }
 
-function showContactList() {
-  document.querySelector('.contact-list').classList.remove('contact-list-hidden');
-  document.querySelector('.contact-detail').classList.remove('contact-detail-visible');
-  document.querySelector('.contact-detail').style.display = 'none'; 
-  document.querySelector('.contact-list').style.display = 'block';  
+function toggleResponsiveVisibilityContact(showElement) {
+  document.body.classList.remove("show-list", "show-detail");
+  document.body.classList.add("show-" + showElement);
+}
+
+/**
+ * Renders the responsive edit buttons for a contact.
+ * @param {string} id - The ID of the contact.
+ */
+function renderResponsiveEditButtons(id) {
+  let responsiveEditRef = document.getElementById(
+    "contact-detail-responsive-edit-delete-wrapper"
+  );
+  responsiveEditRef.innerHTML = "";
+  responsiveEditRef.innerHTML += /*html*/ `
+    <div class="edit-delete-btn-responsive" onclick="openSlideIn('${id}')">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+                <div class="slide-in" id="slideIn">
+                  <div class="slide-in-content"></div>
+                </div>
+  `;
 }
 
 /**
@@ -116,8 +135,12 @@ function showContactList() {
  * @param {Element} contact - The contact element to activate.
  */
 function updateActiveStateContactList(contact) {
-  document.querySelectorAll('.contact-list-contact').forEach(contactInList => contactInList.classList.remove('contact-list-contact-active'));
-  contact.classList.add('contact-list-contact-active');
+  document
+    .querySelectorAll(".contact-list-contact")
+    .forEach((contactInList) =>
+      contactInList.classList.remove("contact-list-contact-active")
+    );
+  contact.classList.add("contact-list-contact-active");
 }
 
 /**
@@ -160,11 +183,11 @@ function getContactDetailTemplate(id, detailUser) {
 
 /**
  * Opens the slide-in menu and populates it with edit and delete buttons for the specified contact.
- * 
+ *
  * @param {string} id - The unique identifier of the contact for which the edit and delete actions will be performed.
  */
 function openSlideIn(id) {
-  const slideInContent = document.querySelector('.slide-in-content');
+  const slideInContent = document.querySelector(".slide-in-content");
   slideInContent.innerHTML = `
       <button class="contact-detail-btn" onclick="openEditContactModal('${id}')">
           <img src="./assets/img/edit.svg" alt="">
@@ -175,29 +198,32 @@ function openSlideIn(id) {
           <span>Delete</span>
       </button>
   `;
-  const slideIn = document.getElementById('slideIn');
-  slideIn.classList.add('visible');
+  const slideIn = document.getElementById("slideIn");
+  slideIn.classList.add("visible");
 }
 
 /**
  * Closes the slide-in menu by removing the 'visible' class.
  */
 function closeSlideIn() {
-  const slideIn = document.getElementById('slideIn');
-  slideIn.classList.remove('visible');
+  const slideIn = document.getElementById("slideIn");
+  slideIn.classList.remove("visible");
 }
 
 /**
- * Closes the slide-in menu if a click occurs outside of it or the designated button.
- * 
- * @param {MouseEvent} event - The click event object.
+ * Activates the functionality to close the slide-in menu when clicking outside of it.
  */
-document.addEventListener('click', function(event) {
-  const slideIn = document.getElementById('slideIn');
-  const button = document.querySelector('.edit-delete-btn-responsive');
-  
-  if (slideIn.classList.contains('visible') && !slideIn.contains(event.target) && !button.contains(event.target)) {
-    closeSlideIn();
-  }
-});
+function activateCloseSlideIn() {
+  document.addEventListener("click", function (event) {
+    const slideIn = document.getElementById("slideIn");
+    const button = document.querySelector(".edit-delete-btn-responsive");
 
+    if (
+      slideIn.classList.contains("visible") &&
+      !slideIn.contains(event.target) &&
+      !button.contains(event.target)
+    ) {
+      closeSlideIn();
+    }
+  });
+}
