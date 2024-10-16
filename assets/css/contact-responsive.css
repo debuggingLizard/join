@@ -102,7 +102,7 @@
         justify-content: center;
     }
 
-    .add-edit-contact-container .right-side .form-elements .cancel-button {
+    .add-contact-wrapper .add-edit-contact-container .right-side .form-elements .cancel-button {
         display: none;
     }
 
