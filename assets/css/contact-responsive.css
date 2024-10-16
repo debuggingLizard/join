@@ -31,7 +31,7 @@
   .contact-name {
     font-size: 36px;
   }
-  .contact-list {
+  /* .contact-list {
     width: 100%;
   }
   .contact-detail {
@@ -114,7 +114,7 @@
     gap: 20px;
     justify-content: center;
     padding: 20px;
-  }
+  } */
 }
 
   @media (max-width: 1180px) {
@@ -136,6 +136,8 @@
   }
 
   @media (max-width: 1024px) {
+
+    /* ab hier sind änderungen die blieben sollen/schon auf main sind */
     .add-edit-contact-container {
       flex-direction: column;
       width: 351px;
@@ -202,6 +204,93 @@
 
     .add-edit-contact-container .right-side .form-elements input {
       width: calc(100% - 32px);
+    }
+  }
+
+  @media (max-width: 800px) {
+    .contact-list {
+      width: 100%;
+    }
+    .contact-detail {
+      display: none;
+    }
+    .contact-detail-btn {
+      display: none;
+    }
+    .slide-in.visible .contact-detail-btn {
+      display: block;
+    }
+    .contact-list-hidden {
+      display: none;
+    }
+    .contact-detail-visible {
+      display: block;
+      width: 100%;
+    }
+    .contact-list-add-button-wrapper {
+      display: none;
+    }
+    .contact-detail-arrow-left-responsive {
+      display: block;
+      align-items: center;
+    }
+    .add-contact-responsive-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      background-color: rgb(42, 54, 71);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .edit-delete-btn-responsive {
+      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(42, 54, 71);
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+    }
+    .dot {
+      display: block;
+      height: 5px;
+      width: 5px;
+      background-color: white;
+      border-radius: 50%;
+      margin: 2px 0;
+    }
+    .slide-in {
+      position: fixed;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+      bottom: 100px;
+      right: -300px;
+      width: 150px;
+      height: 100px;
+      background-color: #ffffff;
+      transition: right 0.6s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .slide-in.visible {
+      right: 10px;
+    }
+    .slide-in-content {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
     }
   }
 
