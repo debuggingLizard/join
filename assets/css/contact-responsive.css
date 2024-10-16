@@ -8,6 +8,7 @@
     .contact-details-header{
         flex-direction: column;
         align-items: start;
+        margin-left: 30px;
     }
     .contacts {
         margin: 0;
@@ -18,7 +19,7 @@
     .contact-details-sep-line-responsive {
         display: block; 
         border-bottom: 3px solid #29ABE2; 
-        width: 35%;  
+        width: 110px;  
         margin: 15px 0;  
     }
     .contact-detail-profile {
