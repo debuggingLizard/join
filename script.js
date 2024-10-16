@@ -20,10 +20,10 @@ function getSidebarTemplate() {
             <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
         </div>
         <nav>
-            <a href="#" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/summary.svg" alt="SummaryButton"><span>Summary</span></a>
-               <a href=" #" id="sidebar-nav-task" class="sidebar-nav-a"><img src="./assets/buttons/addTask.svg" alt="AddTask"><span>Add Task</span></a>
-               <a href="#" id="sidebar-nav-board" class="sidebar-nav-a"><img src="./assets/buttons/board.svg" alt="Board"><span>Board</span></a>
-              <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/contacts.svg" alt="Contacts"><span>Contacts</span></a>
+            <a href="#" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/Summary.svg" alt="SummaryButton"><span>Summary</span></a>
+               <a href=" #" id="sidebar-nav-task" class="sidebar-nav-a"><img src="./assets/buttons/AddTask.svg" alt="AddTask"><span>Add Task</span></a>
+               <a href="#" id="sidebar-nav-board" class="sidebar-nav-a"><img src="./assets/buttons/Board.svg" alt="Board"><span>Board</span></a>
+              <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/Contacts.svg" alt="Contacts"><span>Contacts</span></a>
         </nav>
         <footer>
             <a tabindex="0" href="#">Privacy Policy</a>
