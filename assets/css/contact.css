@@ -113,6 +113,14 @@
 
 .edit-contact-wrapper .add-edit-contact-container .right-side .person-img {
     padding: 0;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 47px;
+    font-weight: 500;
 }
 
 .add-edit-contact-container .right-side .person-img img {
