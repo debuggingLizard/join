@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: assets/js/delete-contact.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,35 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: assets/js/delete-contact.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Deletes a contact by its ID.
+ * @param {string} id - The ID of the contact to delete.
+ */
+async function deleteContact(id) {
+    await deleteData('users', id);
+    await renderContactList();
+    document.getElementById('contact-detail-view').innerHTML = '';
+    hideEditContactOverlay();
+}
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+ * Deletes the contact currently open in Edit form.
+ */
+function deleteContactFromEditForm() {
+    let id = document.querySelector('#edit-contact-form input[name = id]').value;    
+    deleteContact(id);
+}</code></pre>
+        </article>
+    </section>
 
 
 

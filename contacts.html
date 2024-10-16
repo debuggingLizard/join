@@ -21,7 +21,8 @@
     <script src="script.js"></script>
 </head>
 
-<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-contacts'); renderContactList(); eventListenerCreateContact(); eventListenerEditContact();">
+<body
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-contacts'); renderContactList(); eventListenerCreateContact(); eventListenerEditContact();">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -80,9 +81,12 @@
             <div id="add-contact-overlay" class="add-contact-wrapper">
                 <div class="add-edit-contact-container" id="add-contact-overlay-container">
                     <div class="left-side">
-                        <img src="./assets/img/logo-white.svg" alt="logo">
+                        <div class="close-button-container">
+                            <img onclick="hideAddContactOverlay()" src="./assets/img/close-white.svg" alt="close">
+                        </div>
+                        <img class="overlay-logo" src="./assets/img/logo-white.svg" alt="logo">
                         <h2>Add contact</h2>
-                        <span>Task are better with a team!</span>
+                        <span>Tasks are better with a team!</span>
                         <span class="border-line"></span>
 
                     </div>
@@ -92,24 +96,28 @@
                                 <img src="./assets/img/person.svg" alt="person">
                             </div>
                         </div>
-                        <form class="form-elements" id="create-contact-form">
+                        <form class="form-elements" id="create-contact-form" novalidate>
                             <div class="close-button-container">
                                 <img onclick="hideAddContactOverlay()" src="./assets/img/close.svg" alt="close">
                             </div>
 
                             <label for="name" class="form-label">
-                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="text" name="name" placeholder="Name" onkeyup="hideInputValidationError('#create-contact-form', 'name')" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
+                                <span class="error-message name-error d-none">Enter name & surname.</span>
                             </label>
 
                             <label for="email" class="form-label">
-                                <input type="email" name="email" placeholder="Email" required>
-                                <img src="./assets/img/mail.svg" alt="mail">
+                                <input type="email" name="email" placeholder="Email" onkeyup="hideInputValidationError('#create-contact-form', 'email')" required>
+                                <img src="./assets/img/mail.svg" alt="Email">
+                                <span class="error-message email-error d-none">Enter a valid email address.</span>
                             </label>
 
                             <label for="phone" class="form-label">
-                                <input type="tel" name="phone" placeholder="Phone" required>
+                                <input type="tel" name="phone" placeholder="Phone" onkeyup="hideInputValidationError('#create-contact-form', 'phone')" required>
                                 <img src="./assets/img/call.svg" alt="call">
+                                <span class="error-message phone-error d-none">Enter a valid phone number with country code.</span>
+                               
                             </label>
 
                             <div class="buttons">
@@ -126,16 +134,16 @@
             <div id="edit-contact-overlay" class="edit-contact-wrapper">
                 <div class="add-edit-contact-container" id="edit-contact-overlay-container">
                     <div class="left-side">
-                        <img src="./assets/img/logo-white.svg" alt="logo">
+                        <img class="overlay-logo" src="./assets/img/logo-white.svg" alt="logo">
                         <h2>Edit contact</h2>
                         <span class="border-line"></span>
 
                     </div>
                     <div class="right-side">
                         <div class="person-img-container">
-                            <div class="person-img contact-detail-profile"></div>
+                            <div class="person-img "></div>
                         </div>
-                        <form class="form-elements" id="edit-contact-form">
+                        <form class="form-elements" id="edit-contact-form" novalidate>
                             <input type="hidden" name="id">
 
                             <div class="close-button-container" onclick="hideEditContactOverlay()">
@@ -143,18 +151,21 @@
                             </div>
 
                             <label for="name" class="form-label">
-                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="text" name="name" placeholder="Name" onkeyup="hideInputValidationError('#edit-contact-form', 'name')" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
+                                <span class="error-message name-error d-none"></span>
                             </label>
 
                             <label for="email" class="form-label">
-                                <input type="email" name="email" placeholder="Email" required>
+                                <input type="email" name="email" placeholder="Email" onkeyup="hideInputValidationError('#edit-contact-form', 'email')" required>
                                 <img src="./assets/img/mail.svg" alt="mail">
+                                <span class="error-message email-error d-none"></span>
                             </label>
 
                             <label for="phone" class="form-label">
-                                <input type="tel" name="phone" placeholder="phone" required>
+                                <input type="tel" name="phone" placeholder="phone" onkeyup="hideInputValidationError('#edit-contact-form', 'phone')" required>
                                 <img src="./assets/img/call.svg" alt="call">
+                                <span class="error-message phone-error d-none"></span>
                             </label>
 
                             <div class="buttons">
@@ -168,6 +179,8 @@
                     </div>
                 </div>
             </div>
+
+            <div class="notification" id="notification"></div>
 
         </main>
      </div>
