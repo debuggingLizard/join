@@ -1,28 +1,37 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(./assets/fonts/inter/Inter-VariableFont_opsz\,wght.ttf);
+}
 
 .task-view{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 220px;
+    width: 252px;
     margin: 20px;
+    padding: 20px;
     border-radius: 8px;
 }
 .task-view h2{
     font-size: 16px;
     font-weight: 700;
+    margin: 10px 0;
 }
 .task-view p{
     font-size: 16px;
     font-weight: 400;
     color: rgb(168,168,168);
+    margin: 10px 0;
 
 }
 
 .userStory{ 
     background-color: rgb(0,56,255);
+    color: white;
     font-size: 16px;
     font-weight: 400;
     display: inline-block;
     border-radius: 8px;
-    padding: 8px 20px;
+    padding: 5px 18px;
+    margin: 10px 0px 26px;
 }
 
 .progress {
@@ -40,23 +49,39 @@
     gap: 8px;
 }
 
-
 .progress {
     background-color: #e9ecef; 
     border-radius: 5px;
     width: 60%; 
     height: 8px; 
     overflow: hidden; 
-
+}
 
 .progress-bar {
     background-color: #007bff; 
     height: 100%;
-    
 }
-
 
 .progress-text {
-    font-size: 12px; }
-    
+    font-size: 12px; 
 }
+    
+.task-contributors {
+    display: flex;
+    align-items: center; 
+    margin: 20px 10px 0px;
+  }
+  
+  .contributor {
+    width: 50px;  
+    height: 50px; 
+    border-radius: 50%;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    font-size: 16px; 
+    color: white;
+    font-weight: bold; 
+    margin-left: -15px;
+    border: 2px solid white; 
+  }
