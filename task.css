@@ -60,6 +60,7 @@
 .progress-bar {
     background-color: #007bff; 
     height: 100%;
+    width: 50%;
 }
 
 .progress-text {
