@@ -1,0 +1,26 @@
+
+.task-view{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 220px;
+    margin: 20px;
+    border-radius: 8px;
+}
+.task-view h2{
+    font-size: 16px;
+    font-weight: 700;
+}
+.task-view p{
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(168,168,168);
+
+}
+
+.userStory{ 
+    background-color: rgb(0,56,255);
+    font-size: 16px;
+    font-weight: 400;
+    display: inline-block;
+    border-radius: 8px;
+    padding: 8px 20px;
+}
