@@ -24,3 +24,40 @@
     border-radius: 8px;
     padding: 8px 20px;
 }
+
+.progress {
+    background-color: #e9ecef;
+    border-radius: 5px; 
+    width: 80%; 
+    height: 18px; 
+   
+    
+}
+
+.progress-wrapper {
+    display: flex; 
+    align-items: center;
+    gap: 8px;
+}
+
+
+.progress {
+    background-color: #e9ecef; 
+    border-radius: 5px;
+    width: 60%; 
+    height: 8px; /* Matches the font-size */
+    overflow: hidden; /* Ensures inner bar does not overflow */
+}
+
+/* Progress bar */
+.progress-bar {
+    background-color: #007bff; /* Bootstrap's blue color */
+    height: 100%; /* Fills the container height */
+    
+}
+
+/* Text beside the progress bar */
+.progress-text {
+    font-size: 12px; 
+    
+}
