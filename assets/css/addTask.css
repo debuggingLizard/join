@@ -1,8 +1,15 @@
+#add-task-title {
+    margin-top: 60px;
+    margin-left: 79px;
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+
 .add-task-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     padding: 20px;
+    margin-left: 60px;
 }
 
 .form-row {
@@ -14,13 +21,31 @@
 .form-column {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
     flex: 1;
 }
 
+#description {
+    margin-bottom: 20px;
+}
+
+#title {
+    margin-bottom: 20px;
+}
+
+#due-date {
+    margin-bottom: 20px;
+}
+
+#category {
+    margin-bottom: 20px;
+}
+
+
+
+
 label {
     font-weight: bold;
-    margin-bottom: 5px;
 }
 
 input,
@@ -29,13 +54,14 @@ select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
+    width: 70%;
     font-size: 16px;
 }
 
 .prio-options {
     display: flex;
     gap: 10px;
+    margin-bottom: 30px;
 }
 
 .prio-btn {
@@ -66,24 +92,27 @@ select {
 }
 
 .subtask-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+    position: relative;
+    width: 100%;
 }
 
 .add-subtask-btn {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
+    position: absolute;
+    right: 190px;
+    top: 50%;
+    transform: translateY(-50%);
     border: none;
-    border-radius: 5px;
+    background-color: transparent;
+    font-size: 24px;
+    color: #2A3647;
     cursor: pointer;
 }
 
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 50px;
+    margin-right: 180px;
     gap: 10px;
 }
 
@@ -98,7 +127,8 @@ select {
 
 .cancel-btn {
     background-color: #f0f0f0;
-    color: #333;
+    border: 1px solid #2A3647;
+    color: #2A3647;
 }
 
 .create-task-btn {
