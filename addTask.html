@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="./assets/img/JoinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./responsive.css">
+    <link rel="stylesheet" href="./assets/css/addTask.css">
     <script src="script.js"></script>
 </head>
 
@@ -22,6 +23,67 @@
         <!-- HEADER -->
         <header id="header" class="header-wrapper">
         </header>
+
+        <h2>Add Task</h2>
+
+        <form id="add-task-form" onsubmit="addTask()">
+            <table>
+                <tr>
+                    <td>Title*: <br>
+                        <input type="text" id="title" name="title" placeholder="Enter a title">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>Description: <br>
+                        <textarea id="description" name="description" rows="4"
+                            placeholder="Enter a Description"></textarea>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td> Assigned to: <br>
+                        <select id="contactsToAssign" name="contact" required>
+                            <option value="contacts-assign">Select contacts to assign</option>
+                        </select>
+                    </td>
+
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <td>
+                        <label for="due-date">Due date*:</label> <br>
+                        <input type="date" id="due-date" name="due-date" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Prio:
+                        <p>Urgent</p>
+                        <p>Medium</p>
+                        <p>Low</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Category* <br>
+                        <select id="category" name="category" required>
+                            <option value="selectedTask">Select task category</option>
+                        </select>
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <button type="submit">Clear</button>
+            <button type="submit">Create Task</button>
+
+        </form>
+
 
 </body>
 
