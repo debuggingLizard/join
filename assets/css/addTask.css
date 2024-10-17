@@ -1,3 +1,107 @@
-.container form table {
-    gap: 100px;
+.add-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input,
+textarea,
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.prio-options {
+    display: flex;
+    gap: 10px;
+}
+
+.prio-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.prio-btn.urgent {
+    background-color: #FF3D00;
+    color: white;
+}
+
+.prio-btn.medium {
+    background-color: #FFA800;
+    color: white;
+}
+
+.prio-btn.low {
+    background-color: #7AE229;
+    color: white;
+}
+
+.prio-btn.active {
+    border: 2px solid #000;
+}
+
+.subtask-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.add-subtask-btn {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.cancel-btn,
+.create-task-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.create-task-btn {
+    background-color: #2A3647;
+    color: white;
 }

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aufgabe hinzufügen | JOIN</title>
-    <link rel="shortcut icon" href="./assets/img/JoinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
@@ -24,66 +23,73 @@
         <header id="header" class="header-wrapper">
         </header>
 
+        <!-- Add Task Form -->
         <h2>Add Task</h2>
+        <form id="add-task-form" class="add-task-form">
+            <div class="form-row">
+                <!-- Left column -->
+                <div class="form-column">
+                    <label for="title">Title*</label>
+                    <input type="text" id="title" name="title" placeholder="Enter a title" required>
 
-        <form id="add-task-form" onsubmit="addTask()">
-            <table>
-                <tr>
-                    <td>Title*: <br>
-                        <input type="text" id="title" name="title" placeholder="Enter a title">
-                    </td>
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Enter a Description"></textarea>
 
-                </tr>
-                <tr>
-                    <td>Description: <br>
-                        <textarea id="description" name="description" rows="4"
-                            placeholder="Enter a Description"></textarea>
-                    </td>
+                    <label for="contactsToAssign">Assigned to</label>
+                    <select id="contactsToAssign" name="contact" required>
+                        <option value="contacts-assign">Select contacts to assign</option> /*
+                        Dies ist ein mehrzeiliger Kommentar, der erklärt,
+                        wie die folgende Funktion funktioniert
+                        */
+                    </select>
+                </div>
 
-                </tr>
-                <tr>
-                    <td> Assigned to: <br>
-                        <select id="contactsToAssign" name="contact" required>
-                            <option value="contacts-assign">Select contacts to assign</option>
-                        </select>
-                    </td>
+                <!-- Right column -->
+                <div class="form-column">
+                    <label for="due-date">Due date*</label>
+                    <input type="date" id="due-date" name="due-date" required>
 
-                </tr>
-            </table>
+                    <label>Prio</label>
+                    <div class="prio-options">
+                        <button type="button" class="prio-btn urgent" onclick="selectPrio('urgent')">Urgent</button>
+                        <button type="button" class="prio-btn medium active"
+                            onclick="selectPrio('medium')">Medium</button>
+                        <button type="button" class="prio-btn low" onclick="selectPrio('low')">Low</button>
+                    </div>
+                    <input type="hidden" id="selectedPrio" name="prio" value="medium">
 
-            <table>
-                <tr>
-                    <td>
-                        <label for="due-date">Due date*:</label> <br>
-                        <input type="date" id="due-date" name="due-date" required>
-                    </td>
-                </tr>
+                    <label for="category">Category*</label>
+                    <select id="category" name="category" required>
+                        <option value="selectedTask">Select task category</option>
+                    </select>
 
-                <tr>
-                    <td>Prio:
-                        <p>Urgent</p>
-                        <p>Medium</p>
-                        <p>Low</p>
-                    </td>
-                </tr>
+                    <label for="subtasks">Subtasks</label>
+                    <div class="subtask-row">
+                        <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
+                        <button type="button" class="add-subtask-btn">+</button>
+                    </div>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Category* <br>
-                        <select id="category" name="category" required>
-                            <option value="selectedTask">Select task category</option>
-                        </select>
-                    </td>
-
-                </tr>
-
-            </table>
-
-
-            <button type="submit">Clear</button>
-            <button type="submit">Create Task</button>
-
+            <div class="form-actions">
+                <button type="button" class="cancel-btn">Clear</button>
+                <button type="submit" class="create-task-btn">Create Task</button>
+            </div>
         </form>
 
+    </div>
+
+    <script>
+        function selectPrio(selected) {
+            document.querySelectorAll('.prio-btn').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector(`.prio-btn.${selected}`).classList.add('active');
+            document.getElementById('selectedPrio').value = selected;
+        }
+
+        selectPrio('medium');
+    </script>
 
 </body>
 
