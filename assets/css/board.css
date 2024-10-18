@@ -25,6 +25,10 @@
     padding: 24px 79px 24px 15px;
 }
 
+.right-board-header input:focus {
+    border: 1px solid #29ABE2;
+}
+
 .right-board-header input::placeholder {
     color: #D1D1D1;
 }
@@ -113,6 +117,16 @@
     border-radius: 8px;
     padding: 4.5px;
     cursor: pointer;
+}
+
+.boards .board-title .icon-add:hover {
+    color: #29ABE2;
+    border: solid 2px #29ABE2;
+}
+
+.boards .board-title .icon-add:active {
+    color: #091931;
+    border: solid 2px #091931;
 }
 
 .boards .board-title .icon-add::before {
