@@ -59,8 +59,8 @@
     margin: 20px 10px 0px;
 }
 .contributor {
-    width: 50px;  
-    height: 50px; 
+    width: 42px;  
+    height: 42px; 
     border-radius: 50%;
     display: flex;
     justify-content: center; 
@@ -70,6 +70,12 @@
     font-weight: bold; 
     margin-left: -15px;
     border: 2px solid white; 
+}
+.contributor-listing{
+    display: flex;
+    justify-content: space-between;
+    
+   
 }
 .close-btn-task-detail {
     position: absolute;
@@ -113,7 +119,7 @@
     display: flex; 
     gap: 40px;
     align-items: center;
-    margin: -20px 30px;
+    margin: -30px 30px;
     
 }
 .overlay {
@@ -141,5 +147,20 @@
     display: flex;
     align-items: center;
     margin: 15px 0;
+}
+
+.task-edit-delete {
+    display: flex;
+    justify-content: end;
+    gap: 15px;
+}
+
+.task-edit-delete-btn{
+    border: unset;
+    background-color: unset;
+}
+
+.task-edit-delete-btn:hover {
+    cursor: pointer;
 }
   
