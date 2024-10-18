@@ -1,0 +1,224 @@
+#add-task-title {
+    margin-top: 60px;
+    margin-left: 79px;
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+
+.add-task-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-left: 60px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+#description {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#title {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#due-date {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#category {
+    margin-bottom: 20px;
+}
+
+#category:hover {
+    cursor: pointer;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+}
+
+input,
+textarea,
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 70%;
+    font-size: 16px;
+}
+
+.prio-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.prio-btn {
+    padding: 10px 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.prio-btn:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.prio-btn.urgent {
+    background-color: white;
+    color: black;
+}
+
+.prio-btn.medium {
+    background-color: white;
+    color: black;
+}
+
+.prio-btn.low {
+    background-color: white;
+    color: black;
+}
+
+.prio-btn.urgent.active {
+    background-color: #FF3D00;
+    font-weight: 700;
+    color: white;
+}
+
+.prio-btn.medium.active {
+    background-color: #FFA800;
+    font-weight: 700;
+    color: white;
+}
+
+.prio-btn.low.active {
+    background-color: #7AE229;
+    font-weight: 700;
+    color: white;
+}
+
+#subtasks {
+    cursor: pointer;
+}
+
+.subtask-row {
+    position: relative;
+    width: 100%;
+}
+
+.add-subtask-btn {
+    position: absolute;
+    right: 190px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    color: #2A3647;
+    cursor: pointer;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+    margin-right: 180px;
+    gap: 10px;
+}
+
+.cancel-btn,
+.create-task-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #2A3647;
+    color: #2A3647;
+}
+
+.create-task-btn {
+    background-color: #2A3647;
+    color: white;
+}
+
+.required {
+    color: red;
+}
+
+.required-text {
+    font-size: 12px;
+    position: absolute;
+    left: 315px;
+    bottom: 40px;
+}
+
+button {
+    transition: transform color 100ms ease-in-out, border-color 100ms ease-in-out, fill 100ms ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.01);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+
+button svg {
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.cancel-btn svg path {
+    fill: #2A3647;
+}
+
+.create-task-btn svg path {
+    fill: white;
+}
+
+.cancel-btn svg {
+    width: 10px;
+    height: 10px;
+}
+
+.create-task-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.cancel-btn:hover {
+    color: #29abe2;
+    border: 1px solid #29abe2;
+}
+
+.cancel-btn:hover svg path {
+    fill: #29abe2;
+}
+
+.create-task-btn:hover {
+    background-color: #29abe2;
+}
+
+#contactsToAssign:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2)
+}

@@ -73,7 +73,7 @@ function resetCreateContactForm() {
  * Shows the add contact overlay.
  */
 function showAddContactOverlay() {
-  document.getElementById('add-contact-overlay').style.zIndex = 100;
+  document.getElementById('add-contact-overlay').style.zIndex = 999;
   document.getElementById('add-contact-overlay').style.backgroundColor = 'rgb(0 0 0 / 30%)'
   document.getElementById('add-contact-overlay-container').style.transform = 'translateX(0)';
 }
