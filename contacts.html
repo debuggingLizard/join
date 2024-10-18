@@ -95,23 +95,23 @@
                                 <img onclick="hideAddContactOverlay()" src="./assets/img/close.svg" alt="close">
                             </div>
 
-                            <label for="name" class="form-label">
+                            <label class="form-label">
                                 <input type="text" name="name" placeholder="Name"
-                                    onkeyup="hideInputValidationError('#create-contact-form', 'name')" required>
+                                    onkeyup="hideInputValidationError('#create-contact-form', 'name')" autocomplete="on" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                                 <span class="error-message name-error d-none">Enter name & surname.</span>
                             </label>
 
-                            <label for="email" class="form-label">
+                            <label class="form-label">
                                 <input type="email" name="email" placeholder="Email"
-                                    onkeyup="hideInputValidationError('#create-contact-form', 'email')" required>
+                                    onkeyup="hideInputValidationError('#create-contact-form', 'email')" autocomplete="on" required>
                                 <img src="./assets/img/mail.svg" alt="Email">
                                 <span class="error-message email-error d-none">Enter a valid email address.</span>
                             </label>
 
-                            <label for="phone" class="form-label">
+                            <label class="form-label">
                                 <input type="tel" name="phone" placeholder="Phone"
-                                    onkeyup="hideInputValidationError('#create-contact-form', 'phone')" required>
+                                    onkeyup="hideInputValidationError('#create-contact-form', 'phone')" autocomplete="on" required>
                                 <img src="./assets/img/call.svg" alt="call">
                                 <span class="error-message phone-error d-none">Enter a valid phone number with country
                                     code.</span>
@@ -148,23 +148,23 @@
                                 <img src="./assets/img/close.svg" alt="close">
                             </div>
 
-                            <label for="name" class="form-label">
+                            <label class="form-label">
                                 <input type="text" name="name" placeholder="Name"
-                                    onkeyup="hideInputValidationError('#edit-contact-form', 'name')" required>
+                                    onkeyup="hideInputValidationError('#edit-contact-form', 'name')" autocomplete="on" required>
                                 <img src="./assets/img/person-gray.svg" alt="person">
                                 <span class="error-message name-error d-none"></span>
                             </label>
 
-                            <label for="email" class="form-label">
+                            <label class="form-label">
                                 <input type="email" name="email" placeholder="Email"
-                                    onkeyup="hideInputValidationError('#edit-contact-form', 'email')" required>
+                                    onkeyup="hideInputValidationError('#edit-contact-form', 'email')" autocomplete="on" required>
                                 <img src="./assets/img/mail.svg" alt="mail">
                                 <span class="error-message email-error d-none"></span>
                             </label>
 
-                            <label for="phone" class="form-label">
+                            <label class="form-label">
                                 <input type="tel" name="phone" placeholder="phone"
-                                    onkeyup="hideInputValidationError('#edit-contact-form', 'phone')" required>
+                                    onkeyup="hideInputValidationError('#edit-contact-form', 'phone')" autocomplete="on" required>
                                 <img src="./assets/img/call.svg" alt="call">
                                 <span class="error-message phone-error d-none"></span>
                             </label>
