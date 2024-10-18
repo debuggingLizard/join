@@ -14,16 +14,3 @@ function closeTaskDetail() {
     document.getElementById("overlay").style.display = "none";
   }, 300);
 }
-document.getElementById("overlay").addEventListener("click", function () {
-  closeTaskDetail();
-});
-document
-  .getElementById("close-btn-task-detail")
-  .addEventListener("click", function (event) {
-    event.stopPropagation();
-    closeTaskDetail();
-  });
-window.onload = function () {
-  document.getElementById("overlay").style.display = "none";
-  document.getElementById("task-detail").classList.remove("show");
-};
