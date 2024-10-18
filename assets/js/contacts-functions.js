@@ -143,16 +143,18 @@ function hideInputValidationError(form, inputName) {
 }
 
 /**
- * Zeigt eine Benachrichtigung an, indem der Text eingefügt und die Animation gestartet wird.
- * Die Benachrichtigung wird nach 2 Sekunden wieder ausgeblendet.
- *
- * @param {string} message - Die anzuzeigende Benachrichtigungsnachricht.
+ * Displays a notification message and hides it after a short delay.
+ * 
+ * @param {string} message - The message to be displayed in the notification.
  */
 function showNotification(message) {
-  document.getElementById("notification").innerHTML = message;
-  document.getElementById("notification").style.transform = "translateX(0)";
-  setTimeout(function () {
-    document.getElementById("notification").style.transform =
-      "translateX(2000px)";
-  }, 2000);
+  let notificationRef = document.getElementById("notification");
+  notificationRef.style.transform = "translateX(2000px)"; 
+  setTimeout(() => {
+    notificationRef.innerHTML = message;
+    notificationRef.style.transform = "translateX(0)";
+    setTimeout(() => {
+      notificationRef.style.transform = "translateX(2000px)";
+    }, 2000);
+  }, 50); 
 }
