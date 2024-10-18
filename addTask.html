@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/task.css">
-        
+    <script src="./assets/js/task-view.js"></script>   
     <script src="script.js"></script>
 </head>
 
@@ -26,9 +26,9 @@
         </header>
 
 
-        <div class="task-view">
+        <div class="task-view" onclick="openTaskDetail()">
             <div class="userStory">User Story</div>
-            <div class="tas-description">
+            <div class="task-description">
             <h2>Kochwelt Page & Recipe Recommender</h2>
             <p>Build start page with recipe recommendation...</p>
             </div>
@@ -48,7 +48,11 @@
                       
         </div>
 
-        <div class="task-detail">
+        <div class="overlay" id="overlay" onclick="closeTaskDetail()">
+        <div class="task-detail" id="task-detail" onclick="event.stopPropagation();">
+            <div id="close-btn-task-detail" class="close-btn-task-detail" onclick="closeTaskDetail()">
+                <img src="./assets/img/close.svg" alt="Close">
+            </div>
             <div class="userStory">User Story</div>
             <h1>Kochwelt Page & Recipe Recommender</h1>
             <p>Build start page with recipe recommendation.</p>
@@ -88,6 +92,7 @@
 
             </div>
 
+        </div>
         </div>
 
 </body>
