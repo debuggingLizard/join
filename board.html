@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./assets/css/icons/icons.css">
     <link rel="stylesheet" href="./responsive.css">
+    <link rel="stylesheet" href="./assets/css/board.css">
     <script src="script.js"></script>
 </head>
 
@@ -23,7 +24,74 @@
         <!-- HEADER -->
         <header id="header" class="header-wrapper">
         </header>
-    </div>    
+
+        <main class="main">
+            <section class="board-header">
+                <h1>Board</h1>
+                <div class="right-board-header">
+                    <label class="search-label">
+                        <input type="text" placeholder="Find Task">
+                        <span></span>
+                        <div class="icon icon-search"></div>
+                    </label>
+                    <button>Add task</button>
+                </div>
+            </section>
+
+            <section class="board-middle">
+                <div class="boards">
+                    <div class="board-title">
+                        <h3>To do</h3>
+                        <div class="icon icon-add"></div>
+                    </div>
+                    <div class="board-tasks">
+                        <div class="no-tasks">
+                            No tasks To do
+                        </div>
+                        <!-- hier können wir "Tasks" hinzufügen -->
+                    </div>
+                </div>
+                <div class="boards">
+                    <div class="board-title">
+                        <h3>In progress</h3>
+                        <div class="icon icon-add"></div>
+                    </div>
+                    <div class="board-tasks">
+                        <div class="no-tasks">
+                            No tasks To do
+                        </div>
+                        <!-- hier können wir "Tasks" hinzufügen -->
+                    </div>
+                </div>
+                <div class="boards">
+                    <div class="board-title">
+                        <h3>Await feedback</h3>
+                        <div class="icon icon-add"></div>
+                    </div>
+                    <div class="board-tasks">
+                        <div class="no-tasks">
+                            No tasks To do
+                        </div>
+                        <!-- hier können wir "Tasks" hinzufügen -->
+                    </div>
+                </div>
+                <div class="boards">
+                    <div class="board-title">
+                        <h3>Done</h3>
+                    </div>
+                    <div class="board-tasks">
+                        <div class="no-tasks">
+                            No tasks To do
+                        </div>
+                        <!-- hier können wir "Tasks" hinzufügen -->
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+
+    </div>
 
 </body>
 
