@@ -30,6 +30,8 @@ body {
     align-items: center;
     padding-top: 64px;
     padding-bottom: 64px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+    z-index: 101;
 }
 
 .sidebar .logo img {
@@ -100,7 +102,7 @@ footer a:focus {
     display: flex;
     padding: 20px 40px 20px 100px;
     background-color: white;
-    z-index: 1;
+    z-index: 100;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
