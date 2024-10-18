@@ -32,11 +32,9 @@ body {
     padding-bottom: 64px;
 }
 
-
 .sidebar .logo img {
     height: 120px;
     width: 100px;
-
 }
 
 nav {
@@ -71,6 +69,7 @@ footer {
     flex-direction: column;
     padding: 8px 56px;
     gap: 15px;
+    width: 100%;
 }
 
 footer a {
@@ -80,7 +79,7 @@ footer a {
 }
 
 footer a:hover {
-    transform: scale(1.05);
+    font-weight: 700;
     color: #00BEE8;
 }
 
