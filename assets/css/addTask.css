@@ -121,6 +121,8 @@ select {
 }
 
 .add-subtask-btn {
+    width: 30px;
+    height: 30px;
     position: absolute;
     right: 190px;
     top: 50%;
@@ -131,6 +133,13 @@ select {
     color: #2A3647;
     cursor: pointer;
 }
+
+.add-subtask-btn:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
 
 .form-actions {
     display: flex;
@@ -175,7 +184,7 @@ button {
     transition: transform color 100ms ease-in-out, border-color 100ms ease-in-out, fill 100ms ease-in-out;
 }
 
-button:hover {
+button:not(.add-subtask-btn):hover {
     transform: scale(1.01);
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
@@ -221,4 +230,28 @@ button svg {
 #contactsToAssign:hover {
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2)
+}
+
+.subtask-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.subtask-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtask-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
 }

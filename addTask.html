@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
     <script src="./assets/js/addTask.js"></script>
 </head>
 
@@ -65,8 +65,11 @@
                     <label for="subtasks">Subtasks</label>
                     <div class="subtask-row">
                         <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                        <button type="button" class="add-subtask-btn">+</button>
+                        <button type="button" class="add-subtask-btn" onclick="addSubtask()">+</button>
                     </div>
+                    <ul id="subtask-list" class="subtask-list">
+                        <!-- Dynamische Subtask-Liste -->
+                    </ul>
                 </div>
             </div>
 
