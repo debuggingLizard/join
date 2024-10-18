@@ -140,17 +140,16 @@
     padding-bottom: 30px;
 }
 
-.add-edit-contact-container .right-side .form-elements img {
+.add-edit-contact-container .right-side .form-elements .close-button-container img {
     width: 18px;
     cursor: pointer;
     padding: 3px;
 }
 
-.add-edit-contact-container .right-side .form-elements img:hover {
+.add-edit-contact-container .right-side .form-elements .close-button-container img:hover {
     background-color: hsl(0deg 0% 13% / 8%);
     border-radius: 50%;
     color: #ffffff;
-    
 }
 
 .add-edit-contact-container .right-side .form-elements .form-label {
