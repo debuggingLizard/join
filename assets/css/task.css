@@ -113,8 +113,8 @@
     display: flex; 
     gap: 40px;
     align-items: center;
-    margin-bottom: -20px;
-    margin-top: -20px;
+    margin: -20px 30px;
+    
 }
 .overlay {
     display: none;
@@ -127,5 +127,19 @@
     justify-content: center;
     align-items: center;
     z-index: 9;
+}
+
+.subtask-checkbox{
+    margin: 2px 30px;
+}
+
+.checkbox-img{
+    margin-right: 15px;
+}
+.check-subtask{
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
 }
   
