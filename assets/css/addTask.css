@@ -27,18 +27,26 @@
 
 #description {
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 #title {
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 #due-date {
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 #category {
     margin-bottom: 20px;
+}
+
+#category:hover {
+    cursor: pointer;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
 }
 
 input,
@@ -103,6 +111,10 @@ select {
     color: white;
 }
 
+#subtasks {
+    cursor: pointer;
+}
+
 .subtask-row {
     position: relative;
     width: 100%;
@@ -157,4 +169,56 @@ select {
     position: absolute;
     left: 315px;
     bottom: 40px;
+}
+
+button {
+    transition: transform color 100ms ease-in-out, border-color 100ms ease-in-out, fill 100ms ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.01);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+
+button svg {
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.cancel-btn svg path {
+    fill: #2A3647;
+}
+
+.create-task-btn svg path {
+    fill: white;
+}
+
+.cancel-btn svg {
+    width: 10px;
+    height: 10px;
+}
+
+.create-task-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.cancel-btn:hover {
+    color: #29abe2;
+    border: 1px solid #29abe2;
+}
+
+.cancel-btn:hover svg path {
+    fill: #29abe2;
+}
+
+.create-task-btn:hover {
+    background-color: #29abe2;
+}
+
+#contactsToAssign:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2)
 }
