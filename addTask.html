@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
     <script src="script.js"></script>
+    <script src="./assets/js/firebase-connect.js"></script>
+    <script src="./assets/js/addTask.js"></script>
 </head>
 
 <body onload="renderSidebarHeader()">
@@ -29,7 +31,7 @@
             <div class="form-row">
                 <!-- Left column -->
                 <div class="form-column">
-                    <label for="title">Title*</label>
+                    <label for="title">Title<span class="required">*</span></label>
                     <input type="text" id="title" name="title" placeholder="Enter a title" required>
 
                     <label for="description">Description</label>
@@ -43,7 +45,7 @@
 
                 <!-- Right column -->
                 <div class="form-column">
-                    <label for="due-date">Due date*</label>
+                    <label for="due-date">Due date<span class="required">*</span></label>
                     <input type="date" id="due-date" name="due-date" required>
 
                     <label>Prio</label>
@@ -55,7 +57,7 @@
                     </div>
                     <input type="hidden" id="selectedPrio" name="prio" value="medium">
 
-                    <label for="category">Category*</label>
+                    <label for="category">Category<span class="required">*</span></label>
                     <select id="category" name="category" required>
                         <option value="selectedTask">Select task category</option>
                     </select>
@@ -69,24 +71,13 @@
             </div>
 
             <div class="form-actions">
+                <span class="required-text"><span class="required">*</span>This field is required</span>
                 <button type="button" class="cancel-btn">Clear</button>
                 <button type="submit" class="create-task-btn">Create Task</button>
             </div>
         </form>
 
     </div>
-
-    <script>
-        function selectPrio(selected) {
-            document.querySelectorAll('.prio-btn').forEach(button => {
-                button.classList.remove('active');
-            });
-            document.querySelector(`.prio-btn.${selected}`).classList.add('active');
-            document.getElementById('selectedPrio').value = selected;
-        }
-
-        selectPrio('medium');
-    </script>
 
 </body>
 

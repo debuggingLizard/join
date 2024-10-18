@@ -41,13 +41,6 @@
     margin-bottom: 20px;
 }
 
-
-
-
-label {
-    font-weight: bold;
-}
-
 input,
 textarea,
 select {
@@ -66,29 +59,48 @@ select {
 
 .prio-btn {
     padding: 10px 20px;
-    border: none;
+    border: 1px solid #eee;
     border-radius: 5px;
     background-color: #f0f0f0;
     cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.prio-btn:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .prio-btn.urgent {
-    background-color: #FF3D00;
-    color: white;
+    background-color: white;
+    color: black;
 }
 
 .prio-btn.medium {
-    background-color: #FFA800;
-    color: white;
+    background-color: white;
+    color: black;
 }
 
 .prio-btn.low {
-    background-color: #7AE229;
+    background-color: white;
+    color: black;
+}
+
+.prio-btn.urgent.active {
+    background-color: #FF3D00;
+    font-weight: 700;
     color: white;
 }
 
-.prio-btn.active {
-    border: 2px solid #000;
+.prio-btn.medium.active {
+    background-color: #FFA800;
+    font-weight: 700;
+    color: white;
+}
+
+.prio-btn.low.active {
+    background-color: #7AE229;
+    font-weight: 700;
+    color: white;
 }
 
 .subtask-row {
@@ -134,4 +146,15 @@ select {
 .create-task-btn {
     background-color: #2A3647;
     color: white;
+}
+
+.required {
+    color: red;
+}
+
+.required-text {
+    font-size: 12px;
+    position: absolute;
+    left: 315px;
+    bottom: 40px;
 }
