@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./assets/css/icons/icons.css">
     <link rel="stylesheet" href="./responsive.css">
+    <link rel="stylesheet" href="./assets/css/task.css">
     <script src="script.js"></script>
+    <script src="./assets/js/task-view.js"></script>
 </head>
 
 <body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board')">
@@ -23,7 +25,86 @@
         <!-- HEADER -->
         <header id="header" class="header-wrapper">
         </header>
-    </div>    
+
+        <main class="main">
+            <!-- Single Task Card; must be rendered dynamically with DB data -->
+            <div class="task-view" onclick="openTaskDetail()">
+                <div class="userStory">User Story</div>
+                <div class="task-description">
+                    <h2>Kochwelt Page & Recipe Recommender</h2>
+                    <p>Build start page with recipe recommendation...</p>
+                </div>
+                <div class="progress-wrapper">
+                    <div class="progress" title="1 von 2 Tasks erledigt">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <span class="progress-text">1/2 Subtasks</span>
+                </div>
+                <div class="contributor-listing">
+                    <div class="task-contributors">
+                        <div class="contributor" style="background-color: #f54242;">AB</div>
+                        <div class="contributor" style="background-color: #42f554;">CD</div>
+                        <div class="contributor" style="background-color: #4287f5;">EF</div>
+                    </div>
+                    <img style="margin-top: 20px;" src="./assets/img/Priority symbols.svg" alt="">
+                </div>
+
+                <!-- Task Detailview Overlay -->
+                <div class="overlay" id="overlay" onclick="closeTaskDetail()">
+                    <div class="task-detail" id="task-detail" onclick="event.stopPropagation();">
+                        <div id="close-btn-task-detail" class="close-btn-task-detail" onclick="closeTaskDetail()">
+                            <img src="./assets/img/close.svg" alt="Close">
+                        </div>
+                        <div class="userStory">User Story</div>
+                        <h1>Kochwelt Page & Recipe Recommender</h1>
+                        <p>Build start page with recipe recommendation.</p>
+                        <div class="task-term">
+                            <div>
+                                <p>Due date:</p>
+                                <p>Priority:</p>
+                            </div>
+                            <div>
+                                <p>Date</p>
+                                <p>Urgency</p>
+                            </div>
+                        </div>
+                        <div class="assigned">
+                            <p>Assigned To:</p>
+                            <div class="contributor-placement">
+                                <div class="contributor" style="background-color: #f54242;">AB</div>
+                                <p>Alfred Bauer</p>
+                            </div>
+                            <div class="contributor-placement">
+                                <div class="contributor" style="background-color: #42f554;">CD</div>
+                                <p>Chriss Dreiyr</p>
+                            </div>
+                            <div class="contributor-placement">
+                                <div class="contributor" style="background-color: #4287f5;">EF</div>
+                                <p>Elfi Freud</p>
+                            </div>
+                        </div>
+                        <div class="subtask">
+                            <p style="margin-bottom: 10px;">Subtask</p>
+                            <div class="subtask-checkbox">
+                                <div class="check-subtask"><img class="checkbox-img" src="./assets/img/Rectangle 5.svg"
+                                        alt=""><span>Implement Recipe Recommendation</span></div>
+                                <div class="check-subtask"><img class="checkbox-img" src="./assets/img/Rectangle 5.svg"
+                                        alt=""><span>Start Page Layout</span></div>
+                            </div>
+                            <div class="task-edit-delete">
+                                <button class="task-edit-delete-btn"><img src="./assets/img/delete.svg" alt="">
+                                    <span>Delete</span>
+                                </button>
+                                <button class="task-edit-delete-btn"><img src="./assets/img/edit.svg" alt="">
+                                    <span>Edit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
 </body>
 
