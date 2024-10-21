@@ -1,7 +1,6 @@
 .contact-detail {
     display: flex;
     flex-direction: column;
-    /* height: calc(100vh - 92px); */
 }
 
 .contact-details-header {
