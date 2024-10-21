@@ -8,7 +8,7 @@
 .add-task-form {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding-left: 20px;
     margin-left: 60px;
 }
 
@@ -118,6 +118,8 @@ select {
 .subtask-row {
     position: relative;
     width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .add-subtask-btn {
@@ -134,12 +136,47 @@ select {
     cursor: pointer;
 }
 
+.clear-subtask-btn {
+    display: none;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    right: 220px;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    color: #2A3647;
+    cursor: pointer;
+}
+
 .add-subtask-btn:hover {
     background-color: #f0f0f0;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
 }
 
+.clear-subtask-btn:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
+.button-divider {
+    display: none;
+}
+
+.button-divider {
+    width: 0.5px;
+    height: 25px;
+    background-color: #2A3647;
+    position: absolute;
+    right: 218px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+}
 
 .form-actions {
     display: flex;
@@ -183,13 +220,6 @@ select {
 button {
     transition: transform color 100ms ease-in-out, border-color 100ms ease-in-out, fill 100ms ease-in-out;
 }
-
-button:not(.add-subtask-btn):hover {
-    transform: scale(1.01);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-
 
 button svg {
     margin-left: 5px;
@@ -238,20 +268,25 @@ button svg {
     margin-top: 10px;
 }
 
-.subtask-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    background-color: #fff;
-    border-radius: 4px;
-    margin-bottom: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 .subtask-actions button {
     background: none;
     border: none;
     cursor: pointer;
     margin-left: 10px;
+}
+
+.subtask-actions {
+    visibility: hidden;
+}
+
+.subtask-item:hover .subtask-actions {
+    visibility: visible;
+}
+
+.subtask-item {
+    display: flex;
+    justify-content: flex-start;
+    gap: 323px;
+    padding-left: 20px;
+    margin-bottom: 7px;
 }
