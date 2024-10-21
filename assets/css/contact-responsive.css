@@ -1,10 +1,15 @@
 @media (max-width: 1240px) {
+  .contact-list {
+    width: unset;
+  }
+
   .contact-list-add-button-wrapper {
     justify-content: left;
   }
 
   .contact-list-wrapper {
     left: 0;
+    width: unset;
   }
 
   .contact-details-header {
