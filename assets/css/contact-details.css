@@ -6,7 +6,7 @@
 .contact-details-header {
     display: flex;
     align-items: center;
-    padding: 90px 30px 30px;
+    padding: 90px 30px 30px 60px;
 }
 
 .contacts {
@@ -37,7 +37,7 @@
 .contact-information {
     display: flex;
     gap: 50px;
-    margin: 30px;
+    margin: 30px 30px 30px 60px;
 }
 
 .contact-detail-profile {
@@ -71,6 +71,14 @@
     right: 25px;
 }
 
+.contact-detail-arrow-left-responsive img {
+    cursor: pointer;
+}
+
+.contact-detail-arrow-left-responsive img:hover {
+    transform: scale(1.1);
+}
+
 .contact-detail-btn-wrapper {
     display: flex;
 
@@ -99,7 +107,7 @@
 }
 
 .contact-access {
-    margin-left: 30px;
+    margin-left: 60px;
 }
 
 .contact-access h3 {
@@ -118,6 +126,10 @@
 .contact-details-access a {
     text-decoration: none;
     color: #007CEE;
+}
+
+.contact-details-access a:hover {
+    color: #29ABE2;
 }
 
 .edit-delete-btn-responsive {

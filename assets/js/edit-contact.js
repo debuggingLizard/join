@@ -82,7 +82,7 @@ async function editContact() {
     };
 
     await putData("users", id, data);
-    renderContactDetail(id);
+    renderContactDetail(id, 'detail');
     renderContactList();
     hideEditContactOverlay();
     showNotification('Contact succesfully updated');
