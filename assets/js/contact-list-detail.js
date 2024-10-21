@@ -189,17 +189,22 @@ function getContactDetailTemplate(id, detailUser) {
 function openSlideIn(id) {
   const slideInContent = document.querySelector(".slide-in-content");
   slideInContent.innerHTML = `
-      <button class="contact-detail-btn" onclick="openEditContactModal('${id}')">
+      <button class="contact-detail-btn" onclick="openEditContactModal('${id}'); closeSlideIn()">
           <img src="./assets/img/edit.svg" alt="">
           <span>Edit</span>
       </button>
-      <button class="contact-detail-btn" onclick="deleteContact('${id}')">
+      <button class="contact-detail-btn" onclick="deleteContact('${id}'); toggleResponsiveVisibilityContact('list')">
           <img src="./assets/img/delete.svg" alt="">
           <span>Delete</span>
       </button>
   `;
   const slideIn = document.getElementById("slideIn");
   slideIn.classList.add("visible");
+}
+
+function removeResponsiveEditAfterDelete() {
+  let responsiveEditRef = document.getElementById('contact-detail-responsive-edit-delete-wrapper');
+  responsiveEditRef.innerHTML = "";
 }
 
 /**

@@ -24,7 +24,7 @@
         flex-direction: column;
         justify-content: end;
         font-size: 12px;
-        width: 76px;
+        width: 80px;
         height: 76px;
         padding: 12px;
         gap: 4px;
@@ -37,11 +37,11 @@
     }
 
     .container {
-        height: calc(100vh - 80px);
+        height: calc(100dvh - 80px);
     }
 
     .main {
-        height: calc(100vh - 92px - 80px);
+        height: calc(100dvh - 96px - 80px);
     }
 
     .header-wrapper {

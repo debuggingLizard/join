@@ -1,8 +1,13 @@
+.board-container {
+    overflow-y: scroll;
+}
+/* wie genau overflow gesetzt wird, bzw. welche elemente sticky sein sollen muss später noch gemacht werden, erstmal so hier, damit es funktional ist */
+
 .board-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 100px 60px;
+    padding: 60px 60px;
 }
 
 .right-board-header {

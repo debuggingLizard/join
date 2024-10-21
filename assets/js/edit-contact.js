@@ -82,7 +82,7 @@ async function editContact() {
     };
 
     await putData("users", id, data);
-    renderContactDetail(id);
+    renderContactDetail(id, 'detail');
     renderContactList();
     hideEditContactOverlay();
     showNotification('Contact succesfully updated');
@@ -93,7 +93,7 @@ async function editContact() {
  * Shows the edit contact overlay.
  */
 function showEditContactOverlay() {
-  document.getElementById("edit-contact-overlay").style.zIndex = 999;
+  document.getElementById("edit-contact-overlay").style.zIndex = 100;
   document.getElementById("edit-contact-overlay").style.backgroundColor =
     "rgb(0 0 0 / 30%)";
   document.getElementById("edit-contact-overlay-container").style.transform =
