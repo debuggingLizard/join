@@ -12,7 +12,7 @@
 
 body {
     display: flex;
-    height: 100vh;
+    height: 100dvh;
 }
 
 .d-none {
@@ -186,5 +186,5 @@ footer a:focus {
 .main {
     background-color: #F6F7F8;
     flex-grow: 1;
-    height: calc(100vh - 92px);
+    height: calc(100dvh - 96px);
 }
