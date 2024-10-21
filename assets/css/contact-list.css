@@ -146,3 +146,7 @@
     color: #007CEE;
     text-decoration: none;
 }
+
+.contact-list-contact-info a:hover {
+    color: #29ABE2;
+}

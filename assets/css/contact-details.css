@@ -120,6 +120,10 @@
     color: #007CEE;
 }
 
+.contact-details-access a:hover {
+    color: #29ABE2;
+}
+
 .edit-delete-btn-responsive {
     display: none;
 }
