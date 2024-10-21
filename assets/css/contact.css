@@ -296,7 +296,7 @@
     padding: 25px;
     border-radius: 20px;
     z-index: 999;
-    left: 70%;
+    right: 4%;
     transition: all 0.5s ease;
     transform: translateX(2000px);
 }

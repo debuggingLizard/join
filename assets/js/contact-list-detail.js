@@ -193,13 +193,18 @@ function openSlideIn(id) {
           <img src="./assets/img/edit.svg" alt="">
           <span>Edit</span>
       </button>
-      <button class="contact-detail-btn" onclick="deleteContact('${id}'); closeSlideIn()">
+      <button class="contact-detail-btn" onclick="deleteContact('${id}'); toggleResponsiveVisibilityContact('list')">
           <img src="./assets/img/delete.svg" alt="">
           <span>Delete</span>
       </button>
   `;
   const slideIn = document.getElementById("slideIn");
   slideIn.classList.add("visible");
+}
+
+function removeResponsiveEditAfterDelete() {
+  let responsiveEditRef = document.getElementById('contact-detail-responsive-edit-delete-wrapper');
+  responsiveEditRef.innerHTML = "";
 }
 
 /**
