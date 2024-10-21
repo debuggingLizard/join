@@ -4,6 +4,7 @@
     background-color: white;
     display: flex;
     flex-direction: column;
+    box-shadow: 4px 0px 6px 0px #00000014;
 }
 
 .contact-list::-webkit-scrollbar {
