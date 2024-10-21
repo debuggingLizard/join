@@ -71,6 +71,14 @@
     right: 25px;
 }
 
+.contact-detail-arrow-left-responsive img {
+    cursor: pointer;
+}
+
+.contact-detail-arrow-left-responsive img:hover {
+    transform: scale(1.1);
+}
+
 .contact-detail-btn-wrapper {
     display: flex;
 
