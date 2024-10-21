@@ -17,10 +17,10 @@ function selectPrio(selected) {
  * resets to + when cleared or subtask is added.
  */
 document.addEventListener("DOMContentLoaded", function () {
-  const subtaskInput = document.getElementById("subtasks");
-  const clearBtn = document.querySelector(".clear-subtask-btn");
-  const divider = document.querySelector(".button-divider");
-  const addBtn = document.querySelector(".add-subtask-btn");
+  let subtaskInput = document.getElementById("subtasks");
+  let clearBtn = document.querySelector(".clear-subtask-btn");
+  let divider = document.querySelector(".button-divider");
+  let addBtn = document.querySelector(".add-subtask-btn");
   if (subtaskInput) {
     subtaskInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
@@ -52,14 +52,14 @@ document.addEventListener("DOMContentLoaded", function () {
  * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button and divider.
  */
 function addSubtask() {
-  const subtaskInput = document.getElementById("subtasks");
-  const subtaskValue = subtaskInput.value.trim();
-  const addBtn = document.querySelector(".add-subtask-btn");
-  const clearBtn = document.querySelector(".clear-subtask-btn");
-  const divider = document.querySelector(".button-divider");
+  let subtaskInput = document.getElementById("subtasks");
+  let subtaskValue = subtaskInput.value.trim();
+  let addBtn = document.querySelector(".add-subtask-btn");
+  let clearBtn = document.querySelector(".clear-subtask-btn");
+  let divider = document.querySelector(".button-divider");
   if (subtaskValue) {
-    const subtaskList = document.getElementById("subtask-list");
-    const listItem = document.createElement("li");
+    let subtaskList = document.getElementById("subtask-list");
+    let listItem = document.createElement("li");
     listItem.classList.add("subtask-item");
     listItem.innerHTML = `
       <span class="subtask-title">${subtaskValue}</span>
@@ -81,9 +81,9 @@ function addSubtask() {
  * @param {HTMLElement} button - The button clicked to edit the subtask.
  */
 function editSubtask(button) {
-  const listItem = button.parentElement.parentElement;
-  const subtaskTitle = listItem.querySelector(".subtask-title");
-  const newTitle = prompt("Edit subtask:", subtaskTitle.textContent);
+  let listItem = button.parentElement.parentElement;
+  let subtaskTitle = listItem.querySelector(".subtask-title");
+  let newTitle = prompt("Edit subtask:", subtaskTitle.textContent);
   if (newTitle !== null) {
     subtaskTitle.textContent = newTitle.trim();
   }
@@ -94,7 +94,7 @@ function editSubtask(button) {
  * @param {HTMLElement} button - The button clicked to delete the subtask.
  */
 function deleteSubtask(button) {
-  const listItem = button.parentElement.parentElement;
+  let listItem = button.parentElement.parentElement;
   listItem.remove();
 }
 
@@ -102,6 +102,6 @@ function deleteSubtask(button) {
  * Clears the subtask input field.
  */
 function clearSubtaskInput() {
-  const subtaskInput = document.getElementById("subtasks");
+  let subtaskInput = document.getElementById("subtasks");
   subtaskInput.value = "";
 }
