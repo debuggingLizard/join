@@ -174,7 +174,27 @@
 }
 .edit-task{
     margin: 80px 30px 0;
+    max-height: 810px;
+    overflow-y: auto;
 }
+.edit-task::-webkit-scrollbar{
+    width: 15px;
+    
+}
+.edit-task::-webkit-scrollbar-track {
+    background: #d4d0d0; /* Farbe des Scrollbalken-Hintergrunds */
+}
+.edit-task::-webkit-scrollbar-thumb {
+    background-color: #888; /* Farbe des Scrollbalken-Daumen */
+    border-radius: 10px; /* Abgerundete Ecken */
+    border: 2px solid #f1f1f1; /* Äußere Umrandung für den Daumen */
+}
+.edit-task::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Farbe beim Hover-Effekt */
+}
+    
+    
+
 
 .edit-task input {
     width: 100%;
@@ -253,7 +273,7 @@
   }
   .edit-task-subtask-listing-wrapper {
     position: relative; 
-    padding-bottom: 40px; 
+    padding-bottom: 110px; 
 }
 
 .edit-task-btn {
@@ -268,6 +288,7 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+    margin: 30px 10px 40px;
 }
 
 .edit-task-btn:hover {
