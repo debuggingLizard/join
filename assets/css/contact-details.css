@@ -6,7 +6,7 @@
 .contact-details-header {
     display: flex;
     align-items: center;
-    padding: 90px 30px 30px;
+    padding: 90px 30px 30px 60px;
 }
 
 .contacts {
@@ -37,7 +37,7 @@
 .contact-information {
     display: flex;
     gap: 50px;
-    margin: 30px;
+    margin: 30px 30px 30px 60px;
 }
 
 .contact-detail-profile {
@@ -107,7 +107,7 @@
 }
 
 .contact-access {
-    margin-left: 30px;
+    margin-left: 60px;
 }
 
 .contact-access h3 {
