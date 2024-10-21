@@ -207,7 +207,12 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .add-contact-responsive-btn:hover {
+    background-color: #29abe2;
+    transition: 100ms ease-in;
   }
 
   .edit-delete-btn-responsive {
@@ -223,7 +228,12 @@
     bottom: 120px;
     right: 20px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .edit-delete-btn-responsive:hover {
+    background-color: #29abe2;
+    transition: 100ms ease-in;
   }
 
   .dot {
@@ -244,7 +254,7 @@
     background-color: #ffffff;
     transition: right 0.4s ease;
     z-index: 10;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   }
 
   .slide-in.visible {
