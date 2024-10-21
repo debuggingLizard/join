@@ -99,7 +99,6 @@ footer a:focus {
     display: flex;
     flex-direction: column;
     background-color: #F6F7F8;
-    padding-bottom: 50px;
 }
 
 .header-wrapper {
