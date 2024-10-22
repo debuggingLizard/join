@@ -7,6 +7,7 @@
     <title>Add Task | JOIN</title>
     <link rel="shortcut icon" href="./assets/img/JoinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/css/icons/icons.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
     <script src="./script.js"></script>
@@ -56,10 +57,9 @@
                         <!-- priority -->
                         <label>Prio</label>
                         <div class="prio-options">
-                            <button type="button" class="prio-btn urgent" onclick="selectPrio('urgent')">Urgent</button>
-                            <button type="button" class="prio-btn medium active"
-                                onclick="selectPrio('medium')">Medium</button>
-                            <button type="button" class="prio-btn low" onclick="selectPrio('low')">Low</button>
+                            <button type="button" class="prio-btn urgent" onclick="selectPrio('urgent')">Urgent<span class="icon-urgent"></span></button>
+                            <button type="button" class="prio-btn medium active" onclick="selectPrio('medium')">Medium <span class="icon-medium"></span></button>
+                            <button type="button" class="prio-btn low" onclick="selectPrio('low')">Low <span class="icon-low"></span></button>
                         </div>
                         <input type="hidden" id="selectedPrio" name="prio" value="medium">
 
