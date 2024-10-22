@@ -46,11 +46,7 @@
 
 #category {
     margin-bottom: 15px;
-}
-
-#category:hover {
     cursor: pointer;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
 }
 
 input,
@@ -185,8 +181,6 @@ select {
 .form-actions {
     display: flex;
     justify-content: space-between;
-    /* margin-top: 60px;
-    margin-right: 145px; */
     gap: 10px;
 }
 
@@ -262,7 +256,6 @@ button svg {
 
 #contactsToAssign:hover {
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2)
 }
 
 .subtask-list {
@@ -289,16 +282,10 @@ button svg {
 .subtask-item {
     display: flex;
     justify-content: flex-start;
-    padding-left: 20px;
-    margin-bottom: 7px;
+    padding: 0 0 2px 20px;
 }
 
 .subtask-item span {
     flex:1;
-}
-
-.subtask-item span:hover {
     cursor: pointer;
 }
-
-
