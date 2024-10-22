@@ -287,7 +287,6 @@ button svg {
 .subtask-item {
     display: flex;
     justify-content: flex-start;
-    /* gap: 323px; */
     padding-left: 20px;
     margin-bottom: 7px;
 }
