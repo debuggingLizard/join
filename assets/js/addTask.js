@@ -70,7 +70,7 @@ function addSubtask() {
     let listItem = document.createElement("li");
     listItem.classList.add("subtask-item");
     listItem.innerHTML = `
-      <span class="subtask-title">${subtaskValue}</span>
+      <span ondbclick="editSubtask(this)" class="subtask-title">${subtaskValue}</span>
       <div class="subtask-actions">
         <button type="button" class="edit-subtask-btn" onclick="editSubtask(this)"><img src="./assets/buttons/edit.svg" alt="Edit" style="width: 16px; height: 16px;"></button>
         <button type="button" class="delete-subtask-btn" onclick="deleteSubtask(this)"><img src="./assets/buttons/delete.svg" alt="Delete" style="width: 16px; height: 16px;"></button>

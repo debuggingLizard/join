@@ -287,7 +287,17 @@ button svg {
 .subtask-item {
     display: flex;
     justify-content: flex-start;
-    gap: 323px;
+    /* gap: 323px; */
     padding-left: 20px;
     margin-bottom: 7px;
 }
+
+.subtask-item span {
+    flex:1;
+}
+
+.subtask-item span:hover {
+    cursor: pointer;
+}
+
+
