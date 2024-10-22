@@ -97,21 +97,10 @@ async function taskContributorTemplate(userId) {
 }
 
 function search(query) {
-    if (query.length >= 1) {
-        searchValue = query.trim().toLowerCase();
-        console.log(searchValue);
-        
-    } else {
-        searchValue = '';
-    }
-
-    renderBoards();
-}
-
-function debouncedSearch(query) {
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(function () {
-        search(query);
+        searchValue = query.trim().toLowerCase();
+        renderBoards();
     }, 500);
 }
