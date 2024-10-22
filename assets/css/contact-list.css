@@ -4,6 +4,7 @@
     background-color: white;
     display: flex;
     flex-direction: column;
+    box-shadow: 4px 0px 6px 0px #00000014;
 }
 
 .contact-list::-webkit-scrollbar {
@@ -145,4 +146,8 @@
     line-height: 19.2px;
     color: #007CEE;
     text-decoration: none;
+}
+
+.contact-list-contact-info a:hover {
+    color: #29ABE2;
 }
