@@ -34,11 +34,11 @@
                 <h1>Board</h1>
                 <div class="right-board-header">
                     <label class="search-label">
-                        <input type="text" placeholder="Find Task">
+                        <input type="text" placeholder="Find Task" onkeyup="debouncedSearch(this.value)">
                         <span></span>
                         <div class="icon icon-search"></div>
                     </label>
-                    <button onclick="renderTasks()">Add task</button>
+                    <button>Add task</button>
                 </div>
             </section>
 

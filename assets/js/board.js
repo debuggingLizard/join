@@ -3,9 +3,20 @@ let todoTasks = [];
 let progressTasks = [];
 let feedbackTasks = [];
 let doneTasks = [];
+let searchValue = '';
+let timeoutId;
 
 async function renderBoards() {
     tasks = await getData('tasks');
+
+    if (searchValue.length >= 1) {
+        filterTasks = Object.entries(tasks).filter(task =>
+            task[1].title.toLowerCase().includes(searchValue) ||
+            task[1].description.toLowerCase().includes(searchValue)
+        );
+        tasks = Object.fromEntries(filterTasks)
+    }
+
     todoTasks = getTasksByStatus('todo');
     progressTasks = getTasksByStatus('progress');
     feedbackTasks = getTasksByStatus('await-feedback');
@@ -83,4 +94,24 @@ function subTaskTemplate(taskDetail) {
 async function taskContributorTemplate(userId) {
     let userDetail = await getData('users/' + userId);
     return /*html*/ `<div class="contributor" style="background-color: ${userDetail.color};">${userDetail.profileImage}</div>`;
+}
+
+function search(query) {
+    if (query.length >= 1) {
+        searchValue = query.trim().toLowerCase();
+        console.log(searchValue);
+        
+    } else {
+        searchValue = '';
+    }
+
+    renderBoards();
+}
+
+function debouncedSearch(query) {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(function () {
+        search(query);
+    }, 500);
 }
