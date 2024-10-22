@@ -1,5 +1,6 @@
 .contact-container {
     display: flex;
+    height: 100px;
 }
 
 .add-contact-wrapper,
