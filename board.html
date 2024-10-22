@@ -29,19 +29,20 @@
         <header id="header" class="header-wrapper">
         </header>
 
-        <main class="main board-container">
+        <main class="main">
             <section class="board-header">
                 <h1>Board</h1>
                 <div class="right-board-header">
                     <label class="search-label">
-                        <input type="text" placeholder="Find Task">
+                        <input type="text" placeholder="Find Task" onkeyup="search(this.value)">
                         <span></span>
                         <div class="icon icon-search"></div>
                     </label>
-                    <button onclick="renderTasks()">Add task</button>
+                    <button>Add task</button>
                 </div>
             </section>
 
+            <!-- Board columns -->
             <section class="board-middle">
                 <div class="boards">
                     <div class="board-title">
@@ -49,11 +50,9 @@
                         <div class="icon icon-add"></div>
                     </div>
                     <div class="board-tasks" id="todo-tasks">
-                        
+
                     </div>
                 </div>
-
-
                 <div class="boards">
                     <div class="board-title">
                         <h3>In progress</h3>
@@ -62,8 +61,6 @@
                     <div class="board-tasks" id="progress-tasks">
                     </div>
                 </div>
-
-
                 <div class="boards">
                     <div class="board-title">
                         <h3>Await feedback</h3>
@@ -72,8 +69,6 @@
                     <div class="board-tasks" id="await-feedback-tasks">
                     </div>
                 </div>
-
-
                 <div class="boards">
                     <div class="board-title">
                         <h3>Done</h3>
@@ -82,8 +77,6 @@
                     </div>
                 </div>
             </section>
-
-
 
             <!-- Task Detailview Overlay -->
             <div class="overlay" id="overlay" onclick="closeTaskDetail()">
