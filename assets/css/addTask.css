@@ -29,21 +29,9 @@
     flex: 1;
 }
 
-#description {
-    margin-bottom: 15px;
-    cursor: pointer;
-}
-
-#title {
-    margin-bottom: 15px;
-    cursor: pointer;
-}
-
-#due-date {
-    margin-bottom: 15px;
-    cursor: pointer;
-}
-
+#description,
+#title,
+#due-date,
 #category {
     margin-bottom: 15px;
     cursor: pointer;
@@ -66,52 +54,70 @@ select {
 }
 
 .prio-btn {
-    padding: 10px 20px;
-    border: 1px solid #eee;
-    border-radius: 5px;
+    padding: 12px 10px;
+    border: unset;
+    border-radius: 10px;
     background-color: #f0f0f0;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
+    display: flex;
+    gap: 6px;
+    font-size: 16px;
+}
+
+.prio-btn span {
+    display: flex;
+    align-items: center;
+    height:100%;
 }
 
 .prio-btn:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.prio-btn.urgent {
-    background-color: white;
-    color: black;
-}
-
-.prio-btn.medium {
-    background-color: white;
-    color: black;
-}
-
+.prio-btn.urgent,
+.prio-btn.medium,
 .prio-btn.low {
     background-color: white;
     color: black;
 }
 
-.prio-btn.urgent.active {
-    background-color: #FF3D00;
+.prio-btn.urgent span {
+    color: #FF3D00;
+}
+
+.prio-btn.medium span {
+    color: #FFA800;
+}
+
+.prio-btn.low span {
+    color: #7AE229;
+}
+
+.prio-btn.urgent.active,
+.prio-btn.medium.active,
+.prio-btn.low.active,
+.prio-btn.urgent.active span,
+.prio-btn.medium.active span,
+.prio-btn.low.active span {
     font-weight: 700;
     color: white;
+}
+
+.prio-btn.urgent.active {
+    background-color: #FF3D00;
 }
 
 .prio-btn.medium.active {
     background-color: #FFA800;
-    font-weight: 700;
-    color: white;
 }
 
 .prio-btn.low.active {
     background-color: #7AE229;
-    font-weight: 700;
-    color: white;
 }
 
-#subtasks {
+#subtasks,
+#contactsToAssign {
     cursor: pointer;
 }
 
@@ -184,13 +190,29 @@ select {
     gap: 10px;
 }
 
+.add-task-button-wrapper {
+    display: flex;
+    gap: 16px;
+}
+
 .cancel-btn,
 .create-task-btn {
-    padding: 10px 20px;
+    padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.cancel-btn span,
+.create-task-btn span {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 12px;
 }
 
 .cancel-btn {
@@ -214,48 +236,15 @@ select {
     align-items: end;
 }
 
-button {
-    transition: transform color 100ms ease-in-out, border-color 100ms ease-in-out, fill 100ms ease-in-out;
-}
-
-button svg {
-    margin-left: 5px;
-    vertical-align: middle;
-}
-
-.cancel-btn svg path {
-    fill: #2A3647;
-}
-
-.create-task-btn svg path {
-    fill: white;
-}
-
-.cancel-btn svg {
-    width: 10px;
-    height: 10px;
-}
-
-.create-task-btn svg {
-    width: 20px;
-    height: 20px;
-}
-
 .cancel-btn:hover {
     color: #29abe2;
     border: 1px solid #29abe2;
-}
-
-.cancel-btn:hover svg path {
-    fill: #29abe2;
+    box-shadow: 0px 4px 4px 0px #00000040;
 }
 
 .create-task-btn:hover {
     background-color: #29abe2;
-}
-
-#contactsToAssign:hover {
-    cursor: pointer;
+    box-shadow: 0px 4px 4px 0px #00000040;
 }
 
 .subtask-list {
