@@ -132,16 +132,16 @@
                             <button class="task-edit-delete-btn"><img src="./assets/img/delete.svg" alt="">
                                 <span>Delete</span>
                             </button>
-                            <button class="task-edit-delete-btn"><img src="./assets/img/edit.svg" alt="">
+                            <button onclick="editTask()" class="task-edit-delete-btn"><img src="./assets/img/edit.svg" alt="">
                                 <span>Edit</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!--wenn edit-task fertig das style aus dem wrapper nehmen und display-non in overlay wieder aktivieren-->
-                <div class="edit-task-wrapper" style="position: fixed; top: 10px;left: 5px;">
-                    <div class="edit-task" onclick="event.stopPropagation();">
+                <!-- Note: The edit-task is influenced by both addTask.css and task.css -->
+                <div class="edit-task-wrapper">
+                    <div class="edit-task" id="edit-task " onclick="event.stopPropagation();">
                         <div id="close-btn-task-detail" class="close-btn-task-detail" onclick="closeTaskDetail()">
                             <img src="./assets/img/close.svg" alt="Close">
                         </div>
@@ -193,32 +193,35 @@
                                     <div class="edit-task-subtask-listing-wrapper">
                                         <div class="edit-task-subtask-listing">
                                             <p><span class="subtask-dot"></span>Implement Recipe Recommendation</p>
+                                            <div class="edit-task-subtask-listing-icons">
+                                                <img src="./assets/img/edit.svg" alt="Edit Subtask" title="Edit">
+                                                <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete">
+                                            </div>
                                         </div>
                                         <div class="edit-task-subtask-listing">
                                             <p><span class="subtask-dot"></span>Start Page Layout</p>
+                                            <div class="edit-task-subtask-listing-icons">
+                                                <img src="./assets/img/edit.svg" alt="Edit Subtask" title="Edit">
+                                                <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete">
+                                            </div>
                                         </div>
-
-                                           
-                                       
                                     </div>  
                     </div>
 
-                        <div class="edit-task-confirm-btn">
-                            <button type="submit" class="edit-task-btn">Ok<svg width="25" height="24" 
-                                viewBox="0 0 25 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                                
-                                                                              
-                                <g mask="url(#mask0_75592_9963)">
-                                    <path
-                                        d="M9.69474 15.15L18.1697 6.675C18.3697 6.475 18.6072 6.375 18.8822 6.375C19.1572 6.375 19.3947 6.475 19.5947 6.675C19.7947 6.875 19.8947 7.1125 19.8947 7.3875C19.8947 7.6625 19.7947 7.9 19.5947 8.1L10.3947 17.3C10.1947 17.5 9.96141 17.6 9.69474 17.6C9.42807 17.6 9.19474 17.5 8.99474 17.3L4.69474 13C4.49474 12.8 4.3989 12.5625 4.40724 12.2875C4.41557 12.0125 4.51974 11.775 4.71974 11.575C4.91974 11.375 5.15724 11.275 5.43224 11.275C5.70724 11.275 5.94474 11.375 6.14474 11.575L9.69474 15.15Z"
-                                        fill="white" />
-                                </g>
-                                </svg>
-                            </button>  
-                        </div>
-
+                    <div class="edit-task-confirm-btn" onclick="event.stopPropagation(); confirmEdit();">
+                        <button type="submit" class="edit-task-btn" onclick="confirmEdit()">Ok<svg width="25" height="24" 
+                            viewBox="0 0 25 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            
+                                                                            
+                            <g mask="url(#mask0_75592_9963)">
+                                <path
+                                    d="M9.69474 15.15L18.1697 6.675C18.3697 6.475 18.6072 6.375 18.8822 6.375C19.1572 6.375 19.3947 6.475 19.5947 6.675C19.7947 6.875 19.8947 7.1125 19.8947 7.3875C19.8947 7.6625 19.7947 7.9 19.5947 8.1L10.3947 17.3C10.1947 17.5 9.96141 17.6 9.69474 17.6C9.42807 17.6 9.19474 17.5 8.99474 17.3L4.69474 13C4.49474 12.8 4.3989 12.5625 4.40724 12.2875C4.41557 12.0125 4.51974 11.775 4.71974 11.575C4.91974 11.375 5.15724 11.275 5.43224 11.275C5.70724 11.275 5.94474 11.375 6.14474 11.575L9.69474 15.15Z"
+                                    fill="white" />
+                            </g>
+                            </svg>
+                        </button>  
+                    </div>
                  </div>
-
             </div>
 
             <!-- Add Task Overlay -->
