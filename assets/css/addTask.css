@@ -1,15 +1,19 @@
+.add-task-content {
+    display: flex;
+    flex-direction: column;
+}
+
 #add-task-title {
-    margin-top: 60px;
-    margin-left: 79px;
-    margin-bottom: 0;
+    padding: 32px 60px 16px;
     font-size: 40px;
 }
 
 .add-task-form {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    padding-left: 20px;
-    margin-left: 60px;
+    justify-content: space-between;
+    padding: 0px 60px 32px;
 }
 
 .form-row {
@@ -21,32 +25,28 @@
 .form-column {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     flex: 1;
 }
 
 #description {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     cursor: pointer;
 }
 
 #title {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     cursor: pointer;
 }
 
 #due-date {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     cursor: pointer;
 }
 
 #category {
-    margin-bottom: 20px;
-}
-
-#category:hover {
+    margin-bottom: 15px;
     cursor: pointer;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
 }
 
 input,
@@ -62,7 +62,7 @@ select {
 .prio-options {
     display: flex;
     gap: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .prio-btn {
@@ -123,8 +123,8 @@ select {
 }
 
 .add-subtask-btn {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     position: absolute;
     right: 190px;
     top: 50%;
@@ -180,9 +180,7 @@ select {
 
 .form-actions {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 50px;
-    margin-right: 180px;
+    justify-content: space-between;
     gap: 10px;
 }
 
@@ -212,9 +210,8 @@ select {
 
 .required-text {
     font-size: 12px;
-    position: absolute;
-    left: 315px;
-    bottom: 40px;
+    display: flex;
+    align-items: end;
 }
 
 button {
@@ -259,7 +256,6 @@ button svg {
 
 #contactsToAssign:hover {
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2)
 }
 
 .subtask-list {
@@ -286,7 +282,10 @@ button svg {
 .subtask-item {
     display: flex;
     justify-content: flex-start;
-    gap: 323px;
-    padding-left: 20px;
-    margin-bottom: 7px;
+    padding: 0 0 2px 20px;
+}
+
+.subtask-item span {
+    flex:1;
+    cursor: pointer;
 }
