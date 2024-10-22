@@ -183,6 +183,7 @@ select {
     justify-content: flex-end;
     margin-top: 100px;
     margin-right: 145px;
+    margin-bottom: 60px;
     gap: 10px;
 }
 

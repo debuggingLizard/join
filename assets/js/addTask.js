@@ -83,9 +83,29 @@ function addSubtask() {
 function editSubtask(button) {
   let listItem = button.parentElement.parentElement;
   let subtaskTitle = listItem.querySelector(".subtask-title");
-  let newTitle = prompt("Edit subtask:", subtaskTitle.textContent);
-  if (newTitle !== null) {
-    subtaskTitle.textContent = newTitle.trim();
+  let inputField = document.createElement("input");
+  inputField.type = "text";
+  inputField.value = subtaskTitle.textContent;
+  inputField.classList.add("edit-input");
+  listItem.replaceChild(inputField, subtaskTitle);
+  inputField.addEventListener("blur", function () {
+    saveSubtaskEdit(listItem, inputField);
+  });
+  inputField.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      saveSubtaskEdit(listItem, inputField);
+    }
+  });
+  inputField.focus();
+}
+
+function saveSubtaskEdit(listItem, inputField) {
+  let newTitle = inputField.value.trim();
+  if (newTitle !== "") {
+    let newSubtaskTitle = document.createElement("span");
+    newSubtaskTitle.classList.add("subtask-title");
+    newSubtaskTitle.textContent = newTitle;
+    listItem.replaceChild(newSubtaskTitle, inputField);
   }
 }
 
