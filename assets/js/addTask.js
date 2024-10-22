@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let clearBtn = document.querySelector(".clear-subtask-btn");
   let divider = document.querySelector(".button-divider");
   let addBtn = document.querySelector(".add-subtask-btn");
+  let subtaskList = document.getElementById("subtask-list");
   if (subtaskInput) {
     subtaskInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
@@ -32,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         clearBtn.style.display = "block";
         divider.style.display = "block";
         addBtn.innerHTML =
-          '<img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 20px; height: 20px;">';
+          '<img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 23px; height: 23px;">';
       } else {
         clearBtn.style.display = "none";
         divider.style.display = "none";
@@ -44,6 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
       clearBtn.style.display = "none";
       divider.style.display = "none";
       addBtn.innerHTML = "+";
+    });
+    subtaskList.addEventListener("dblclick", function (event) {
+      if (event.target && event.target.classList.contains("subtask-title")) {
+        const editButton =
+          event.target.parentElement.querySelector(".edit-subtask-btn");
+        editSubtask(editButton); // Ruft die Editierfunktion auf
+      }
     });
   }
 });
@@ -77,8 +85,10 @@ function addSubtask() {
 }
 
 /**
- * Edits the text of an existing subtask.
- * @param {HTMLElement} button - The button clicked to edit the subtask.
+ * Enables inline subtask editing with an input field.
+ * Save changes by clicking the checkmark or pressing Enter.
+ *
+ * @param {HTMLElement} button - The edit button clicked.
  */
 function editSubtask(button) {
   let listItem = button.parentElement.parentElement;
@@ -88,12 +98,24 @@ function editSubtask(button) {
   inputField.value = subtaskTitle.textContent;
   inputField.classList.add("edit-input");
   listItem.replaceChild(inputField, subtaskTitle);
-  inputField.addEventListener("blur", function () {
+  button.style.display = "none";
+  let saveBtn = document.createElement("button");
+  saveBtn.innerHTML = `
+    <img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 20px; height: 20px;">
+  `;
+  saveBtn.classList.add("save-subtask-btn");
+  let actionsContainer = button.parentElement;
+  actionsContainer.appendChild(saveBtn);
+  saveBtn.addEventListener("click", function () {
     saveSubtaskEdit(listItem, inputField);
+    button.style.display = "inline-block";
+    saveBtn.remove();
   });
   inputField.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       saveSubtaskEdit(listItem, inputField);
+      button.style.display = "inline-block";
+      saveBtn.remove();
     }
   });
   inputField.focus();
