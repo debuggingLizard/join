@@ -1,15 +1,19 @@
+.add-task-content {
+    display: flex;
+    flex-direction: column;
+}
+
 #add-task-title {
-    margin-top: 30px;
-    margin-left: 79px;
-    margin-bottom: 10px;
+    padding: 32px 60px 16px;
     font-size: 40px;
 }
 
 .add-task-form {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    padding-left: 20px;
-    margin-left: 60px;
+    justify-content: space-between;
+    padding: 0px 60px 32px;
 }
 
 .form-row {
@@ -180,10 +184,9 @@ select {
 
 .form-actions {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 100px;
-    margin-right: 145px;
-    margin-bottom: 60px;
+    justify-content: space-between;
+    /* margin-top: 60px;
+    margin-right: 145px; */
     gap: 10px;
 }
 
@@ -213,9 +216,8 @@ select {
 
 .required-text {
     font-size: 12px;
-    position: absolute;
-    left: 315px;
-    bottom: 40px;
+    display: flex;
+    align-items: end;
 }
 
 button {
