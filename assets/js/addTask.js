@@ -30,13 +30,11 @@ function updateAssignedContacts() {
         const id = checkbox.dataset.id;
         const color = checkbox.dataset.color;
         const initials = checkbox.dataset.initials;
-        const div = document.createElement('div');
-        div.innerHTML = `<span id="${id}" style="background-color:${color}">${initials}</span>`;
-        assignedContactsDiv.appendChild(div);
+        assignedContactsDiv.innerHTML += `<span id="${id}" style="background-color:${color}">${initials}</span>`;
     } else {
-        const divToRemove = Array.from(assignedContactsDiv.children).find(div => div.querySelector('span').id === checkbox.dataset.id);
-        if (divToRemove) {
-            assignedContactsDiv.removeChild(divToRemove);
+        const spanToRemove = Array.from(assignedContactsDiv.children).find(span => span.id === checkbox.id);
+        if (spanToRemove) {
+            assignedContactsDiv.removeChild(spanToRemove);
         }
     }
 });
@@ -271,5 +269,17 @@ function checkRequiredFields() {
 
 
 function createTask() {
-  
+  let title = document.getElementById('title').value;
+  let description = document.getElementById('description').value;
+  let users;
+  let date;
+  let priority;
+  let category;
+  let subtasks; 
+  let status = "todo";
+
+  const data = {
+    
+
+  };
 }
