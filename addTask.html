@@ -33,7 +33,7 @@
             <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createTask();">
                 <div class="form-row">
                     <!-- Left column -->
-                    <div class="form-column">
+                    <div class="form-column left">
                         <label for="title">Title<span class="required">*</span></label>
                         <input type="text" id="title" name="title" placeholder="Enter a title" required>
 
@@ -52,6 +52,7 @@
                         <!-- due date -->
                         <label for="due-date">Due date<span class="required">*</span></label>
                         <input type="date" id="due-date" name="due-date" required>
+                        <span id="incorrect-date" class="error">Due Date cannot be in the past</span>
 
                         <!-- priority -->
                         <label>Prio</label>
@@ -74,12 +75,10 @@
                         <label for="subtasks">Subtasks</label>
                         <div class="subtask-row">
                             <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                            <button type="button" class="clear-subtask-btn" onclick="clearSubtaskInput()">
-                                <img src="./assets/buttons/clearTask.svg" alt="Clear Subtask">
-                            </button>
-                            <div class=" button-divider">
+                            <div class="subtask-buttons">
+                                <button type="button" class="clear-subtask-btn icon-close" onclick="clearSubtaskInput()"></button>
+                                <button type="button" class="add-subtask-btn icon-add" onclick="addSubtask()"></button>
                             </div>
-                            <button type="button" class="add-subtask-btn" onclick="addSubtask()">+</button>
                         </div>
                         <ul id="subtask-list" class="subtask-list">
                             <!-- Dynamic subtask list -->

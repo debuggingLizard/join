@@ -29,11 +29,14 @@
     flex: 1;
 }
 
+.form-column.left {
+    border-right: 1px solid #D1D1D1;
+}
+
 #description,
 #title,
 #due-date,
 #category {
-    margin-bottom: 15px;
     cursor: pointer;
 }
 
@@ -41,15 +44,27 @@ input,
 textarea,
 select {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 70%;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    width: 100%;
     font-size: 16px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border: 1px solid #29ABE2;
+    outline: none;
 }
 
 label {
     width:fit-content;
     cursor: pointer;
+}
+
+.error {
+    font-size: 12px;
+    color: #FF8190;
 }
 
 .prio-options {
@@ -59,13 +74,14 @@ label {
 }
 
 .prio-btn {
+    flex:1;
     padding: 12px 10px;
     border: unset;
     border-radius: 10px;
-    background-color: #f0f0f0;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
     display: flex;
+    justify-content: center;
     gap: 6px;
     font-size: 16px;
 }
@@ -78,6 +94,10 @@ label {
 
 .prio-btn:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.prio-btn.active:hover {
+    box-shadow: none;
 }
 
 .prio-btn.urgent,
@@ -133,60 +153,52 @@ label {
     align-items: center;
 }
 
-.add-subtask-btn {
-    width: 25px;
-    height: 25px;
+.subtask-buttons,
+.subtask-actions {
     position: absolute;
-    right: 190px;
-    top: 50%;
-    transform: translateY(-50%);
+    height: 100%;
+    right: 2%;
+    display: flex;
+    align-items: center;
+}
+
+.add-subtask-btn {
     border: none;
     background-color: transparent;
-    font-size: 24px;
+    font-size: 14px;
     color: #2A3647;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 .clear-subtask-btn {
     display: none;
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 50%;
-    right: 220px;
-    transform: translateY(-50%);
+    height: 100%;
     border: none;
     background-color: transparent;
-    font-size: 24px;
+    font-size: 12px;
     color: #2A3647;
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
+
 }
 
-.add-subtask-btn:hover {
+.add-subtask-btn::before,
+.clear-subtask-btn::before {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+}
+
+.add-subtask-btn:hover::before,
+.clear-subtask-btn:hover::before,
+.subtask-actions button:hover {
     background-color: #f0f0f0;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
-}
-
-.clear-subtask-btn:hover {
-    background-color: #f0f0f0;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
-}
-
-.button-divider {
-    display: none;
-}
-
-.button-divider {
-    width: 0.5px;
-    height: 25px;
-    background-color: #2A3647;
-    position: absolute;
-    right: 218px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.5;
 }
 
 .form-actions {
@@ -255,7 +267,7 @@ label {
 .subtask-list {
     list-style: none;
     padding: 0;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
 .subtask-actions button {
@@ -267,6 +279,11 @@ label {
 
 .subtask-actions {
     visibility: hidden;
+    position: absolute;
+}
+
+.subtask-item:hover {
+    background-color: #eeeeee;
 }
 
 .subtask-item:hover .subtask-actions {
@@ -276,12 +293,21 @@ label {
 .subtask-item {
     display: flex;
     justify-content: flex-start;
-    padding: 0 0 2px 20px;
+    margin: 0 0 2px 18px;
+    padding: 2px;
+    position: relative;
 }
 
 .subtask-item span {
     flex: 1;
     cursor: pointer;
+}
+
+.subtask-item input {
+    padding: 0;
+    border:none;
+    border-bottom: 1px solid #29ABE2;
+    border-radius: 0;
 }
 
 .create-task-btn:disabled {

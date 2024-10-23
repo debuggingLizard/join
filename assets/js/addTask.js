@@ -90,16 +90,16 @@ document.addEventListener("DOMContentLoaded", function () {
       let selectedDate = new Date(dueDateInput.value);
       let today = new Date();
       if (selectedDate < today.setHours(0, 0, 0, 0)) {
-        alert(
-          "Das ausgewählte Fälligkeitsdatum darf nicht in der Vergangenheit liegen."
-        );
+        document.getElementById('incorrect-date').classList.remove('d-none')
         dueDateInput.value = "";
+        setTimeout(function() {
+          document.getElementById('incorrect-date').classList.add('d-none');
+      }, 3000); 
       }
     });
   }
   let subtaskInput = document.getElementById("subtasks");
   let clearBtn = document.querySelector(".clear-subtask-btn");
-  let divider = document.querySelector(".button-divider");
   let addBtn = document.querySelector(".add-subtask-btn");
   let subtaskList = document.getElementById("subtask-list");
   if (subtaskInput) {
@@ -111,21 +111,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     subtaskInput.addEventListener("input", function () {
       if (subtaskInput.value.length > 0) {
-        clearBtn.style.display = "block";
-        divider.style.display = "block";
-        addBtn.innerHTML =
-          '<img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 23px; height: 23px;">';
+        clearBtn.style.display = "flex";
+        addBtn.classList.remove('icon-add');
+        addBtn.classList.add('icon-check');
+          // '<img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 23px; height: 23px;">';
       } else {
         clearBtn.style.display = "none";
-        divider.style.display = "none";
-        addBtn.innerHTML = "+";
+        addBtn.classList.remove('icon-check');
+        addBtn.classList.add('icon-add');
       }
     });
     clearBtn.addEventListener("click", function () {
       subtaskInput.value = "";
       clearBtn.style.display = "none";
-      divider.style.display = "none";
-      addBtn.innerHTML = "+";
+      addBtn.classList.remove('icon-check');
+      addBtn.classList.add('icon-add');
     });
     subtaskList.addEventListener("dblclick", function (event) {
       if (event.target && event.target.classList.contains("subtask-title")) {
@@ -157,14 +157,13 @@ document.addEventListener("click", function (event) {
 });
 
 /**
- * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button and divider.
+ * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button.
  */
 function addSubtask() {
   let subtaskInput = document.getElementById("subtasks");
   let subtaskValue = subtaskInput.value.trim();
   let addBtn = document.querySelector(".add-subtask-btn");
   let clearBtn = document.querySelector(".clear-subtask-btn");
-  let divider = document.querySelector(".button-divider");
   if (subtaskValue) {
     let subtaskList = document.getElementById("subtask-list");
     let listItem = document.createElement("li");
@@ -172,15 +171,15 @@ function addSubtask() {
     listItem.innerHTML = `
       <span ondbclick="editSubtask(this)" class="subtask-title">${subtaskValue}</span>
       <div class="subtask-actions">
-        <button type="button" class="edit-subtask-btn" onclick="editSubtask(this)"><img src="./assets/buttons/edit.svg" alt="Edit" style="width: 16px; height: 16px;"></button>
-        <button type="button" class="delete-subtask-btn" onclick="deleteSubtask(this)"><img src="./assets/buttons/delete.svg" alt="Delete" style="width: 16px; height: 16px;"></button>
+        <button type="button" class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></button>
+        <button type="button" class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></button>
       </div>
     `;
     subtaskList.appendChild(listItem);
     subtaskInput.value = "";
-    addBtn.innerHTML = "+";
+    addBtn.classList.remove('icon-check');
+    addBtn.classList.add('icon-add');
     clearBtn.style.display = "none";
-    divider.style.display = "none";
   }
 }
 
@@ -200,10 +199,8 @@ function editSubtask(button) {
   listItem.replaceChild(inputField, subtaskTitle);
   button.style.display = "none";
   let saveBtn = document.createElement("button");
-  saveBtn.innerHTML = `
-    <img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 20px; height: 20px;">
-  `;
   saveBtn.classList.add("save-subtask-btn");
+  saveBtn.classList.add("icon-check");
   let actionsContainer = button.parentElement;
   actionsContainer.appendChild(saveBtn);
   saveBtn.addEventListener("click", function () {
