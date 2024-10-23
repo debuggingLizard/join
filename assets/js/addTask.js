@@ -12,13 +12,27 @@ function selectPrio(selected) {
 }
 
 /**
- * Handles subtask input behavior:
- * - Shows/hides the clear button and divider based on input.
- * - Toggles the add button between a checkmark (✓) and "+".
- * - Enables subtask editing on double-click.
- * - Validates required fields to enable the "Create Task" button.
+ * Initializes event listeners and validations:
+ * - Sets the minimum date for the due date and prevents selecting past dates.
+ * - Manages subtask input: shows/hides the clear button, toggles the add button, and enables subtask editing.
+ * - Validates required fields and enables/disables the "Create Task" button.
  */
 document.addEventListener("DOMContentLoaded", function () {
+  let dueDateInput = document.getElementById("due-date");
+  let today = new Date().toISOString().split("T")[0];
+  if (dueDateInput) {
+    dueDateInput.setAttribute("min", today);
+    dueDateInput.addEventListener("change", function () {
+      let selectedDate = new Date(dueDateInput.value);
+      let today = new Date();
+      if (selectedDate < today.setHours(0, 0, 0, 0)) {
+        alert(
+          "Das ausgewählte Fälligkeitsdatum darf nicht in der Vergangenheit liegen."
+        );
+        dueDateInput.value = "";
+      }
+    });
+  }
   let subtaskInput = document.getElementById("subtasks");
   let clearBtn = document.querySelector(".clear-subtask-btn");
   let divider = document.querySelector(".button-divider");
@@ -50,13 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     subtaskList.addEventListener("dblclick", function (event) {
       if (event.target && event.target.classList.contains("subtask-title")) {
-        const editButton =
+        let editButton =
           event.target.parentElement.querySelector(".edit-subtask-btn");
         editSubtask(editButton);
       }
     });
   }
-  const formFields = document.querySelectorAll(
+  let formFields = document.querySelectorAll(
     "input[required], select[required], textarea[required]"
   );
   formFields.forEach((field) => {
@@ -167,7 +181,7 @@ function clearSubtaskInput() {
  * Checks if all required fields are filled and enables/disables the "Create Task" button.
  */
 function checkRequiredFields() {
-  const requiredFields = document.querySelectorAll(
+  let requiredFields = document.querySelectorAll(
     "input[required], select[required], textarea[required]"
   );
   let allFilled = true;
@@ -176,7 +190,7 @@ function checkRequiredFields() {
       allFilled = false;
     }
   });
-  const createTaskBtn = document.getElementById("createTaskBtn");
+  let createTaskBtn = document.getElementById("createTaskBtn");
   createTaskBtn.disabled = !allFilled;
 
   // Log-Ausgabe, um den Status des Buttons zu prüfen
