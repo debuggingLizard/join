@@ -7,6 +7,7 @@
     <title>Add Task | JOIN</title>
     <link rel="shortcut icon" href="./assets/img/JoinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/css/icons/icons.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
     <script src="./script.js"></script>
@@ -56,10 +57,12 @@
                         <!-- priority -->
                         <label>Prio</label>
                         <div class="prio-options">
-                            <button type="button" class="prio-btn urgent" onclick="selectPrio('urgent')">Urgent</button>
-                            <button type="button" class="prio-btn medium active"
-                                onclick="selectPrio('medium')">Medium</button>
-                            <button type="button" class="prio-btn low" onclick="selectPrio('low')">Low</button>
+                            <button type="button" class="prio-btn urgent" onclick="selectPrio('urgent')">Urgent<span
+                                    class="icon-urgent"></span></button>
+                            <button type="button" class="prio-btn medium active" onclick="selectPrio('medium')">Medium
+                                <span class="icon-medium"></span></button>
+                            <button type="button" class="prio-btn low" onclick="selectPrio('low')">Low <span
+                                    class="icon-low"></span></button>
                         </div>
                         <input type="hidden" id="selectedPrio" name="prio" value="medium">
 
@@ -90,30 +93,14 @@
                     <span class="required-text"><span class="required">*</span>This field is required</span>
                     <div class="add-task-button-wrapper">
                         <!-- Clear Button -->
-                        <button type="button" class="cancel-btn">Clear<svg width="14" height="14" viewBox="0 0 14 14"
-                                fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M7.14434 8.40005L2.24434 13.3C2.061 13.4834 1.82767 13.575 1.54434 13.575C1.261 13.575 1.02767 13.4834 0.844336 13.3C0.661003 13.1167 0.569336 12.8834 0.569336 12.6C0.569336 12.3167 0.661003 12.0834 0.844336 11.9L5.74434 7.00005L0.844336 2.10005C0.661003 1.91672 0.569336 1.68338 0.569336 1.40005C0.569336 1.11672 0.661003 0.883382 0.844336 0.700049C1.02767 0.516715 1.261 0.425049 1.54434 0.425049C1.82767 0.425049 2.061 0.516715 2.24434 0.700049L7.14434 5.60005L12.0443 0.700049C12.2277 0.516715 12.461 0.425049 12.7443 0.425049C13.0277 0.425049 13.261 0.516715 13.4443 0.700049C13.6277 0.883382 13.7193 1.11672 13.7193 1.40005C13.7193 1.68338 13.6277 1.91672 13.4443 2.10005L8.54434 7.00005L13.4443 11.9C13.6277 12.0834 13.7193 12.3167 13.7193 12.6C13.7193 12.8834 13.6277 13.1167 13.4443 13.3C13.261 13.4834 13.0277 13.575 12.7443 13.575C12.461 13.575 12.2277 13.4834 12.0443 13.3L7.14434 8.40005Z"
-                                    fill="#2A3647" />
-                            </svg>
-                        </button>
+                        <button type="button" class="cancel-btn">Clear<span class="icon-close"></span></button>
                         <!-- Create Button -->
-                        <button type="submit" class="create-task-btn">Create Task<svg width="25" height="24"
-                                viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <mask id="mask0_75592_9963" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0"
-                                    y="0" width="25" height="24">
-                                    <rect x="0.144531" width="24" height="24" fill="#D9D9D9" />
-                                </mask>
-                                <g mask="url(#mask0_75592_9963)">
-                                    <path
-                                        d="M9.69474 15.15L18.1697 6.675C18.3697 6.475 18.6072 6.375 18.8822 6.375C19.1572 6.375 19.3947 6.475 19.5947 6.675C19.7947 6.875 19.8947 7.1125 19.8947 7.3875C19.8947 7.6625 19.7947 7.9 19.5947 8.1L10.3947 17.3C10.1947 17.5 9.96141 17.6 9.69474 17.6C9.42807 17.6 9.19474 17.5 8.99474 17.3L4.69474 13C4.49474 12.8 4.3989 12.5625 4.40724 12.2875C4.41557 12.0125 4.51974 11.775 4.71974 11.575C4.91974 11.375 5.15724 11.275 5.43224 11.275C5.70724 11.275 5.94474 11.375 6.14474 11.575L9.69474 15.15Z"
-                                        fill="#2A3647" />
-                                </g>
-                            </svg>
-                        </button>
+                        <button id="createTaskBtn" type="submit" class="create-task-btn" disabled>Create Task<span
+                                class="icon-check"></span></button>
                     </div>
                 </div>
             </form>
+
         </main>
     </div>
 </body>
