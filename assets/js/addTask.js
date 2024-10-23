@@ -12,9 +12,11 @@ function selectPrio(selected) {
 }
 
 /**
- * Updates button visibility and content based on subtask input:
- * shows clear button and changes add button to ✓ when typing,
- * resets to + when cleared or subtask is added.
+ * Handles subtask input behavior:
+ * - Shows/hides the clear button and divider based on input.
+ * - Toggles the add button between a checkmark (✓) and "+".
+ * - Enables subtask editing on double-click.
+ * - Validates required fields to enable the "Create Task" button.
  */
 document.addEventListener("DOMContentLoaded", function () {
   let subtaskInput = document.getElementById("subtasks");
@@ -50,10 +52,17 @@ document.addEventListener("DOMContentLoaded", function () {
       if (event.target && event.target.classList.contains("subtask-title")) {
         const editButton =
           event.target.parentElement.querySelector(".edit-subtask-btn");
-        editSubtask(editButton); // Ruft die Editierfunktion auf
+        editSubtask(editButton);
       }
     });
   }
+  const formFields = document.querySelectorAll(
+    "input[required], select[required], textarea[required]"
+  );
+  formFields.forEach((field) => {
+    field.addEventListener("input", checkRequiredFields);
+  });
+  checkRequiredFields();
 });
 
 /**
@@ -121,6 +130,12 @@ function editSubtask(button) {
   inputField.focus();
 }
 
+/**
+ * Replaces the input field with the updated subtask title if not empty.
+ *
+ * @param {HTMLElement} listItem - The subtask container.
+ * @param {HTMLElement} inputField - The input field with the new title.
+ */
 function saveSubtaskEdit(listItem, inputField) {
   let newTitle = inputField.value.trim();
   if (newTitle !== "") {
@@ -146,4 +161,28 @@ function deleteSubtask(button) {
 function clearSubtaskInput() {
   let subtaskInput = document.getElementById("subtasks");
   subtaskInput.value = "";
+}
+
+/**
+ * Checks if all required fields are filled and enables/disables the "Create Task" button.
+ */
+function checkRequiredFields() {
+  const requiredFields = document.querySelectorAll(
+    "input[required], select[required], textarea[required]"
+  );
+  let allFilled = true;
+  requiredFields.forEach((field) => {
+    if (!field.value.trim()) {
+      allFilled = false;
+    }
+  });
+  const createTaskBtn = document.getElementById("createTaskBtn");
+  createTaskBtn.disabled = !allFilled;
+
+  // Log-Ausgabe, um den Status des Buttons zu prüfen
+  if (allFilled) {
+    console.log("Button ist aktiviert");
+  } else {
+    console.log("Button ist deaktiviert");
+  }
 }

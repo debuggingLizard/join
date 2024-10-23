@@ -57,9 +57,12 @@
                         <!-- priority -->
                         <label>Prio</label>
                         <div class="prio-options">
-                            <button type="button" class="prio-btn urgent" onclick="selectPrio('urgent')">Urgent<span class="icon-urgent"></span></button>
-                            <button type="button" class="prio-btn medium active" onclick="selectPrio('medium')">Medium <span class="icon-medium"></span></button>
-                            <button type="button" class="prio-btn low" onclick="selectPrio('low')">Low <span class="icon-low"></span></button>
+                            <button type="button" class="prio-btn urgent" onclick="selectPrio('urgent')">Urgent<span
+                                    class="icon-urgent"></span></button>
+                            <button type="button" class="prio-btn medium active" onclick="selectPrio('medium')">Medium
+                                <span class="icon-medium"></span></button>
+                            <button type="button" class="prio-btn low" onclick="selectPrio('low')">Low <span
+                                    class="icon-low"></span></button>
                         </div>
                         <input type="hidden" id="selectedPrio" name="prio" value="medium">
 
@@ -92,10 +95,12 @@
                         <!-- Clear Button -->
                         <button type="button" class="cancel-btn">Clear<span class="icon-close"></span></button>
                         <!-- Create Button -->
-                        <button type="submit" class="create-task-btn">Create Task<span class="icon-check"></span></button>
+                        <button id="createTaskBtn" type="submit" class="create-task-btn" disabled>Create Task<span
+                                class="icon-check"></span></button>
                     </div>
                 </div>
             </form>
+
         </main>
     </div>
 </body>
