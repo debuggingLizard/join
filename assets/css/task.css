@@ -1,7 +1,6 @@
 .container {
     padding-bottom: 50px;
 }
-
 .task-view {
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
     padding: 20px;
@@ -11,20 +10,17 @@
     user-select: none; /* Prevent text selection during dragging */
     transition: none; /* Disable any CSS transitions during drag */
 }
-
 .task-view h2 {
     font-size: 16px;
     font-weight: 700;
     margin: 10px 0;
 }
-
 .task-view p {
     font-size: 16px;
     font-weight: 400;
     color: rgb(168, 168, 168);
     margin: 10px 0;
 }
-
 .userStory {
     background-color: rgb(0, 56, 255);
     color: white;
@@ -35,13 +31,17 @@
     padding: 5px 18px;
     margin: 10px 0px 26px;
 }
-
+.progress {
+    background-color: #e9ecef;
+    border-radius: 5px;
+    width: 80%;
+    height: 18px;
+}
 .progress-wrapper {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-
 .progress {
     background-color: #e9ecef;
     border-radius: 5px;
@@ -49,31 +49,25 @@
     height: 8px;
     overflow: hidden;
 }
-
 .progress-bar {
     background-color: #007bff;
     height: 100%;
     width: 50%;
 }
-
 .progress-text {
     font-size: 12px;
 }
-
 .task-contributors {
     display: flex;
     align-items: center;
 }
-
 .task-contributors .contributor:first-child {
     margin-left: 0;
 }
-
 .contributor-listing .icon {
     font-size: 20px;
     line-height: 0;
 }
-
 .contributor {
     width: 38px;
     height: 38px;
@@ -87,21 +81,18 @@
     margin-left: -10px;
     border: 2px solid white;
 }
-
 .contributor-listing {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
 }
-
-.close-btn-task-detail {
+.close-btn-task-detail img {
     position: absolute;
     top: 30px !important;
     right: 38px; 
     cursor: pointer;
 }
-
 .task-detail {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: white;
@@ -115,30 +106,24 @@
     cursor: default;
     z-index: 1001; 
 }
-
 .task-detail.show {
     transform: translateX(0);
 }
-
 .task-detail h1 {
     font-size: 61px;
 }
-
 .task-detail p {
     font-size: 20px;
     margin: 30px 0;
 }
-
 .task-detail h1+p {
     margin-bottom: 5px;
 }
-
 .task-term {
     display: flex;
     gap: 40px;
     margin-bottom: -30px;
 }
-
 .contributor-placement {
     display: flex;
     gap: 40px;
@@ -146,7 +131,6 @@
     margin: -30px 30px;
     
 }
-
 .overlay {
     display: none;
     position: fixed;
@@ -159,15 +143,12 @@
     align-items: center;
     z-index: 1000;
 }
-
-.subtask-checkbox{
+.subtask-checkbox {
     margin: 2px 30px;
 }
-
-.checkbox-img{
+.checkbox-img {
     margin-right: 15px;
 }
-
 .check-subtask {
     font-size: 16px;
     display: flex;
@@ -179,8 +160,7 @@
     justify-content: end;
     gap: 16px;
 }
-
-.task-edit-delete-btn{
+.task-edit-delete-btn {
     border: unset;
     background-color: unset;
     display: flex;
@@ -205,10 +185,19 @@
 .edit-task{
     display: block; 
     flex: 1; 
-    margin: 70px 2px 0px 26px; 
+    margin: 70px 0px 0px 26px; 
     max-height: calc(100vh - 200px); 
     overflow-y: scroll; 
     box-sizing: border-box;
+}
+.edit-task-form-column {
+    margin-right: 10px;
+}
+.close-btn-edit-task-detail img{
+    position: absolute;
+    right: 38px;
+    cursor: pointer;
+    margin-top: -40px;
 }
 .edit-task::-webkit-scrollbar{
     width: 10px;
@@ -228,6 +217,7 @@
     width: 100%;
     height: 40px;
     margin-bottom: 25px;
+    margin-right: 10px;
 }
 .edit-task textarea {
     width: 100%;
@@ -247,6 +237,7 @@
 .assigned-contributors-to-task {
     display: flex; 
     flex-direction: column;
+    margin-right: 10px;
 }
 .assigned-label{
     margin: 0px 0px 10px;
@@ -266,8 +257,8 @@
 }
 .edit-subtask-btn{
     position: absolute;
-    right: 10px;
-    bottom: 30%;
+    right: 20px;
+    bottom: 28%;
     transform: translateY(-50%);
     border: none;
     background-color: transparent;
@@ -300,6 +291,7 @@
 .edit-task-subtask-listing:hover .edit-task-subtask-listing-icons {
     display: flex; 
     gap: 10px;
+    margin-right: 12px;
 }
 .edit-task-subtask-listing-icons img {
     width: 16px;
@@ -316,6 +308,9 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .edit-task-btn:hover {
     border: 1px solid #29abe2;
