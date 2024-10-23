@@ -12,11 +12,27 @@ function selectPrio(selected) {
 }
 
 /**
- * Updates button visibility and content based on subtask input:
- * shows clear button and changes add button to ✓ when typing,
- * resets to + when cleared or subtask is added.
+ * Initializes event listeners and validations:
+ * - Sets the minimum date for the due date and prevents selecting past dates.
+ * - Manages subtask input: shows/hides the clear button, toggles the add button, and enables subtask editing.
+ * - Validates required fields and enables/disables the "Create Task" button.
  */
 document.addEventListener("DOMContentLoaded", function () {
+  let dueDateInput = document.getElementById("due-date");
+  let today = new Date().toISOString().split("T")[0];
+  if (dueDateInput) {
+    dueDateInput.setAttribute("min", today);
+    dueDateInput.addEventListener("change", function () {
+      let selectedDate = new Date(dueDateInput.value);
+      let today = new Date();
+      if (selectedDate < today.setHours(0, 0, 0, 0)) {
+        alert(
+          "Das ausgewählte Fälligkeitsdatum darf nicht in der Vergangenheit liegen."
+        );
+        dueDateInput.value = "";
+      }
+    });
+  }
   let subtaskInput = document.getElementById("subtasks");
   let clearBtn = document.querySelector(".clear-subtask-btn");
   let divider = document.querySelector(".button-divider");
@@ -48,12 +64,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     subtaskList.addEventListener("dblclick", function (event) {
       if (event.target && event.target.classList.contains("subtask-title")) {
-        const editButton =
+        let editButton =
           event.target.parentElement.querySelector(".edit-subtask-btn");
-        editSubtask(editButton); // Ruft die Editierfunktion auf
+        editSubtask(editButton);
       }
     });
   }
+  let formFields = document.querySelectorAll(
+    "input[required], select[required], textarea[required]"
+  );
+  formFields.forEach((field) => {
+    field.addEventListener("input", checkRequiredFields);
+  });
+  checkRequiredFields();
 });
 
 /**
@@ -121,6 +144,12 @@ function editSubtask(button) {
   inputField.focus();
 }
 
+/**
+ * Replaces the input field with the updated subtask title if not empty.
+ *
+ * @param {HTMLElement} listItem - The subtask container.
+ * @param {HTMLElement} inputField - The input field with the new title.
+ */
 function saveSubtaskEdit(listItem, inputField) {
   let newTitle = inputField.value.trim();
   if (newTitle !== "") {
@@ -146,4 +175,28 @@ function deleteSubtask(button) {
 function clearSubtaskInput() {
   let subtaskInput = document.getElementById("subtasks");
   subtaskInput.value = "";
+}
+
+/**
+ * Checks if all required fields are filled and enables/disables the "Create Task" button.
+ */
+function checkRequiredFields() {
+  let requiredFields = document.querySelectorAll(
+    "input[required], select[required], textarea[required]"
+  );
+  let allFilled = true;
+  requiredFields.forEach((field) => {
+    if (!field.value.trim()) {
+      allFilled = false;
+    }
+  });
+  let createTaskBtn = document.getElementById("createTaskBtn");
+  createTaskBtn.disabled = !allFilled;
+
+  // Log-Ausgabe, um den Status des Buttons zu prüfen
+  if (allFilled) {
+    console.log("Button ist aktiviert");
+  } else {
+    console.log("Button ist deaktiviert");
+  }
 }

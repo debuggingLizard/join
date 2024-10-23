@@ -68,7 +68,7 @@ select {
 .prio-btn span {
     display: flex;
     align-items: center;
-    height:100%;
+    height: 100%;
 }
 
 .prio-btn:hover {
@@ -275,6 +275,11 @@ select {
 }
 
 .subtask-item span {
-    flex:1;
+    flex: 1;
     cursor: pointer;
+}
+
+.create-task-btn:disabled {
+    background-color: grey;
+    cursor: not-allowed;
 }
