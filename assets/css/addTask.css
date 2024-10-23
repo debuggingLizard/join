@@ -326,6 +326,7 @@ label {
 
 .assignees-list {
     background-color: #FFFFFF;
+    width: 100%;
 }
 
 .assignees-list label {

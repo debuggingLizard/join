@@ -3,11 +3,6 @@ async function renderAddTaskData() {
   await renderCategories();
 }
 
-async function renderPriorities() {
-  let priorities = await getData("priorities");
-  // let prioritySelect = document.getElementById('')
-}
-
 async function renderContacts() {
   let contacts = await getData("users");
   let sortedContacts = Object.keys(contacts)
@@ -62,7 +57,6 @@ function styleLabel(checkbox) {
 
 async function renderCategories() {
   let categories = await getData("categories");
-  console.log(categories);
   let categorySelect = document.getElementById("category");
   categorySelect.innerHTML =
     '<option value="" disabled selected hidden>Select task category</option>';
@@ -125,7 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
         clearBtn.style.display = "flex";
         addBtn.classList.remove('icon-add');
         addBtn.classList.add('icon-check');
-          // '<img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 23px; height: 23px;">';
       } else {
         clearBtn.style.display = "none";
         addBtn.classList.remove('icon-check');
@@ -286,7 +279,7 @@ function checkRequiredFields() {
   }
 }
 
-function createTask() {
+async function createTask() {
   let title = document.getElementById("title").value;
   let description = document.getElementById("description").value || '';
   let assignedSpans = document.getElementById("assigned-to").querySelectorAll("span");
@@ -313,4 +306,22 @@ function createTask() {
   };
 
   console.log(data);
+  resetAddTask();
+  await postData("tasks", data);
+}
+
+function resetAddTask() {
+  document.getElementById("title").value = '';
+  document.getElementById("description").value = '';
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {checkbox.checked = false; styleLabel(checkbox);});
+  document.getElementById("assigned-to").innerHTML = '';
+  document.getElementById("due-date").value = '';
+  document.querySelectorAll(".prio-btn").forEach((button) => {
+    button.classList.remove("active");
+  });
+  document.querySelector(`.prio-btn.medium`).classList.add("active");
+  document.getElementById("selectedPrio").value = '-O9M0Iky4rEYMLq5Jwo_';
+  document.getElementById("category").value = '';
+  document.getElementById("subtask-list").innerHTML = '';
 }
