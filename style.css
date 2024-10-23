@@ -193,8 +193,6 @@ footer a:focus {
 }
 
 @media (max-width: 1024px) {
-
-    /* Footer fixiert am unteren Bildschirmrand */
     .footer {
         position: fixed;
         bottom: 0;
@@ -202,19 +200,14 @@ footer a:focus {
         right: 0;
         padding: 10px 0;
         z-index: 1000;
-        /* Sicherstellen, dass der Footer über dem Inhalt liegt */
     }
 
-    /* Board-Inhalt wird scrollbar gemacht, damit er nicht unter den Footer geht */
     .container {
         height: calc(100vh - 60px);
-        /* Höhe des Containers abzüglich der Footer-Höhe */
         overflow-y: auto;
-        /* Scrollbar für den Board-Inhalt */
     }
 
     .main {
         padding-bottom: 60px;
-        /* Abstand vom Footer sicherstellen */
     }
 }
