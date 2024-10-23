@@ -80,6 +80,19 @@ document.addEventListener("DOMContentLoaded", function () {
   checkRequiredFields();
 });
 
+
+function openContactDropdown() {
+  document.getElementById('assignees-list').classList.remove('d-none');
+}
+
+document.addEventListener('click', function(event) {
+  const input = document.getElementById('assignees');
+  const dropdown = document.getElementById('assignees-list');
+  if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+    dropdown.classList.add('d-none');
+}
+});
+
 /**
  * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button and divider.
  */

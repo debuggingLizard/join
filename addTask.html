@@ -43,8 +43,8 @@
                             placeholder="Enter a Description"></textarea>
 
                         <label for="assignees">Assigned to</label>
-                        <input type="search" name="assignees" id="assignees" placeholder="Select contacts to assign" required>
-                        <div class="assignees-list">
+                        <input type="search" name="assignees" id="assignees" placeholder="Select contacts to assign" onclick="openContactDropdown()" required>
+                        <div id="assignees-list" class="assignees-list d-none">
                             <label>Contact A<input type="checkbox" value="A"></label>
                             <label>Contact B<input type="checkbox" value="B"></label>
                             <label>Contact C<input type="checkbox" value="C"></label>

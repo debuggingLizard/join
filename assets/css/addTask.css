@@ -47,6 +47,10 @@ select {
     font-size: 16px;
 }
 
+label {
+    width:fit-content;
+}
+
 .prio-options {
     display: flex;
     gap: 10px;
