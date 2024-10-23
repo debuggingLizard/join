@@ -3,12 +3,17 @@ async function renderAddTaskData() {
   await renderCategories();
 }
 
+async function renderPriorities() {
+  let priorities = await getData("priorities");
+  // let prioritySelect = document.getElementById('')
+}
+
 async function renderContacts() {
   let contacts = await getData("users");
   let sortedContacts = Object.keys(contacts)
     .map((id) => ({ id, ...contacts[id] }))
     .sort((a, b) => a.name.localeCompare(b.name));
-  let assigneesList = document.getElementById('assignees-list');
+  let assigneesList = document.getElementById("assignees-list");
   assigneesList.innerHTML = "";
   for (let i = 0; i < sortedContacts.length; i++) {
     assigneesList.innerHTML += getAssigneesListTemplate(sortedContacts[i]);
@@ -17,38 +22,43 @@ async function renderContacts() {
 }
 
 function getAssigneesListTemplate(contact) {
-  return /*html*/`
+  return /*html*/ `
     <label for="${contact.id}">${contact.name}<input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}"></label>
-  `
+  `;
 }
 
 function updateAssignedContacts() {
-  document.getElementById('assignees-list').addEventListener('change', function(event) {
-    const checkbox = event.target;
-    const assignedContactsDiv = document.getElementById('assigned-to');
-    if (checkbox.checked) {
+  document
+    .getElementById("assignees-list")
+    .addEventListener("change", function (event) {
+      const checkbox = event.target;
+      const assignedContactsDiv = document.getElementById("assigned-to");
+      if (checkbox.checked) {
         const id = checkbox.dataset.id;
         const color = checkbox.dataset.color;
         const initials = checkbox.dataset.initials;
         assignedContactsDiv.innerHTML += `<span id="${id}" style="background-color:${color}">${initials}</span>`;
-    } else {
-        const spanToRemove = Array.from(assignedContactsDiv.children).find(span => span.id === checkbox.id);
+      } else {
+        const spanToRemove = Array.from(assignedContactsDiv.children).find(
+          (span) => span.id === checkbox.id
+        );
         if (spanToRemove) {
-            assignedContactsDiv.removeChild(spanToRemove);
+          assignedContactsDiv.removeChild(spanToRemove);
         }
-    }
-});
+      }
+    });
 }
 
 async function renderCategories() {
   let categories = await getData("categories");
   console.log(categories);
-  let categorySelect = document.getElementById('category');
-  categorySelect.innerHTML = '<option value="" disabled selected hidden>Select task category</option>';
-  Object.keys(categories).forEach(id => {
-    categorySelect.innerHTML += /*html*/`
+  let categorySelect = document.getElementById("category");
+  categorySelect.innerHTML =
+    '<option value="" disabled selected hidden>Select task category</option>';
+  Object.keys(categories).forEach((id) => {
+    categorySelect.innerHTML += /*html*/ `
       <option value="${id}">${categories[id].title}</option>
-    `
+    `;
   });
 }
 
@@ -57,12 +67,12 @@ async function renderCategories() {
  *
  * @param {string} selected - The class name of the selected priority button.
  */
-function selectPrio(selected) {
+function selectPrio(selected, id) {
   document.querySelectorAll(".prio-btn").forEach((button) => {
     button.classList.remove("active");
   });
   document.querySelector(`.prio-btn.${selected}`).classList.add("active");
-  // document.getElementById("selectedPrio").value = selected;
+  document.getElementById("selectedPrio").value = id;
 }
 
 /**
@@ -95,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (subtaskInput) {
     subtaskInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
+        event.preventDefault();
         addSubtask();
       }
     });
@@ -267,19 +278,31 @@ function checkRequiredFields() {
   }
 }
 
-
 function createTask() {
-  let title = document.getElementById('title').value;
-  let description = document.getElementById('description').value;
-  let users;
-  let date;
-  let priority;
-  let category;
-  let subtasks; 
+  let title = document.getElementById("title").value;
+  let description = document.getElementById("description").value || '';
+  let assignedSpans = document.getElementById("assigned-to").querySelectorAll("span");
+  let users = Array.from(assignedSpans).map((span) => span.id);
+  let date = document.getElementById("due-date").value;
+  let priority = document.getElementById("selectedPrio").value;
+  let category = document.getElementById("category").value;
+
+  let subtasks = Array.from(document.getElementById("subtask-list").children).map((li) => ({
+    done: false,
+    title: li.querySelector(".subtask-title").textContent,
+  }));
   let status = "todo";
 
   const data = {
-    
-
+    title: title,
+    description: description,
+    users: users.length > 0 ? users : [],
+    date: date,
+    priority: priority,
+    category: category,
+    subtasks: subtasks.length > 0 ? subtasks : [],
+    status: status
   };
+
+  console.log(data);
 }
