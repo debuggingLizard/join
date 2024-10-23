@@ -1,3 +1,4 @@
+
 /**
  * Sets the selected priority button as active and removes the active class from others.
  *
