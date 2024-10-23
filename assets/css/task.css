@@ -8,6 +8,8 @@
     border-radius: 26px;
     cursor: pointer;
     background-color: white;
+    user-select: none; /* Prevent text selection during dragging */
+    transition: none; /* Disable any CSS transitions during drag */
 }
 
 .task-view h2 {
@@ -32,13 +34,6 @@
     border-radius: 8px;
     padding: 5px 18px;
     margin: 10px 0px 26px;
-}
-
-.progress {
-    background-color: #e9ecef;
-    border-radius: 5px;
-    width: 80%;
-    height: 18px;
 }
 
 .progress-wrapper {
