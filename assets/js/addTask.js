@@ -270,13 +270,6 @@ function checkRequiredFields() {
   });
   let createTaskBtn = document.getElementById("createTaskBtn");
   createTaskBtn.disabled = !allFilled;
-
-  // Log-Ausgabe, um den Status des Buttons zu prüfen
-  if (allFilled) {
-    console.log("Button ist aktiviert");
-  } else {
-    console.log("Button ist deaktiviert");
-  }
 }
 
 async function createTask() {
@@ -305,14 +298,6 @@ async function createTask() {
     status: status
   };
 
-  if (!data.users || data.users.length === 0) {
-    data.users = [];
-}
-if (!data.subtasks || data.subtasks.length === 0) {
-    data.subtasks = [];
-}
-
-  console.log(data);
   resetAddTask();
   await postData("tasks", data);
 }
