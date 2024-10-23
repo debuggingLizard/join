@@ -23,7 +23,7 @@ async function renderContacts() {
 
 function getAssigneesListTemplate(contact) {
   return /*html*/ `
-    <label for="${contact.id}">${contact.name}<input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}"></label>
+    <label for="${contact.id}"><div><span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span><span>${contact.name}</span></div><input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)"></label>
   `;
 }
 
@@ -37,7 +37,7 @@ function updateAssignedContacts() {
         const id = checkbox.dataset.id;
         const color = checkbox.dataset.color;
         const initials = checkbox.dataset.initials;
-        assignedContactsDiv.innerHTML += `<span id="${id}" style="background-color:${color}">${initials}</span>`;
+        assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
       } else {
         const spanToRemove = Array.from(assignedContactsDiv.children).find(
           (span) => span.id === checkbox.id
@@ -47,6 +47,17 @@ function updateAssignedContacts() {
         }
       }
     });
+}
+
+function styleLabel(checkbox) {
+  let label = checkbox.parentElement;
+  if (checkbox.checked) {
+      label.style.backgroundColor = '#2A3647';
+      label.style.color = 'white';
+  } else {
+      label.style.backgroundColor = '';
+      label.style.color = '';
+  }
 }
 
 async function renderCategories() {
