@@ -101,14 +101,16 @@
     flex: 1;
 }
 
-.boards .board-title{
+.boards .board-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .boards .board-title h3 {
     font-size: 20px;
 }
+
 .boards .board-title .icon-add {
     border: solid 2px #2A3647;
     color: #2A3647;
@@ -133,7 +135,7 @@
     font-weight: bold;
 }
 
-.boards .board-tasks{
+.boards .board-tasks {
     display: flex;
     justify-content: center;
     flex-direction: column;
