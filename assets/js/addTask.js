@@ -1,6 +1,6 @@
 async function renderAddTaskData() {
   await renderContacts();
-
+  await renderCategories();
 }
 
 async function renderContacts() {
@@ -40,6 +40,18 @@ function updateAssignedContacts() {
         }
     }
 });
+}
+
+async function renderCategories() {
+  let categories = await getData("categories");
+  console.log(categories);
+  let categorySelect = document.getElementById('category');
+  categorySelect.innerHTML = '<option value="" disabled selected hidden>Select task category</option>';
+  Object.keys(categories).forEach(id => {
+    categorySelect.innerHTML += /*html*/`
+      <option value="${id}">${categories[id].title}</option>
+    `
+  });
 }
 
 /**
@@ -255,4 +267,9 @@ function checkRequiredFields() {
   } else {
     console.log("Button ist deaktiviert");
   }
+}
+
+
+function createTask() {
+  
 }
