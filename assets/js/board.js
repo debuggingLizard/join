@@ -82,7 +82,7 @@ async function taskTemplate(taskId, taskDetail) {
   let categoryDetail = await getData("categories/" + taskDetail.category);
   let priorityDetail = await getData("priorities/" + taskDetail.priority);
 
-  return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail()">
+  return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail('${taskId}')">
                         <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
                         <div class="task-description">
                             <h2>${taskDetail.title}</h2>
