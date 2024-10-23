@@ -11,16 +11,15 @@
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
     <script src="./script.js"></script>
+    <script src="./assets/js/firebase-connect.js"></script>
     <script src="./assets/js/addTask.js"></script>
 </head>
 
-<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task')">
+<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task'); renderAddTaskData()">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
     </aside>
-
-
 
     <!-- Main Content Bereich -->
     <div class="container">
@@ -43,12 +42,9 @@
                             placeholder="Enter a Description"></textarea>
 
                         <label for="assignees">Assigned to</label>
-                        <input type="search" name="assignees" id="assignees" placeholder="Select contacts to assign" onclick="openContactDropdown()" required>
-                        <div id="assignees-list" class="assignees-list d-none">
-                            <label>Contact A<input type="checkbox" value="A"></label>
-                            <label>Contact B<input type="checkbox" value="B"></label>
-                            <label>Contact C<input type="checkbox" value="C"></label>
-                        </div>
+                        <input type="search" name="assignees" id="assignees" placeholder="Select contacts to assign" onclick="openContactDropdown()">
+                        <div id="assignees-list" class="assignees-list d-none"></div>
+                        <div id="assigned-to"></div>
                     </div>
 
                     <!-- Right column -->

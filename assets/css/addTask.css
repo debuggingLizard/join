@@ -49,6 +49,7 @@ select {
 
 label {
     width:fit-content;
+    cursor: pointer;
 }
 
 .prio-options {

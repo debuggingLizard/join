@@ -1,3 +1,46 @@
+async function renderAddTaskData() {
+  await renderContacts();
+
+}
+
+async function renderContacts() {
+  let contacts = await getData("users");
+  let sortedContacts = Object.keys(contacts)
+    .map((id) => ({ id, ...contacts[id] }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  let assigneesList = document.getElementById('assignees-list');
+  assigneesList.innerHTML = "";
+  for (let i = 0; i < sortedContacts.length; i++) {
+    assigneesList.innerHTML += getAssigneesListTemplate(sortedContacts[i]);
+  }
+  updateAssignedContacts();
+}
+
+function getAssigneesListTemplate(contact) {
+  return /*html*/`
+    <label for="${contact.id}">${contact.name}<input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}"></label>
+  `
+}
+
+function updateAssignedContacts() {
+  document.getElementById('assignees-list').addEventListener('change', function(event) {
+    const checkbox = event.target;
+    const assignedContactsDiv = document.getElementById('assigned-to');
+    if (checkbox.checked) {
+        const id = checkbox.dataset.id;
+        const color = checkbox.dataset.color;
+        const initials = checkbox.dataset.initials;
+        const div = document.createElement('div');
+        div.innerHTML = `<span id="${id}" style="background-color:${color}">${initials}</span>`;
+        assignedContactsDiv.appendChild(div);
+    } else {
+        const divToRemove = Array.from(assignedContactsDiv.children).find(div => div.querySelector('span').id === checkbox.dataset.id);
+        if (divToRemove) {
+            assignedContactsDiv.removeChild(divToRemove);
+        }
+    }
+});
+}
 
 /**
  * Sets the selected priority button as active and removes the active class from others.
@@ -80,17 +123,16 @@ document.addEventListener("DOMContentLoaded", function () {
   checkRequiredFields();
 });
 
-
 function openContactDropdown() {
-  document.getElementById('assignees-list').classList.remove('d-none');
+  document.getElementById("assignees-list").classList.remove("d-none");
 }
 
-document.addEventListener('click', function(event) {
-  const input = document.getElementById('assignees');
-  const dropdown = document.getElementById('assignees-list');
+document.addEventListener("click", function (event) {
+  const input = document.getElementById("assignees");
+  const dropdown = document.getElementById("assignees-list");
   if (!input.contains(event.target) && !dropdown.contains(event.target)) {
-    dropdown.classList.add('d-none');
-}
+    dropdown.classList.add("d-none");
+  }
 });
 
 /**
