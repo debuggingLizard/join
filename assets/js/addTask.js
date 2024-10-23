@@ -305,6 +305,13 @@ async function createTask() {
     status: status
   };
 
+  if (!data.users || data.users.length === 0) {
+    data.users = [];
+}
+if (!data.subtasks || data.subtasks.length === 0) {
+    data.subtasks = [];
+}
+
   console.log(data);
   resetAddTask();
   await postData("tasks", data);
