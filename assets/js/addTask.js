@@ -1,3 +1,5 @@
+let addTaskstatus = "todo";
+
 async function renderAddTaskData() {
   await renderContacts();
   await renderCategories();
@@ -271,8 +273,6 @@ function checkRequiredFields() {
   let createTaskBtn = document.getElementById("createTaskBtn");
   createTaskBtn.disabled = !allFilled;
 }
-
-let addTaskstatus = "todo";
 
 async function createTask() {
   let title = document.getElementById("title").value;

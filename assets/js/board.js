@@ -2,6 +2,7 @@ let tasks = {};
 let filterTasks = [];
 let searchValue = "";
 let timeoutId;
+let showNewTask;
 
 async function loadTasksFromDatabase() {
   tasks = await getData("tasks");
@@ -129,6 +130,7 @@ function openAddTask(status) {
   document.getElementById("add-task-overlay").style.backgroundColor = "rgb(0 0 0 / 30%)";
   document.getElementById("add-task-container").style.transform = "translateX(0)";
   addTaskstatus = status;
+  showNewTask = status;
 }
 
 function eventListenerCloseAddTask() {
@@ -146,4 +148,18 @@ function closeAddTask() {
     document.getElementById('add-task-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
     document.getElementById('add-task-container').style.transform = 'translateX(200%)';
     document.getElementById('add-task-overlay').style.zIndex = -1;
+}
+
+async function createAndRenderTask() {
+    await createTask();
+    await renderBoardForNewTask();
+    closeAddTask();
+}
+
+async function renderBoardForNewTask() {
+    tasks = await getData("tasks");
+    filterTasks = Object.entries(tasks);
+    
+    await renderTasks(showNewTask + "-tasks", getTasksByStatus(showNewTask));
+    console.log("this is the end of renderBoardForNewTask");
 }

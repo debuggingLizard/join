@@ -145,7 +145,8 @@
                     <span class="close-add-task icon-close" onclick="closeAddTask(); resetAddTask()"></span>
                     <h2 id="add-task-title">Add Task</h2>
 
-                    <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createTask(); closeAddTask()">
+                    <!-- <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createTask(); renderBoardForNewTask(); closeAddTask();"> -->
+                        <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createAndRenderTask();">
                         <div class="form-row">
                             <!-- Left column -->
                             <div class="form-column left">
