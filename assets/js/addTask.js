@@ -18,7 +18,13 @@ async function renderContacts() {
 
 function getAssigneesListTemplate(contact) {
   return /*html*/ `
-    <label for="${contact.id}"><div><span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span><span>${contact.name}</span></div><input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)"></label>
+    <label for="${contact.id}">
+      <div>
+        <span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span>
+        <span class="contact-profile-name">${contact.name}</span>
+      </div>
+      <input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)">
+    </label>
   `;
 }
 
@@ -148,8 +154,13 @@ document.addEventListener("DOMContentLoaded", function () {
   checkRequiredFields();
 });
 
-function openContactDropdown() {
-  document.getElementById("assignees-list").classList.remove("d-none");
+function toggleContactDropdown() {
+  document.getElementById("assignees-list").classList.toggle("d-none");
+  document.querySelector('.assign-label').classList.toggle('open');
+}
+
+function categoryDropDown() {
+  document.querySelector('.category-label').classList.toggle('open');
 }
 
 document.addEventListener("click", function (event) {
@@ -157,6 +168,7 @@ document.addEventListener("click", function (event) {
   const dropdown = document.getElementById("assignees-list");
   if (!input.contains(event.target) && !dropdown.contains(event.target)) {
     dropdown.classList.add("d-none");
+    document.querySelector('.assign-label').classList.remove('open');
   }
 });
 
@@ -316,4 +328,39 @@ function resetAddTask() {
   document.getElementById("selectedPrio").value = '-O9M0Iky4rEYMLq5Jwo_';
   document.getElementById("category").value = '';
   document.getElementById("subtask-list").innerHTML = '';
+}
+
+// Set custom placeholder when input is empty
+function setPlaceholder() {
+  const dateInput = document.getElementById('due-date');
+  dateInput.setAttribute('type', 'text');
+  if (dateInput.value === '') {
+      dateInput.value = 'dd/mm/yyyy';  // Placeholder text
+      dateInput.classList.remove('text-date');
+  }
+}
+
+// Clear the custom placeholder on focus
+function clearPlaceholder() {
+  const dateInput = document.getElementById('due-date');
+  dateInput.setAttribute('type', 'date');  // Switch back to date type
+  dateInput.classList.remove('text-date');
+  dateInput.showPicker();
+}
+
+// Format the date to dd/mm/yyyy after selection
+function formatDate() {
+  const dateInput = document.getElementById('due-date');
+  const selectedDate = new Date(dateInput.value); // Get the selected date
+
+  // Format the date to dd/mm/yyyy
+  const day = String(selectedDate.getDate()).padStart(2, '0'); // Get day and ensure 2 digits
+  const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Get month (0-indexed)
+  const year = selectedDate.getFullYear(); // Get year
+
+  // Set the formatted date as input value
+  dateInput.setAttribute('type', 'text'); // Change input type to text to show the formatted date
+  dateInput.classList.add('text-date');
+  dateInput.blur();
+  dateInput.value = `${day}/${month}/${year}`;
 }

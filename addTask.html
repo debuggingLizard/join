@@ -15,7 +15,8 @@
     <script src="./assets/js/addTask.js"></script>
 </head>
 
-<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task'); renderAddTaskData()">
+<body
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task'); renderAddTaskData(); setPlaceholder();">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -34,60 +35,89 @@
                 <div class="form-row">
                     <!-- Left column -->
                     <div class="form-column left">
-                        <label for="title">Title<span class="required">*</span></label>
-                        <input type="text" id="title" name="title" placeholder="Enter a title" required>
-
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="4"
-                            placeholder="Enter a Description"></textarea>
-
-                        <label for="assignees">Assigned to</label>
-                        <input type="search" name="assignees" id="assignees" placeholder="Select contacts to assign" onclick="openContactDropdown()">
-                        <div id="assignees-list" class="assignees-list d-none"></div>
-                        <div id="assigned-to"></div>
+                        <label for="title">
+                            <div>Title<span class="required">*</span></div>
+                            <input type="text" id="title" name="title" placeholder="Enter a title" required>
+                        </label>
+                        <label for="description">
+                            <div>Description</div>
+                            <textarea id="description" name="description" rows="4"
+                                placeholder="Enter a Description"></textarea>
+                        </label>
+                        <label for="assignees" class="assign-label">
+                            <div>Assigned to</div>
+                            <div>
+                                <input type="search" name="assignees" id="assignees"
+                                    placeholder="Select contacts to assign" onclick="toggleContactDropdown()">
+                                <div id="assignees-list" class="assignees-list d-none"></div>
+                                <div id="assigned-to" class="assigned-to"></div>
+                            </div>
+                        </label>
                     </div>
 
                     <!-- Right column -->
                     <div class="form-column right">
                         <!-- due date -->
-                        <label for="due-date">Due date<span class="required">*</span></label>
-                        <input type="date" id="due-date" name="due-date" required>
-                        <span id="incorrect-date" class="error">Due Date cannot be in the past</span>
+                        <label for="due-date" class="date-label">
+                            <div>Due date<span class="required">*</span></div>
+                            <input type="date" class="picker" id="due-date" name="due-date" onfocus="clearPlaceholder()"
+                                onblur="setPlaceholder()" onchange="formatDate()" required>
+                            <span id="incorrect-date" class="error d-none">Due Date cannot be in the past</span>
+                        </label>
 
-                        <!-- priority -->
-                        <label>Prio</label>
-                        <div class="prio-options">
-                            <button type="button" class="prio-btn urgent" onclick="selectPrio('urgent', '-O9M0Iky4rEYMLq5JwoZ')">Urgent<span
-                                    class="icon-urgent"></span></button>
-                            <button type="button" class="prio-btn medium active" onclick="selectPrio('medium', '-O9M0Iky4rEYMLq5Jwo_')">Medium
-                                <span class="icon-medium"></span></button>
-                            <button type="button" class="prio-btn low" onclick="selectPrio('low', '-O9M0IlWMv7MvM-vtcJ-')">Low <span
-                                    class="icon-low"></span></button>
+                        <div class="right-compact">
+                            <!-- priority -->
+                            <label>
+                                <div>Prio</div>
+                                <div class="prio-options">
+                                    <div class="prio-btn urgent" onclick="selectPrio('urgent', '-O9M0Iky4rEYMLq5JwoZ')">
+                                        Urgent<span class="icon-urgent"></span>
+                                    </div>
+                                    <div class="prio-btn medium active"
+                                        onclick="selectPrio('medium', '-O9M0Iky4rEYMLq5Jwo_')">
+                                        Medium<span class="icon-medium"></span>
+                                    </div>
+                                    <div class="prio-btn low" onclick="selectPrio('low', '-O9M0IlWMv7MvM-vtcJ-')">
+                                        Low <span class="icon-low"></span>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="selectedPrio" name="prio" value="-O9M0Iky4rEYMLq5Jwo_">
+                            </label>
+
+
+                            <!-- category -->
+                            <label for="category" class="category-label">
+                                <div>Category<span class="required">*</span></div>
+                                <select id="category" name="category" placeholder="Select task category"
+                                    onclick="categoryDropDown();" required>
+                                </select>
+                            </label>
+
+                            <!-- subtasks -->
+                            <label for="subtasks">
+                                <div>Subtasks</div>
+                                <div class="subtask-row">
+                                    <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
+                                    <div class="subtask-buttons">
+                                        <span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput()"></span>
+                                        <span class="add-subtask-btn icon-add" onclick="addSubtask()"></span>
+                                    </div>
+                                </div>
+                                <ul id="subtask-list" class="subtask-list">
+                                    <!-- Dynamic subtask list -->
+                                </ul>
+
+                                <span class="required-text mobile"><span class="required">*</span>This field is
+                                    required</span>
+                            </label>
+
                         </div>
-                        <input type="hidden" id="selectedPrio" name="prio" value="-O9M0Iky4rEYMLq5Jwo_">
 
-                        <!-- category -->
-                        <label for="category">Category<span class="required">*</span></label>
-                        <select id="category" name="category" placeholder="Select task category" required>
-                        </select>
-
-                        <!-- subtasks -->
-                        <label for="subtasks">Subtasks</label>
-                        <div class="subtask-row">
-                            <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                            <div class="subtask-buttons">
-                                <button type="button" class="clear-subtask-btn icon-close" onclick="clearSubtaskInput()"></button>
-                                <button type="button" class="add-subtask-btn icon-add" onclick="addSubtask()"></button>
-                            </div>
-                        </div>
-                        <ul id="subtask-list" class="subtask-list">
-                            <!-- Dynamic subtask list -->
-                        </ul>
                     </div>
                 </div>
 
                 <div class="form-actions">
-                    <span class="required-text"><span class="required">*</span>This field is required</span>
+                    <span class="required-text desktop"><span class="required">*</span>This field is required</span>
                     <div class="add-task-button-wrapper">
                         <!-- Clear Button -->
                         <button type="button" class="cancel-btn">Clear<span class="icon-close"></span></button>
