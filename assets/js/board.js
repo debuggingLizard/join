@@ -51,7 +51,9 @@ async function renderTasks(boardElementId, boardTasks) {
             let taskId = task[0];
             let taskDetail = task[1];
             boardElement.innerHTML += await taskTemplate(taskId, taskDetail);
-            await renderTaskContributors(taskId, taskDetail);
+            if (taskDetail.users != undefined && taskDetail.users.length > 0) {
+                await renderTaskContributors(taskId, taskDetail);
+            }
             if (taskDetail.subtasks != undefined && taskDetail.subtasks.length > 0) {
                 renderSubtasks(taskId, taskDetail);
             }

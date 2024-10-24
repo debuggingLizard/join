@@ -1,14 +1,83 @@
+async function renderAddTaskData() {
+  await renderContacts();
+  await renderCategories();
+}
+
+async function renderContacts() {
+  let contacts = await getData("users");
+  let sortedContacts = Object.keys(contacts)
+    .map((id) => ({ id, ...contacts[id] }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  let assigneesList = document.getElementById("assignees-list");
+  assigneesList.innerHTML = "";
+  for (let i = 0; i < sortedContacts.length; i++) {
+    assigneesList.innerHTML += getAssigneesListTemplate(sortedContacts[i]);
+  }
+  updateAssignedContacts();
+}
+
+function getAssigneesListTemplate(contact) {
+  return /*html*/ `
+    <label for="${contact.id}"><div><span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span><span>${contact.name}</span></div><input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)"></label>
+  `;
+}
+
+function updateAssignedContacts() {
+  document
+    .getElementById("assignees-list")
+    .addEventListener("change", function (event) {
+      const checkbox = event.target;
+      const assignedContactsDiv = document.getElementById("assigned-to");
+      if (checkbox.checked) {
+        const id = checkbox.dataset.id;
+        const color = checkbox.dataset.color;
+        const initials = checkbox.dataset.initials;
+        assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
+      } else {
+        const spanToRemove = Array.from(assignedContactsDiv.children).find(
+          (span) => span.id === checkbox.id
+        );
+        if (spanToRemove) {
+          assignedContactsDiv.removeChild(spanToRemove);
+        }
+      }
+    });
+}
+
+function styleLabel(checkbox) {
+  let label = checkbox.parentElement;
+  if (checkbox.checked) {
+      label.style.backgroundColor = '#2A3647';
+      label.style.color = 'white';
+  } else {
+      label.style.backgroundColor = '';
+      label.style.color = '';
+  }
+}
+
+async function renderCategories() {
+  let categories = await getData("categories");
+  let categorySelect = document.getElementById("category");
+  categorySelect.innerHTML =
+    '<option value="" disabled selected hidden>Select task category</option>';
+  Object.keys(categories).forEach((id) => {
+    categorySelect.innerHTML += /*html*/ `
+      <option value="${id}">${categories[id].title}</option>
+    `;
+  });
+}
+
 /**
  * Sets the selected priority button as active and removes the active class from others.
  *
  * @param {string} selected - The class name of the selected priority button.
  */
-function selectPrio(selected) {
+function selectPrio(selected, id) {
   document.querySelectorAll(".prio-btn").forEach((button) => {
     button.classList.remove("active");
   });
   document.querySelector(`.prio-btn.${selected}`).classList.add("active");
-  // document.getElementById("selectedPrio").value = selected;
+  document.getElementById("selectedPrio").value = id;
 }
 
 /**
@@ -26,41 +95,41 @@ document.addEventListener("DOMContentLoaded", function () {
       let selectedDate = new Date(dueDateInput.value);
       let today = new Date();
       if (selectedDate < today.setHours(0, 0, 0, 0)) {
-        alert(
-          "Das ausgewählte Fälligkeitsdatum darf nicht in der Vergangenheit liegen."
-        );
+        document.getElementById('incorrect-date').classList.remove('d-none')
         dueDateInput.value = "";
+        setTimeout(function() {
+          document.getElementById('incorrect-date').classList.add('d-none');
+      }, 3000); 
       }
     });
   }
   let subtaskInput = document.getElementById("subtasks");
   let clearBtn = document.querySelector(".clear-subtask-btn");
-  let divider = document.querySelector(".button-divider");
   let addBtn = document.querySelector(".add-subtask-btn");
   let subtaskList = document.getElementById("subtask-list");
   if (subtaskInput) {
     subtaskInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
+        event.preventDefault();
         addSubtask();
       }
     });
     subtaskInput.addEventListener("input", function () {
       if (subtaskInput.value.length > 0) {
-        clearBtn.style.display = "block";
-        divider.style.display = "block";
-        addBtn.innerHTML =
-          '<img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 23px; height: 23px;">';
+        clearBtn.style.display = "flex";
+        addBtn.classList.remove('icon-add');
+        addBtn.classList.add('icon-check');
       } else {
         clearBtn.style.display = "none";
-        divider.style.display = "none";
-        addBtn.innerHTML = "+";
+        addBtn.classList.remove('icon-check');
+        addBtn.classList.add('icon-add');
       }
     });
     clearBtn.addEventListener("click", function () {
       subtaskInput.value = "";
       clearBtn.style.display = "none";
-      divider.style.display = "none";
-      addBtn.innerHTML = "+";
+      addBtn.classList.remove('icon-check');
+      addBtn.classList.add('icon-add');
     });
     subtaskList.addEventListener("dblclick", function (event) {
       if (event.target && event.target.classList.contains("subtask-title")) {
@@ -79,15 +148,26 @@ document.addEventListener("DOMContentLoaded", function () {
   checkRequiredFields();
 });
 
+function openContactDropdown() {
+  document.getElementById("assignees-list").classList.remove("d-none");
+}
+
+document.addEventListener("click", function (event) {
+  const input = document.getElementById("assignees");
+  const dropdown = document.getElementById("assignees-list");
+  if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+    dropdown.classList.add("d-none");
+  }
+});
+
 /**
- * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button and divider.
+ * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button.
  */
 function addSubtask() {
   let subtaskInput = document.getElementById("subtasks");
   let subtaskValue = subtaskInput.value.trim();
   let addBtn = document.querySelector(".add-subtask-btn");
   let clearBtn = document.querySelector(".clear-subtask-btn");
-  let divider = document.querySelector(".button-divider");
   if (subtaskValue) {
     let subtaskList = document.getElementById("subtask-list");
     let listItem = document.createElement("li");
@@ -95,15 +175,15 @@ function addSubtask() {
     listItem.innerHTML = `
       <span ondbclick="editSubtask(this)" class="subtask-title">${subtaskValue}</span>
       <div class="subtask-actions">
-        <button type="button" class="edit-subtask-btn" onclick="editSubtask(this)"><img src="./assets/buttons/edit.svg" alt="Edit" style="width: 16px; height: 16px;"></button>
-        <button type="button" class="delete-subtask-btn" onclick="deleteSubtask(this)"><img src="./assets/buttons/delete.svg" alt="Delete" style="width: 16px; height: 16px;"></button>
+        <button type="button" class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></button>
+        <button type="button" class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></button>
       </div>
     `;
     subtaskList.appendChild(listItem);
     subtaskInput.value = "";
-    addBtn.innerHTML = "+";
+    addBtn.classList.remove('icon-check');
+    addBtn.classList.add('icon-add');
     clearBtn.style.display = "none";
-    divider.style.display = "none";
   }
 }
 
@@ -123,10 +203,8 @@ function editSubtask(button) {
   listItem.replaceChild(inputField, subtaskTitle);
   button.style.display = "none";
   let saveBtn = document.createElement("button");
-  saveBtn.innerHTML = `
-    <img src="./assets/buttons/check.svg" alt="Checkmark" style="width: 20px; height: 20px;">
-  `;
   saveBtn.classList.add("save-subtask-btn");
+  saveBtn.classList.add("icon-check");
   let actionsContainer = button.parentElement;
   actionsContainer.appendChild(saveBtn);
   saveBtn.addEventListener("click", function () {
@@ -192,11 +270,50 @@ function checkRequiredFields() {
   });
   let createTaskBtn = document.getElementById("createTaskBtn");
   createTaskBtn.disabled = !allFilled;
+}
 
-  // Log-Ausgabe, um den Status des Buttons zu prüfen
-  if (allFilled) {
-    console.log("Button ist aktiviert");
-  } else {
-    console.log("Button ist deaktiviert");
-  }
+async function createTask() {
+  let title = document.getElementById("title").value;
+  let description = document.getElementById("description").value || '';
+  let assignedSpans = document.getElementById("assigned-to").querySelectorAll("span");
+  let users = Array.from(assignedSpans).map((span) => span.id);
+  let date = document.getElementById("due-date").value;
+  let priority = document.getElementById("selectedPrio").value;
+  let category = document.getElementById("category").value;
+
+  let subtasks = Array.from(document.getElementById("subtask-list").children).map((li) => ({
+    done: false,
+    title: li.querySelector(".subtask-title").textContent,
+  }));
+  let status = "todo";
+
+  const data = {
+    title: title,
+    description: description,
+    users: users.length > 0 ? users : [],
+    date: date,
+    priority: priority,
+    category: category,
+    subtasks: subtasks.length > 0 ? subtasks : [],
+    status: status
+  };
+
+  resetAddTask();
+  await postData("tasks", data);
+}
+
+function resetAddTask() {
+  document.getElementById("title").value = '';
+  document.getElementById("description").value = '';
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {checkbox.checked = false; styleLabel(checkbox);});
+  document.getElementById("assigned-to").innerHTML = '';
+  document.getElementById("due-date").value = '';
+  document.querySelectorAll(".prio-btn").forEach((button) => {
+    button.classList.remove("active");
+  });
+  document.querySelector(`.prio-btn.medium`).classList.add("active");
+  document.getElementById("selectedPrio").value = '-O9M0Iky4rEYMLq5Jwo_';
+  document.getElementById("category").value = '';
+  document.getElementById("subtask-list").innerHTML = '';
 }
