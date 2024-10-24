@@ -99,13 +99,16 @@
     padding: 30px;
     border-radius: 26px;
     position: absolute;
-    transform: translateX(100%);
-    transition: transform 0.7s ease-in-out;
+    right: -100%; 
+    top: 50%;
+    transform: translateY(-50%);
+    transition: right 0.7s ease-in-out; 
     cursor: default;
-    z-index: 1001; 
+    z-index: 1001;
 }
 .task-detail.show {
-    transform: translateX(0);
+    right: 50%; 
+    transform: translate(50%, -50%);
 }
 .task-detail h1 {
     font-size: 61px;
@@ -126,7 +129,7 @@
     display: flex;
     gap: 40px;
     align-items: center;
-    margin: -30px 30px;
+    margin: -30px 0px 10px;
 }
 .overlay {
     display: none;
@@ -255,6 +258,136 @@
     display: flex; 
     flex-direction: column;
     margin-right: 10px;
+}
+.edit-assigned-contributors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+.dropdown-container select {
+    width: 100%;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+}
+.custom-dropdown input {
+    width: 100%;
+    padding: 10px;
+}
+.dropdown-list {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+.dropdown-item p {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+.dropdown-item input[type="checkbox"] {
+    margin-left: auto;
+}
+.contributor {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: white;
+    font-weight: 400;
+    margin-left: 5px;
+    border: 2px solid white;
+}
+.custom-dropdown::after {
+    content: '▿';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #333;
+    pointer-events: none;
+}
+.custom-dropdown input {
+    width: 100%;
+    padding-right: 30px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.dropdown-list {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: scroll;
+    width: 100%;
+    z-index: 10;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+.dropdown-item p {
+    margin-left: 10px;
+}
+.dropdown-item input {
+    margin-left: auto;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.dropdown-list::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+.dropdown-list::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+#contactsToAssign {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
 }
 .assigned-contributors-to-task select {
     width: 100%;
