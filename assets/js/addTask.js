@@ -85,80 +85,80 @@ function selectPrio(selected, id) {
  * - Sets the minimum date for the due date and prevents selecting past dates.
  * - Manages subtask input: shows/hides the clear button, toggles the add button, and enables subtask editing.
  * - Validates required fields and enables/disables the "Create Task" button.
+ * - Assignees list can be close by clicking outside of list/input
  */
-document.addEventListener("DOMContentLoaded", function () {
+function initEventListenerAddTask() {
   let dueDateInput = document.getElementById("due-date");
   let today = new Date().toISOString().split("T")[0];
   if (dueDateInput) {
-    dueDateInput.setAttribute("min", today);
-    dueDateInput.addEventListener("change", function () {
-      let selectedDate = new Date(dueDateInput.value);
-      let today = new Date();
-      if (selectedDate < today.setHours(0, 0, 0, 0)) {
-        document.getElementById('incorrect-date').classList.remove('d-none')
-        dueDateInput.value = "";
-        setTimeout(function() {
-          document.getElementById('incorrect-date').classList.add('d-none');
-      }, 3000); 
-      }
-    });
+      dueDateInput.setAttribute("min", today);
+      dueDateInput.addEventListener("change", function () {
+          let selectedDate = new Date(dueDateInput.value);
+          let today = new Date();
+          if (selectedDate < today.setHours(0, 0, 0, 0)) {
+              document.getElementById('incorrect-date').classList.remove('d-none')
+              dueDateInput.value = "";
+              setTimeout(function () {
+                  document.getElementById('incorrect-date').classList.add('d-none');
+              }, 3000);
+          }
+      });
   }
   let subtaskInput = document.getElementById("subtasks");
   let clearBtn = document.querySelector(".clear-subtask-btn");
   let addBtn = document.querySelector(".add-subtask-btn");
   let subtaskList = document.getElementById("subtask-list");
   if (subtaskInput) {
-    subtaskInput.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        addSubtask();
-      }
-    });
-    subtaskInput.addEventListener("input", function () {
-      if (subtaskInput.value.length > 0) {
-        clearBtn.style.display = "flex";
-        addBtn.classList.remove('icon-add');
-        addBtn.classList.add('icon-check');
-      } else {
-        clearBtn.style.display = "none";
-        addBtn.classList.remove('icon-check');
-        addBtn.classList.add('icon-add');
-      }
-    });
-    clearBtn.addEventListener("click", function () {
-      subtaskInput.value = "";
-      clearBtn.style.display = "none";
-      addBtn.classList.remove('icon-check');
-      addBtn.classList.add('icon-add');
-    });
-    subtaskList.addEventListener("dblclick", function (event) {
-      if (event.target && event.target.classList.contains("subtask-title")) {
-        let editButton =
-          event.target.parentElement.querySelector(".edit-subtask-btn");
-        editSubtask(editButton);
-      }
-    });
+      subtaskInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+              event.preventDefault();
+              addSubtask();
+          }
+      });
+      subtaskInput.addEventListener("input", function () {
+          if (subtaskInput.value.length > 0) {
+              clearBtn.style.display = "flex";
+              addBtn.classList.remove('icon-add');
+              addBtn.classList.add('icon-check');
+          } else {
+              clearBtn.style.display = "none";
+              addBtn.classList.remove('icon-check');
+              addBtn.classList.add('icon-add');
+          }
+      });
+      clearBtn.addEventListener("click", function () {
+          subtaskInput.value = "";
+          clearBtn.style.display = "none";
+          addBtn.classList.remove('icon-check');
+          addBtn.classList.add('icon-add');
+      });
+      subtaskList.addEventListener("dblclick", function (event) {
+          if (event.target && event.target.classList.contains("subtask-title")) {
+              let editButton =
+                  event.target.parentElement.querySelector(".edit-subtask-btn");
+              editSubtask(editButton);
+          }
+      });
   }
   let formFields = document.querySelectorAll(
-    "input[required], select[required], textarea[required]"
+      "input[required], select[required], textarea[required]"
   );
   formFields.forEach((field) => {
-    field.addEventListener("input", checkRequiredFields);
+      field.addEventListener("input", checkRequiredFields);
   });
   checkRequiredFields();
-});
+  document.addEventListener("click", function (event) {
+      const input = document.getElementById("assignees");
+      const dropdown = document.getElementById("assignees-list");
+      if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+          dropdown.classList.add("d-none");
+      }
+  });
+}
 
 function openContactDropdown() {
   document.getElementById("assignees-list").classList.remove("d-none");
 }
-
-document.addEventListener("click", function (event) {
-  const input = document.getElementById("assignees");
-  const dropdown = document.getElementById("assignees-list");
-  if (!input.contains(event.target) && !dropdown.contains(event.target)) {
-    dropdown.classList.add("d-none");
-  }
-});
 
 /**
  * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button.

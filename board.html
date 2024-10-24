@@ -17,10 +17,11 @@
     <script src="./assets/js/board.js"></script>
     <script src="./assets/js/dragging.js"></script>
     <script src="./assets/js/task-view.js"></script>
+    <script src="./assets/js/addTask.js"></script>
 </head>
 
 <body
-    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); loadTasksFromDatabase(); loadDropTargets();">
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); loadTasksFromDatabase(); loadDropTargets(); initEventListenerAddTask()">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -139,8 +140,8 @@
             </div>
 
             <!-- Add Task Overlay -->
-            <div id="add-task-overlay" class="add-task-overlay-wrapper" onclick="closeAddTask()">
-                <div id="add-task-container" class="add-task-container" onclick="event.stopPropagation();">
+                <div id="add-task-overlay" class="add-task-overlay-wrapper">
+                    <div id="add-task-container" class="add-task-container">
                     <span class="close-add-task icon-close" onclick="closeAddTask()"></span>
                     <h2 id="add-task-title">Add Task</h2>
 

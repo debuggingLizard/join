@@ -124,9 +124,21 @@ function search(query) {
 
 // Add Task Functionality
 function openAddTask() {
+    eventListenerCloseAddTask();
+    renderAddTaskData();
   document.getElementById("add-task-overlay").style.zIndex = 999;
   document.getElementById("add-task-overlay").style.backgroundColor = "rgb(0 0 0 / 30%)";
   document.getElementById("add-task-container").style.transform = "translateX(0)";
+}
+
+function eventListenerCloseAddTask() {
+    const overlay = document.getElementById('add-task-overlay');
+    const closeTrigger = function (e) {
+        if (e.target !== e.currentTarget) return;
+        closeAddTask();
+        overlay.removeEventListener('click', closeTrigger);
+    };
+    overlay.addEventListener('click', closeTrigger);
 }
 
 function closeAddTask() {
