@@ -146,7 +146,26 @@
 .subtask-checkbox {
     margin: 2px 30px;
 }
+
+.checkbox-svg{
+    margin-right: 15px;
+}
+
 .checkbox-img {
+    width: 20px; 
+    height: 20px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px; 
+}
+
+.checkbox-tick-img {
+    width: 22px; 
+    height: 22px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
     margin-right: 15px;
 }
 .check-subtask {
@@ -190,10 +209,10 @@
     display: block; 
     flex: 1; 
     margin: 70px 0px 0px 26px; 
-    max-height: calc(100vh - 200px); 
-    overflow-y: scroll; 
+    max-height: calc(100vh - 300px); 
     box-sizing: border-box;
-}
+    overflow-y: auto; 
+} 
 .edit-task-form-column {
     margin-right: 10px;
 }
@@ -319,4 +338,13 @@
 .edit-task-btn:hover {
     border: 1px solid #29abe2;
     background-color: #29abe2;
+}
+.edit-task-confirm-btn{
+    display: flex; 
+    justify-content: flex-end; 
+    width: 100%;
+    padding: 20px 10px;
+    background-color: white;
+    position: sticky;
+    bottom: 0;
 }
