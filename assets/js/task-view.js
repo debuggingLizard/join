@@ -91,9 +91,10 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, ass
             </div>
   
             <div class="assigned-contributors-to-task">
-                <label for="contactsToAssign" class="assigned-label">Assigned to</label>
-                <select id="contactsToAssign" name="contact" required>
-                    ${assignedUsers.map(user => `<option value="${user.name}" selected>${user.name}</option>`).join('')}
+    <label for="contactsToAssign" class="assigned-label">Assigned to</label>
+    <div class="assigned-contributors-wrapper">
+        <select id="contactsToAssign" name="contact" required>
+            <option value="">Select contacts to assign</option>
                 </select>
   
                 <div class="edit-assigned-contributors">
@@ -106,21 +107,32 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, ass
             </div>
   
             <div class="subtask-section">
-                <label for="subtasks" class="subtasks-label">Subtasks</label>
-                <div class="subtask-row">
-                    <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                    <button type="button" class="edit-subtask-btn">+</button>
+    <label for="subtasks" class="subtasks-label">Subtasks</label>
+
+    <!-- Eingabefeld für neue Subtasks -->
+    <div class="subtask-row">
+        <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
+        <button type="button" class="edit-subtask-btn">+</button>
+    </div>
+
+    <!-- Auflistung der bestehenden Subtasks -->
+    <div class="edit-task-subtask-listing-wrapper">
+        ${(subtasks || []).map((subtask, index) => `
+            <div class="edit-task-subtask-listing" id="subtask-${index}">
+                <p id="subtask-text-${index}" class="subtask-text">${subtask.title}</p>
+                <input type="text" id="edit-subtask-input-${index}" class="edit-subtask-input" value="${subtask.title}" style="display: none;">
+                
+                <div class="edit-task-subtask-listing-icons" id="icons-${index}">
+                    <img src="./assets/img/edit.svg" alt="Edit Subtask" title="Edit" onclick="editSubtask(${index})">
+                    <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete" onclick="deleteSubtask(${index})">
                 </div>
-  
-                <div class="edit-task-subtask-listing-wrapper">
-                    ${(subtasks || []).map(subtask => `
-                        <div class="edit-task-subtask-listing">
-                            <p><span class="subtask-dot"></span>${subtask.title}</p>
-                            <div class="edit-task-subtask-listing-icons">
-                                <img src="./assets/img/edit.svg" alt="Edit Subtask" title="Edit">
-                                <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete">
-                            </div>
-                        </div>`).join('')}
+
+                <div class="edit-task-subtask-save-icons" id="save-icons-${index}" style="display: none;">
+                    <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete" onclick="deleteSubtask(${index})">
+                    <img src="./assets/img/Vector 17.svg" alt="Save Subtask" title="Save" onclick="saveSubtask(${index})">
+                </div>
+            </div>
+        `).join('')}
                 </div>
             </div>
               
@@ -190,22 +202,17 @@ function closeTaskDetail() {
 function editTask() {
   const taskDetail = document.getElementById("task-detail");
   const editTaskWrapper = document.querySelector('.edit-task-wrapper');
-  
- 
+   
   taskDetail.style.display = 'none'; 
-
  
   const editTaskHTML = createEditTaskTemplate(taskInformation, taskPriority, taskCategory, assignedUsers, subtasks);
   console.log('Generated Edit Task HTML:', editTaskHTML);  
   editTaskWrapper.innerHTML = editTaskHTML; 
-
  
   console.log('Edit Task Wrapper Inhalt:', editTaskWrapper.innerHTML);
 
- 
   editTaskWrapper.style.position = 'absolute'; 
   editTaskWrapper.style.top = taskDetail.offsetTop + 'px'; 
-
  
   editTaskWrapper.style.display = 'flex'; 
 }
@@ -263,6 +270,27 @@ function toggleSubtask(index) {
       checked.style.display = 'inline-block';
     }
   }
+
+  function editSubtask(index) {
+    
+    document.getElementById(`edit-subtask-input-${index}`).style.display = 'block';
+    document.getElementById(`subtask-text-${index}`).style.display = 'none';
+    document.getElementById(`icons-${index}`).style.display = 'none';
+    document.getElementById(`save-icons-${index}`).style.display = 'flex';
+}
+
+function saveSubtask(index) {
+    const newSubtaskText = document.getElementById(`edit-subtask-input-${index}`).value;
+    
+   
+    document.getElementById(`subtask-text-${index}`).innerText = newSubtaskText;
+   
+    document.getElementById(`edit-subtask-input-${index}`).style.display = 'none';
+    document.getElementById(`subtask-text-${index}`).style.display = 'block';
+    document.getElementById(`icons-${index}`).style.display = 'flex';
+    document.getElementById(`save-icons-${index}`).style.display = 'none';
+}
+
   
 
 
