@@ -41,7 +41,7 @@
                         <span></span>
                         <div class="icon icon-search"></div>
                     </label>
-                    <button>Add task</button>
+                    <button onclick="openAddTask()">Add task</button>
                 </div>
             </section>
 
@@ -139,9 +139,9 @@
             </div>
 
             <!-- Add Task Overlay -->
-            <div id="add-task-overlay" class="add-task-overlay-wrapper">
-                <div id="add-task-container" class="add-task-container">
-
+            <div id="add-task-overlay" class="add-task-overlay-wrapper" onclick="closeAddTask()">
+                <div id="add-task-container" class="add-task-container" onclick="event.stopPropagation();">
+                    <span class="close-add-task icon-close" onclick="closeAddTask()"></span>
                     <h2 id="add-task-title">Add Task</h2>
 
                     <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createTask();">
@@ -210,7 +210,7 @@
                             <span class="required-text"><span class="required">*</span>This field is required</span>
                             <div class="add-task-button-wrapper">
                                 <!-- Clear Button -->
-                                <button type="button" class="cancel-btn">Clear<span class="icon-close"></span></button>
+                                <button type="button" class="cancel-btn" onclick="closeAddTask()">Cancel<span class="icon-close"></span></button>
                                 <!-- Create Button -->
                                 <button id="createTaskBtn" type="submit" class="create-task-btn" disabled>Create
                                     Task<span class="icon-check"></span></button>

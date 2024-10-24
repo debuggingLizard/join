@@ -93,6 +93,8 @@ label {
     justify-content: center;
     gap: 6px;
     font-size: 16px;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+
 }
 
 .prio-btn span {
