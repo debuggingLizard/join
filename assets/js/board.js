@@ -123,12 +123,12 @@ function search(query) {
 }
 
 // Add Task Functionality
-function openAddTask() {
+function openAddTask(status) {
     eventListenerCloseAddTask();
-    renderAddTaskData();
   document.getElementById("add-task-overlay").style.zIndex = 999;
   document.getElementById("add-task-overlay").style.backgroundColor = "rgb(0 0 0 / 30%)";
   document.getElementById("add-task-container").style.transform = "translateX(0)";
+  addTaskstatus = status;
 }
 
 function eventListenerCloseAddTask() {
@@ -136,6 +136,7 @@ function eventListenerCloseAddTask() {
     const closeTrigger = function (e) {
         if (e.target !== e.currentTarget) return;
         closeAddTask();
+        resetAddTask();
         overlay.removeEventListener('click', closeTrigger);
     };
     overlay.addEventListener('click', closeTrigger);

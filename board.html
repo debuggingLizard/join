@@ -21,7 +21,7 @@
 </head>
 
 <body
-    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); loadTasksFromDatabase(); loadDropTargets(); initEventListenerAddTask()">
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); loadTasksFromDatabase(); loadDropTargets(); initEventListenerAddTask(); renderAddTaskData()">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -42,7 +42,7 @@
                         <span></span>
                         <div class="icon icon-search"></div>
                     </label>
-                    <button onclick="openAddTask()">Add task</button>
+                    <button onclick="openAddTask('todo')">Add task</button>
                 </div>
             </section>
 
@@ -51,7 +51,7 @@
                 <div class="boards">
                     <div class="board-title">
                         <h3>To do</h3>
-                        <div class="icon icon-add"></div>
+                        <div class="icon icon-add" onclick="openAddTask('todo')"></div>
                     </div>
                     <div class="board-tasks drop-target" id="todo-tasks" title="To do" ondrop="drop(event, 'todo')">
                     </div>
@@ -59,7 +59,7 @@
                 <div class="boards">
                     <div class="board-title">
                         <h3>In progress</h3>
-                        <div class="icon icon-add"></div>
+                        <div class="icon icon-add" onclick="openAddTask('progress')"></div>
                     </div>
                     <div class="board-tasks drop-target" id="progress-tasks" title="In progress"
                         ondrop="drop(event, 'progress')">
@@ -68,7 +68,7 @@
                 <div class="boards">
                     <div class="board-title">
                         <h3>Await feedback</h3>
-                        <div class="icon icon-add"></div>
+                        <div class="icon icon-add" onclick="openAddTask('await-feedback')"></div>
                     </div>
                     <div class="board-tasks drop-target" id="await-feedback-tasks" title="Await feedback"
                         ondrop="drop(event, 'await-feedback')">
@@ -142,10 +142,10 @@
             <!-- Add Task Overlay -->
                 <div id="add-task-overlay" class="add-task-overlay-wrapper">
                     <div id="add-task-container" class="add-task-container">
-                    <span class="close-add-task icon-close" onclick="closeAddTask()"></span>
+                    <span class="close-add-task icon-close" onclick="closeAddTask(); resetAddTask()"></span>
                     <h2 id="add-task-title">Add Task</h2>
 
-                    <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createTask();">
+                    <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createTask(); closeAddTask()">
                         <div class="form-row">
                             <!-- Left column -->
                             <div class="form-column left">
@@ -211,7 +211,7 @@
                             <span class="required-text"><span class="required">*</span>This field is required</span>
                             <div class="add-task-button-wrapper">
                                 <!-- Clear Button -->
-                                <button type="button" class="cancel-btn" onclick="closeAddTask()">Cancel<span class="icon-close"></span></button>
+                                <button type="button" class="cancel-btn" onclick="closeAddTask(); resetAddTask()">Cancel<span class="icon-close"></span></button>
                                 <!-- Create Button -->
                                 <button id="createTaskBtn" type="submit" class="create-task-btn" disabled>Create
                                     Task<span class="icon-check"></span></button>

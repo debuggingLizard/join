@@ -272,6 +272,8 @@ function checkRequiredFields() {
   createTaskBtn.disabled = !allFilled;
 }
 
+let addTaskstatus = "todo";
+
 async function createTask() {
   let title = document.getElementById("title").value;
   let description = document.getElementById("description").value || '';
@@ -285,7 +287,7 @@ async function createTask() {
     done: false,
     title: li.querySelector(".subtask-title").textContent,
   }));
-  let status = "todo";
+  let status = addTaskstatus;
 
   const data = {
     title: title,
@@ -300,6 +302,7 @@ async function createTask() {
 
   resetAddTask();
   await postData("tasks", data);
+  addTaskstatus = "todo";
 }
 
 function resetAddTask() {
