@@ -152,3 +152,9 @@
     color: #A8A8A8;
     font-weight: 400;
 }
+
+@media (max-width: 1024px) {
+    .board-middle {
+        flex-direction: column;
+    }
+}
