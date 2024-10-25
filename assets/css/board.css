@@ -137,10 +137,11 @@
 
 .boards .board-tasks {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     margin-top: 15px;
     gap: 15px;
+    min-height: 400px;
 }
 
 .boards .board-tasks .no-tasks {
@@ -235,6 +236,15 @@
     .right-board-header input {
         width: 95%;
     }
+}
 
+.dragging {
+    opacity: 1;
+    transform: rotate(10deg);
+    position: absolute;
+}
 
+.dragging-target-area {
+    border-radius: 30px;
+    border: dashed 1px #A8A8A8;
 }

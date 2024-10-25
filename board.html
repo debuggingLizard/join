@@ -14,10 +14,11 @@
     <script src="script.js"></script>
     <script src="./assets/js/firebase-connect.js"></script>
     <script src="./assets/js/board.js"></script>
+    <script src="./assets/js/dragging.js"></script>
     <script src="./assets/js/task-view.js"></script>
 </head>
 
-<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); renderBoards()">
+<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); loadTasksFromDatabase(); loadDropTargets();">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -53,8 +54,7 @@
                         <h3>To do</h3>
                         <div class="icon icon-add"></div>
                     </div>
-                    <div class="board-tasks" id="todo-tasks">
-
+                    <div class="board-tasks drop-target" id="todo-tasks" title="To do" ondrop="drop(event, 'todo')">
                     </div>
                 </div>
                 <div class="boards">
@@ -62,7 +62,7 @@
                         <h3>In progress</h3>
                         <div class="icon icon-add"></div>
                     </div>
-                    <div class="board-tasks" id="progress-tasks">
+                    <div class="board-tasks drop-target" id="progress-tasks" title="In progress" ondrop="drop(event, 'progress')">
                     </div>
                 </div>
                 <div class="boards">
@@ -70,14 +70,14 @@
                         <h3>Await feedback</h3>
                         <div class="icon icon-add"></div>
                     </div>
-                    <div class="board-tasks" id="await-feedback-tasks">
+                    <div class="board-tasks drop-target" id="await-feedback-tasks" title="Await feedback" ondrop="drop(event, 'await-feedback')">
                     </div>
                 </div>
                 <div class="boards">
                     <div class="board-title">
                         <h3>Done</h3>
                     </div>
-                    <div class="board-tasks" id="done-tasks">
+                    <div class="board-tasks drop-target" id="done-tasks" title="Done" ondrop="drop(event, 'done')">
                     </div>
                 </div>
             </section>

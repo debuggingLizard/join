@@ -12,6 +12,7 @@
 
 body {
     display: flex;
+    overflow-x: hidden;
 }
 
 .d-none {
@@ -210,4 +211,12 @@ footer a:focus {
     .main {
         padding-bottom: 60px;
     }
+}
+
+input.input-error {
+    border: 1px solid #FF8190;
+}
+
+select.input-error {
+    border: 1px solid #FF8190;
 }

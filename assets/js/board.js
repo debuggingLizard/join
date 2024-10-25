@@ -1,38 +1,48 @@
 let tasks = {};
-let todoTasks = [];
-let progressTasks = [];
-let feedbackTasks = [];
-let doneTasks = [];
+let filterTasks = [];
 let searchValue = '';
 let timeoutId;
 
-async function renderBoards() {
+async function loadTasksFromDatabase() {
     tasks = await getData('tasks');
 
+    renderBoards();
+}
+
+async function renderBoards() {
+    filterTasks = Object.entries(tasks);
+    checkSearchValue();
+
+    await renderTasks('todo-tasks', getTasksByStatus('todo'));
+    await renderTasks('progress-tasks', getTasksByStatus('progress'));
+    await renderTasks('await-feedback-tasks', getTasksByStatus('await-feedback'));
+    await renderTasks('done-tasks', getTasksByStatus('done'));
+}
+
+async function renderBoardsByStatus(currentStatus, targetStatus) {
+    filterTasks = Object.entries(tasks);
+    checkSearchValue();
+
+    await renderTasks(currentStatus + '-tasks', getTasksByStatus(currentStatus));
+    await renderTasks(targetStatus + '-tasks', getTasksByStatus(targetStatus));
+}
+
+function checkSearchValue() {
     if (searchValue.length >= 1) {
         filterTasks = Object.entries(tasks).filter(task =>
             task[1].title.toLowerCase().includes(searchValue) ||
             task[1].description.toLowerCase().includes(searchValue)
         );
-        tasks = Object.fromEntries(filterTasks)
     }
-
-    todoTasks = getTasksByStatus('todo');
-    progressTasks = getTasksByStatus('progress');
-    feedbackTasks = getTasksByStatus('await-feedback');
-    doneTasks = getTasksByStatus('done');
-    await renderTasks('todo-tasks', todoTasks, 'To do');
-    await renderTasks('progress-tasks', progressTasks, 'In progress');
-    await renderTasks('await-feedback-tasks', feedbackTasks, 'Await feedback');
-    await renderTasks('done-tasks', doneTasks, 'Done');
 }
 
 function getTasksByStatus(status) {
-    return Object.entries(tasks).filter(task => task[1].status === status);
+    return filterTasks.filter(task => task[1].status === status);
 }
 
-async function renderTasks(boardElementId, boardTasks, boardTitle) {
+async function renderTasks(boardElementId, boardTasks) {
     let boardElement = document.getElementById(boardElementId);
+    let boardTitle = boardElement.getAttribute('title');
     if (boardTasks.length === 0) {
         boardElement.innerHTML = `<div class="no-tasks">No tasks ${boardTitle}</div>`;
     } else {
@@ -41,7 +51,9 @@ async function renderTasks(boardElementId, boardTasks, boardTitle) {
             let taskId = task[0];
             let taskDetail = task[1];
             boardElement.innerHTML += await taskTemplate(taskId, taskDetail);
-            await renderTaskContributors(taskId, taskDetail);
+            if (taskDetail.users != undefined && taskDetail.users.length > 0) {
+                await renderTaskContributors(taskId, taskDetail);
+            }
             if (taskDetail.subtasks != undefined && taskDetail.subtasks.length > 0) {
                 renderSubtasks(taskId, taskDetail);
             }
@@ -66,7 +78,7 @@ async function taskTemplate(taskId, taskDetail) {
     let categoryDetail = await getData('categories/' + taskDetail.category);
     let priorityDetail = await getData('priorities/' + taskDetail.priority);
 
-    return /*html*/ `<div class="task-view" onclick="openTaskDetail()">
+    return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail()">
                         <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
                         <div class="task-description">
                             <h2>${taskDetail.title}</h2>
