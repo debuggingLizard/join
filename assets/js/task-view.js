@@ -115,15 +115,15 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, all
 
    
             <div class="assigned-contributors-to-task">
-                    <label for="usersToAssign" class="assigned-label">Assigned to</label>
-                    <select id="contactsToAssign" name="contact" required>
-                        <option value="">Select contacts to assign</option>
-                        ${allUsers.map(user => `
+                    <label for="contactsToAssign" class="assigned-label">Assigned to</label>
+    
+                <select id="contactsToAssign" name="contact" multiple required>
+                    <option value="" disabled selected hidden>Select contacts to assign</option>
+                    ${allUsers.map(user => `
                         <option value="${user.id}" ${user.selected ? 'selected' : ''}>${user.profileImage} ${user.name}</option>
-                        `).join('')}
-                    </select>
-
-            </div>        
+                     `).join('')}
+                </select>
+            </div>
 
             <div class="edit-assigned-contributors">
                         ${(assignedUsers || []).map(user => `
@@ -169,6 +169,29 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, all
     `;
 }
 
+
+function renderEditTaskTemplate() {
+    // Dein Code, der das Dropdown erstellt
+    document.getElementById('contactsToAssign').addEventListener('change', function() {
+        const selectedUserIds = Array.from(this.selectedOptions).map(option => option.value);
+
+        // Beispiel: Liste der ausgewählten Benutzer anzeigen
+        selectedUserIds.forEach(userId => {
+            const selectedUser = allUsers.find(user => user.id === userId);
+            console.log(`Ausgewählter Benutzer: ${selectedUser.name} (${selectedUser.profileImage})`);
+        });
+    });
+}
+
+async function fetchUsers() {
+    try {
+        const users = await getData('users'); 
+        return Object.values(users); 
+    } catch (error) {
+        console.error("Fehler beim Abrufen der Benutzer:", error);
+        return []; 
+    }
+}
 
 function toggleUserSelection(userId) {
     const userElement = document.getElementById(`user-${userId}`);
