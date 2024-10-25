@@ -1,10 +1,16 @@
-
-let taskInformation, taskPriority, taskCategory, assignedUsers, subtasks;
+let taskId;
+let taskInformation;
+let taskPriority;
+let taskCategory;
+let assignedUsers;
 let selectedUserIds = [];
 let isFirstOpen = true;
+let editFormErrors = {
+    title: 0,
+    dueDate: 0
+};
 
-
-function createTaskDetailTemplate(taskInformation, taskPriority, taskCategory, assignedUsers, subtasks) {
+function createTaskDetailTemplate() {
     return `
         <div class="task-detail" id="task-detail" onclick="event.stopPropagation();">
             <div id="close-btn-task-detail" class="close-btn-task-detail" onclick="closeTaskDetail()">
@@ -40,8 +46,8 @@ function createTaskDetailTemplate(taskInformation, taskPriority, taskCategory, a
                 <p style="margin-bottom: 10px;">Subtasks</p>
                 <div class="subtask-checkbox">
              
-                ${(subtasks && subtasks.length > 0) ?
-            subtasks.map((subtask, index) => `
+                ${(taskInformation.subtasks && taskInformation.subtasks.length > 0) ?
+            taskInformation.subtasks.map((subtask, index) => `
                     <div class="check-subtask" id="subtask-${index}" onclick="toggleSubtask(${index})">
                         <img id="unchecked-${index}" class="checkbox-img" src="./assets/img/unchecked-button.svg" alt="checkbox" style="display: ${subtask.done ? 'none' : 'inline-block'};">
                         <img id="checked-${index}" class="checkbox-tick-img" src="./assets/img/checked-button.svg" alt="checkbox" style="display: ${subtask.done ? 'inline-block' : 'none'};">
@@ -55,182 +61,143 @@ function createTaskDetailTemplate(taskInformation, taskPriority, taskCategory, a
                 <button class="task-edit-delete-btn"><img src="./assets/img/delete.svg" alt="">
                     <span>Delete</span>
                 </button>
-                <button onclick="editTask()" class="task-edit-delete-btn"><img src="./assets/img/edit.svg" alt="">
+                <button onclick="openEditTaskForm()" class="task-edit-delete-btn"><img src="./assets/img/edit.svg" alt="">
                     <span>Edit</span>
                 </button>
             </div>
         </div>`;
 }
-function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, allUsers, assignedUsers, subtasks) {
+function createEditTaskTemplate() {
     return `
     <div class="edit-task" id="edit-task" onclick="event.stopPropagation();">
-            <div id="close-btn-edit-task-detail" class="close-btn-edit-task-detail" onclick="closeTaskDetail()">
-                <img src="./assets/img/close.svg" alt="Close">
-            </div>
+        <div id="close-btn-edit-task-detail" class="close-btn-edit-task-detail" onclick="closeTaskDetail()">
+            <img src="./assets/img/close.svg" alt="Close">
+        </div>
 
-            <div class="form-column edit-task-form-column">
-                <label for="title">
-                    <div>Title<span class="required">*</span></div>
-                    <input type="text" id="title" name="title" placeholder="Enter a title" value="${taskInformation.title}" required>
-                    <span class="title-error error d-none"></span>
-                </label>
+        <form id="edit-task-form" class="form-column edit-task-form-column" novalidate>
+            <label for="title">
+                <div>Title<span class="required">*</span></div>
+                <input type="text" id="title" name="title" placeholder="Enter a title" value="${taskInformation.title}" required>
+                <span class="title-error error d-none"></span>
+            </label>
 
-                <label for="description">
-                    <div>Description</div>
-                    <textarea id="description" name="description" rows="4"
-                        placeholder="Enter a Description">${taskInformation.description}</textarea>
-                </label>
+            <label for="description">
+                <div>Description</div>
+                <textarea id="description" name="description" rows="4"
+                    placeholder="Enter a Description">${taskInformation.description}</textarea>
+            </label>
 
-                <label for="due-date" class="date-label">
-                    <div>Due date<span class="required">*</span></div>
-                    <input type="text" class="picker text-date" id="due-date" name="due-date" value="${taskInformation.date}" onfocus="clearPlaceholder()"
-                        onblur="setPlaceholder()" onchange="formatDate()" required>
-                    <span class="due-date-error error d-none"></span>
-                </label>
+            <label for="due-date" class="date-label">
+                <div>Due date<span class="required">*</span></div>
+                <input type="text" class="picker text-date" id="due-date" name="due-date" value="${taskInformation.date}" onfocus="clearPlaceholder()"
+                    onblur="setPlaceholder()" onchange="formatDate()" required>
+                <span class="due-date-error error d-none"></span>
+            </label>
 
-                <label>
-                    <div>Prio</div>
-                    <div class="prio-options">
-                        <div class="prio-btn urgent ${taskPriority.title === 'Urgent' ? 'active' : ''}" onclick="selectPrio('urgent', '-O9M0Iky4rEYMLq5JwoZ')">
-                            Urgent<span class="icon-urgent"></span>
-                        </div>
-                        <div class="prio-btn medium ${taskPriority.title === 'Medium' ? 'active' : ''}"
-                            onclick="selectPrio('medium', '-O9M0Iky4rEYMLq5Jwo_')">
-                            Medium<span class="icon-medium"></span>
-                        </div>
-                        <div class="prio-btn low ${taskPriority.title === 'Low' ? 'active' : ''}" onclick="selectPrio('low', '-O9M0IlWMv7MvM-vtcJ-')">
-                            Low <span class="icon-low"></span>
-                        </div>
+            <label>
+                <div>Prio</div>
+                <div class="prio-options">
+                    <div class="prio-btn urgent ${taskPriority.title === 'Urgent' ? 'active' : ''}" onclick="selectPrio('urgent', '-O9M0Iky4rEYMLq5JwoZ')">
+                        Urgent<span class="icon-urgent"></span>
                     </div>
-                    <input type="hidden" id="selectedPrio" name="prio" value="${taskInformation.priority}">
-                </label>
-
-                <label for="assignees" class="assign-label">
-                    <div>Assigned to</div>
-                    <div>
-                        <input type="search" name="assignees" id="assignees"
-                            placeholder="Select contacts to assign" onclick="toggleContactDropdown()">
-                        <div class="assignees-list d-none"></div>
-                        <div id="assigned-to" class="assigned-to"></div>
+                    <div class="prio-btn medium ${taskPriority.title === 'Medium' ? 'active' : ''}"
+                        onclick="selectPrio('medium', '-O9M0Iky4rEYMLq5Jwo_')">
+                        Medium<span class="icon-medium"></span>
                     </div>
-                </label>
-            </div>
-   
-            <div class="assigned-contributors-to-task">
-                    <label for="contactsToAssign" class="assigned-label">Assigned to</label>
+                    <div class="prio-btn low ${taskPriority.title === 'Low' ? 'active' : ''}" onclick="selectPrio('low', '-O9M0IlWMv7MvM-vtcJ-')">
+                        Low <span class="icon-low"></span>
+                    </div>
+                </div>
+                <input type="hidden" id="selectedPrio" name="prio" value="${taskInformation.priority}">
+            </label>
 
-                    <div class="edit-assigned-contributors" id="selectedContributors">
-                        ${(assignedUsers || []).map(user => `
-                            <div class="contributor" style="background-color: ${user.color}; display: inline-block; margin-right: 8px;">
-                                ${user.profileImage}
-                            </div>
+            <label for="assignees" class="assign-label">
+                <div>Assigned to</div>
+                <div>
+                    <input type="search" name="assignees" id="assignees"
+                        placeholder="Select contacts to assign" onclick="toggleContactDropdown()">
+                    <div class="assignees-list d-none"></div>
+                    <div id="assigned-to" class="assigned-to">
+                        ${(assignedUsers).map(user => `
+                            <span id="${user.id}" class="contact-profile-image" style="background-color:${user.color}">${user.profileImage}</span>
                         `).join('')}
-                
-                            <div class="subtask-section">
-                                    <label for="subtasks" class="subtasks-label">Subtasks</label>
-                                    <div class="edit-task-subtask-row">
-                                                        <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                                                        <button type="button" class="edit-subtask-btn">+</button>
-                                <div class="edit-task-subtask-listing-wrapper">
-                            
-                                        ${(subtasks || []).map((subtask, index) => `
-                                    <div class="edit-task-subtask-listing" id="subtask-${index}">
-                                    
-                                    <p id="subtask-text-${index}" class="subtask-text"><span class="subtask-dot"></span>${subtask.title}</p>
-                                    <input type="text" id="edit-subtask-input-${index}" class="edit-subtask-input" value="${subtask.title}" style="display: none;">
-
-                                    <div class="edit-task-subtask-listing-icons" id="icons-${index}">
-                                        <img src="./assets/img/edit.svg" alt="Edit Subtask" title="Edit" onclick="editSubtask(${index})">
-                                        <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete" onclick="deleteSubtask(${index})">
-                                    </div>
-
-                                    <div class="edit-task-subtask-save-icons" id="save-icons-${index}" style="display: none;">
-                                        <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete" onclick="deleteSubtask(${index})">
-                                        <img src="./assets/img/check-black.svg" alt="Save Subtask" title="Save" onclick="saveSubtask(${index})" style="width: 20px; height: 20px;">
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
                     </div>
+                </div>
+            </label>
+
+            <label for="subtasks">
+                <div>Subtasks</div>
+                <div class="subtask-row">
+                    <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
+                    <div class="subtask-buttons">
+                        <span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput()"></span>
+                        <span class="add-subtask-btn icon-add" onclick="addSubtask()"></span>
+                    </div>
+                </div>
+                <ul id="subtask-list" class="subtask-list">
+                    ${(taskInformation.subtasks || []).map((subtask, index) => `
+                        <li class="subtask-item">
+                            <span ondbclick="editSubtask(this)" class="subtask-title">${subtask.title}</span>
+                            <div class="subtask-actions">
+                                <div class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></div>
+                                <div class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></div>
+                            </div>
+                        </li>
+                    `).join('')}
+                </ul>
+            </label>
+
+            <div class="edit-task-confirm-btn">
+                <button id="editTaskBtn" type="submit" class="create-task-btn">
+                    Ok<span class="icon-check"></span>
+                </button>
             </div>
-        <div class="edit-task-confirm-btn" onclick="event.stopPropagation(); confirmEdit();">
-        <button type="submit" class="edit-task-btn" onclick="confirmEdit()">Ok
-            <svg width="25" height="24" viewBox="0 0 25 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <g mask="url(#mask0_75592_9963)">
-                    <path d="M9.69474 15.15L18.1697 6.675C18.3697 6.475 18.6072 6.375 18.8822 6.375C19.1572 6.375 19.3947 6.475 19.5947 6.675C19.7947 6.875 19.8947 7.1125 19.8947 7.3875C19.8947 7.6625 19.7947 7.9 19.5947 8.1L10.3947 17.3C10.1947 17.5 9.96141 17.6 9.69474 17.6C9.42807 17.6 9.19474 17.5 8.99474 17.3L4.69474 13C4.49474 12.8 4.3989 12.5625 4.40724 12.2875C4.41557 12.0125 4.51974 11.775 4.71974 11.575C4.91974 11.375 5.15724 11.275 5.43224 11.275C5.70724 11.275 5.94474 11.375 6.14474 11.575L9.69474 15.15Z" fill="white"/>
-                </g>
-            </svg>
-        </button>
-            </div>
+        </form>                                    
+        
+    </div>
     `;
 }
 
-async function getAllUsers() {
-    try {
-        const users = await getData('users');
-        if (!users) throw new Error("Keine Benutzer gefunden");
-
-
-        return Object.entries(users).map(([id, user]) => ({
-            id,
-            name: user.name || "Unbekannt",
-            profileImage: user.profileImage || "N/A",
-            color: user.color || "#ccc"
-        }));
-    } catch (error) {
-        console.error("Fehler beim Abrufen der User-Daten:", error);
-        return [];
-    }
-}
-
-async function getAssignedUsers(userIds) {
-    if (!Array.isArray(userIds)) {
-        console.error("userIds ist keine Array", userIds);
-        return [];
-    }
-
-    const userDetails = await Promise.all(userIds.map(async userId => {
-        try {
-            const user = await getData('users/' + userId);
-            return user || {};
-        } catch (error) {
-            console.error("Fehler beim Abrufen des Benutzers:", error);
-            return {};
-        }
-    }));
-
-    return userDetails;
-}
-
-async function openTaskDetail(taskId) {
+async function getDataFromDatabase() {
     try {
         taskInformation = await getData('tasks/' + taskId);
-
         taskPriority = await getData('priorities/' + taskInformation.priority);
-
         taskCategory = await getData('categories/' + taskInformation.category);
+        assignedUsers = await getAssignedUsers();
+    } catch (error) {
+        console.error("Get data failed:");
+    }
+}
 
-        assignedUsers = await getAssignedUsers(taskInformation.users);
-
-        subtasks = taskInformation.subtasks || [];
-
-        if (subtasks.length > 0) {
-            const subtasksArray = Array.isArray(subtasks) ? subtasks : Object.values(subtasks);
-            const taskDetailHTML = createTaskDetailTemplate(taskInformation, taskPriority, taskCategory, assignedUsers, subtasksArray);
-            document.getElementById('overlay').innerHTML = taskDetailHTML;
-        } else {
-            document.getElementById('overlay').innerHTML = '<p>No subtasks available</p>';
+async function getAssignedUsers() {
+    if (taskInformation.users != undefined && taskInformation.users.length > 0) {
+        const userDetails = [];
+        for (const userId of taskInformation.users) {
+            const user = await getData('users/' + userId);
+            user['id'] = userId;
+            userDetails.push(user);
         }
 
-        const overlay = document.getElementById("overlay");
-        const taskDetail = document.getElementById("task-detail");
-        overlay.style.display = "flex";
-        setTimeout(() => {
-            taskDetail.classList.add("show");
-        }, 10);
-    } catch (error) {
-        console.error("Fehler beim Öffnen des Task-Details:", error);
+        return userDetails;
     }
+
+    return [];
+}
+
+async function openTaskDetail(id) {
+    taskId = id;
+
+    await getDataFromDatabase();
+
+    const taskDetailHTML = createTaskDetailTemplate();
+    document.getElementById('overlay').innerHTML = taskDetailHTML;
+
+    const overlay = document.getElementById("overlay");
+    const taskDetail = document.getElementById("task-detail");
+    overlay.style.display = "flex";
+    setTimeout(() => {
+        taskDetail.classList.add("show");
+    }, 10);
 }
 
 function closeTaskDetail() {
@@ -250,14 +217,13 @@ function closeTaskDetail() {
 }
 
 
-async function editTask() {
-    const allUsers = await getAllUsers();
+async function openEditTaskForm() {
     const taskDetail = document.getElementById("task-detail");
     const editTaskWrapper = document.querySelector('.edit-task-wrapper');
 
     taskDetail.style.display = 'none';
 
-    const editTaskHTML = createEditTaskTemplate(taskInformation, taskPriority, taskCategory, allUsers, assignedUsers, subtasks);
+    const editTaskHTML = createEditTaskTemplate();
     editTaskWrapper.innerHTML = editTaskHTML;
 
     editTaskWrapper.style.position = 'absolute';
@@ -266,33 +232,46 @@ async function editTask() {
     editTaskWrapper.style.display = 'flex';
 
     renderContacts(taskInformation.users);
+
+    editFormEventListener();
 }
 
+function editFormEventListener() {
+    let formElement = document.getElementById('edit-task-form');
 
-function confirmEdit() {
-    const taskTitleElement = document.getElementById('title');
-    const taskDescriptionElement = document.getElementById('description');
-    const taskDueDateElement = document.getElementById('due-date');
-    const taskPriorityElement = document.querySelector('.prio-btn.active');
+    formElement.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        checkEditFormValidation('title', 'The title field is required');
+        checkEditFormValidation('due-date', 'The Date field is required');
 
-    if (!taskTitleElement || !taskDescriptionElement || !taskDueDateElement || !taskPriorityElement) {
-        console.error("Ein erforderliches Element wurde nicht gefunden.");
-        return;
+        if (editFormErrors.title === 0 && editFormErrors.dueDate === 0) {
+            await confirmEdit();
+        }
+    });
+}
+
+function checkEditFormValidation(inputName, message) {
+    let inputElement = document.querySelector(`#edit-task-form *[name = ${inputName}]`);
+
+    if (!inputElement.checkValidity()) {
+        showInputValidationError('#edit-task-form', inputName, message)
+        editFormErrors[inputName] = 1;
+    } else {
+        hideInputValidationError('#edit-task-form', inputName)
+        editFormErrors[inputName] = 0;
     }
 
-    const taskTitle = taskTitleElement.value;
-    const taskDescription = taskDescriptionElement.value;
-    const taskDueDate = taskDueDateElement.value;
-    const taskPriority = taskPriorityElement.innerText;
+    if (inputElement.value === 'dd/mm/yyyy') {
+        showInputValidationError('#edit-task-form', inputName, message)
+        editFormErrors[inputName] = 1;
+    }
+}
 
-    updateTaskData(taskInformation.id, {
-        title: taskTitle,
-        description: taskDescription,
-        date: taskDueDate,
-        priority: taskPriority
-    });
+async function confirmEdit() {
+    await updateTaskData();
+    await getDataFromDatabase();
 
-    const taskDetailHTML = createTaskDetailTemplate(taskInformation, taskPriority, taskCategory, assignedUsers, subtasks);
+    const taskDetailHTML = createTaskDetailTemplate();
     document.getElementById('overlay').innerHTML = taskDetailHTML;
 
     const editTaskWrapper = document.querySelector('.edit-task-wrapper');
@@ -309,6 +288,10 @@ function confirmEdit() {
     taskDetail.style.top = '50%';
     taskDetail.style.left = '50%';
     taskDetail.style.transform = 'translate(-50%, -50%)';
+
+    await loadTasksFromDatabase();
+    filterTasks = Object.entries(tasks);
+    await renderTasks(taskInformation.status + "-tasks", getTasksByStatus(taskInformation.status));
 }
 
 
@@ -325,50 +308,35 @@ function toggleSubtask(index) {
     }
 }
 
-function editSubtask(index) {
-
-    document.getElementById(`edit-subtask-input-${index}`).style.display = 'block';
-    document.getElementById(`subtask-text-${index}`).style.display = 'none';
-    document.getElementById(`icons-${index}`).style.display = 'none';
-    document.getElementById(`save-icons-${index}`).style.display = 'flex';
-}
-
-function saveSubtask(index) {
-    const newSubtaskText = document.getElementById(`edit-subtask-input-${index}`).value;
-
-
-    document.getElementById(`subtask-text-${index}`).innerText = newSubtaskText;
-
-
-    document.getElementById(`edit-subtask-input-${index}`).style.display = 'none';
-    document.getElementById(`subtask-text-${index}`).style.display = 'block';
-    document.getElementById(`icons-${index}`).style.display = 'flex';
-    document.getElementById(`save-icons-${index}`).style.display = 'none';
-}
-
-function selectPrio(priority) {
-    document.querySelectorAll('.prio-btn').forEach(btn => {
-        const priorityColor = btn.getAttribute('data-color');
-
-
-        btn.classList.remove('active');
-        btn.style.backgroundColor = 'transparent';
-        btn.querySelector('span').style.color = 'black';
-        btn.querySelector('.icon').style.color = priorityColor;
-    });
-
-
-    const selectedBtn = document.querySelector(`.prio-btn.${priority}`);
-    selectedBtn.classList.add('active');
-    selectedBtn.style.backgroundColor = selectedBtn.getAttribute('data-color');
-    selectedBtn.querySelector('span').style.color = 'white';
-    selectedBtn.querySelector('.icon').style.color = 'white';
-}
-
-async function updateTaskData(taskId, updatedData) {
+async function updateTaskData() {
     try {
-        await updateData(`tasks/${taskId}`, updatedData);
-        console.log(`Task ${taskId} updated successfully.`);
+        let title = document.querySelector("#edit-task-form *[name = title]").value;
+        let description = document.querySelector("#edit-task-form *[name = description]").value || '';
+
+        let assignedSpans = document.querySelector("#edit-task-form .assigned-to").querySelectorAll("span");
+        let users = Array.from(assignedSpans).map((span) => span.id);
+        let date = document.querySelector("#edit-task-form *[name = due-date]").value;
+        let priority = document.querySelector("#edit-task-form *[name = prio]").value;
+        let category = taskInformation.category;
+
+        let subtasks = Array.from(document.querySelector("#edit-task-form .subtask-list").children).map((li) => ({
+            done: false,
+            title: li.querySelector(".subtask-title").textContent,
+        }));
+        let status = taskInformation.status;
+
+        const data = {
+            title: title,
+            description: description,
+            users: users.length > 0 ? users : [],
+            date: date,
+            priority: priority,
+            category: category,
+            subtasks: subtasks.length > 0 ? subtasks : [],
+            status: status
+        };
+
+        await putData('tasks', taskId, data);
     } catch (error) {
         console.error(`Error updating task ${taskId}:`, error);
     }

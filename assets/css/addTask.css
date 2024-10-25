@@ -355,7 +355,7 @@ label {
 .create-task-btn {
     padding: 10px 13px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
@@ -408,6 +408,9 @@ label {
     list-style: none;
     padding: 0;
     margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .subtask-actions button {
@@ -433,14 +436,15 @@ label {
 .subtask-item {
     display: flex;
     justify-content: flex-start;
-    margin: 0 0 2px 18px;
-    padding: 2px;
+    padding: 4px 2px 4px 18px;
     position: relative;
+    border-radius: 10px;
 }
 
 .subtask-item span {
     flex: 1;
     cursor: pointer;
+    font-size: 13px;
 }
 
 .subtask-item input {
@@ -448,6 +452,7 @@ label {
     border: none;
     border-bottom: 1px solid #29ABE2;
     border-radius: 0;
+    font-size: 13px;
 }
 
 .create-task-btn:disabled {
@@ -553,6 +558,18 @@ label {
 
 .required-text.mobile {
     display: none;
+}
+
+.edit-subtask-btn {
+    position: absolute;
+    right: 30px;
+    top: 9px;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    font-size: 15px;
+    color: #2A3647;
+    cursor: pointer;
 }
 
 @media (max-width: 800px) {

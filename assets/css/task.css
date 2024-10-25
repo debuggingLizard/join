@@ -363,17 +363,6 @@
     display: block;
     margin-bottom: 10px;
 }
-.edit-subtask-btn{
-    position: absolute;
-    right: 38px;
-    bottom: 20.5%;
-    transform: translateY(-50%);
-    border: none;
-    background-color: transparent;
-    font-size: 24px;
-    color: #2A3647;
-    cursor: pointer;
-}
 .subtask-dot {
     display: inline-block;
     height: 5px;
@@ -382,6 +371,29 @@
     border-radius: 50%;
     margin: 2px 15px;
 }
+
+.task-detail {
+    border-radius: 20px 0 0 20px;
+    overflow-y: scroll;
+    max-height: 90vh;
+}
+
+.task-detail::-webkit-scrollbar {
+    width: 7px;
+}
+
+.task-detail::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.task-detail::-webkit-scrollbar-thumb {
+    background: #A8A8A8;
+}
+
+.task-detail::-webkit-scrollbar-thumb:hover {
+    background: #999999;
+}
+
 .edit-task-subtask-listing {
     display: flex;
     justify-content: space-between;
