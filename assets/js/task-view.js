@@ -20,7 +20,7 @@ function createTaskDetailTemplate(taskInformation, taskPriority, taskCategory, a
                 </div>
                 <div>
                     <p>${taskInformation.date}</p>
-                    <div>
+                    <div class="detail-priority-container">
                         <span style="margin-right: 8px;">${taskPriority.title}</span>
                         <span class="icon ${taskPriority.icon}" style="color:${taskPriority.color}"></span>
                     </div>
@@ -43,8 +43,8 @@ function createTaskDetailTemplate(taskInformation, taskPriority, taskCategory, a
                 ${(subtasks && subtasks.length > 0) ? 
                     subtasks.map((subtask, index) => `
                     <div class="check-subtask" id="subtask-${index}" onclick="toggleSubtask(${index})">
-                        <img id="unchecked-${index}" class="checkbox-img" src="./assets/img/Rectangle 5.svg" alt="checkbox" style="display: ${subtask.completed ? 'none' : 'inline-block'};">
-                        <img id="checked-${index}" class="checkbox-tick-img" src="./assets/img/Check button (1).svg" alt="checkbox" style="display: ${subtask.completed ? 'inline-block' : 'none'};">
+                        <img id="unchecked-${index}" class="checkbox-img" src="./assets/img/unchecked-button.svg" alt="checkbox" style="display: ${subtask.done ? 'none' : 'inline-block'};">
+                        <img id="checked-${index}" class="checkbox-tick-img" src="./assets/img/checked-button.svg" alt="checkbox" style="display: ${subtask.done ? 'inline-block' : 'none'};">
                         <span>${subtask.title}</span>
                         </div>`).join('') 
                 :       '<p>No subtasks available</p>'}
@@ -158,7 +158,7 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, all
 
                     <div class="edit-task-subtask-save-icons" id="save-icons-${index}" style="display: none;">
                         <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete" onclick="deleteSubtask(${index})">
-                        <img src="./assets/img/Vector 17.svg" alt="Save Subtask" title="Save" onclick="saveSubtask(${index})" style="width: 20px; height: 20px;">
+                        <img src="./assets/img/check-black.svg" alt="Save Subtask" title="Save" onclick="saveSubtask(${index})" style="width: 20px; height: 20px;">
                     </div>
                 </div>
             `).join('')}
@@ -258,30 +258,20 @@ async function getAssignedUsers(userIds) {
 async function openTaskDetail(taskId) {
     try {
         taskInformation = await getData('tasks/' + taskId);
-        console.log("Task Information:", taskInformation);
 
         taskPriority = await getData('priorities/' + taskInformation.priority);
-        console.log("Task Priority:", taskPriority);
 
         taskCategory = await getData('categories/' + taskInformation.category);
-        console.log("Task Category:", taskCategory);
 
         assignedUsers = await getAssignedUsers(taskInformation.users);
-        console.log("Assigned Users:", assignedUsers);
 
         subtasks = taskInformation.subtasks || [];
-        console.log("Subtasks:", subtasks);
-
         
-        if (subtasks && subtasks.length > 0) {
-            console.log("Subtasks erfolgreich geladen:", subtasks);
-            
+        if (subtasks.length > 0) {
             const subtasksArray = Array.isArray(subtasks) ? subtasks : Object.values(subtasks);
             const taskDetailHTML = createTaskDetailTemplate(taskInformation, taskPriority, taskCategory, assignedUsers, subtasksArray);
             document.getElementById('overlay').innerHTML = taskDetailHTML;
         } else {
-            console.log("Keine Subtasks verfügbar");
-           
             document.getElementById('overlay').innerHTML = '<p>No subtasks available</p>';
         }
 
