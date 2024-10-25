@@ -69,16 +69,16 @@
     line-height: 0;
 }
 .contributor {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
     color: white;
-    font-weight: 300;
-    margin-left: -10px;
+    font-weight: 400;
+    margin-left: 5px;
     border: 2px solid white;
 }
 .contributor-listing {
@@ -131,7 +131,7 @@
     display: flex;
     gap: 40px;
     align-items: center;
-    margin: -30px 0px 10px;
+    margin: -30px 0px 5px;
 }
 .overlay {
     display: none;
@@ -145,8 +145,13 @@
     align-items: center;
     z-index: 1000;
 }
+.edit-task-subtask-row{
+    display: flex;
+    flex-direction: column;
+
+}
 .subtask-checkbox {
-    margin: 2px 30px;
+    margin: 2px 30px 30px;
 }
 .checkbox-svg{
     margin-right: 15px;
@@ -172,6 +177,9 @@
     display: flex;
     align-items: center;
     margin: 15px 0;
+}
+.subtask p{
+    margin-top: unset;
 }
 .task-edit-delete {
     display: flex;
@@ -265,65 +273,53 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 10px;
+    margin-top: -15px;
+    flex-direction: column;
 }
-.dropdown-container select {
-    width: 100%;
-    height: 40px;
-    padding: 5px;
-    border-radius: 5px;
-}
+
 .dropdown-container {
     max-height: 200px; 
     overflow-y: auto;
 }
-select {
-    display: block;
+
+.custom-dropdown {
     position: relative;
-}
-select[multiple] {
-    position: relative;
-        width: 100%;
-        height: auto;
-        padding: 10px;
-        font-size: 14px;
+    width: 100%;
+    cursor: pointer;
 }
 
-select[multiple]:focus {
-    height: auto; 
-    overflow-y: scroll; 
-}
-select[multiple] option {
+.dropdown-selected {
     padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
 }
-select option[disabled] {
-    color: #888;
-    font-style: italic;
+
+.dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-select option {
-    padding: 8px 10px;
-    font-size: 14px;
-    color: #333;
-}
-select:valid option[disabled] {
-    display: none;
-}
-select:invalid option[disabled] {
-    display: block;
-}
-.contributor {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+.dropdown-item {
+    padding: 10px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 12px;
-    color: white;
-    font-weight: 400;
-    margin-left: 5px;
-    border: 2px solid white;
 }
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+
+
 .custom-dropdown::after {
     content: '▿';
     position: absolute;
@@ -335,28 +331,6 @@ select:invalid option[disabled] {
     pointer-events: none;
 }
 
-
-#contactsToAssign {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    cursor: pointer;
-}
-.assigned-contributors-to-task select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    appearance: none; 
-    background-color: white;
-    font-size: 16px;
-    font-weight: 400;
-    position: relative;
-    color: #333;
-    cursor: pointer;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-}
 .assigned-contributors-wrapper {
     position: relative;
     display: inline-block;
@@ -382,10 +356,6 @@ select:invalid option[disabled] {
     outline: none;
     border-color: #29abe2;
 }
-
-.edit-assigned-contributors{
-    display: flex;
-}
 .edit-assigned-contributors .contributor {
     margin: 10px 2px ;
 }
@@ -395,8 +365,8 @@ select:invalid option[disabled] {
 }
 .edit-subtask-btn{
     position: absolute;
-    right: 20px;
-    bottom: 28%;
+    right: 38px;
+    bottom: 20.5%;
     transform: translateY(-50%);
     border: none;
     background-color: transparent;
@@ -451,6 +421,7 @@ select:invalid option[disabled] {
 }
 .edit-task-subtask-listing-wrapper {
     position: relative; 
+       
 }
 .edit-task-btn {
     padding: 8px 8px;
