@@ -22,7 +22,7 @@ async function renderAddTaskData() {
       createFormErrors.dueDate === 0 &&
       createFormErrors.category === 0
     ) {
-      createTask();
+      await createTask();
       if (typeof renderTaskAfterCreateTask === 'function') {
         await renderTaskAfterCreateTask();
       }
