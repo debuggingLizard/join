@@ -434,8 +434,6 @@ function formatDate() {
 function showFeedbackOverlay() {
   const overlay = document.getElementById("feedback-overlay");
   overlay.classList.add("show");
-
-  // Blendet das Overlay nach 3 Sekunden aus
   setTimeout(() => {
     overlay.classList.remove("show");
   }, 1000);
