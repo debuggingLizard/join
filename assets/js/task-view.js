@@ -117,28 +117,38 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, all
             <div class="assigned-contributors-to-task">
                     <label for="contactsToAssign" class="assigned-label">Assigned to</label>
     
-                <select id="contactsToAssign" name="contact" multiple required>
-                    <option value="" disabled selected hidden>Select contacts to assign</option>
-                    ${allUsers.map(user => `
-                        <option value="${user.id}" ${user.selected ? 'selected' : ''}>${user.profileImage} ${user.name}</option>
-                     `).join('')}
-                </select>
-            </div>
+                
+    <div class="custom-dropdown" onclick="toggleDropdown()">
+        <input type="text" id="dropdown-placeholder" placeholder="Select contacts to assign" readonly />
+        <div class="dropdown-list" id="contactsDropdown" style="display: none;">
+            ${allUsers.map(user => `
+                <div class="dropdown-item" onclick="toggleUserSelection('${user.id}')">
+                    <div class="contributor" style="background-color: ${user.color};">${user.profileImage}</div>
+                    <p>${user.name}</p>
+                    <input type="checkbox" id="checkbox-${user.id}" style="display: none;">
+                </div>
+            `).join('')}
+        </div>
+    </div>
 
-            <div class="edit-assigned-contributors">
-                        ${(assignedUsers || []).map(user => `
-                            <div class="contributor" style="background-color: ${user.color}; display: inline-block; margin-right: 8px;">
-                                ${user.profileImage}
-                            </div>
-                        `).join('')}
+    <div class="edit-assigned-contributors" id="selectedContributors">
+        ${(assignedUsers || []).map(user => `
+            <div class="contributor" style="background-color: ${user.color}; display: inline-block; margin-right: 8px;">
+                ${user.profileImage}
             </div>
+        `).join('')}
    
             <div class="subtask-section">
                     <label for="subtasks" class="subtasks-label">Subtasks</label>
+                    <div class="edit-task-subtask-row">
+                                        <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
+                                        <button type="button" class="edit-subtask-btn">+</button>
                 <div class="edit-task-subtask-listing-wrapper">
+               
                          ${(subtasks || []).map((subtask, index) => `
                     <div class="edit-task-subtask-listing" id="subtask-${index}">
-                    <p id="subtask-text-${index}" class="subtask-text">${subtask.title}</p>
+                     
+                    <p id="subtask-text-${index}" class="subtask-text"><span class="subtask-dot"></span>${subtask.title}</p>
                     <input type="text" id="edit-subtask-input-${index}" class="edit-subtask-input" value="${subtask.title}" style="display: none;">
 
                     <div class="edit-task-subtask-listing-icons" id="icons-${index}">
@@ -148,15 +158,17 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, all
 
                     <div class="edit-task-subtask-save-icons" id="save-icons-${index}" style="display: none;">
                         <img src="./assets/img/delete.svg" alt="Delete Subtask" title="Delete" onclick="deleteSubtask(${index})">
-                        <img src="./assets/img/Vector17.svg" alt="Save Subtask" title="Save" onclick="saveSubtask(${index})" style="width: 20px; height: 20px;">
+                        <img src="./assets/img/Vector 17.svg" alt="Save Subtask" title="Save" onclick="saveSubtask(${index})" style="width: 20px; height: 20px;">
                     </div>
                 </div>
             `).join('')}
         </div>
     </div>
 
-    <!-- Bestätigungs-Button -->
-    <div class="edit-task-confirm-btn" onclick="event.stopPropagation(); confirmEdit();">
+    
+    
+        </div>
+        <div class="edit-task-confirm-btn" onclick="event.stopPropagation(); confirmEdit();">
         <button type="submit" class="edit-task-btn" onclick="confirmEdit()">Ok
             <svg width="25" height="24" viewBox="0 0 25 24" fill="white" xmlns="http://www.w3.org/2000/svg">
                 <g mask="url(#mask0_75592_9963)">
@@ -165,48 +177,46 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, all
             </svg>
         </button>
             </div>
-        </div>
     `;
 }
 
 
-function renderEditTaskTemplate() {
-    
-    document.getElementById('contactsToAssign').addEventListener('change', function() {
-        const selectedUserIds = Array.from(this.selectedOptions).map(option => option.value);
 
-        
-        selectedUserIds.forEach(userId => {
-            const selectedUser = allUsers.find(user => user.id === userId);
-            console.log(`Ausgewählter Benutzer: ${selectedUser.name} (${selectedUser.profileImage})`);
-        });
-    });
+
+function toggleDropdown() {
+    const dropdownList = document.querySelector('.dropdown-list');
+    dropdownList.style.display = dropdownList.style.display === 'none' ? 'block' : 'none';
 }
 
-async function fetchUsers() {
-    try {
-        const users = await getData('users'); 
-        return Object.values(users); 
-    } catch (error) {
-        console.error("Fehler beim Abrufen der Benutzer:", error);
-        return []; 
-    }
+async function renderDropdown(users) {
+    const dropdownList = document.querySelector('.dropdown-list');
+    
+    dropdownList.innerHTML = users.map(user => `
+        <div class="dropdown-item" onclick="toggleUserSelection('${user.id}')">
+            <div class="contributor" style="background-color: ${user.color};">${user.profileImage}</div>
+            <span>${user.name}</span>
+        </div>
+    `).join('');
 }
 
 function toggleUserSelection(userId) {
-    const userElement = document.getElementById(`user-${userId}`);
-    const isSelected = selectedUserIds.includes(userId);
-
-    if (isSelected) {
-        
+    if (selectedUserIds.includes(userId)) {
         selectedUserIds = selectedUserIds.filter(id => id !== userId);
-        userElement.style.backgroundColor = 'white';  
     } else {
-       
         selectedUserIds.push(userId);
-        userElement.style.backgroundColor = 'black'; 
     }
+    console.log("Selected Users:", selectedUserIds);
 }
+
+async function fetchAndRenderUsers() {
+    const users = await getAllUsers(); // Holt die Benutzerliste aus der Datenbank
+    renderDropdown(users);
+}
+
+// Aufrufen der Funktion, um das Dropdown mit Benutzern zu füllen
+fetchAndRenderUsers();
+
+
 async function getAllUsers() {
     try {
         const users = await getData('users');
@@ -224,7 +234,6 @@ async function getAllUsers() {
         return []; 
     }
 }
-
 
 async function getAssignedUsers(userIds) {
     if (!Array.isArray(userIds)) {
