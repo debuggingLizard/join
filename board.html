@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="./assets/css/board.css">
     <link rel="stylesheet" href="./assets/css/task.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
+    <link rel="stylesheet" href="./assets/css/board-responsive.css">
+    <link rel="stylesheet" href="./assets/css/addTask-responsive.css">
     <script src="script.js"></script>
     <script src="./assets/js/firebase-connect.js"></script>
     <script src="./assets/js/board.js"></script>
@@ -36,17 +38,17 @@
 
         <main class="main">
             <section class="board-header">
-                <h1>Board </h1>
-
+                <div class="left-board-header">
+                    <h1>Board </h1>
+                    <button class="icon-add media-query">
+                    </button>
+                </div>
                 <div class="right-board-header">
                     <label class="search-label">
                         <input type="text" placeholder="Find Task" onkeyup="search(this.value)">
                         <span></span>
                         <div class="icon icon-search"></div>
                     </label>
-                    <button class="media-query">
-                        <p>Add task</p>
-                    </button>
                     <button class="mobile-d-none" onclick="openAddTask('todo')">Add task</button>
                 </div>
             </section>

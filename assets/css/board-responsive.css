@@ -1,0 +1,123 @@
+@media (max-width: 1092px) {
+    .board-header {
+        padding: 60px 30px;
+    }
+
+    .board-middle {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 1044px) {
+
+    .board-middle {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .boards {
+        display:flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .boards .board-tasks {
+        flex-direction: row;
+        flex-wrap: wrap;
+        min-height: unset;
+    }
+
+    .board-tasks .task-view {
+        flex: 1 1 calc(30%);
+        max-width: 30%;
+    }
+
+}
+
+@media (max-width: 1000px) {
+    .form-column.left {
+        min-width: 300px;
+    }
+    
+    .form-column.right {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 800px) {
+    .right-board-header input {
+        width:100%;
+    }
+
+    .board-header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px 30px 60px;
+    }
+
+    .left-board-header,
+    .right-board-header,
+    .right-board-header .search-label {
+        width: 100%;
+    }
+
+    .left-board-header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+    }
+
+    .right-board-header {
+        justify-content: flex-start;
+    }
+
+    .left-board-header button {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        font-weight: 300;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .media-query {
+        display: block;
+    }
+
+    .mobile-d-none {
+        display: none;
+    }
+
+    .search-label .icon-search {
+        right: 27px;
+        font-size: 17px;
+    }
+
+    .add-task-container{
+        border-radius: 20px 0 0 20px;
+        overflow-y: scroll;
+        max-height: 600px;
+    }
+    .add-task-container::-webkit-scrollbar {
+        width: 7px;
+    }
+    
+    .add-task-container::-webkit-scrollbar-track {
+        background: #ffffff;
+    }
+    
+    .add-task-container::-webkit-scrollbar-thumb {
+        background: #2A3647;
+    }
+    
+    .add-task-container::-webkit-scrollbar-thumb:hover {
+        background: #2A3647;
+    }
+}
+
+@media (max-width: 486px) {
+    .board-header h1 {
+        font-size: 40px;
+    }
+}

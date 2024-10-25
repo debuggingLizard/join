@@ -51,6 +51,7 @@
     font-size: 18px;
 }
 
+.left-board-header button,
 .right-board-header button {
     background: #2A3647;
     color: #fff;
@@ -158,86 +159,6 @@
     display: none;
 }
 
-@media (max-width: 1076px) {
-    .right-board-header input {
-        margin-left: 30px;
-    }
-
-    .right-board-header button {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 1044px) {
-    .board-middle {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-@media (max-width: 1038px) {
-    .right-board-header button {
-        font-size: 11px;
-    }
-}
-
-@media (max-width: 833px) {
-
-    .right-board-header input {
-        margin-left: 0;
-    }
-
-    .board-header {
-        flex-direction: column;
-    }
-
-    .right-board-header {
-        flex-direction: column-reverse;
-
-    }
-
-    .right-board-header button {
-        width: 400px;
-    }
-
-    .media-query {
-        display: block;
-    }
-
-    .media-query p {
-        display: none;
-    }
-
-    .mobile-d-none {
-        display: none;
-    }
-
-    .search-label .icon-search {
-        right: 27px;
-        font-size: 17px;
-    }
-
-    .search-label {
-        display: flex;
-        justify-content: center;
-    }
-
-    .right-board-header button {
-        width: 20px;
-        height: 40px;
-    }
-}
-
-@media (max-width: 486px) {
-    .board-header h1 {
-        font-size: 40px;
-    }
-
-    .right-board-header input {
-        width: 95%;
-    }
-}
-
 .dragging {
     opacity: 1;
     transform: rotate(10deg);
@@ -301,37 +222,3 @@
 .form-column.right {
     min-width: 370px;
 }
-
-@media (max-width: 1000px) {
-    .form-column.left {
-        min-width: 300px;
-    }
-    
-    .form-column.right {
-        min-width: 300px;
-    }
-}
-
-@media (max-width: 800px) {
-    .add-task-container{
-        border-radius: 20px 0 0 20px;
-        overflow-y: scroll;
-        max-height: 600px;
-    }
-    .add-task-container::-webkit-scrollbar {
-        width: 7px;
-    }
-    
-    .add-task-container::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-    
-    .add-task-container::-webkit-scrollbar-thumb {
-        background: #2A3647;
-    }
-    
-    .add-task-container::-webkit-scrollbar-thumb:hover {
-        background: #2A3647;
-    }
-}
-

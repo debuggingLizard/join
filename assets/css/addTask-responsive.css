@@ -1,0 +1,83 @@
+@media (max-width: 800px) {
+    body {
+        overflow-y: hidden;
+    }
+
+    .add-task-content {
+        overflow-y: scroll;
+    }
+
+    .form-row {
+        justify-content: center;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .form-column.left {
+        padding-right: 0;
+        border-right: none;
+    }
+
+    .form-column.right {
+        padding-left: 0;
+    }
+
+    .form-column .right-compact {
+        gap: 30px;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .add-task-form {
+        padding: 0 20px 0;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 60px;
+        padding: 50px 0 0 0;
+        position: sticky;
+        bottom: 0;
+    }
+
+    .add-task-button-wrapper {
+        gap: 25px;
+        justify-content: flex-end;
+        background: #F6F7F8;
+        padding: 15px 0;
+
+    }
+
+    .cancel-btn,
+    .create-task-btn {
+        padding: 12px 15px;
+
+    }
+
+    .create-task-btn:disabled {
+        font-size: 19px;
+    }
+
+    .cancel-btn,
+    .create-task-btn {
+        font-size: 19px;
+    }
+
+    #add-task-title {
+        padding: 40px 20px 10px;
+    }
+
+    .prio-btn {
+        padding: 9px 10px;
+    }
+
+    .required-text.mobile {
+        display: inline-block;
+    }
+
+    .required-text.desktop {
+        display: none;
+    }
+}
