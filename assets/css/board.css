@@ -168,7 +168,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -188,6 +188,7 @@
     border-radius: 20px;
     transition: all 0.5s ease;
     transform: translateX(200%);
+    margin: 0 20px;
     z-index: 1000;
 }
 
@@ -198,3 +199,53 @@
     font-size: 12px;
     cursor: pointer;
 }
+
+#add-task-title {
+    padding: 50px 62px 35px !important;
+}
+
+.prio-btn.urgent, .prio-btn.medium, .prio-btn.low {
+    min-width: 50px !important;
+}
+
+.form-column.left {
+    min-width: 370px;
+}
+
+.form-column.right {
+    min-width: 370px;
+}
+
+@media (max-width: 1000px) {
+    .form-column.left {
+        min-width: 300px;
+    }
+    
+    .form-column.right {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 800px) {
+    .add-task-container{
+        border-radius: 20px 0 0 20px;
+        overflow-y: scroll;
+        max-height: 600px;
+    }
+    .add-task-container::-webkit-scrollbar {
+        width: 7px;
+    }
+    
+    .add-task-container::-webkit-scrollbar-track {
+        background: #ffffff;
+    }
+    
+    .add-task-container::-webkit-scrollbar-thumb {
+        background: #2A3647;
+    }
+    
+    .add-task-container::-webkit-scrollbar-thumb:hover {
+        background: #2A3647;
+    }
+}
+

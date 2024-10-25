@@ -11,7 +11,7 @@ async function renderAddTaskData() {
 
   let formElement = document.getElementById('add-task-form');
 
-  formElement.addEventListener("submit", function (e) {
+  formElement.addEventListener("submit", async function (e) {
     e.preventDefault();
     checkCreateInputValidation('title', 'The title field is required');
     checkCreateInputValidation('due-date', 'The Date field is required');
@@ -23,6 +23,9 @@ async function renderAddTaskData() {
       createFormErrors.category === 0
     ) {
       createTask();
+      if (typeof renderTaskAfterCreateTask === 'function') {
+        await renderTaskAfterCreateTask();
+      }
     }
 
   });
@@ -39,7 +42,7 @@ function checkCreateInputValidation(inputName, message) {
     createFormErrors[inputName] = 0;
   }
 
-  if(inputElement.value === 'dd/mm/yyyy') {
+  if (inputElement.value === 'dd/mm/yyyy') {
     showInputValidationError('#add-task-form', inputName, message)
     createFormErrors[inputName] = 1;
   }
@@ -183,18 +186,18 @@ function initEventListenerAddTask() {
     });
   }
   let formFields = document.querySelectorAll(
-      "input[required], select[required], textarea[required]"
+    "input[required], select[required], textarea[required]"
   );
   formFields.forEach((field) => {
-      field.addEventListener("input", checkRequiredFields);
+    field.addEventListener("input", checkRequiredFields);
   });
   checkRequiredFields();
   document.addEventListener("click", function (event) {
-      const input = document.getElementById("assignees");
-      const dropdown = document.getElementById("assignees-list");
-      if (!input.contains(event.target) && !dropdown.contains(event.target)) {
-          dropdown.classList.add("d-none");
-      }
+    const input = document.getElementById("assignees");
+    const dropdown = document.getElementById("assignees-list");
+    if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.add("d-none");
+    }
   });
 }
 
