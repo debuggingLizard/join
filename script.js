@@ -1,5 +1,6 @@
 /**
- * Renders the sidebar and header content.
+ * Renders sidebar and header content.
+ * Clears existing content in sidebar and header, then inserts new templates.
  */
 function renderSidebarHeader() {
   let sidebarRef = document.getElementById("sidebar");
@@ -63,10 +64,10 @@ function openHeaderProfileInfo() {
 }
 
 // muss in render-funktion von jeder HTML-Seite aufgerufen werden (bzw. im onload), damit die Nav-Links entsprechend optisch angepasst werden.
-// Der Parameter ist die ID des Links, z.B. 'sidebar-nav-board'
+// The parameter is the ID of the link, e.g., 'sidebar-nav-board'
 /**
- * Updates the active state of the navigation links.
- * @param {string} navLinkID - The ID of the navigation link to activate.
+ * Updates the active state of navigation links.
+ * @param {string} navLinkID - ID of the navigation link to activate.
  */
 function updateActiveStateNavLink(navLinkID) {
   document
