@@ -150,6 +150,9 @@ function closeAddTask() {
     document.getElementById('add-task-overlay').style.zIndex = -1;
 }
 
+// diese Funktion war ursprünglich in onsubmit der AddTask-Form im Board, 
+// durch den eventListener in renderAddTaskData() (Zeile 8 in addTask.js) gibt es kein onsubmit mehr.
+// Wie sollen die beiden Funktionen renderBoardForNewTask() und closeAddTask() dann ausgeführt werden?
 async function createAndRenderTask() {
     await createTask();
     await renderBoardForNewTask();

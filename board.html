@@ -17,11 +17,12 @@
     <script src="./assets/js/board.js"></script>
     <script src="./assets/js/dragging.js"></script>
     <script src="./assets/js/task-view.js"></script>
+    <script src="./assets/js/helper-functions.js"></script>
     <script src="./assets/js/addTask.js"></script>
 </head>
 
 <body
-    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); loadTasksFromDatabase(); loadDropTargets(); initEventListenerAddTask(); renderAddTaskData()">
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); loadTasksFromDatabase(); loadDropTargets(); initEventListenerAddTask(); renderAddTaskData(); setPlaceholder();">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -145,8 +146,8 @@
                     <span class="close-add-task icon-close" onclick="closeAddTask(); resetAddTask()"></span>
                     <h2 id="add-task-title">Add Task</h2>
 
-                    <!-- <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createTask(); renderBoardForNewTask(); closeAddTask();"> -->
-                        <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createAndRenderTask();">
+                    <!-- <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createAndRenderTask()"> -->
+                        <form id="add-task-form" class="add-task-form" novalidate>
                         <div class="form-row">
                             <!-- Left column -->
                             <div class="form-column left">
