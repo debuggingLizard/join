@@ -8,7 +8,7 @@
 }
 
 .contact-list::-webkit-scrollbar {
-    width: 12px;
+    width: 8px;
 }
 
 .contact-list::-webkit-scrollbar-track {

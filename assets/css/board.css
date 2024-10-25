@@ -51,6 +51,7 @@
     font-size: 18px;
 }
 
+.left-board-header button,
 .right-board-header button {
     background: #2A3647;
     color: #fff;
@@ -73,12 +74,14 @@
     top: 3px;
 }
 
+.left-board-header button:hover,
 .right-board-header button:hover {
     background: #29ABE2;
     border: solid 1px #29ABE2;
     box-shadow: 0 4px 4px 0px rgb(0 0 0 / 25%);
 }
 
+.left-board-header button:active,
 .right-board-header button:active {
     background: #091931;
     border: solid 1px #091931;
@@ -92,7 +95,7 @@
     justify-content: center;
     padding: 0 60px;
     align-items: flex-start;
-    gap: 35px;
+    gap: 30px;
     color: #42526E;
     font-weight: bold;
 }
@@ -101,14 +104,16 @@
     flex: 1;
 }
 
-.boards .board-title{
+.boards .board-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .boards .board-title h3 {
     font-size: 20px;
 }
+
 .boards .board-title .icon-add {
     border: solid 2px #2A3647;
     color: #2A3647;
@@ -133,7 +138,7 @@
     font-weight: bold;
 }
 
-.boards .board-tasks{
+.boards .board-tasks {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -150,6 +155,10 @@
     padding: 17px;
     color: #A8A8A8;
     font-weight: 400;
+}
+
+.media-query {
+    display: none;
 }
 
 .dragging {
@@ -200,14 +209,6 @@
     cursor: pointer;
 }
 
-#add-task-title {
-    padding: 50px 62px 35px !important;
-}
-
-.prio-btn.urgent, .prio-btn.medium, .prio-btn.low {
-    min-width: 50px !important;
-}
-
 .form-column.left {
     min-width: 370px;
 }
@@ -215,37 +216,3 @@
 .form-column.right {
     min-width: 370px;
 }
-
-@media (max-width: 1000px) {
-    .form-column.left {
-        min-width: 300px;
-    }
-    
-    .form-column.right {
-        min-width: 300px;
-    }
-}
-
-@media (max-width: 800px) {
-    .add-task-container{
-        border-radius: 20px 0 0 20px;
-        overflow-y: scroll;
-        max-height: 600px;
-    }
-    .add-task-container::-webkit-scrollbar {
-        width: 7px;
-    }
-    
-    .add-task-container::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-    
-    .add-task-container::-webkit-scrollbar-thumb {
-        background: #2A3647;
-    }
-    
-    .add-task-container::-webkit-scrollbar-thumb:hover {
-        background: #2A3647;
-    }
-}
-

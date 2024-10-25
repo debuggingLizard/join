@@ -117,16 +117,20 @@ async function taskTemplate(taskId, taskDetail) {
   let priorityDetail = await getData("priorities/" + taskDetail.priority);
 
   return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail()">
+                      <div class="task-view-top">
                         <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
                         <div class="task-description">
-                            <h2>${taskDetail.title}</h2>
-                            <p>${taskDetail.description}</p>
+                          <h2>${taskDetail.title}</h2>
+                          <p>${taskDetail.description}</p>
                         </div>
+                      </div>
+                      <div class="task-view-bottom">
                         <div class="progress-wrapper" id="subtask-wrapper${taskId}"></div>
                         <div class="contributor-listing">
-                            <div class="task-contributors" id="task-contributors${taskId}"></div>
-                            <div class="icon ${priorityDetail.icon}" style="color:${priorityDetail.color}" title="${priorityDetail.title}"></div>
+                          <div class="task-contributors" id="task-contributors${taskId}"></div>
+                          <div class="icon ${priorityDetail.icon}" style="color:${priorityDetail.color}" title="${priorityDetail.title}"></div>
                         </div>
+                      </div>                     
                     </div>`;
 }
 
