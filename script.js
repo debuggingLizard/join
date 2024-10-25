@@ -74,3 +74,13 @@ function updateActiveStateNavLink(navLinkID) {
     .forEach((link) => link.classList.remove("nav-a-active"));
   document.getElementById(navLinkID).classList.add("nav-a-active");
 }
+
+function showFeedbackOverlay() {
+  const overlay = document.getElementById("feedback-overlay");
+  overlay.classList.add("show");
+
+  // Blendet das Overlay nach 3 Sekunden aus
+  setTimeout(() => {
+    overlay.classList.remove("show");
+  }, 3000);
+}
