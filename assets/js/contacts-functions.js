@@ -5,15 +5,12 @@
  */
 async function isEmailExist(email) {
   const users = await getData("users");
-
   if (users === null || users === undefined) {
     return false;
   }
-
   const foundUsers = Object.values(users).filter(
     (user) => user.email === email
   );
-
   return foundUsers.length > 0 ? true : false;
 }
 
@@ -70,8 +67,7 @@ function randomIntFromInterval(min, max) {
 }
 
 /**
- * Entfernt alle Fehlerzustände und versteckt Fehlermeldungen
- * in den Formularen "create-contact-form" und "edit-contact-form".
+ * Removes error styles and messages from contact creation and edit forms.
  */
 function removeAllErrors() {
   let createInputElements = document.querySelectorAll(
@@ -103,17 +99,17 @@ function removeAllErrors() {
 
 /**
  * Displays a notification message and hides it after a short delay.
- * 
+ *
  * @param {string} message - The message to be displayed in the notification.
  */
 function showNotification(message) {
   let notificationRef = document.getElementById("notification");
-  notificationRef.style.transform = "translateX(2000px)"; 
+  notificationRef.style.transform = "translateX(2000px)";
   setTimeout(() => {
     notificationRef.innerHTML = message;
     notificationRef.style.transform = "translateX(0)";
     setTimeout(() => {
       notificationRef.style.transform = "translateX(2000px)";
     }, 2000);
-  }, 50); 
+  }, 50);
 }

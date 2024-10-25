@@ -219,3 +219,27 @@ input.input-error {
 select.input-error {
     border: 1px solid #FF8190;
 }
+
+/* Feedback Overlay */
+.feedback-overlay {
+    display: none;
+    /* Startet versteckt */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.feedback-overlay.show {
+    display: block;
+}
+
+.feedback-overlay img {
+    margin-left: 10px;
+    vertical-align: middle;
+}
