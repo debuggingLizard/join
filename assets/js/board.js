@@ -83,16 +83,20 @@ async function taskTemplate(taskId, taskDetail) {
   let priorityDetail = await getData("priorities/" + taskDetail.priority);
 
   return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail()">
+                      <div class="task-view-top">
                         <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
                         <div class="task-description">
-                            <h2>${taskDetail.title}</h2>
-                            <p>${taskDetail.description}</p>
+                          <h2>${taskDetail.title}</h2>
+                          <p>${taskDetail.description}</p>
                         </div>
+                      </div>
+                      <div class="task-view-bottom">
                         <div class="progress-wrapper" id="subtask-wrapper${taskId}"></div>
                         <div class="contributor-listing">
-                            <div class="task-contributors" id="task-contributors${taskId}"></div>
-                            <div class="icon ${priorityDetail.icon}" style="color:${priorityDetail.color}" title="${priorityDetail.title}"></div>
+                          <div class="task-contributors" id="task-contributors${taskId}"></div>
+                          <div class="icon ${priorityDetail.icon}" style="color:${priorityDetail.color}" title="${priorityDetail.title}"></div>
                         </div>
+                      </div>                     
                     </div>`;
 }
 
@@ -125,42 +129,46 @@ function search(query) {
 
 // Add Task Functionality
 function openAddTask(status) {
-    eventListenerCloseAddTask();
+  eventListenerCloseAddTask();
   document.getElementById("add-task-overlay").style.zIndex = 999;
-  document.getElementById("add-task-overlay").style.backgroundColor = "rgb(0 0 0 / 30%)";
-  document.getElementById("add-task-container").style.transform = "translateX(0)";
+  document.getElementById("add-task-overlay").style.backgroundColor =
+    "rgb(0 0 0 / 30%)";
+  document.getElementById("add-task-container").style.transform =
+    "translateX(0)";
   addTaskstatus = status;
   showNewTask = status;
 }
 
 function eventListenerCloseAddTask() {
-    const overlay = document.getElementById('add-task-overlay');
-    const closeTrigger = function (e) {
-        if (e.target !== e.currentTarget) return;
-        closeAddTask();
-        resetAddTask();
-        overlay.removeEventListener('click', closeTrigger);
-    };
-    overlay.addEventListener('click', closeTrigger);
+  const overlay = document.getElementById("add-task-overlay");
+  const closeTrigger = function (e) {
+    if (e.target !== e.currentTarget) return;
+    closeAddTask();
+    resetAddTask();
+    overlay.removeEventListener("click", closeTrigger);
+  };
+  overlay.addEventListener("click", closeTrigger);
 }
 
 function closeAddTask() {
-    document.getElementById('add-task-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
-    document.getElementById('add-task-container').style.transform = 'translateX(200%)';
-    document.getElementById('add-task-overlay').style.zIndex = -1;
+  document.getElementById("add-task-overlay").style.backgroundColor =
+    "rgb(0 0 0 / 0%)";
+  document.getElementById("add-task-container").style.transform =
+    "translateX(200%)";
+  document.getElementById("add-task-overlay").style.zIndex = -1;
 }
 
-// diese Funktion war ursprünglich in onsubmit der AddTask-Form im Board, 
+// diese Funktion war ursprünglich in onsubmit der AddTask-Form im Board,
 // durch den eventListener in renderAddTaskData() (Zeile 8 in addTask.js) gibt es kein onsubmit mehr.
 // Wie sollen die beiden Funktionen renderBoardForNewTask() und closeAddTask() dann ausgeführt werden?
 async function renderTaskAfterCreateTask() {
-    await renderBoardForNewTask();
-    closeAddTask();
+  await renderBoardForNewTask();
+  closeAddTask();
 }
 
 async function renderBoardForNewTask() {
-    tasks = await getData("tasks");
-    filterTasks = Object.entries(tasks);
-    
-    await renderTasks(showNewTask + "-tasks", getTasksByStatus(showNewTask));
+  tasks = await getData("tasks");
+  filterTasks = Object.entries(tasks);
+
+  await renderTasks(showNewTask + "-tasks", getTasksByStatus(showNewTask));
 }
