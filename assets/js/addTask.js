@@ -2,20 +2,24 @@ let addTaskstatus = "todo";
 let createFormErrors = {
   title: 0,
   dueDate: 0,
-  category: 0
+  category: 0,
 };
 
+/**
+ * Renders the add task form with contacts and categories, and validates input on submit.
+ * Listens for form submission, checks required fields, and creates the task if valid.
+ */
 async function renderAddTaskData() {
   await renderContacts();
   await renderCategories();
 
-  let formElement = document.getElementById('add-task-form');
+  let formElement = document.getElementById("add-task-form");
 
   formElement.addEventListener("submit", async function (e) {
     e.preventDefault();
-    checkCreateInputValidation('title', 'The title field is required');
-    checkCreateInputValidation('due-date', 'The Date field is required');
-    checkCreateInputValidation('category', 'The Category field is required');
+    checkCreateInputValidation("title", "The title field is required");
+    checkCreateInputValidation("due-date", "The Date field is required");
+    checkCreateInputValidation("category", "The Category field is required");
 
     if (
       createFormErrors.title === 0 &&
@@ -23,31 +27,40 @@ async function renderAddTaskData() {
       createFormErrors.category === 0
     ) {
       await createTask();
-      if (typeof renderTaskAfterCreateTask === 'function') {
+      if (typeof renderTaskAfterCreateTask === "function") {
         await renderTaskAfterCreateTask();
       }
     }
-
   });
 }
 
+/**
+ * Validates a specific form input; shows or hides error messages.
+ * @param {string} inputName - The name of the input field to validate.
+ * @param {string} message - The error message to display if validation fails.
+ */
 function checkCreateInputValidation(inputName, message) {
-  let inputElement = document.querySelector(`#add-task-form *[name = ${inputName}]`);
+  let inputElement = document.querySelector(
+    `#add-task-form *[name = ${inputName}]`
+  );
 
   if (!inputElement.checkValidity()) {
-    showInputValidationError('#add-task-form', inputName, message)
+    showInputValidationError("#add-task-form", inputName, message);
     createFormErrors[inputName] = 1;
   } else {
-    hideInputValidationError('#add-task-form', inputName)
+    hideInputValidationError("#add-task-form", inputName);
     createFormErrors[inputName] = 0;
   }
 
-  if (inputElement.value === 'dd/mm/yyyy') {
-    showInputValidationError('#add-task-form', inputName, message)
+  if (inputElement.value === "dd/mm/yyyy") {
+    showInputValidationError("#add-task-form", inputName, message);
     createFormErrors[inputName] = 1;
   }
 }
 
+/**
+ * Fetches and sorts contacts, renders them in the assignees list, and updates assignments.
+ */
 async function renderContacts() {
   let contacts = await getData("users");
   let sortedContacts = Object.keys(contacts)
@@ -57,13 +70,18 @@ async function renderContacts() {
   let assigneesListElement = document.getElementById("assignees-list");
 
   assigneesListElement.innerHTML = "";
-  sortedContacts.forEach(contact => {
+  sortedContacts.forEach((contact) => {
     assigneesListElement.innerHTML += getAssigneesListTemplate(contact);
   });
 
   updateAssignedContacts();
 }
 
+/**
+ * Generates the HTML template for an assignee contact with a profile image, name, and checkbox.
+ * @param {object} contact - The contact data, including id, color, profileImage, and name.
+ * @returns {string} HTML template for the contact element.
+ */
 function getAssigneesListTemplate(contact) {
   return /*html*/ `
     <label for="${contact.id}">
@@ -76,6 +94,10 @@ function getAssigneesListTemplate(contact) {
   `;
 }
 
+/**
+ * Updates assigned contacts display based on selected checkboxes.
+ * Adds or removes contact profile images in the assigned contacts section.
+ */
 function updateAssignedContacts() {
   let assigneesListElement = document.getElementById("assignees-list");
   assigneesListElement.addEventListener("change", function (event) {
@@ -97,21 +119,31 @@ function updateAssignedContacts() {
   });
 }
 
+/**
+ * Styles the label of a checkbox when selected or deselected.
+ * Changes background and text color based on checkbox state.
+ * @param {HTMLInputElement} checkbox - The checkbox element to style.
+ */
 function styleLabel(checkbox) {
   let label = checkbox.parentElement;
   if (checkbox.checked) {
-    label.style.backgroundColor = '#2A3647';
-    label.style.color = 'white';
+    label.style.backgroundColor = "#2A3647";
+    label.style.color = "white";
   } else {
-    label.style.backgroundColor = '';
-    label.style.color = '';
+    label.style.backgroundColor = "";
+    label.style.color = "";
   }
 }
 
+/**
+ * Fetches categories and populates the category dropdown menu.
+ * Sets a default placeholder option for category selection.
+ */
 async function renderCategories() {
   let categories = await getData("categories");
   let categorySelect = document.getElementById("category");
-  categorySelect.innerHTML = '<option value="" disabled selected hidden>Select task category</option>';
+  categorySelect.innerHTML =
+    '<option value="" disabled selected hidden>Select task category</option>';
   Object.keys(categories).forEach((id) => {
     categorySelect.innerHTML += /*html*/ `
       <option value="${id}">${categories[id].title}</option>
@@ -150,7 +182,6 @@ function initEventListenerAddTask() {
   let addBtn = document.querySelector(".add-subtask-btn");
   let subtaskList = document.getElementById("subtask-list");
   if (subtaskInput) {
-
     subtaskInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -161,20 +192,20 @@ function initEventListenerAddTask() {
     subtaskInput.addEventListener("input", function () {
       if (subtaskInput.value.length > 0) {
         clearBtn.style.display = "flex";
-        addBtn.classList.remove('icon-add');
-        addBtn.classList.add('icon-check');
+        addBtn.classList.remove("icon-add");
+        addBtn.classList.add("icon-check");
       } else {
         clearBtn.style.display = "none";
-        addBtn.classList.remove('icon-check');
-        addBtn.classList.add('icon-add');
+        addBtn.classList.remove("icon-check");
+        addBtn.classList.add("icon-add");
       }
     });
 
     clearBtn.addEventListener("click", function () {
       subtaskInput.value = "";
       clearBtn.style.display = "none";
-      addBtn.classList.remove('icon-check');
-      addBtn.classList.add('icon-add');
+      addBtn.classList.remove("icon-check");
+      addBtn.classList.add("icon-add");
     });
 
     subtaskList.addEventListener("dblclick", function (event) {
@@ -203,11 +234,11 @@ function initEventListenerAddTask() {
 
 function toggleContactDropdown() {
   document.getElementById("assignees-list").classList.toggle("d-none");
-  document.querySelector('.assign-label').classList.toggle('open');
+  document.querySelector(".assign-label").classList.toggle("open");
 }
 
 function categoryDropDown() {
-  document.querySelector('.category-label').classList.toggle('open');
+  document.querySelector(".category-label").classList.toggle("open");
 }
 
 /**
@@ -231,8 +262,8 @@ function addSubtask() {
     `;
     subtaskList.appendChild(listItem);
     subtaskInput.value = "";
-    addBtn.classList.remove('icon-check');
-    addBtn.classList.add('icon-add');
+    addBtn.classList.remove("icon-check");
+    addBtn.classList.add("icon-add");
     clearBtn.style.display = "none";
   }
 }
@@ -319,8 +350,8 @@ function checkRequiredFields() {
     }
   });
 
-  const dateInput = document.getElementById('due-date');
-  if (dateInput.value === 'dd/mm/yyyy') {
+  const dateInput = document.getElementById("due-date");
+  if (dateInput.value === "dd/mm/yyyy") {
     allFilled = false;
   }
 
@@ -328,16 +359,24 @@ function checkRequiredFields() {
   createTaskBtn.disabled = !allFilled;
 }
 
+/**
+ * Collects input values and creates a new task with title, description, assigned users, date, priority, category, and subtasks.
+ * Resets the form and posts the task data to storage.
+ */
 async function createTask() {
   let title = document.getElementById("title").value;
-  let description = document.getElementById("description").value || '';
-  let assignedSpans = document.getElementById("assigned-to").querySelectorAll("span");
+  let description = document.getElementById("description").value || "";
+  let assignedSpans = document
+    .getElementById("assigned-to")
+    .querySelectorAll("span");
   let users = Array.from(assignedSpans).map((span) => span.id);
   let date = document.getElementById("due-date").value;
   let priority = document.getElementById("selectedPrio").value;
   let category = document.getElementById("category").value;
 
-  let subtasks = Array.from(document.getElementById("subtask-list").children).map((li) => ({
+  let subtasks = Array.from(
+    document.getElementById("subtask-list").children
+  ).map((li) => ({
     done: false,
     title: li.querySelector(".subtask-title").textContent,
   }));
@@ -351,7 +390,7 @@ async function createTask() {
     priority: priority,
     category: category,
     subtasks: subtasks.length > 0 ? subtasks : [],
-    status: status
+    status: status,
   };
 
   resetAddTask();
@@ -359,65 +398,74 @@ async function createTask() {
   addTaskstatus = "todo";
 }
 
+/**
+ * Resets the add task form, clearing inputs, unchecking checkboxes, removing validation errors, and setting defaults.
+ */
 function resetAddTask() {
-  document.getElementById("title").value = '';
-  hideInputValidationError('#add-task-form', 'title');
-  createFormErrors['title'] = 0;
+  document.getElementById("title").value = "";
+  hideInputValidationError("#add-task-form", "title");
+  createFormErrors["title"] = 0;
 
-  document.getElementById("description").value = '';
+  document.getElementById("description").value = "";
   let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(checkbox => { checkbox.checked = false; styleLabel(checkbox); });
-  document.getElementById("assigned-to").innerHTML = '';
-  document.getElementById("due-date").value = '';
-  hideInputValidationError('#add-task-form', 'due-date');
-  createFormErrors['dueDate'] = 0;
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = false;
+    styleLabel(checkbox);
+  });
+  document.getElementById("assigned-to").innerHTML = "";
+  document.getElementById("due-date").value = "";
+  hideInputValidationError("#add-task-form", "due-date");
+  createFormErrors["dueDate"] = 0;
 
   document.querySelectorAll(".prio-btn").forEach((button) => {
     button.classList.remove("active");
   });
   document.querySelector(`.prio-btn.medium`).classList.add("active");
-  document.getElementById("selectedPrio").value = '-O9M0Iky4rEYMLq5Jwo_';
-  document.getElementById("category").value = '';
-  hideInputValidationError('#add-task-form', 'category');
-  createFormErrors['category'] = 0;
+  document.getElementById("selectedPrio").value = "-O9M0Iky4rEYMLq5Jwo_";
+  document.getElementById("category").value = "";
+  hideInputValidationError("#add-task-form", "category");
+  createFormErrors["category"] = 0;
 
-  document.getElementById("subtask-list").innerHTML = '';
+  document.getElementById("subtask-list").innerHTML = "";
   setPlaceholder();
   let createTaskBtn = document.getElementById("createTaskBtn");
   createTaskBtn.disabled = true;
 }
 
-// Set custom placeholder when input is empty
+/**
+ * Sets a placeholder for the due date input if it is empty and switches input type to text.
+ */
 function setPlaceholder() {
-  const dateInput = document.getElementById('due-date');
-  dateInput.setAttribute('type', 'text');
-  if (dateInput.value === '') {
-    dateInput.value = 'dd/mm/yyyy';  // Placeholder text
-    dateInput.classList.remove('text-date');
+  const dateInput = document.getElementById("due-date");
+  dateInput.setAttribute("type", "text");
+  if (dateInput.value === "") {
+    dateInput.value = "dd/mm/yyyy"; // Placeholder text
+    dateInput.classList.remove("text-date");
   }
 }
 
-// Clear the custom placeholder on focus
+/**
+ * Clears the placeholder for the due date input and switches type back to date, showing the date picker.
+ */
 function clearPlaceholder() {
-  const dateInput = document.getElementById('due-date');
-  dateInput.setAttribute('type', 'date');  // Switch back to date type
-  dateInput.classList.remove('text-date');
+  const dateInput = document.getElementById("due-date");
+  dateInput.setAttribute("type", "date"); // Switch back to date type
+  dateInput.classList.remove("text-date");
   dateInput.showPicker();
 }
 
-// Format the date to dd/mm/yyyy after selection
+/**
+ * Formats the selected date as "dd/mm/yyyy" and switches input type to text for display.
+ */
 function formatDate() {
-  const dateInput = document.getElementById('due-date');
-  const selectedDate = new Date(dateInput.value); // Get the selected date
+  const dateInput = document.getElementById("due-date");
+  const selectedDate = new Date(dateInput.value);
+  const day = String(selectedDate.getDate()).padStart(2, "0");
+  const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+  const year = selectedDate.getFullYear();
 
-  // Format the date to dd/mm/yyyy
-  const day = String(selectedDate.getDate()).padStart(2, '0'); // Get day and ensure 2 digits
-  const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Get month (0-indexed)
-  const year = selectedDate.getFullYear(); // Get year
-
-  // Set the formatted date as input value
-  dateInput.setAttribute('type', 'text'); // Change input type to text to show the formatted date
-  dateInput.classList.add('text-date');
+  dateInput.setAttribute("type", "text");
+  dateInput.classList.add("text-date");
   dateInput.blur();
   dateInput.value = `${day}/${month}/${year}`;
 }
