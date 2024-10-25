@@ -1,6 +1,47 @@
+let createFormErrors = {
+  title: 0,
+  dueDate: 0,
+  category: 0
+};
+
 async function renderAddTaskData() {
   await renderContacts();
   await renderCategories();
+
+  let formElement = document.getElementById('add-task-form');
+
+  formElement.addEventListener("submit", function (e) {
+    e.preventDefault();
+    checkCreateInputValidation('title', 'The title field is required');
+    checkCreateInputValidation('due-date', 'The Date field is required');
+    checkCreateInputValidation('category', 'The Category field is required');
+
+    if (
+      createFormErrors.title === 0 &&
+      createFormErrors.dueDate === 0 &&
+      createFormErrors.category === 0
+    ) {
+      createTask();
+    }
+
+  });
+}
+
+function checkCreateInputValidation(inputName, message) {
+  let inputElement = document.querySelector(`#add-task-form *[name = ${inputName}]`);
+
+  if (!inputElement.checkValidity()) {
+    showInputValidationError('#add-task-form', inputName, message)
+    createFormErrors[inputName] = 1;
+  } else {
+    hideInputValidationError('#add-task-form', inputName)
+    createFormErrors[inputName] = 0;
+  }
+
+  if(inputElement.value === 'dd/mm/yyyy') {
+    showInputValidationError('#add-task-form', inputName, message)
+    createFormErrors[inputName] = 1;
+  }
 }
 
 async function renderContacts() {
@@ -8,58 +49,65 @@ async function renderContacts() {
   let sortedContacts = Object.keys(contacts)
     .map((id) => ({ id, ...contacts[id] }))
     .sort((a, b) => a.name.localeCompare(b.name));
-  let assigneesList = document.getElementById("assignees-list");
-  assigneesList.innerHTML = "";
-  for (let i = 0; i < sortedContacts.length; i++) {
-    assigneesList.innerHTML += getAssigneesListTemplate(sortedContacts[i]);
-  }
+
+  let assigneesListElement = document.getElementById("assignees-list");
+
+  assigneesListElement.innerHTML = "";
+  sortedContacts.forEach(contact => {
+    assigneesListElement.innerHTML += getAssigneesListTemplate(contact);
+  });
+
   updateAssignedContacts();
 }
 
 function getAssigneesListTemplate(contact) {
   return /*html*/ `
-    <label for="${contact.id}"><div><span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span><span>${contact.name}</span></div><input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)"></label>
+    <label for="${contact.id}">
+      <div>
+        <span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span>
+        <span class="contact-profile-name">${contact.name}</span>
+      </div>
+      <input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)">
+    </label>
   `;
 }
 
 function updateAssignedContacts() {
-  document
-    .getElementById("assignees-list")
-    .addEventListener("change", function (event) {
-      const checkbox = event.target;
-      const assignedContactsDiv = document.getElementById("assigned-to");
-      if (checkbox.checked) {
-        const id = checkbox.dataset.id;
-        const color = checkbox.dataset.color;
-        const initials = checkbox.dataset.initials;
-        assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
-      } else {
-        const spanToRemove = Array.from(assignedContactsDiv.children).find(
-          (span) => span.id === checkbox.id
-        );
-        if (spanToRemove) {
-          assignedContactsDiv.removeChild(spanToRemove);
-        }
+  let assigneesListElement = document.getElementById("assignees-list");
+  assigneesListElement.addEventListener("change", function (event) {
+    const checkbox = event.target;
+    const assignedContactsDiv = document.getElementById("assigned-to");
+    if (checkbox.checked) {
+      const id = checkbox.dataset.id;
+      const color = checkbox.dataset.color;
+      const initials = checkbox.dataset.initials;
+      assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
+    } else {
+      const spanToRemove = Array.from(assignedContactsDiv.children).find(
+        (span) => span.id === checkbox.id
+      );
+      if (spanToRemove) {
+        assignedContactsDiv.removeChild(spanToRemove);
       }
-    });
+    }
+  });
 }
 
 function styleLabel(checkbox) {
   let label = checkbox.parentElement;
   if (checkbox.checked) {
-      label.style.backgroundColor = '#2A3647';
-      label.style.color = 'white';
+    label.style.backgroundColor = '#2A3647';
+    label.style.color = 'white';
   } else {
-      label.style.backgroundColor = '';
-      label.style.color = '';
+    label.style.backgroundColor = '';
+    label.style.color = '';
   }
 }
 
 async function renderCategories() {
   let categories = await getData("categories");
   let categorySelect = document.getElementById("category");
-  categorySelect.innerHTML =
-    '<option value="" disabled selected hidden>Select task category</option>';
+  categorySelect.innerHTML = '<option value="" disabled selected hidden>Select task category</option>';
   Object.keys(categories).forEach((id) => {
     categorySelect.innerHTML += /*html*/ `
       <option value="${id}">${categories[id].title}</option>
@@ -91,29 +139,20 @@ document.addEventListener("DOMContentLoaded", function () {
   let today = new Date().toISOString().split("T")[0];
   if (dueDateInput) {
     dueDateInput.setAttribute("min", today);
-    dueDateInput.addEventListener("change", function () {
-      let selectedDate = new Date(dueDateInput.value);
-      let today = new Date();
-      if (selectedDate < today.setHours(0, 0, 0, 0)) {
-        document.getElementById('incorrect-date').classList.remove('d-none')
-        dueDateInput.value = "";
-        setTimeout(function() {
-          document.getElementById('incorrect-date').classList.add('d-none');
-      }, 3000); 
-      }
-    });
   }
   let subtaskInput = document.getElementById("subtasks");
   let clearBtn = document.querySelector(".clear-subtask-btn");
   let addBtn = document.querySelector(".add-subtask-btn");
   let subtaskList = document.getElementById("subtask-list");
   if (subtaskInput) {
+
     subtaskInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
         event.preventDefault();
         addSubtask();
       }
     });
+
     subtaskInput.addEventListener("input", function () {
       if (subtaskInput.value.length > 0) {
         clearBtn.style.display = "flex";
@@ -125,12 +164,14 @@ document.addEventListener("DOMContentLoaded", function () {
         addBtn.classList.add('icon-add');
       }
     });
+
     clearBtn.addEventListener("click", function () {
       subtaskInput.value = "";
       clearBtn.style.display = "none";
       addBtn.classList.remove('icon-check');
       addBtn.classList.add('icon-add');
     });
+
     subtaskList.addEventListener("dblclick", function (event) {
       if (event.target && event.target.classList.contains("subtask-title")) {
         let editButton =
@@ -148,8 +189,13 @@ document.addEventListener("DOMContentLoaded", function () {
   checkRequiredFields();
 });
 
-function openContactDropdown() {
-  document.getElementById("assignees-list").classList.remove("d-none");
+function toggleContactDropdown() {
+  document.getElementById("assignees-list").classList.toggle("d-none");
+  document.querySelector('.assign-label').classList.toggle('open');
+}
+
+function categoryDropDown() {
+  document.querySelector('.category-label').classList.toggle('open');
 }
 
 document.addEventListener("click", function (event) {
@@ -157,6 +203,7 @@ document.addEventListener("click", function (event) {
   const dropdown = document.getElementById("assignees-list");
   if (!input.contains(event.target) && !dropdown.contains(event.target)) {
     dropdown.classList.add("d-none");
+    document.querySelector('.assign-label').classList.remove('open');
   }
 });
 
@@ -268,6 +315,12 @@ function checkRequiredFields() {
       allFilled = false;
     }
   });
+
+  const dateInput = document.getElementById('due-date');
+  if (dateInput.value === 'dd/mm/yyyy') {
+    allFilled = false;
+  }
+
   let createTaskBtn = document.getElementById("createTaskBtn");
   createTaskBtn.disabled = !allFilled;
 }
@@ -304,16 +357,63 @@ async function createTask() {
 
 function resetAddTask() {
   document.getElementById("title").value = '';
+  hideInputValidationError('#add-task-form', 'title');
+  createFormErrors['title'] = 0;
+
   document.getElementById("description").value = '';
   let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(checkbox => {checkbox.checked = false; styleLabel(checkbox);});
+  checkboxes.forEach(checkbox => { checkbox.checked = false; styleLabel(checkbox); });
   document.getElementById("assigned-to").innerHTML = '';
   document.getElementById("due-date").value = '';
+  hideInputValidationError('#add-task-form', 'due-date');
+  createFormErrors['dueDate'] = 0;
+
   document.querySelectorAll(".prio-btn").forEach((button) => {
     button.classList.remove("active");
   });
   document.querySelector(`.prio-btn.medium`).classList.add("active");
   document.getElementById("selectedPrio").value = '-O9M0Iky4rEYMLq5Jwo_';
   document.getElementById("category").value = '';
+  hideInputValidationError('#add-task-form', 'category');
+  createFormErrors['category'] = 0;
+
   document.getElementById("subtask-list").innerHTML = '';
+  setPlaceholder();
+  let createTaskBtn = document.getElementById("createTaskBtn");
+  createTaskBtn.disabled = true;
+}
+
+// Set custom placeholder when input is empty
+function setPlaceholder() {
+  const dateInput = document.getElementById('due-date');
+  dateInput.setAttribute('type', 'text');
+  if (dateInput.value === '') {
+    dateInput.value = 'dd/mm/yyyy';  // Placeholder text
+    dateInput.classList.remove('text-date');
+  }
+}
+
+// Clear the custom placeholder on focus
+function clearPlaceholder() {
+  const dateInput = document.getElementById('due-date');
+  dateInput.setAttribute('type', 'date');  // Switch back to date type
+  dateInput.classList.remove('text-date');
+  dateInput.showPicker();
+}
+
+// Format the date to dd/mm/yyyy after selection
+function formatDate() {
+  const dateInput = document.getElementById('due-date');
+  const selectedDate = new Date(dateInput.value); // Get the selected date
+
+  // Format the date to dd/mm/yyyy
+  const day = String(selectedDate.getDate()).padStart(2, '0'); // Get day and ensure 2 digits
+  const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Get month (0-indexed)
+  const year = selectedDate.getFullYear(); // Get year
+
+  // Set the formatted date as input value
+  dateInput.setAttribute('type', 'text'); // Change input type to text to show the formatted date
+  dateInput.classList.add('text-date');
+  dateInput.blur();
+  dateInput.value = `${day}/${month}/${year}`;
 }
