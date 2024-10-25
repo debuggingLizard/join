@@ -17,7 +17,7 @@
 </head>
 
 <body
-    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task'); renderAddTaskData(); setPlaceholder();">
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task'); initEventListenerAddTask(); renderAddTaskData(); setPlaceholder();">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -120,7 +120,9 @@
                 </div>
 
                 <div class="form-actions">
-                    <span class="required-text desktop"><span class="required">*</span>This field is required</span>
+                    <span class="required-text desktop">
+                        <span class="required">*</span>This field is required
+                    </span>
                     <div class="add-task-button-wrapper">
                         <!-- Clear Button -->
                         <button type="button" class="cancel-btn" onclick="resetAddTask();">
