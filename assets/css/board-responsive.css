@@ -1,14 +1,15 @@
-@media (max-width: 1092px) {
+@media (max-width: 1170px) {
     .board-header {
         padding: 60px 30px;
     }
 
     .board-middle {
         padding: 0 30px;
+        gap:20px;
     }
 }
 
-@media (max-width: 1044px) {
+@media (max-width: 1084px) {
 
     .board-middle {
         flex-direction: column;
