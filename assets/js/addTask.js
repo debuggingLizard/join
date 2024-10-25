@@ -1,3 +1,4 @@
+let addTaskstatus = "todo";
 let createFormErrors = {
   title: 0,
   dueDate: 0,
@@ -10,7 +11,7 @@ async function renderAddTaskData() {
 
   let formElement = document.getElementById('add-task-form');
 
-  formElement.addEventListener("submit", function (e) {
+  formElement.addEventListener("submit", async function (e) {
     e.preventDefault();
     checkCreateInputValidation('title', 'The title field is required');
     checkCreateInputValidation('due-date', 'The Date field is required');
@@ -21,7 +22,10 @@ async function renderAddTaskData() {
       createFormErrors.dueDate === 0 &&
       createFormErrors.category === 0
     ) {
-      createTask();
+      await createTask();
+      if (typeof renderTaskAfterCreateTask === 'function') {
+        await renderTaskAfterCreateTask();
+      }
     }
 
   });
@@ -38,7 +42,7 @@ function checkCreateInputValidation(inputName, message) {
     createFormErrors[inputName] = 0;
   }
 
-  if(inputElement.value === 'dd/mm/yyyy') {
+  if (inputElement.value === 'dd/mm/yyyy') {
     showInputValidationError('#add-task-form', inputName, message)
     createFormErrors[inputName] = 1;
   }
@@ -133,8 +137,9 @@ function selectPrio(selected, id) {
  * - Sets the minimum date for the due date and prevents selecting past dates.
  * - Manages subtask input: shows/hides the clear button, toggles the add button, and enables subtask editing.
  * - Validates required fields and enables/disables the "Create Task" button.
+ * - Assignees list can be close by clicking outside of list/input
  */
-document.addEventListener("DOMContentLoaded", function () {
+function initEventListenerAddTask() {
   let dueDateInput = document.getElementById("due-date");
   let today = new Date().toISOString().split("T")[0];
   if (dueDateInput) {
@@ -187,7 +192,14 @@ document.addEventListener("DOMContentLoaded", function () {
     field.addEventListener("input", checkRequiredFields);
   });
   checkRequiredFields();
-});
+  document.addEventListener("click", function (event) {
+    const input = document.getElementById("assignees");
+    const dropdown = document.getElementById("assignees-list");
+    if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.add("d-none");
+    }
+  });
+}
 
 function toggleContactDropdown() {
   document.getElementById("assignees-list").classList.toggle("d-none");
@@ -197,15 +209,6 @@ function toggleContactDropdown() {
 function categoryDropDown() {
   document.querySelector('.category-label').classList.toggle('open');
 }
-
-document.addEventListener("click", function (event) {
-  const input = document.getElementById("assignees");
-  const dropdown = document.getElementById("assignees-list");
-  if (!input.contains(event.target) && !dropdown.contains(event.target)) {
-    dropdown.classList.add("d-none");
-    document.querySelector('.assign-label').classList.remove('open');
-  }
-});
 
 /**
  * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button.
@@ -338,7 +341,7 @@ async function createTask() {
     done: false,
     title: li.querySelector(".subtask-title").textContent,
   }));
-  let status = "todo";
+  let status = addTaskstatus;
 
   const data = {
     title: title,
@@ -353,6 +356,7 @@ async function createTask() {
 
   resetAddTask();
   await postData("tasks", data);
+  addTaskstatus = "todo";
 }
 
 function resetAddTask() {
