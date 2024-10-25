@@ -209,10 +209,6 @@
     cursor: pointer;
 }
 
-.prio-btn.urgent, .prio-btn.medium, .prio-btn.low {
-    min-width: 50px !important;
-}
-
 .form-column.left {
     min-width: 370px;
 }

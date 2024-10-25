@@ -50,21 +50,6 @@
 
     }
 
-    .cancel-btn,
-    .create-task-btn {
-        padding: 12px 15px;
-
-    }
-
-    .create-task-btn:disabled {
-        font-size: 19px;
-    }
-
-    .cancel-btn,
-    .create-task-btn {
-        font-size: 19px;
-    }
-
     #add-task-title {
         padding: 40px 20px 10px;
     }
@@ -79,5 +64,19 @@
 
     .required-text.desktop {
         display: none;
+    }
+}
+
+@media (max-width: 400px) {
+.add-task-form {
+    padding: 0 10px;
+}
+
+    .prio-options {
+        gap: 4px;
+    }
+
+    .prio-btn {
+        min-width: 50px !important;
     }
 }

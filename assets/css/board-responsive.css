@@ -115,7 +115,7 @@
     }
 
     .form-row {
-        max-height: calc(600px - 84.4px - 98.8px);
+        max-height: calc(600px - 84.4px - 90.8px);
         overflow-y: scroll;
         justify-content: flex-start;
         padding-right: 4px;
@@ -145,11 +145,6 @@
     .add-task-button-wrapper {
         background-color: #ffffff;
     }
-
-    .cancel-btn, .create-task-btn, .create-task-btn:disabled {
-        font-size: 16px;
-    }
-
 }
 
 @media (max-width: 700px) {
@@ -167,6 +162,10 @@
     .board-tasks .task-view {
         flex: 1 1 calc(90%);
         max-width: 90%;
+    }
+
+    .add-task-form {
+        padding: 0 20px 0 !important;
     }
 }
 
