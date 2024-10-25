@@ -192,3 +192,11 @@ footer a:focus {
     background-color: #F6F7F8;
     flex-grow: 1;
 }
+
+input.input-error {
+    border: 1px solid #FF8190;
+}
+
+select.input-error {
+    border: 1px solid #FF8190;
+}

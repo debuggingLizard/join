@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./assets/css/addTask.css">
     <script src="./script.js"></script>
     <script src="./assets/js/firebase-connect.js"></script>
+    <script src="./assets/js/helper-functions.js"></script>
     <script src="./assets/js/addTask.js"></script>
 </head>
 
@@ -31,13 +32,14 @@
         <main class="main add-task-content">
             <!-- Add Task Form -->
             <h2 id="add-task-title">Add Task</h2>
-            <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createTask();">
+            <form id="add-task-form" class="add-task-form" novalidate>
                 <div class="form-row">
                     <!-- Left column -->
                     <div class="form-column left">
                         <label for="title">
                             <div>Title<span class="required">*</span></div>
                             <input type="text" id="title" name="title" placeholder="Enter a title" required>
+                            <span class="title-error error d-none"></span>
                         </label>
                         <label for="description">
                             <div>Description</div>
@@ -62,7 +64,7 @@
                             <div>Due date<span class="required">*</span></div>
                             <input type="date" class="picker" id="due-date" name="due-date" onfocus="clearPlaceholder()"
                                 onblur="setPlaceholder()" onchange="formatDate()" required>
-                            <span id="incorrect-date" class="error d-none">Due Date cannot be in the past</span>
+                            <span class="due-date-error error d-none"></span>
                         </label>
 
                         <div class="right-compact">
@@ -91,6 +93,7 @@
                                 <select id="category" name="category" placeholder="Select task category"
                                     onclick="categoryDropDown();" required>
                                 </select>
+                                <span class="category-error error d-none"></span>
                             </label>
 
                             <!-- subtasks -->
@@ -120,10 +123,13 @@
                     <span class="required-text desktop"><span class="required">*</span>This field is required</span>
                     <div class="add-task-button-wrapper">
                         <!-- Clear Button -->
-                        <button type="button" class="cancel-btn">Clear<span class="icon-close"></span></button>
+                        <button type="button" class="cancel-btn" onclick="resetAddTask();">
+                            Clear<span class="icon-close"></span>
+                        </button>
                         <!-- Create Button -->
-                        <button id="createTaskBtn" type="submit" class="create-task-btn" disabled>Create Task<span
-                                class="icon-check"></span></button>
+                        <button id="createTaskBtn" type="submit" class="create-task-btn" disabled>
+                            Create Task<span class="icon-check"></span>
+                        </button>
                     </div>
                 </div>
             </form>
