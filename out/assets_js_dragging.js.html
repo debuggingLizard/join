@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: assets/js/create-contact.js</title>
+    <title>JSDoc: Source: assets/js/dragging.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: assets/js/create-contact.js</h1>
+    <h1 class="page-title">Source: assets/js/dragging.js</h1>
 
     
 
@@ -26,134 +26,117 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let createFormErrors = {
-  name: 0,
-  email: 0,
-  phone: 0,
-};
+            <pre class="prettyprint source linenums"><code>let currentDraggable = null;
+let currentDraggingElementId;
+let offsetX = 0;
+let offsetY = 0;
+let width = 0;
+let height = 0;
+let elementAdded = false;
+let addedElement = null;
+let isOverDropTarget = false;
 
 /**
- * Adds event listeners to the create contact form and overlay.
+ * Initializes drag for a task, setting size, offset, and custom drag image.
+ * @param {Event} e - The drag event.
+ * @param {string} taskId - The ID of the task being dragged.
  */
-function eventListenerCreateContact() {
-  let formElement = document.getElementById("create-contact-form");
+function dragstart(e, taskId) {
+  currentDraggingElementId = taskId;
 
-  formElement.addEventListener("submit", function (e) {
-    e.preventDefault();
-    checkCreateInputValidation("name", "Enter name &amp; surname.");
-    checkCreateInputValidation("email", "Enter a valid email address.");
-    checkCreateInputValidation(
-      "phone",
-      "Enter a valid phone number with country code."
-    );
+  e.dataTransfer.setData("text/plain", null);
 
-    if (
-      createFormErrors.name === 0 &amp;&amp;
-      createFormErrors.email === 0 &amp;&amp;
-      createFormErrors.phone === 0
-    ) {
-      createContact();
-    }
-  });
+  currentDraggable = e.target;
 
-  document
-    .getElementById("add-contact-overlay")
-    .addEventListener("click", function (e) {
-      if (e.target !== e.currentTarget) return;
-      hideAddContactOverlay();
+  // Get the width and height of the element
+  width = currentDraggable.offsetWidth;
+  height = currentDraggable.offsetHeight;
+
+  // Set the width and height to the element when drag starts
+  currentDraggable.style.width = `${width}px`;
+  currentDraggable.style.height = `${height}px`;
+
+  offsetX = e.clientX - currentDraggable.getBoundingClientRect().left; // Calculate the offset
+  offsetY = e.clientY - currentDraggable.getBoundingClientRect().top;
+
+  // Prevent the default drag ghost
+  e.dataTransfer.setDragImage(new Image(), 0, 0);
+}
+
+/**
+ * Moves the dragged element, adjusting for scroll and pointer events.
+ * @param {Event} e - The drag event.
+ */
+function drag(e) {
+  currentDraggable.classList.add("dragging");
+  currentDraggable.style.top = `${e.clientY + window.scrollY - offsetY}px`; // Adjust for scrolling
+  currentDraggable.style.left = `${e.clientX + window.scrollX - offsetX}px`; // Adjust for scrolling
+  currentDraggable.style.pointerEvents = "none";
+}
+
+/**
+ * Ends drag by resetting element styles and clearing current draggable reference.
+ */
+function dragEnd() {
+  currentDraggable.classList.remove("dragging");
+  currentDraggable.style.width = "";
+  currentDraggable.style.height = "";
+  currentDraggable.style.left = "";
+  currentDraggable.style.top = "";
+  currentDraggable = null;
+  elementAdded = false;
+}
+
+/**
+ * Updates task status on drop, re-renders boards, and saves status.
+ * @param {Event} e - The drop event.
+ * @param {string} targetStatus - The target status for the dropped task.
+ */
+async function drop(e, targetStatus) {
+  e.preventDefault();
+  let currentStatus = tasks[currentDraggingElementId].status;
+  tasks[currentDraggingElementId].status = targetStatus;
+  renderBoardsByStatus(currentStatus, targetStatus);
+  await putData("tasks", currentDraggingElementId + "/status", targetStatus);
+}
+
+/**
+ * Sets up drop targets to show a placeholder during drag-over and remove it on leave.
+ */
+function loadDropTargets() {
+  const dropTargets = document.querySelectorAll(".drop-target");
+
+  dropTargets.forEach((target) => {
+    target.addEventListener("dragover", (e) => {
+      e.preventDefault();
+
+      if (!elementAdded) {
+        const newElement = document.createElement("div");
+        newElement.classList.add("dragging-target-area");
+        newElement.style.width = `${width}px`;
+        newElement.style.height = `${height}px`;
+
+        target.appendChild(newElement);
+        elementAdded = true;
+        addedElement = newElement;
+      }
     });
-}
 
-/**
- * Creates a new contact.
- * Checks whether an e-mail exists already (e-mails must be unique)
- * If e-mail doesn't exist, object data is created.
- * data contains the input values, a randomly chosen color for the use and the initials of the user.
- * Random color is chosen by function getRandomColor(). Initials are created by getprofileImage(name), using the name from the input.
- */
-async function createContact() {
-  let name = document.querySelector(
-    "#create-contact-form input[name = name]"
-  ).value;
-  let email = document.querySelector(
-    "#create-contact-form input[name = email]"
-  ).value;
-  let mobile = document.querySelector(
-    "#create-contact-form input[name = phone]"
-  ).value;
+    target.addEventListener("dragenter", () => {
+      isOverDropTarget = true;
+    });
 
-  if (await isEmailExist(email)) {
-    showInputValidationError(
-      "#create-contact-form",
-      "email",
-      "Email already exists, please choose another!"
-    );
-  } else {
-    const data = {
-      name: name,
-      mobile: mobile,
-      email: email,
-      color: getRandomColor(),
-      profileImage: getProfileImage(name),
-    };
-
-    await postData("users", data);
-    resetCreateContactForm();
-    renderContactList();
-    hideAddContactOverlay();
-    showNotification("Contact succesfully created");
-  }
-}
-
-/**
- * Resets the create contact form fields.
- */
-function resetCreateContactForm() {
-  document.querySelector("#create-contact-form input[name = name]").value = "";
-  document.querySelector("#create-contact-form input[name = email]").value = "";
-  document.querySelector("#create-contact-form input[name = phone]").value = "";
-}
-
-/**
- * Shows the add contact overlay.
- */
-function showAddContactOverlay() {
-  document.getElementById("add-contact-overlay").style.zIndex = 999;
-  document.getElementById("add-contact-overlay").style.backgroundColor =
-    "rgb(0 0 0 / 30%)";
-  document.getElementById("add-contact-overlay-container").style.transform =
-    "translateX(0)";
-}
-
-/**
- * Hides the add contact overlay.
- */
-function hideAddContactOverlay() {
-  document.getElementById("add-contact-overlay").style.backgroundColor =
-    "rgb(0 0 0 / 0%)";
-  document.getElementById("add-contact-overlay-container").style.transform =
-    "translateX(200%)";
-  document.getElementById("add-contact-overlay").style.zIndex = -1;
-
-  resetCreateContactForm();
-  removeAllErrors();
-}
-
-/**
- * Check create form input field validation
- */
-function checkCreateInputValidation(inputName, message) {
-  let inputElement = document.querySelector(
-    `#create-contact-form input[name = ${inputName}]`
-  );
-
-  if (!inputElement.checkValidity()) {
-    showInputValidationError("#create-contact-form", inputName, message);
-    createFormErrors[inputName] = 1;
-  } else {
-    hideInputValidationError("#create-contact-form", inputName);
-    createFormErrors[inputName] = 0;
-  }
+    target.addEventListener("dragleave", (e) => {
+      if (isOverDropTarget &amp;&amp; !target.contains(e.relatedTarget)) {
+        if (addedElement) {
+          target.removeChild(addedElement);
+          elementAdded = false;
+          addedElement = null;
+        }
+        isOverDropTarget = false;
+      }
+    });
+  });
 }
 </code></pre>
         </article>

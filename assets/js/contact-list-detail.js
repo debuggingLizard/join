@@ -14,13 +14,7 @@ async function renderContactList() {
 }
 
 /**
- * This function sorts the users alphabetically (this is necessary because the contact list must be sorted alphabetically).
- * From these sortedUsers, it extracts the first letter of every name and creates an empty array in the groupedUsers object if that array doesn't exist already.
- * It also extracts the initials of the first and last name of a user and assigns them to initials.
- * Finally, it creates a copy of each user and adds the initials to it, pushing each user object with their initials into groupedUsers.
- * The keys of groupedUsers are the first letters that exist in the user database (for grouping), the values are the respective user objects that start with that letter.
- *
- * @param {object} users
+ * Groups users by the first letter of their names.
  */
 function getFirstLetters(users) {
   let sortedUsers = Object.keys(users).sort((a, b) => {
@@ -103,6 +97,10 @@ async function renderContactDetail(id, showElement) {
   }
 }
 
+/**
+ * Toggles visibility for contact sections based on the specified element.
+ * @param {string} showElement - Element to show (e.g., "list" or "detail").
+ */
 function toggleResponsiveVisibilityContact(showElement) {
   document.body.classList.remove("show-list", "show-detail");
   document.body.classList.add("show-" + showElement);
@@ -202,8 +200,13 @@ function openSlideIn(id) {
   slideIn.classList.add("visible");
 }
 
+/**
+ * Clears content from the responsive edit/delete wrapper.
+ */
 function removeResponsiveEditAfterDelete() {
-  let responsiveEditRef = document.getElementById('contact-detail-responsive-edit-delete-wrapper');
+  let responsiveEditRef = document.getElementById(
+    "contact-detail-responsive-edit-delete-wrapper"
+  );
   responsiveEditRef.innerHTML = "";
 }
 
