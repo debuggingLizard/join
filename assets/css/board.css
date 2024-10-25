@@ -209,10 +209,6 @@
     cursor: pointer;
 }
 
-#add-task-title {
-    padding: 50px 62px 35px !important;
-}
-
 .prio-btn.urgent, .prio-btn.medium, .prio-btn.low {
     min-width: 50px !important;
 }
