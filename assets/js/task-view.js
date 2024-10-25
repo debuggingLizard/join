@@ -171,11 +171,11 @@ function createEditTaskTemplate(taskInformation, taskPriority, taskCategory, all
 
 
 function renderEditTaskTemplate() {
-    // Dein Code, der das Dropdown erstellt
+    
     document.getElementById('contactsToAssign').addEventListener('change', function() {
         const selectedUserIds = Array.from(this.selectedOptions).map(option => option.value);
 
-        // Beispiel: Liste der ausgewählten Benutzer anzeigen
+        
         selectedUserIds.forEach(userId => {
             const selectedUser = allUsers.find(user => user.id === userId);
             console.log(`Ausgewählter Benutzer: ${selectedUser.name} (${selectedUser.profileImage})`);
