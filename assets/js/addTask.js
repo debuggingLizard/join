@@ -396,6 +396,7 @@ async function createTask() {
   resetAddTask();
   await postData("tasks", data);
   addTaskstatus = "todo";
+  showFeedbackOverlay();
 }
 
 /**
@@ -468,4 +469,16 @@ function formatDate() {
   dateInput.classList.add("text-date");
   dateInput.blur();
   dateInput.value = `${day}/${month}/${year}`;
+}
+
+/**
+ * Displays the feedback overlay by adding the "show" class to the overlay element.
+ * Removes the "show" class after 1 second to hide the overlay.
+ */
+function showFeedbackOverlay() {
+  const overlay = document.getElementById("feedback-overlay");
+  overlay.classList.add("show");
+  setTimeout(() => {
+    overlay.classList.remove("show");
+  }, 1000);
 }
