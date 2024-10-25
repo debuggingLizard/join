@@ -48,36 +48,36 @@ function checkCreateInputValidation(inputName, message) {
   }
 }
 
-async function renderContacts() {
+async function renderContacts(assignedUsers = []) {
   let contacts = await getData("users");
   let sortedContacts = Object.keys(contacts)
     .map((id) => ({ id, ...contacts[id] }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  let assigneesListElement = document.getElementById("assignees-list");
+  let assigneesListElement = document.querySelector(".assignees-list");
 
   assigneesListElement.innerHTML = "";
   sortedContacts.forEach(contact => {
-    assigneesListElement.innerHTML += getAssigneesListTemplate(contact);
+    assigneesListElement.innerHTML += getAssigneesListTemplate(contact, assignedUsers);
   });
 
   updateAssignedContacts();
 }
 
-function getAssigneesListTemplate(contact) {
+function getAssigneesListTemplate(contact, assignedUsers = []) {
   return /*html*/ `
-    <label for="${contact.id}">
+    <label for="${contact.id}" class='${assignedUsers.includes(contact.id) ? 'active' : ''}'>
       <div>
         <span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span>
         <span class="contact-profile-name">${contact.name}</span>
       </div>
-      <input type="checkbox" id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)">
+      <input type="checkbox" ${assignedUsers.includes(contact.id) ? 'checked' : ''} id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)">
     </label>
   `;
 }
 
 function updateAssignedContacts() {
-  let assigneesListElement = document.getElementById("assignees-list");
+  let assigneesListElement = document.querySelector(".assignees-list");
   assigneesListElement.addEventListener("change", function (event) {
     const checkbox = event.target;
     const assignedContactsDiv = document.getElementById("assigned-to");
@@ -100,11 +100,9 @@ function updateAssignedContacts() {
 function styleLabel(checkbox) {
   let label = checkbox.parentElement;
   if (checkbox.checked) {
-    label.style.backgroundColor = '#2A3647';
-    label.style.color = 'white';
+    label.classList.add('active');
   } else {
-    label.style.backgroundColor = '';
-    label.style.color = '';
+    label.classList.remove('active');
   }
 }
 
@@ -194,7 +192,7 @@ function initEventListenerAddTask() {
   checkRequiredFields();
   document.addEventListener("click", function (event) {
     const input = document.getElementById("assignees");
-    const dropdown = document.getElementById("assignees-list");
+    const dropdown = document.querySelector(".assignees-list");
     if (!input.contains(event.target) && !dropdown.contains(event.target)) {
       dropdown.classList.add("d-none");
     }
@@ -202,7 +200,7 @@ function initEventListenerAddTask() {
 }
 
 function toggleContactDropdown() {
-  document.getElementById("assignees-list").classList.toggle("d-none");
+  document.querySelector(".assignees-list").classList.toggle("d-none");
   document.querySelector('.assign-label').classList.toggle('open');
 }
 

@@ -243,17 +243,17 @@
 .edit-task::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
-.edit-task input {
+/* .edit-task input {
     width: 100%;
     height: 40px;
     margin-bottom: 25px;
     margin-right: 10px;
-}
-.edit-task textarea {
+} */
+/* .edit-task textarea {
     width: 100%;
     height: 80px;
     margin-bottom: 25px;
-}
+} */
 .priority-assignment p{
     margin: 16px 0;
 }

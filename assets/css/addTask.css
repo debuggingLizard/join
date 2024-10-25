@@ -499,6 +499,15 @@ label {
     border-radius: 10px;
 }
 
+.assignees-list label.active {
+    background-color: rgb(42, 54, 71);
+    color: white;
+}
+
+.assignees-list label.active:hover {
+    background-color: rgb(42, 54, 71);
+}
+
 .assignees-list label:hover {
     background-color: #eeeeee;
 }
