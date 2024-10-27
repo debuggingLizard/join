@@ -162,7 +162,7 @@ async function renderTaskAfterCreateTask() {
 }
 
 async function renderBoardForNewTask() {
-  loadTasksFromDatabase();
+  await loadTasksFromDatabase();
   filterTasks = Object.entries(tasks);
 
   await renderTasks(showNewTask + "-tasks", getTasksByStatus(showNewTask));
