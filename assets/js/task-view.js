@@ -58,30 +58,30 @@ function taskDetailTemplate() {
             : '<p>No subtasks available</p>'}
                         </div>
                 </div>
+            </div>
 
-                <div class="task-edit-delete" id="task-detail-edit-delete">
-                    <div class="task-edit-delete-btn" onclick="showDeleteConfirm()">
-                        <div class="icon icon-delete"></div>
-                        <span>Delete</span>
-                    </div>
-                    <div class="task-edit-delete-btn" onclick="openEditTaskForm()">
-                        <div class="icon icon-edit"></div>
-                        <span>Edit</span>
-                    </div>
+            <div class="task-edit-delete" id="task-detail-edit-delete">
+                <div class="task-edit-delete-btn" onclick="showDeleteConfirm()">
+                    <div class="icon icon-delete"></div>
+                    <span>Delete</span>
                 </div>
+                <div class="task-edit-delete-btn" onclick="openEditTaskForm()">
+                    <div class="icon icon-edit"></div>
+                    <span>Edit</span>
+                </div>
+            </div>
 
-                <div class="task-edit-delete confirm-delete d-none" id="task-detail-delete-confirm">
-                    <div>
-                        Are you sure you want delete this task?
-                    </div>
-                    <div class="task-edit-delete-btn" onclick="hideDeleteConfirm()">
-                        <div class="icon icon-close"></div>
-                        <span>No</span>
-                    </div>
-                    <div class="task-edit-delete-btn" onclick="confirmDelete()">
-                        <div class="icon icon-check"></div>
-                        <span>Yes</span>
-                    </div>
+            <div class="task-edit-delete confirm-delete d-none" id="task-detail-delete-confirm">
+                <div>
+                    Are you sure you want delete this task?
+                </div>
+                <div class="task-edit-delete-btn" onclick="hideDeleteConfirm()">
+                    <div class="icon icon-close"></div>
+                    <span>No</span>
+                </div>
+                <div class="task-edit-delete-btn" onclick="confirmDelete()">
+                    <div class="icon icon-check"></div>
+                    <span>Yes</span>
                 </div>
             </div>
             `;
