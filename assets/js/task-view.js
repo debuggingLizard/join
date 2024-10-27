@@ -374,23 +374,3 @@ async function updateTaskData() {
 async function deleteTaskData() {
     await deleteData('tasks', taskId);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
