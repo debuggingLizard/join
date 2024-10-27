@@ -51,6 +51,7 @@
     font-size: 18px;
 }
 
+.left-board-header button,
 .right-board-header button {
     background: #2A3647;
     color: #fff;
@@ -73,12 +74,14 @@
     top: 3px;
 }
 
+.left-board-header button:hover,
 .right-board-header button:hover {
     background: #29ABE2;
     border: solid 1px #29ABE2;
     box-shadow: 0 4px 4px 0px rgb(0 0 0 / 25%);
 }
 
+.left-board-header button:active,
 .right-board-header button:active {
     background: #091931;
     border: solid 1px #091931;
@@ -92,7 +95,7 @@
     justify-content: center;
     padding: 0 60px;
     align-items: flex-start;
-    gap: 35px;
+    gap: 30px;
     color: #42526E;
     font-weight: bold;
 }
@@ -154,6 +157,10 @@
     font-weight: 400;
 }
 
+.media-query {
+    display: none;
+}
+
 .dragging {
     opacity: 1;
     transform: rotate(10deg);
@@ -200,14 +207,6 @@
     margin: 24px;
     font-size: 12px;
     cursor: pointer;
-}
-
-#add-task-title {
-    padding: 50px 62px 35px !important;
-}
-
-.prio-btn.urgent, .prio-btn.medium, .prio-btn.low {
-    min-width: 50px !important;
 }
 
 .form-column.left {

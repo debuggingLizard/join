@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: assets/js/board.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: assets/js/board.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let tasks = {};
+let filterTasks = [];
+let searchValue = "";
+let timeoutId;
+let showNewTask;
+
+/**
+ * Loads tasks from the database and triggers board rendering.
+ */
+async function loadTasksFromDatabase() {
+  tasks = await getData("tasks");
+  renderBoards();
+}
+
+/**
+ * Filters tasks and renders them by status in their respective board sections.
+ */
+async function renderBoards() {
+  filterTasks = Object.entries(tasks);
+  checkSearchValue();
+  await renderTasks("todo-tasks", getTasksByStatus("todo"));
+  await renderTasks("progress-tasks", getTasksByStatus("progress"));
+  await renderTasks("await-feedback-tasks", getTasksByStatus("await-feedback"));
+  await renderTasks("done-tasks", getTasksByStatus("done"));
+}
+
+/**
+ * Filters tasks and renders them by the specified current and target statuses.
+ * @param {string} currentStatus - The current status of tasks to render.
+ * @param {string} targetStatus - The target status of tasks to render.
+ */
+async function renderBoardsByStatus(currentStatus, targetStatus) {
+  filterTasks = Object.entries(tasks);
+  checkSearchValue();
+  await renderTasks(currentStatus + "-tasks", getTasksByStatus(currentStatus));
+  await renderTasks(targetStatus + "-tasks", getTasksByStatus(targetStatus));
+}
+
+/**
+ * Filters tasks based on a search value in the title or description if the search value is non-empty.
+ */
+function checkSearchValue() {
+  if (searchValue.length >= 1) {
+    filterTasks = Object.entries(tasks).filter(
+      (task) =>
+        task[1].title.toLowerCase().includes(searchValue) ||
+        task[1].description.toLowerCase().includes(searchValue)
+    );
+  }
+}
+
+/**
+ * Returns tasks that match the specified status from the filtered tasks.
+ * @param {string} status - The status to filter tasks by.
+ * @returns {Array} Tasks with the given status.
+ */
+function getTasksByStatus(status) {
+  return filterTasks.filter((task) => task[1].status === status);
+}
+
+/**
+ * Renders tasks in the specified board element; shows a placeholder if no tasks are present.
+ * @param {string} boardElementId - The ID of the board to render tasks in.
+ * @param {Array} boardTasks - The list of tasks to display in the board.
+ */
+async function renderTasks(boardElementId, boardTasks) {
+  let boardElement = document.getElementById(boardElementId);
+  let boardTitle = boardElement.getAttribute("title");
+  if (boardTasks.length === 0) {
+    boardElement.innerHTML = `&lt;div class="no-tasks">No tasks ${boardTitle}&lt;/div>`;
+  } else {
+    boardElement.innerHTML = "";
+    for await (const task of boardTasks) {
+      let taskId = task[0];
+      let taskDetail = task[1];
+      boardElement.innerHTML += await taskTemplate(taskId, taskDetail);
+      if (taskDetail.users != undefined &amp;&amp; taskDetail.users.length > 0) {
+        await renderTaskContributors(taskId, taskDetail);
+      }
+      if (taskDetail.subtasks != undefined &amp;&amp; taskDetail.subtasks.length > 0) {
+        renderSubtasks(taskId, taskDetail);
+      }
+    }
+  }
+}
+
+/**
+ * Renders subtasks for a specific task in the designated subtask wrapper element.
+ * @param {string} taskId - The ID of the task to render subtasks for.
+ * @param {object} taskDetail - The task details, including subtasks.
+ */
+function renderSubtasks(taskId, taskDetail) {
+  let subTasksElement = document.getElementById("subtask-wrapper" + taskId);
+  subTasksElement.innerHTML = subTaskTemplate(taskDetail);
+}
+
+/**
+ * Renders contributors for a specific task in the task contributors element.
+ * @param {string} taskId - The ID of the task to render contributors for.
+ * @param {object} taskDetail - The task details, including assigned users.
+ */
+async function renderTaskContributors(taskId, taskDetail) {
+  let taskContributorsElement = document.getElementById(
+    "task-contributors" + taskId
+  );
+  taskContributorsElement.innerHTML = "";
+  for await (const userId of taskDetail.users) {
+    taskContributorsElement.innerHTML += await taskContributorTemplate(userId);
+  }
+}
+
+/**
+ * Creates an HTML template for a task card with category, description, subtasks, contributors, and priority.
+ */
+async function taskTemplate(taskId, taskDetail) {
+  let categoryDetail = await getData("categories/" + taskDetail.category);
+  let priorityDetail = await getData("priorities/" + taskDetail.priority);
+
+  return /*html*/ `&lt;div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail()">
+                        &lt;div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}&lt;/div>
+                        &lt;div class="task-description">
+                            &lt;h2>${taskDetail.title}&lt;/h2>
+                            &lt;p>${taskDetail.description}&lt;/p>
+                        &lt;/div>
+                        &lt;div class="progress-wrapper" id="subtask-wrapper${taskId}">&lt;/div>
+                        &lt;div class="contributor-listing">
+                            &lt;div class="task-contributors" id="task-contributors${taskId}">&lt;/div>
+                            &lt;div class="icon ${priorityDetail.icon}" style="color:${priorityDetail.color}" title="${priorityDetail.title}">&lt;/div>
+                        &lt;/div>
+                    &lt;/div>`;
+}
+
+/**
+ * Generates an HTML template for a subtask progress bar, showing completed and total subtasks.
+ */
+function subTaskTemplate(taskDetail) {
+  let allSubTasks = taskDetail.subtasks.length;
+  let allDoneTasks = taskDetail.subtasks.filter(
+    (subtask) => subtask.done === true
+  ).length;
+  let progressBarPercent = (allDoneTasks * 100) / allSubTasks;
+
+  return /*html*/ `&lt;div class="progress" title="${allDoneTasks} of ${allSubTasks} Subtasks done">
+    &lt;div class="progress-bar" style="width: ${progressBarPercent}%;">&lt;/div>
+    &lt;/div>
+    &lt;span class="progress-text">${allDoneTasks}/${allSubTasks} Subtasks&lt;/span>`;
+}
+
+/**
+ * Returns HTML for a task contributor.
+ */
+async function taskContributorTemplate(userId) {
+  let userDetail = await getData("users/" + userId);
+  return /*html*/ `&lt;div class="contributor" style="background-color: ${userDetail.color};">${userDetail.profileImage}&lt;/div>`;
+}
+
+/**
+ * Debounces and updates search query, then renders boards.
+ */
+function search(query) {
+  clearTimeout(timeoutId);
+
+  timeoutId = setTimeout(function () {
+    searchValue = query.trim().toLowerCase();
+    renderBoards();
+  }, 500);
+}
+
+/**
+ * Opens the add task overlay and sets task status.
+ */
+function openAddTask(status) {
+  eventListenerCloseAddTask();
+  document.getElementById("add-task-overlay").style.zIndex = 999;
+  document.getElementById("add-task-overlay").style.backgroundColor =
+    "rgb(0 0 0 / 30%)";
+  document.getElementById("add-task-container").style.transform =
+    "translateX(0)";
+  addTaskstatus = status;
+  showNewTask = status;
+}
+
+/**
+ * Adds a click event to close and reset the add task overlay.
+ */
+function eventListenerCloseAddTask() {
+  const overlay = document.getElementById("add-task-overlay");
+  const closeTrigger = function (e) {
+    if (e.target !== e.currentTarget) return;
+    closeAddTask();
+    resetAddTask();
+    overlay.removeEventListener("click", closeTrigger);
+  };
+  overlay.addEventListener("click", closeTrigger);
+}
+
+/**
+ * Closes the add task overlay by resetting styles.
+ */
+function closeAddTask() {
+  document.getElementById("add-task-overlay").style.backgroundColor =
+    "rgb(0 0 0 / 0%)";
+  document.getElementById("add-task-container").style.transform =
+    "translateX(200%)";
+  document.getElementById("add-task-overlay").style.zIndex = -1;
+}
+
+/**
+ * Renders board with the new task and closes the add task overlay.
+ */
+async function renderTaskAfterCreateTask() {
+  await renderBoardForNewTask();
+  closeAddTask();
+}
+
+/**
+ * Fetches tasks, filters, and renders the board for the new task.
+ */
+async function renderBoardForNewTask() {
+  tasks = await getData("tasks");
+  filterTasks = Object.entries(tasks);
+
+  await renderTasks(showNewTask + "-tasks", getTasksByStatus(showNewTask));
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateCloseSlideIn">activateCloseSlideIn</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#checkCreateInputValidation">checkCreateInputValidation</a></li><li><a href="global.html#checkEditInputValidation">checkEditInputValidation</a></li><li><a href="global.html#checkRequiredFields">checkRequiredFields</a></li><li><a href="global.html#checkSearchValue">checkSearchValue</a></li><li><a href="global.html#clearPlaceholder">clearPlaceholder</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeAddTask">closeAddTask</a></li><li><a href="global.html#closeSlideIn">closeSlideIn</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#drag">drag</a></li><li><a href="global.html#dragEnd">dragEnd</a></li><li><a href="global.html#dragstart">dragstart</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#eventListenerCloseAddTask">eventListenerCloseAddTask</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getAssigneesListTemplate">getAssigneesListTemplate</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getTasksByStatus">getTasksByStatus</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#hideInputValidationError">hideInputValidationError</a></li><li><a href="global.html#initEventListenerAddTask">initEventListenerAddTask</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#loadDropTargets">loadDropTargets</a></li><li><a href="global.html#loadTasksFromDatabase">loadTasksFromDatabase</a></li><li><a href="global.html#openAddTask">openAddTask</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#openSlideIn">openSlideIn</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#removeAllErrors">removeAllErrors</a></li><li><a href="global.html#removeResponsiveEditAfterDelete">removeResponsiveEditAfterDelete</a></li><li><a href="global.html#renderAddTaskData">renderAddTaskData</a></li><li><a href="global.html#renderBoardForNewTask">renderBoardForNewTask</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#renderBoardsByStatus">renderBoardsByStatus</a></li><li><a href="global.html#renderCategories">renderCategories</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderResponsiveEditButtons">renderResponsiveEditButtons</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderTaskAfterCreateTask">renderTaskAfterCreateTask</a></li><li><a href="global.html#renderTaskContributors">renderTaskContributors</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#resetAddTask">resetAddTask</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#selectPrio">selectPrio</a></li><li><a href="global.html#setPlaceholder">setPlaceholder</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#showFeedbackOverlay">showFeedbackOverlay</a></li><li><a href="global.html#showInputValidationError">showInputValidationError</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#styleLabel">styleLabel</a></li><li><a href="global.html#subTaskTemplate">subTaskTemplate</a></li><li><a href="global.html#taskContributorTemplate">taskContributorTemplate</a></li><li><a href="global.html#taskTemplate">taskTemplate</a></li><li><a href="global.html#toggleResponsiveVisibilityContact">toggleResponsiveVisibilityContact</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li><li><a href="global.html#updateAssignedContacts">updateAssignedContacts</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri Oct 25 2024 20:14:16 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -200,6 +200,9 @@ async function getAssignedUsers() {
     return [];
 }
 
+/**
+ * Opens the task detail overlay and displays the task details.
+ */
 async function openTaskDetail(id) {
     taskId = id;
 
@@ -219,6 +222,9 @@ async function loadTemplates() {
     document.getElementById("edit-task").innerHTML = editTaskTemplate();
 }
 
+/**
+ * Closes the task detail overlay and hides the overlay after a delay.
+ */
 function closeTaskDetail() {
     document.getElementById("task-detail").classList.remove("show");
     document.getElementById("edit-task").classList.remove("show");

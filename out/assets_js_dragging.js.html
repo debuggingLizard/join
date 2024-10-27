@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: assets/js/contacts-functions.js</title>
+    <title>JSDoc: Source: assets/js/dragging.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: assets/js/contacts-functions.js</h1>
+    <h1 class="page-title">Source: assets/js/dragging.js</h1>
 
     
 
@@ -26,120 +26,117 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Checks if an email already exists in the users database.
- * @param {string} email - The email to check.
- * @returns {Promise&lt;boolean>} True if the email exists, false otherwise.
+            <pre class="prettyprint source linenums"><code>let currentDraggable = null;
+let currentDraggingElementId;
+let offsetX = 0;
+let offsetY = 0;
+let width = 0;
+let height = 0;
+let elementAdded = false;
+let addedElement = null;
+let isOverDropTarget = false;
+
+/**
+ * Initializes drag for a task, setting size, offset, and custom drag image.
+ * @param {Event} e - The drag event.
+ * @param {string} taskId - The ID of the task being dragged.
  */
-async function isEmailExist(email) {
-  const users = await getData("users");
-  if (users === null || users === undefined) {
-    return false;
-  }
-  const foundUsers = Object.values(users).filter(
-    (user) => user.email === email
-  );
-  return foundUsers.length > 0 ? true : false;
+function dragstart(e, taskId) {
+  currentDraggingElementId = taskId;
+
+  e.dataTransfer.setData("text/plain", null);
+
+  currentDraggable = e.target;
+
+  // Get the width and height of the element
+  width = currentDraggable.offsetWidth;
+  height = currentDraggable.offsetHeight;
+
+  // Set the width and height to the element when drag starts
+  currentDraggable.style.width = `${width}px`;
+  currentDraggable.style.height = `${height}px`;
+
+  offsetX = e.clientX - currentDraggable.getBoundingClientRect().left; // Calculate the offset
+  offsetY = e.clientY - currentDraggable.getBoundingClientRect().top;
+
+  // Prevent the default drag ghost
+  e.dataTransfer.setDragImage(new Image(), 0, 0);
 }
 
 /**
- * Returns a random color from a predefined set of colors.
- * @returns {string} A random color.
+ * Moves the dragged element, adjusting for scroll and pointer events.
+ * @param {Event} e - The drag event.
  */
-function getRandomColor() {
-  const colors = [
-    "#FF7A00",
-    "#FF5EB3",
-    "#6E52FF",
-    "#9327FF",
-    "#00BEE8",
-    "#1FD7C1",
-    "#FF745E",
-    "#FFA35E",
-    "#FC71FF",
-    "#FFC701",
-    "#0038FF",
-    "#C3FF2B",
-    "#FFE62B",
-    "#FF4646",
-    "#FFBB2B",
-  ];
-
-  const rndInt = randomIntFromInterval(0, colors.length - 1);
-  return colors[rndInt];
+function drag(e) {
+  currentDraggable.classList.add("dragging");
+  currentDraggable.style.top = `${e.clientY + window.scrollY - offsetY}px`; // Adjust for scrolling
+  currentDraggable.style.left = `${e.clientX + window.scrollX - offsetX}px`; // Adjust for scrolling
+  currentDraggable.style.pointerEvents = "none";
 }
 
 /**
- * Generates a profile image string based on a user's name.
- * @param {string} name - The user's name.
- * @returns {string} The profile image string.
+ * Ends drag by resetting element styles and clearing current draggable reference.
  */
-function getProfileImage(name) {
-  const parts = name.trim().split(" ");
-  const firstInitial = parts[0].charAt(0).toUpperCase();
-  const lastInitial =
-    parts.length &lt; 2
-      ? parts[0].charAt(0).toUpperCase()
-      : parts[1].charAt(0).toUpperCase();
-  return firstInitial + lastInitial;
+function dragEnd() {
+  currentDraggable.classList.remove("dragging");
+  currentDraggable.style.width = "";
+  currentDraggable.style.height = "";
+  currentDraggable.style.left = "";
+  currentDraggable.style.top = "";
+  currentDraggable = null;
+  elementAdded = false;
 }
 
 /**
- * Returns a random integer between the specified min and max values, inclusive.
- * @param {number} min - The minimum value.
- * @param {number} max - The maximum value.
- * @returns {number} A random integer between min and max.
+ * Updates task status on drop, re-renders boards, and saves status.
+ * @param {Event} e - The drop event.
+ * @param {string} targetStatus - The target status for the dropped task.
  */
-function randomIntFromInterval(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+async function drop(e, targetStatus) {
+  e.preventDefault();
+  let currentStatus = tasks[currentDraggingElementId].status;
+  tasks[currentDraggingElementId].status = targetStatus;
+  renderBoardsByStatus(currentStatus, targetStatus);
+  await putData("tasks", currentDraggingElementId + "/status", targetStatus);
 }
 
 /**
- * Removes error styles and messages from contact creation and edit forms.
+ * Sets up drop targets to show a placeholder during drag-over and remove it on leave.
  */
-function removeAllErrors() {
-  let createInputElements = document.querySelectorAll(
-    `#create-contact-form input`
-  );
-  createInputElements.forEach((element) => {
-    element.classList.remove("input-error");
+function loadDropTargets() {
+  const dropTargets = document.querySelectorAll(".drop-target");
+
+  dropTargets.forEach((target) => {
+    target.addEventListener("dragover", (e) => {
+      e.preventDefault();
+
+      if (!elementAdded) {
+        const newElement = document.createElement("div");
+        newElement.classList.add("dragging-target-area");
+        newElement.style.width = `${width}px`;
+        newElement.style.height = `${height}px`;
+
+        target.appendChild(newElement);
+        elementAdded = true;
+        addedElement = newElement;
+      }
+    });
+
+    target.addEventListener("dragenter", () => {
+      isOverDropTarget = true;
+    });
+
+    target.addEventListener("dragleave", (e) => {
+      if (isOverDropTarget &amp;&amp; !target.contains(e.relatedTarget)) {
+        if (addedElement) {
+          target.removeChild(addedElement);
+          elementAdded = false;
+          addedElement = null;
+        }
+        isOverDropTarget = false;
+      }
+    });
   });
-
-  let editInputElements = document.querySelectorAll(`#edit-contact-form input`);
-  editInputElements.forEach((element) => {
-    element.classList.remove("input-error");
-  });
-
-  let createErrorMessageElements = document.querySelectorAll(
-    "#create-contact-form [class$='-error']"
-  );
-  createErrorMessageElements.forEach((element) => {
-    element.classList.add("d-none");
-  });
-
-  let editErrorMessageElements = document.querySelectorAll(
-    "#edit-contact-form [class$='-error']"
-  );
-  editErrorMessageElements.forEach((element) => {
-    element.classList.add("d-none");
-  });
-}
-
-/**
- * Displays a notification message and hides it after a short delay.
- *
- * @param {string} message - The message to be displayed in the notification.
- */
-function showNotification(message) {
-  let notificationRef = document.getElementById("notification");
-  notificationRef.style.transform = "translateX(2000px)";
-  setTimeout(() => {
-    notificationRef.innerHTML = message;
-    notificationRef.style.transform = "translateX(0)";
-    setTimeout(() => {
-      notificationRef.style.transform = "translateX(2000px)";
-    }, 2000);
-  }, 50);
 }
 </code></pre>
         </article>

@@ -13,6 +13,7 @@
 body {
     display: flex;
     overflow-x: hidden;
+    height: 100dvh;
 }
 
 .d-none {
@@ -191,6 +192,24 @@ footer a:focus {
 .main {
     background-color: #F6F7F8;
     flex-grow: 1;
+    height: calc(100dvh - 92px);
+    overflow-y: auto;
+}
+
+.main::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.main::-webkit-scrollbar-thumb {
+    background: #A8A8A8;
+}
+
+.main::-webkit-scrollbar-thumb:hover {
+    background: #999999;
 }
 
 input.input-error {
@@ -199,4 +218,28 @@ input.input-error {
 
 select.input-error {
     border: 1px solid #FF8190;
+}
+
+/* Feedback Overlay */
+.feedback-overlay {
+    display: none;
+    /* Startet versteckt */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.feedback-overlay.show {
+    display: block;
+}
+
+.feedback-overlay img {
+    margin-left: 10px;
+    vertical-align: middle;
 }
