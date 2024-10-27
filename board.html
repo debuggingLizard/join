@@ -85,15 +85,13 @@
             </section>
 
             <!-- Task Detailview Overlay -->
-            <div class="overlay" id="overlay" onclick="closeTaskDetail()">
+            <div class="overlay d-none" id="overlay" onclick="closeTaskDetail()">
+                <div class="task-detail" id="task-detail" onclick="event.stopPropagation();">
 
-                
-
-            </div>
-
-            <!-- Note: The edit-task is influenced by both addTask.css and task.css -->
-            <div class="edit-task-wrapper">
-                
+                </div>
+                <div class="edit-task d-none" id="edit-task" onclick="event.stopPropagation();">
+                    
+                </div>
             </div>
 
             <!-- Add Task Overlay -->

@@ -10,68 +10,86 @@ let editFormErrors = {
     dueDate: 0
 };
 
-function createTaskDetailTemplate() {
+function taskDetailTemplate() {
     return `
-        <div class="task-detail" id="task-detail" onclick="event.stopPropagation();">
-            <div id="close-btn-task-detail" class="close-btn-task-detail" onclick="closeTaskDetail()">
-                <img src="./assets/img/close.svg" alt="Close">
+            <div class="task-detail-header">
+                <div class="userStory" style="background-color:${taskCategory.color}">${taskCategory.title}</div>
+                <div class="close-btn-task-detail icon icon-close" onclick="closeTaskDetail()"></div>
             </div>
-            <div class="userStory" style="background-color:${taskCategory.color}">${taskCategory.title}</div>
-            <h1>${taskInformation.title}</h1>
-            <p>${taskInformation.description}</p>
-            <div class="task-term">
-                <div>
-                    <p>Due date:</p>
-                    <p>Priority:</p>
-                </div>
-                <div>
-                    <p>${taskInformation.date}</p>
-                    <div class="detail-priority-container">
-                        <span style="margin-right: 8px;">${taskPriority.title}</span>
-                        <span class="icon ${taskPriority.icon}" style="color:${taskPriority.color}"></span>
+
+            <div class="task-detail-body">
+                <h1>${taskInformation.title}</h1>
+                <p>${taskInformation.description}</p>
+                <div class="task-term">
+                    <div>
+                        <p>Due date:</p>
+                        <p>Priority:</p>
+                    </div>
+                    <div>
+                        <p>${taskInformation.date}</p>
+                        <div class="detail-priority-container">
+                            <span style="margin-right: 8px;">${taskPriority.title}</span>
+                            <span class="icon ${taskPriority.icon}" style="color:${taskPriority.color}"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="assigned">
-                <p>Assigned To:</p>
-                <div id="task-overlay-assigned-contacts">
-                    ${(assignedUsers || []).map(user => `
-                        <div class="contributor-placement">
-                            <div class="contributor" style="background-color: ${user.color};">${user.profileImage}</div>
-                            <p>${user.name}</p>
-                        </div>`).join('')}
+                <div class="assigned">
+                    <p>Assigned To:</p>
+                    <div id="task-overlay-assigned-contacts">
+                        ${(assignedUsers || []).map(user => `
+                            <div class="contributor-placement">
+                                <div class="contributor" style="background-color: ${user.color};">${user.profileImage}</div>
+                                <p>${user.name}</p>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
-            </div>
-            <div class="subtask">
-                <p style="margin-bottom: 10px;">Subtasks</p>
-                <div class="subtask-checkbox">
-             
-                ${(taskInformation.subtasks && taskInformation.subtasks.length > 0) ?
+                <div class="subtask">
+                    <p style="margin-bottom: 10px;">Subtasks</p>
+                    <div class="subtask-checkbox">
+                    ${(taskInformation.subtasks && taskInformation.subtasks.length > 0) ?
             taskInformation.subtasks.map((subtask, index) => `
-                    <div class="check-subtask" id="subtask-${index}" onclick="toggleSubtask(${index})">
-                        <img id="unchecked-${index}" class="checkbox-img" src="./assets/img/unchecked-button.svg" alt="checkbox" style="display: ${subtask.done ? 'none' : 'inline-block'};">
-                        <img id="checked-${index}" class="checkbox-tick-img" src="./assets/img/checked-button.svg" alt="checkbox" style="display: ${subtask.done ? 'inline-block' : 'none'};">
-                        <span>${subtask.title}</span>
-                        </div>`).join('')
+                            <div class="check-subtask" id="subtask-${index}" onclick="toggleSubtask(${index})">
+                                <img id="unchecked-${index}" class="checkbox-img ${subtask.done ? 'd-none' : ''}" src="./assets/img/unchecked-button.svg" alt="checkbox">
+                                <img id="checked-${index}" class="checkbox-tick-img ${subtask.done ? '' : 'd-none'}" src="./assets/img/checked-button.svg" alt="checkbox">
+                                <span>${subtask.title}</span>
+                            </div>
+                        `).join('')
             : '<p>No subtasks available</p>'}
+                        </div>
+                </div>
+
+                <div class="task-edit-delete" id="task-detail-edit-delete">
+                    <div class="task-edit-delete-btn" onclick="showDeleteConfirm()">
+                        <div class="icon icon-delete"></div>
+                        <span>Delete</span>
                     </div>
+                    <div class="task-edit-delete-btn" onclick="openEditTaskForm()">
+                        <div class="icon icon-edit"></div>
+                        <span>Edit</span>
+                    </div>
+                </div>
+
+                <div class="task-edit-delete confirm-delete d-none" id="task-detail-delete-confirm">
+                    <div>
+                        Are you sure you want delete this task?
+                    </div>
+                    <div class="task-edit-delete-btn" onclick="hideDeleteConfirm()">
+                        <div class="icon icon-close"></div>
+                        <span>No</span>
+                    </div>
+                    <div class="task-edit-delete-btn" onclick="confirmDelete()">
+                        <div class="icon icon-check"></div>
+                        <span>Yes</span>
+                    </div>
+                </div>
             </div>
-            
-            <div class="task-edit-delete">
-                <button class="task-edit-delete-btn"><img src="./assets/img/delete.svg" alt="">
-                    <span>Delete</span>
-                </button>
-                <button onclick="openEditTaskForm()" class="task-edit-delete-btn"><img src="./assets/img/edit.svg" alt="">
-                    <span>Edit</span>
-                </button>
-            </div>
-        </div>`;
+            `;
 }
-function createEditTaskTemplate() {
+function editTaskTemplate() {
     return `
-    <div class="edit-task" id="edit-task" onclick="event.stopPropagation();">
-        <div id="close-btn-edit-task-detail" class="close-btn-edit-task-detail" onclick="closeTaskDetail()">
-            <img src="./assets/img/close.svg" alt="Close">
+        <div class="edit-task-header">
+            <div class="close-btn-task-detail icon icon-close" onclick="closeTaskDetail()"></div>
         </div>
 
         <form id="edit-task-form" class="form-column edit-task-form-column" novalidate>
@@ -137,7 +155,7 @@ function createEditTaskTemplate() {
                 <ul id="subtask-list" class="subtask-list">
                     ${(taskInformation.subtasks || []).map((subtask, index) => `
                         <li class="subtask-item">
-                            <span ondbclick="editSubtask(this)" class="subtask-title">${subtask.title}</span>
+                            <span ondbclick="editSubtask(this)" class="subtask-title" status="${subtask.done}">${subtask.title}</span>
                             <div class="subtask-actions">
                                 <div class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></div>
                                 <div class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></div>
@@ -153,8 +171,6 @@ function createEditTaskTemplate() {
                 </button>
             </div>
         </form>                                    
-        
-    </div>
     `;
 }
 
@@ -188,48 +204,44 @@ async function openTaskDetail(id) {
     taskId = id;
 
     await getDataFromDatabase();
+    await loadTemplates();
 
-    const taskDetailHTML = createTaskDetailTemplate();
-    document.getElementById('overlay').innerHTML = taskDetailHTML;
-
-    const overlay = document.getElementById("overlay");
-    const taskDetail = document.getElementById("task-detail");
-    overlay.style.display = "flex";
+    document.getElementById("overlay").classList.remove('d-none');
+    document.getElementById("task-detail").classList.remove("d-none");
     setTimeout(() => {
-        taskDetail.classList.add("show");
-    }, 10);
+        document.getElementById("task-detail").classList.add("show");
+        document.getElementById("edit-task").classList.add("show");
+    }, 100);
+}
+
+async function loadTemplates() {
+    document.getElementById("task-detail").innerHTML = taskDetailTemplate();
+    document.getElementById("edit-task").innerHTML = editTaskTemplate();
 }
 
 function closeTaskDetail() {
-    const taskDetail = document.getElementById("task-detail");
-    const editTaskWrapper = document.querySelector('.edit-task-wrapper');
-    const editTaskConfirmBtn = document.querySelector('.edit-task-confirm-btn');
-
-    taskDetail.classList.remove("show");
+    document.getElementById("task-detail").classList.remove("show");
+    document.getElementById("edit-task").classList.remove("show");
     setTimeout(() => {
-        taskDetail.style.display = 'none';
-        editTaskWrapper.style.display = 'none';
-        if (editTaskConfirmBtn) {
-            editTaskConfirmBtn.style.display = 'none';
-        }
-        document.getElementById("overlay").style.display = "none";
-    }, 300);
+        document.getElementById("edit-task").classList.add("d-none");
+        document.getElementById("overlay").classList.add('d-none');
+    }, 500);
 }
 
+function showDeleteConfirm() {
+    document.getElementById('task-detail-edit-delete').classList.add('d-none');
+    document.getElementById('task-detail-delete-confirm').classList.remove('d-none');
+}
+
+function hideDeleteConfirm() {
+    document.getElementById('task-detail-edit-delete').classList.remove('d-none');
+    document.getElementById('task-detail-delete-confirm').classList.add('d-none');
+}
 
 async function openEditTaskForm() {
-    const taskDetail = document.getElementById("task-detail");
-    const editTaskWrapper = document.querySelector('.edit-task-wrapper');
 
-    taskDetail.style.display = 'none';
-
-    const editTaskHTML = createEditTaskTemplate();
-    editTaskWrapper.innerHTML = editTaskHTML;
-
-    editTaskWrapper.style.position = 'absolute';
-    editTaskWrapper.style.top = taskDetail.offsetTop + 'px';
-
-    editTaskWrapper.style.display = 'flex';
+    document.getElementById("task-detail").classList.add("d-none");
+    document.getElementById("edit-task").classList.remove("d-none");
 
     renderContacts(taskInformation.users);
 
@@ -270,42 +282,59 @@ function checkEditFormValidation(inputName, message) {
 async function confirmEdit() {
     await updateTaskData();
     await getDataFromDatabase();
+    await loadTemplates();
 
-    const taskDetailHTML = createTaskDetailTemplate();
-    document.getElementById('overlay').innerHTML = taskDetailHTML;
-
-    const editTaskWrapper = document.querySelector('.edit-task-wrapper');
-    if (editTaskWrapper) {
-        editTaskWrapper.innerHTML = '';
-        editTaskWrapper.style.display = 'none';
-    }
-
-    const taskDetail = document.getElementById("task-detail");
-    taskDetail.style.display = 'block';
-    taskDetail.classList.add("show");
-
-    taskDetail.style.position = 'absolute';
-    taskDetail.style.top = '50%';
-    taskDetail.style.left = '50%';
-    taskDetail.style.transform = 'translate(-50%, -50%)';
+    document.getElementById("task-detail").classList.remove("d-none");
+    document.getElementById("task-detail").classList.add("show");
+    document.getElementById("edit-task").classList.add("d-none");
+    document.getElementById("edit-task").classList.add("show");
 
     await loadTasksFromDatabase();
     filterTasks = Object.entries(tasks);
     await renderTasks(taskInformation.status + "-tasks", getTasksByStatus(taskInformation.status));
 }
 
+async function confirmDelete() {
+    await deleteTaskData();
 
-function toggleSubtask(index) {
+    document.getElementById("task-detail").classList.remove("show");
+    document.getElementById("edit-task").classList.remove("show");
+    document.getElementById("overlay").classList.add('d-none');
+
+    await loadTasksFromDatabase();
+    filterTasks = Object.entries(tasks);
+    await renderTasks(taskInformation.status + "-tasks", getTasksByStatus(taskInformation.status));
+}
+
+async function toggleSubtask(index) {
+    let subTaskStatus;
+
+    const subtaskElement = document.getElementById(`subtask-${index}`);
     const unchecked = document.getElementById(`unchecked-${index}`);
     const checked = document.getElementById(`checked-${index}`);
 
-    if (unchecked.style.display === 'none') {
-        unchecked.style.display = 'inline-block';
-        checked.style.display = 'none';
+    subtaskElement.style.pointerEvents = 'none';
+
+    if (taskInformation.subtasks[index].done) {
+        taskInformation.subtasks[index].done = false;
+        subTaskStatus = false;
+        unchecked.classList.remove('d-none');
+        checked.classList.add('d-none');
     } else {
-        unchecked.style.display = 'none';
-        checked.style.display = 'inline-block';
+        taskInformation.subtasks[index].done = true;
+        subTaskStatus = true;
+        unchecked.classList.add('d-none');
+        checked.classList.remove('d-none');
     }
+
+    await putData("tasks", taskId + '/subtasks/' + index + '/done', subTaskStatus);
+
+    await loadTasksFromDatabase();
+    filterTasks = Object.entries(tasks);
+    await renderTasks(taskInformation.status + "-tasks", getTasksByStatus(taskInformation.status));
+    document.getElementById("edit-task").innerHTML = editTaskTemplate();
+
+    subtaskElement.style.pointerEvents = 'auto';
 }
 
 async function updateTaskData() {
@@ -320,7 +349,7 @@ async function updateTaskData() {
         let category = taskInformation.category;
 
         let subtasks = Array.from(document.querySelector("#edit-task-form .subtask-list").children).map((li) => ({
-            done: false,
+            done: li.querySelector(".subtask-title").getAttribute('status') == 'true' ? true : false,
             title: li.querySelector(".subtask-title").textContent,
         }));
         let status = taskInformation.status;
@@ -340,6 +369,10 @@ async function updateTaskData() {
     } catch (error) {
         console.error(`Error updating task ${taskId}:`, error);
     }
+}
+
+async function deleteTaskData() {
+    await deleteData('tasks', taskId);
 }
 
 
