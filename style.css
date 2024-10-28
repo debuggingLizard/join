@@ -118,6 +118,7 @@ footer a:focus {
     align-items: center;
     width: 100%;
     max-width: 1440px;
+    position: relative;
 }
 
 .header-content h2 {
@@ -164,8 +165,8 @@ footer a:focus {
 
 .user-info-links {
     position: absolute;
-    right: 40px;
-    top: 92px;
+    right: 0;
+    top: 76px;
     display: flex;
     flex-direction: column;
     background-color: #2A3647;
