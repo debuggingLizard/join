@@ -43,7 +43,7 @@ function getHeaderTemplate() {
             <img class="header-responsive-logo" src="./assets/img/JoinLogoResponsive.svg" alt="">
             <h2>Kanban Project Management Tool</h2>
             <div class="user-info">
-                <a href="help.html" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>
+                <a href="help.html" onclick="saveCurrentPage()" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>
                 <div class="user-info-profile" onclick="openHeaderProfileInfo()">SM</div>
             </div>
             <div id="user-info-links" class="user-info-links d-none">
@@ -82,4 +82,17 @@ function showFeedbackOverlay() {
   setTimeout(() => {
     overlay.classList.remove("show");
   }, 1000);
+}
+
+function saveCurrentPage() {
+  sessionStorage.setItem('previousPage', window.location.href);
+}
+
+function goBack() {
+  let previousPage = sessionStorage.getItem('previousPage');
+  if (previousPage) {
+    window.location.href = previousPage;
+  } else {
+    window.history.back();
+  }
 }
