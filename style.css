@@ -252,13 +252,29 @@ select.input-error {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    position: relative;
 }
-        ol {
-            list-style-type: decimal; /* Stellt sicher, dass eine nummerierte Liste angezeigt wird */
-            margin: 0;
-            padding-left: 40px;
-        }
-        ol li {
-            margin-bottom: 10px;
-        }
 
+.help-container h3 {
+    padding-top: 12px;
+}
+
+.help-container .blue-text {
+    color: #29ABE2;
+}
+
+ol {
+    list-style-type: decimal;
+    margin: 0;
+    padding-left: 20px;
+    font-weight: 700;
+}
+
+ol li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+ol li span {
+    font-weight: 400;
+}
