@@ -107,7 +107,6 @@
 
     .add-task-container{
         border-radius: 20px;
-        max-height: 600px;
     }
 
     #add-task-title {
@@ -141,16 +140,15 @@
     .form-actions {
         padding-top: 20px;
     }
-
-    .add-task-button-wrapper {
-        background-color: #ffffff;
-    }
 }
 
 @media (max-width: 700px) {
     .board-tasks .task-view {
         flex: 1 1 calc(45%);
         max-width: 45%;
+    }
+    .task-detail h1 {
+        font-size: 40px;
     }
 }
 
@@ -163,15 +161,19 @@
         flex: 1 1 calc(90%);
         max-width: 90%;
     }
-
-    .add-task-form {
-        padding: 0 20px 0 !important;
-    }
 }
 
 @media (max-width: 360px) {
     .form-column.left,
     .form-column.right {
         min-width: 260px;
+    }
+
+    .task-detail {
+        padding: 30px 15px;
+    }
+
+    .edit-task {
+        padding: 30px 10px;
     }
 }
