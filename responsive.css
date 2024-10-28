@@ -44,7 +44,7 @@
         height: calc(100dvh - 96px - 80px);
     }
 
-    .header-wrapper {
+    .header-content {
         padding: 20px 40px;
     }
 }
@@ -72,7 +72,11 @@
         padding: 2px 4px;
     }
 
-    .header-wrapper {
+    .header-content {
         padding: 20px 16px;
+    }
+
+    .user-info-links {
+        right: 16px;
     }
 }

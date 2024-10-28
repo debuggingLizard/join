@@ -106,7 +106,6 @@ footer a:focus {
 .header-wrapper {
     height: 96px;
     display: flex;
-    padding: 20px 40px 20px 100px;
     background-color: white;
     z-index: 100;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
@@ -119,6 +118,7 @@ footer a:focus {
     width: 100%;
     max-width: 1440px;
     position: relative;
+    padding: 20px 40px 20px 100px;
 }
 
 .header-content h2 {
@@ -165,8 +165,8 @@ footer a:focus {
 
 .user-info-links {
     position: absolute;
-    right: 0;
-    top: 76px;
+    right: 40px;
+    top: 96px;
     display: flex;
     flex-direction: column;
     background-color: #2A3647;
@@ -193,7 +193,6 @@ footer a:focus {
 }
 
 .main {
-    background-color: #F6F7F8;
     flex-grow: 1;
     height: calc(100dvh - 92px);
     overflow-y: auto;
