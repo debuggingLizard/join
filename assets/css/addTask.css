@@ -8,7 +8,6 @@
 #add-task-title {
     padding: 60px 60px 16px;
     font-size: 45px;
-
 }
 
 .add-task-form {
@@ -17,6 +16,8 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 0px 60px 32px;
+    width:100%;
+    max-width: 1440px;
 }
 
 .form-row {
@@ -354,7 +355,7 @@ label {
 .create-task-btn {
     padding: 10px 13px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
@@ -409,6 +410,9 @@ label {
     list-style: none;
     padding: 0;
     margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .subtask-actions button {
@@ -434,14 +438,15 @@ label {
 .subtask-item {
     display: flex;
     justify-content: flex-start;
-    margin: 0 0 2px 18px;
-    padding: 2px;
+    padding: 4px 2px 4px 18px;
     position: relative;
+    border-radius: 10px;
 }
 
 .subtask-item span {
     flex: 1;
     cursor: pointer;
+    font-size: 13px;
 }
 
 .subtask-item input {
@@ -449,13 +454,13 @@ label {
     border: none;
     border-bottom: 1px solid #29ABE2;
     border-radius: 0;
+    font-size: 13px;
 }
 
 .create-task-btn:disabled {
     background: #A8A8A8;
     color: #fff;
     border-radius: 8px;
-    font-size: 16px;
     cursor: pointer;
     font-weight: 500;
     border: solid 1px #A8A8A8;
@@ -505,6 +510,15 @@ label {
     border-radius: 10px;
 }
 
+.assignees-list label.active {
+    background-color: rgb(42, 54, 71);
+    color: white;
+}
+
+.assignees-list label.active:hover {
+    background-color: rgb(42, 54, 71);
+}
+
 .assignees-list label:hover {
     background-color: #eeeeee;
 }
@@ -550,4 +564,73 @@ label {
 
 .required-text.mobile {
     display: none;
+}
+
+.edit-subtask-btn {
+    position: absolute;
+    right: 30px;
+    top: 9px;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    font-size: 15px;
+    color: #2A3647;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    body {
+        overflow-y: hidden;
+    }
+
+    .add-task-content {
+        overflow-y: scroll;
+    }
+
+    .form-column.left {
+        padding-right: 0;
+        border-right: none;
+    }
+
+    .form-column.right {
+        padding-left: 0;
+    }
+
+    .form-column .right-compact {
+        gap: 30px;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .add-task-form {
+        padding: 0 20px 0;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 60px;
+        padding: 50px 0 0 0;
+        position: sticky;
+        bottom: 0;
+    }
+
+    .cancel-btn,
+    .create-task-btn {
+        padding: 12px 15px;
+
+    }
+
+    .prio-btn {
+        padding: 9px 10px;
+    }
+
+    .required-text.mobile {
+        display: inline-block;
+    }
+
+    .required-text.desktop {
+        display: none;
+    }
 }

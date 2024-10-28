@@ -24,7 +24,7 @@
 </head>
 
 <body
-    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); loadTasksFromDatabase(); loadDropTargets(); initEventListenerAddTask(); renderAddTaskData(); setPlaceholder();">
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-board'); renderAllBoards(); loadDropTargets(); initEventListenerAddTask(); renderAddTaskData(); setPlaceholder('#add-task-form');">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -91,58 +91,12 @@
             </section>
 
             <!-- Task Detailview Overlay -->
-            <div class="overlay" id="overlay" onclick="closeTaskDetail()">
+            <div class="overlay d-none" id="overlay" onclick="closeTaskDetail()">
                 <div class="task-detail" id="task-detail" onclick="event.stopPropagation();">
-                    <div id="close-btn-task-detail" class="close-btn-task-detail" onclick="closeTaskDetail()">
-                        <img src="./assets/img/close.svg" alt="Close">
-                    </div>
-                    <div class="userStory">User Story</div>
-                    <h1>Kochwelt Page & Recipe Recommender</h1>
-                    <p>Build start page with recipe recommendation.</p>
-                    <div class="task-term">
-                        <div>
-                            <p>Due date:</p>
-                            <p>Priority:</p>
-                        </div>
-                        <div>
-                            <p>Date</p>
-                            <p>Urgency</p>
-                        </div>
-                    </div>
-                    <div class="assigned">
-                        <p>Assigned To:</p>
-                        <div id="task-overlay-assigned-contacts">
-                            <div class="contributor-placement">
-                                <div class="contributor" style="background-color: #f54242;">AB</div>
-                                <p>Alfred Bauer</p>
-                            </div>
-                            <div class="contributor-placement">
-                                <div class="contributor" style="background-color: #42f554;">CD</div>
-                                <p>Chriss Dreiyr</p>
-                            </div>
-                            <div class="contributor-placement">
-                                <div class="contributor" style="background-color: #4287f5;">EF</div>
-                                <p>Elfi Freud</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="subtask">
-                        <p style="margin-bottom: 10px;">Subtask</p>
-                        <div class="subtask-checkbox">
-                            <div class="check-subtask"><img class="checkbox-img" src="./assets/img/Rectangle 5.svg"
-                                    alt=""><span>Implement Recipe Recommendation</span></div>
-                            <div class="check-subtask"><img class="checkbox-img" src="./assets/img/Rectangle 5.svg"
-                                    alt=""><span>Start Page Layout</span></div>
-                        </div>
-                        <div class="task-edit-delete">
-                            <button class="task-edit-delete-btn"><img src="./assets/img/delete.svg" alt="">
-                                <span>Delete</span>
-                            </button>
-                            <button class="task-edit-delete-btn"><img src="./assets/img/edit.svg" alt="">
-                                <span>Edit</span>
-                            </button>
-                        </div>
-                    </div>
+
+                </div>
+                <div class="edit-task d-none" id="edit-task" onclick="event.stopPropagation();">
+                    
                 </div>
             </div>
 
@@ -175,7 +129,7 @@
                                     </div>
                                     <div>
                                         <input type="search" name="assignees" id="assignees"
-                                            placeholder="Select contacts to assign" onclick="toggleContactDropdown()">
+                                            placeholder="Select contacts to assign" onclick="toggleContactDropdown('#add-task-form')">
                                         <div id="assignees-list" class="assignees-list d-none"></div>
                                         <div id="assigned-to" class="assigned-to"></div>
                                     </div>
@@ -189,7 +143,7 @@
                                 <label for="due-date" class="date-label">
                                     <div>Due date<span class="required">*</span></div>
                                     <input type="date" class="picker" id="due-date" name="due-date"
-                                        onfocus="clearPlaceholder()" onblur="setPlaceholder()" onchange="formatDate()"
+                                        onfocus="clearPlaceholder('#add-task-form')" onblur="setPlaceholder('#add-task-form')" onchange="formatDate('#add-task-form')"
                                         required>
                                     <span class="due-date-error error d-none"></span>
                                 </label>
@@ -199,14 +153,14 @@
                                     <div>Prio</div>
                                     <div class="prio-options">
                                         <div class="prio-btn urgent"
-                                            onclick="selectPrio('urgent', '-O9M0Iky4rEYMLq5JwoZ')">
+                                            onclick="selectPrio('#add-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
                                             Urgent<span class="icon-urgent"></span>
                                         </div>
                                         <div class="prio-btn medium active"
-                                            onclick="selectPrio('medium', '-O9M0Iky4rEYMLq5Jwo_')">
+                                            onclick="selectPrio('#add-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
                                             Medium<span class="icon-medium"></span>
                                         </div>
-                                        <div class="prio-btn low" onclick="selectPrio('low', '-O9M0IlWMv7MvM-vtcJ-')">
+                                        <div class="prio-btn low" onclick="selectPrio('#add-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
                                             Low <span class="icon-low"></span>
                                         </div>
                                     </div>
@@ -229,9 +183,9 @@
                                         <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
                                         <div class="subtask-buttons">
                                             <button type="button" class="clear-subtask-btn icon-close"
-                                                onclick="clearSubtaskInput()"></button>
+                                                onclick="clearSubtaskInput('#add-task-form')"></button>
                                             <button type="button" class="add-subtask-btn icon-add"
-                                                onclick="addSubtask()"></button>
+                                                onclick="addSubtask('#add-task-form')"></button>
                                         </div>
                                     </div>
                                     <ul id="subtask-list" class="subtask-list">
@@ -263,7 +217,6 @@
 
                 </div>
             </div>
-
         </main>
     </div>
     <div id="feedback-overlay" class="feedback-overlay">Task added to board<img src="./assets/buttons/Board.svg"
