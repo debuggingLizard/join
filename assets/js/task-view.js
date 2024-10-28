@@ -107,22 +107,22 @@ function editTaskTemplate() {
 
             <label for="due-date" class="date-label">
                 <div>Due date<span class="required">*</span></div>
-                <input type="text" class="picker text-date" id="due-date" name="due-date" value="${taskInformation.date}" onfocus="clearPlaceholder()"
-                    onblur="setPlaceholder()" onchange="formatDate()" required>
+                <input type="text" class="picker text-date" id="due-date" name="due-date" value="${taskInformation.date}" onfocus="clearPlaceholder('#edit-task-form')"
+                    onblur="setPlaceholder('#edit-task-form')" onchange="formatDate('#edit-task-form')" required>
                 <span class="due-date-error error d-none"></span>
             </label>
 
             <label>
                 <div>Prio</div>
                 <div class="prio-options">
-                    <div class="prio-btn urgent ${taskPriority.title === 'Urgent' ? 'active' : ''}" onclick="selectPrio('urgent', '-O9M0Iky4rEYMLq5JwoZ')">
+                    <div class="prio-btn urgent ${taskPriority.title === 'Urgent' ? 'active' : ''}" onclick="selectPrio('#edit-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
                         Urgent<span class="icon-urgent"></span>
                     </div>
                     <div class="prio-btn medium ${taskPriority.title === 'Medium' ? 'active' : ''}"
-                        onclick="selectPrio('medium', '-O9M0Iky4rEYMLq5Jwo_')">
+                        onclick="selectPrio('#edit-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
                         Medium<span class="icon-medium"></span>
                     </div>
-                    <div class="prio-btn low ${taskPriority.title === 'Low' ? 'active' : ''}" onclick="selectPrio('low', '-O9M0IlWMv7MvM-vtcJ-')">
+                    <div class="prio-btn low ${taskPriority.title === 'Low' ? 'active' : ''}" onclick="selectPrio('#edit-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
                         Low <span class="icon-low"></span>
                     </div>
                 </div>
@@ -133,7 +133,7 @@ function editTaskTemplate() {
                 <div>Assigned to</div>
                 <div>
                     <input type="search" name="assignees" id="assignees"
-                        placeholder="Select contacts to assign" onclick="toggleContactDropdown()">
+                        placeholder="Select contacts to assign" onclick="toggleContactDropdown('#edit-task-form')">
                     <div class="assignees-list d-none"></div>
                     <div id="assigned-to" class="assigned-to">
                         ${(assignedUsers).map(user => `
@@ -148,8 +148,8 @@ function editTaskTemplate() {
                 <div class="subtask-row">
                     <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
                     <div class="subtask-buttons">
-                        <span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput()"></span>
-                        <span class="add-subtask-btn icon-add" onclick="addSubtask()"></span>
+                        <span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput('#edit-task-form')"></span>
+                        <span class="add-subtask-btn icon-add" onclick="addSubtask('#edit-task-form')"></span>
                     </div>
                 </div>
                 <ul id="subtask-list" class="subtask-list">
@@ -249,7 +249,10 @@ async function openEditTaskForm() {
     document.getElementById("task-detail").classList.add("d-none");
     document.getElementById("edit-task").classList.remove("d-none");
 
-    renderContacts(taskInformation.users);
+    renderContacts('#edit-task-form', taskInformation.users);
+    initSubtaskFunctions('#edit-task-form');
+    initDateInput('#edit-task-form');
+    initContactDropdownList('#edit-task-form');
 
     editFormEventListener();
 }

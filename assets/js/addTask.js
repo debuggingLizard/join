@@ -10,7 +10,7 @@ let createFormErrors = {
  * Listens for form submission, checks required fields, and creates the task if valid.
  */
 async function renderAddTaskData() {
-  await renderContacts();
+  await renderContacts("#add-task-form");
   await renderCategories();
 
   let formElement = document.getElementById("add-task-form");
@@ -61,20 +61,20 @@ function checkCreateInputValidation(inputName, message) {
 /**
  * Fetches and sorts contacts, renders them in the assignees list, and updates assignments.
  */
-async function renderContacts(assignedUsers = []) {
+async function renderContacts(form, assignedUsers = []) {
   let contacts = await getData("users");
   let sortedContacts = Object.keys(contacts)
     .map((id) => ({ id, ...contacts[id] }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  let assigneesListElement = document.querySelector(".assignees-list");
+  let assigneesListElement = document.querySelector(`${form} .assignees-list`);
 
   assigneesListElement.innerHTML = "";
   sortedContacts.forEach(contact => {
     assigneesListElement.innerHTML += getAssigneesListTemplate(contact, assignedUsers);
   });
 
-  updateAssignedContacts();
+  updateAssignedContacts(form);
 }
 
 /**
@@ -98,11 +98,11 @@ function getAssigneesListTemplate(contact, assignedUsers = []) {
  * Updates assigned contacts display based on selected checkboxes.
  * Adds or removes contact profile images in the assigned contacts section.
  */
-function updateAssignedContacts() {
-  let assigneesListElement = document.querySelector(".assignees-list");
+function updateAssignedContacts(form) {
+  let assigneesListElement = document.querySelector(`${form} .assignees-list`);
   assigneesListElement.addEventListener("change", function (event) {
     const checkbox = event.target;
-    const assignedContactsDiv = document.getElementById("assigned-to");
+    const assignedContactsDiv = document.querySelector(`${form} .assigned-to`);
     if (checkbox.checked) {
       const id = checkbox.dataset.id;
       const color = checkbox.dataset.color;
@@ -154,12 +154,12 @@ async function renderCategories() {
  *
  * @param {string} selected - The class name of the selected priority button.
  */
-function selectPrio(selected, id) {
-  document.querySelectorAll(".prio-btn").forEach((button) => {
+function selectPrio(formId, selected, id) {
+  document.querySelectorAll(`${formId} .prio-btn`).forEach((button) => {
     button.classList.remove("active");
   });
-  document.querySelector(`.prio-btn.${selected}`).classList.add("active");
-  document.getElementById("selectedPrio").value = id;
+  document.querySelector(`${formId} .prio-btn.${selected}`).classList.add("active");
+  document.querySelector(`${formId} *[name = prio]`).value = id;
 }
 
 /**
@@ -170,15 +170,43 @@ function selectPrio(selected, id) {
  * - Assignees list can be close by clicking outside of list/input
  */
 function initEventListenerAddTask() {
-  let dueDateInput = document.getElementById("due-date");
+  initDateInput('#add-task-form');
+  initSubtaskFunctions('#add-task-form');
+
+  let formFields = document.querySelectorAll(
+    "input[required], select[required], textarea[required]"
+  );
+  formFields.forEach((field) => {
+    field.addEventListener("input", checkRequiredFields);
+  });
+  checkRequiredFields();
+
+  initContactDropdownList('#add-task-form');
+}
+
+function initDateInput(formId) {
+  let dueDateInput = document.querySelector(`${formId} *[name = due-date]`);
   let today = new Date().toISOString().split("T")[0];
   if (dueDateInput) {
     dueDateInput.setAttribute("min", today);
   }
-  let subtaskInput = document.getElementById("subtasks");
-  let clearBtn = document.querySelector(".clear-subtask-btn");
-  let addBtn = document.querySelector(".add-subtask-btn");
-  let subtaskList = document.getElementById("subtask-list");
+}
+
+function initContactDropdownList(formId) {
+  document.addEventListener("click", function (event) {
+    const input = document.querySelector(`${formId} *[name = assignees]`);
+    const dropdown = document.querySelector(`${formId} .assignees-list`);
+    if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.add("d-none");
+    }
+  });
+}
+
+function initSubtaskFunctions(formId) {
+  let subtaskInput = document.querySelector(`${formId} *[name = subtasks]`);
+  let clearSubtaskBtn = document.querySelector(`${formId} .clear-subtask-btn`);
+  let addBtn = document.querySelector(`${formId} .add-subtask-btn`);
+  let subtaskList = document.querySelector(`${formId} .subtask-list`);
   if (subtaskInput) {
     subtaskInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
@@ -189,19 +217,19 @@ function initEventListenerAddTask() {
 
     subtaskInput.addEventListener("input", function () {
       if (subtaskInput.value.length > 0) {
-        clearBtn.style.display = "flex";
+        clearSubtaskBtn.style.display = "flex";
         addBtn.classList.remove("icon-add");
         addBtn.classList.add("icon-check");
       } else {
-        clearBtn.style.display = "none";
+        clearSubtaskBtn.style.display = "none";
         addBtn.classList.remove("icon-check");
         addBtn.classList.add("icon-add");
       }
     });
 
-    clearBtn.addEventListener("click", function () {
+    clearSubtaskBtn.addEventListener("click", function () {
       subtaskInput.value = "";
-      clearBtn.style.display = "none";
+      clearSubtaskBtn.style.display = "none";
       addBtn.classList.remove("icon-check");
       addBtn.classList.add("icon-add");
     });
@@ -214,25 +242,11 @@ function initEventListenerAddTask() {
       }
     });
   }
-  let formFields = document.querySelectorAll(
-    "input[required], select[required], textarea[required]"
-  );
-  formFields.forEach((field) => {
-    field.addEventListener("input", checkRequiredFields);
-  });
-  checkRequiredFields();
-  document.addEventListener("click", function (event) {
-    const input = document.getElementById("assignees");
-    const dropdown = document.querySelector(".assignees-list");
-    if (!input.contains(event.target) && !dropdown.contains(event.target)) {
-      dropdown.classList.add("d-none");
-    }
-  });
 }
 
-function toggleContactDropdown() {
-  document.querySelector(".assignees-list").classList.toggle("d-none");
-  document.querySelector('.assign-label').classList.toggle('open');
+function toggleContactDropdown(formId) {
+  document.querySelector(`${formId} .assignees-list`).classList.toggle("d-none");
+  document.querySelector(`${formId} .assign-label`).classList.toggle('open');
 }
 
 function categoryDropDown() {
@@ -242,13 +256,13 @@ function categoryDropDown() {
 /**
  * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button.
  */
-function addSubtask() {
-  let subtaskInput = document.getElementById("subtasks");
+function addSubtask(formId) {
+  let subtaskInput = document.querySelector(`${formId} *[name = subtasks]`);
   let subtaskValue = subtaskInput.value.trim();
-  let addBtn = document.querySelector(".add-subtask-btn");
-  let clearBtn = document.querySelector(".clear-subtask-btn");
+  let addBtn = document.querySelector(`${formId} .add-subtask-btn`);
+  let clearBtn = document.querySelector(`${formId} .clear-subtask-btn`);
   if (subtaskValue) {
-    let subtaskList = document.getElementById("subtask-list");
+    let subtaskList = document.querySelector(`${formId} .subtask-list`);
     let listItem = document.createElement("li");
     listItem.classList.add("subtask-item");
     listItem.innerHTML = `
@@ -329,8 +343,8 @@ function deleteSubtask(button) {
 /**
  * Clears the subtask input field.
  */
-function clearSubtaskInput() {
-  let subtaskInput = document.getElementById("subtasks");
+function clearSubtaskInput(formId) {
+  let subtaskInput = document.querySelector(`${formId} *[name = subtasks]`);
   subtaskInput.value = "";
 }
 
@@ -348,7 +362,7 @@ function checkRequiredFields() {
     }
   });
 
-  const dateInput = document.getElementById("due-date");
+  const dateInput = document.querySelector("#add-task-form *[name = due-date]");
   if (dateInput.value === "dd/mm/yyyy") {
     allFilled = false;
   }
@@ -362,20 +376,16 @@ function checkRequiredFields() {
  * Resets the form and posts the task data to storage.
  */
 async function createTask() {
-  let title = document.getElementById("title").value;
-  let description = document.getElementById("description").value || "";
-  let assignedSpans = document
-    .getElementById("assigned-to")
-    .querySelectorAll("span");
+  let title = document.querySelector("#add-task-form *[name = title]").value;
+  let description = document.querySelector("#add-task-form *[name = description]").value || '';
+  let assignedSpans = document.querySelector("#add-task-form .assigned-to").querySelectorAll("span");
   let users = Array.from(assignedSpans).map((span) => span.id);
-  let date = document.getElementById("due-date").value;
-  let priority = document.getElementById("selectedPrio").value;
+  let date = document.querySelector("#add-task-form *[name = due-date]").value;
+  let priority = document.querySelector("#add-task-form *[name = prio]").value;
   let category = document.getElementById("category").value;
 
-  let subtasks = Array.from(
-    document.getElementById("subtask-list").children
-  ).map((li) => ({
-    done: false,
+  let subtasks = Array.from(document.querySelector("#add-task-form .subtask-list").children).map((li) => ({
+    done: li.querySelector(".subtask-title").getAttribute('status') == 'true' ? true : false,
     title: li.querySelector(".subtask-title").textContent,
   }));
   let status = addTaskstatus;
@@ -401,18 +411,18 @@ async function createTask() {
  * Resets the add task form, clearing inputs, unchecking checkboxes, removing validation errors, and setting defaults.
  */
 function resetAddTask() {
-  document.getElementById("title").value = "";
+  document.querySelector("#add-task-form *[name = title]").value = "";
   hideInputValidationError("#add-task-form", "title");
   createFormErrors["title"] = 0;
 
-  document.getElementById("description").value = "";
+  document.querySelector("#add-task-form *[name = description]").value = "";
   let checkboxes = document.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach((checkbox) => {
     checkbox.checked = false;
     styleLabel(checkbox);
   });
-  document.getElementById("assigned-to").innerHTML = "";
-  document.getElementById("due-date").value = "";
+  document.querySelector("#add-task-form .assigned-to").innerHTML = "";
+  document.querySelector("#add-task-form *[name = due-date]").value = "";
   hideInputValidationError("#add-task-form", "due-date");
   createFormErrors["dueDate"] = 0;
 
@@ -425,8 +435,8 @@ function resetAddTask() {
   hideInputValidationError("#add-task-form", "category");
   createFormErrors["category"] = 0;
 
-  document.getElementById("subtask-list").innerHTML = "";
-  setPlaceholder();
+  document.querySelector("#add-task-form .subtask-list").innerHTML = "";
+  setPlaceholder("#add-task-form");
   let createTaskBtn = document.getElementById("createTaskBtn");
   createTaskBtn.disabled = true;
 }
@@ -434,8 +444,8 @@ function resetAddTask() {
 /**
  * Sets a placeholder for the due date input if it is empty and switches input type to text.
  */
-function setPlaceholder() {
-  const dateInput = document.getElementById("due-date");
+function setPlaceholder(formId) {
+  const dateInput = document.querySelector(`${formId} *[name = due-date]`);
   dateInput.setAttribute("type", "text");
   if (dateInput.value === "") {
     dateInput.value = "dd/mm/yyyy"; // Placeholder text
@@ -446,18 +456,27 @@ function setPlaceholder() {
 /**
  * Clears the placeholder for the due date input and switches type back to date, showing the date picker.
  */
-function clearPlaceholder() {
-  const dateInput = document.getElementById("due-date");
+function clearPlaceholder(formId) {
+  const dateInput = document.querySelector(`${formId} *[name = due-date]`);
+  let newValue = '';
+  if (dateInput.value !== "dd/mm/yyyy") {
+    newValue = convertDateFormatWithDash(dateInput.value);
+    dateInput.value = '';
+  }
+
   dateInput.setAttribute("type", "date"); // Switch back to date type
   dateInput.classList.remove("text-date");
-  dateInput.showPicker();
+  setTimeout(() => {
+    dateInput.value = newValue;
+    dateInput.showPicker();
+  }, 200);
 }
 
 /**
  * Formats the selected date as "dd/mm/yyyy" and switches input type to text for display.
  */
-function formatDate() {
-  const dateInput = document.getElementById("due-date");
+function formatDate(formId) {
+  const dateInput = document.querySelector(`${formId} *[name = due-date]`);
   const selectedDate = new Date(dateInput.value);
   const day = String(selectedDate.getDate()).padStart(2, "0");
   const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
@@ -467,6 +486,11 @@ function formatDate() {
   dateInput.classList.add("text-date");
   dateInput.blur();
   dateInput.value = `${day}/${month}/${year}`;
+}
+
+function convertDateFormatWithDash(dateString) {
+  const [day, month, year] = dateString.split("/");
+  return `${year}-${month}-${day}`;
 }
 
 /**
