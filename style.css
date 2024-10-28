@@ -247,7 +247,7 @@ select.input-error {
 }
 
 /* Help Page */
-.help-container {
+.info-pages-container {
     padding: 60px;
     display: flex;
     flex-direction: column;
@@ -257,29 +257,29 @@ select.input-error {
     max-width: 1440px;
 }
 
-.help-container h3 {
+.info-pages-container h3 {
     padding-top: 12px;
 }
 
-.help-container .blue-text,
-.help-container a {
+.info-pages-container .blue-text,
+.info-pages-container a {
     color: #29ABE2;
 }
 
-.help-container a:hover {
+.info-pages-container a:hover {
     color: #00BEE8;
 }
 
-.help-container .go-back {
+.info-pages-container .go-back {
     width: 32px;
     position: sticky;
-    top: 0;
+    top: 24px;
     margin-left: auto;
     cursor: pointer;
     border-radius: 50%;
 }
 
-.help-container .go-back:hover {
+.info-pages-container .go-back:hover {
     background-color: #ebebeb;
 }
 
@@ -290,6 +290,7 @@ ol {
     font-weight: 700;
 }
 
+ul,
 ol li {
     margin-bottom: 10px;
     padding-left: 20px;

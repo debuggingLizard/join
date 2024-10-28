@@ -27,8 +27,8 @@ function getSidebarTemplate() {
             <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/Contacts.svg" alt="Contacts"><span>Contacts</span></a>
         </nav>
         <footer>
-            <a tabindex="0" href="#">Privacy Policy</a>
-            <a tabindex="0" href="#">Legal notice</a>
+            <a tabindex="0" href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
+            <a tabindex="0" href="legal-notice.html"onclick="saveCurrentPage()">Legal notice</a>
         </footer>
     `;
 }
@@ -48,8 +48,8 @@ function getHeaderTemplate() {
             </div>
             <div id="user-info-links" class="user-info-links d-none">
                 <a href="help.html" onclick="saveCurrentPage()" class="user-info-links-help">Help</a>
-                <a href="">Legal Notice</a>
-                <a href="">Privacy Policy</a>
+                <a href="legal-notice.html" onclick="saveCurrentPage()">Legal Notice</a>
+                <a href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
                 <a href="">Log Out</a>
             </div>
         </div>
