@@ -66,7 +66,7 @@
         display: block;
     }
 
-    .help-container {
+    .info-pages-container {
         padding: 60px 40px;
     }
 }
@@ -84,7 +84,7 @@
         right: 16px;
     }
 
-    .help-container {
+    .info-pages-container {
         padding: 60px 16px;
     }
 }
