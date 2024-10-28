@@ -263,6 +263,13 @@ select.input-error {
     color: #29ABE2;
 }
 
+.help-container .go-back {
+    width: 32px;
+    position: sticky;
+    top: 0;
+    margin-left: auto;
+}
+
 ol {
     list-style-type: decimal;
     margin: 0;
