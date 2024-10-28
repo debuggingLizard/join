@@ -217,22 +217,7 @@
     min-width: 370px;
 }
 
-@media (max-width: 1000px) {
-    .form-column.left {
-        min-width: 300px;
-    }
-    
-    .form-column.right {
-        min-width: 300px;
-    }
-}
-
 @media (max-width: 800px) {
-    .add-task-container{
-        border-radius: 20px 0 0 20px;
-        overflow-y: scroll;
-        max-height: 600px;
-    }
     .add-task-container::-webkit-scrollbar {
         width: 7px;
     }
