@@ -253,6 +253,8 @@ select.input-error {
     flex-direction: column;
     gap: 16px;
     position: relative;
+    width:100%;
+    max-width: 1440px;
 }
 
 .help-container h3 {

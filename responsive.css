@@ -65,6 +65,10 @@
     .user-info-links-help {
         display: block;
     }
+
+    .help-container {
+        padding: 60px 40px;
+    }
 }
 
 @media (max-width: 360px) {
@@ -78,5 +82,9 @@
 
     .user-info-links {
         right: 16px;
+    }
+
+    .help-container {
+        padding: 60px 16px;
     }
 }
