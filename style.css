@@ -177,11 +177,13 @@ footer a:focus {
     overflow: hidden;
 }
 
-.user-info-links p {
+.user-info-links a {
     padding: 18px 26px;
+    text-decoration: none;
+    color: #CDCDCD;
 }
 
-.user-info-links p:hover {
+.user-info-links a:hover {
     background-color: #334969;
 }
 
@@ -243,3 +245,20 @@ select.input-error {
     margin-left: 10px;
     vertical-align: middle;
 }
+
+/* Help Page */
+.help-container {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+        ol {
+            list-style-type: decimal; /* Stellt sicher, dass eine nummerierte Liste angezeigt wird */
+            margin: 0;
+            padding-left: 40px;
+        }
+        ol li {
+            margin-bottom: 10px;
+        }
+
