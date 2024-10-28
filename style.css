@@ -177,11 +177,13 @@ footer a:focus {
     overflow: hidden;
 }
 
-.user-info-links p {
+.user-info-links a {
     padding: 18px 26px;
+    text-decoration: none;
+    color: #CDCDCD;
 }
 
-.user-info-links p:hover {
+.user-info-links a:hover {
     background-color: #334969;
 }
 
@@ -242,4 +244,55 @@ select.input-error {
 .feedback-overlay img {
     margin-left: 10px;
     vertical-align: middle;
+}
+
+/* Help Page */
+.help-container {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.help-container h3 {
+    padding-top: 12px;
+}
+
+.help-container .blue-text,
+.help-container a {
+    color: #29ABE2;
+}
+
+.help-container a:hover {
+    color: #00BEE8;
+}
+
+.help-container .go-back {
+    width: 32px;
+    position: sticky;
+    top: 0;
+    margin-left: auto;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.help-container .go-back:hover {
+    background-color: #ebebeb;
+}
+
+ol {
+    list-style-type: decimal;
+    margin: 0;
+    padding-left: 20px;
+    font-weight: 700;
+}
+
+ol li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+ol li span {
+    font-weight: 400;
 }
