@@ -259,8 +259,13 @@ select.input-error {
     padding-top: 12px;
 }
 
-.help-container .blue-text {
+.help-container .blue-text,
+.help-container a {
     color: #29ABE2;
+}
+
+.help-container a:hover {
+    color: #00BEE8;
 }
 
 .help-container .go-back {
