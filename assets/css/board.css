@@ -3,6 +3,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 60px 60px;
+    width: 100%;
+    max-width: 1440px;
 }
 
 .right-board-header {
@@ -98,6 +100,8 @@
     gap: 30px;
     color: #42526E;
     font-weight: bold;
+    width: 100%;
+    max-width: 1440px;
 }
 
 .boards {
@@ -215,24 +219,6 @@
 
 .form-column.right {
     min-width: 370px;
-}
-
-@media (max-width: 800px) {
-    .add-task-container::-webkit-scrollbar {
-        width: 7px;
-    }
-    
-    .add-task-container::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-    
-    .add-task-container::-webkit-scrollbar-thumb {
-        background: #2A3647;
-    }
-    
-    .add-task-container::-webkit-scrollbar-thumb:hover {
-        background: #2A3647;
-    }
 }
 
 .detail-priority-container {
