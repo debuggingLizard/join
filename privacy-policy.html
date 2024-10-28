@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task | JOIN</title>
+    <link rel="shortcut icon" href="./assets/img/JoinLogo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/css/icons/icons.css">
+    <link rel="stylesheet" href="./responsive.css">
+    <link rel="stylesheet" href="./assets/css/addTask.css">
+    <link rel="stylesheet" href="./assets/css/addTask-responsive.css">
+    <script src="./script.js"></script>
+    <script src="./assets/js/firebase-connect.js"></script>
+    <script src="./assets/js/helper-functions.js"></script>
+    <script src="./assets/js/addTask.js"></script>
+</head>
+
+<body
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task'); initEventListenerAddTask(); renderAddTaskData(); setPlaceholder();">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+    </aside>
+
+    <!-- Main Content Bereich -->
+    <div class="container">
+        <!-- HEADER -->
+        <header id="header" class="header-wrapper">
+        </header>
+
+        <main>Privacy Policy</main>

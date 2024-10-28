@@ -27,8 +27,8 @@ function getSidebarTemplate() {
             <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/Contacts.svg" alt="Contacts"><span>Contacts</span></a>
         </nav>
         <footer>
-            <a tabindex="0" href="#">Privacy Policy</a>
-            <a tabindex="0" href="#">Legal notice</a>
+            <a tabindex="0" href="./privacy-policy.html">Privacy Policy</a>
+            <a tabindex="0" href="./legal-notice.html">Legal notice</a>
         </footer>
     `;
 }
