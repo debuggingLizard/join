@@ -107,7 +107,6 @@
 
     .add-task-container{
         border-radius: 20px;
-        max-height: 600px;
     }
 
     #add-task-title {
@@ -116,34 +115,13 @@
 
     .form-row {
         max-height: calc(600px - 84.4px - 90.8px);
-        overflow-y: scroll;
+        overflow-y: auto;
         justify-content: flex-start;
         padding-right: 4px;
     }
 
-    .form-row::-webkit-scrollbar {
-        width: 4px;
-    }
-    
-    .form-row::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-    
-    .form-row::-webkit-scrollbar-thumb {
-        background: #A8A8A8;
-        border-radius: 8px;
-    }
-    
-    .form-row::-webkit-scrollbar-thumb:hover {
-        background: #999999;
-    }
-
     .form-actions {
         padding-top: 20px;
-    }
-
-    .add-task-button-wrapper {
-        background-color: #ffffff;
     }
 }
 
@@ -151,6 +129,9 @@
     .board-tasks .task-view {
         flex: 1 1 calc(45%);
         max-width: 45%;
+    }
+    .task-detail h1 {
+        font-size: 40px;
     }
 }
 
@@ -163,15 +144,19 @@
         flex: 1 1 calc(90%);
         max-width: 90%;
     }
-
-    .add-task-form {
-        padding: 0 20px 0 !important;
-    }
 }
 
 @media (max-width: 360px) {
     .form-column.left,
     .form-column.right {
         min-width: 260px;
+    }
+
+    .task-detail {
+        padding: 30px 15px;
+    }
+
+    .edit-task {
+        padding: 30px 10px;
     }
 }

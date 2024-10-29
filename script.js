@@ -27,8 +27,8 @@ function getSidebarTemplate() {
             <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/Contacts.svg" alt="Contacts"><span>Contacts</span></a>
         </nav>
         <footer>
-            <a tabindex="0" href="#">Privacy Policy</a>
-            <a tabindex="0" href="#">Legal notice</a>
+            <a tabindex="0" href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
+            <a tabindex="0" href="legal-notice.html"onclick="saveCurrentPage()">Legal notice</a>
         </footer>
     `;
 }
@@ -43,14 +43,14 @@ function getHeaderTemplate() {
             <img class="header-responsive-logo" src="./assets/img/JoinLogoResponsive.svg" alt="">
             <h2>Kanban Project Management Tool</h2>
             <div class="user-info">
-                <a href="#" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>
+                <a href="help.html" onclick="saveCurrentPage()" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>
                 <div class="user-info-profile" onclick="openHeaderProfileInfo()">SM</div>
             </div>
             <div id="user-info-links" class="user-info-links d-none">
-                <p class="user-info-links-help">Help</p>
-                <p>Legal Notice</p>
-                <p>Privacy Policy</p>
-                <p>Log Out</p>
+                <a href="help.html" onclick="saveCurrentPage()" class="user-info-links-help">Help</a>
+                <a href="legal-notice.html" onclick="saveCurrentPage()">Legal Notice</a>
+                <a href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
+                <a href="">Log Out</a>
             </div>
         </div>
     `;
@@ -82,4 +82,17 @@ function showFeedbackOverlay() {
   setTimeout(() => {
     overlay.classList.remove("show");
   }, 1000);
+}
+
+function saveCurrentPage() {
+  sessionStorage.setItem('previousPage', window.location.href);
+}
+
+function goBack() {
+  let previousPage = sessionStorage.getItem('previousPage');
+  if (previousPage) {
+    window.location.href = previousPage;
+  } else {
+    window.history.back();
+  }
 }

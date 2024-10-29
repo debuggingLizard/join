@@ -1,0 +1,388 @@
+.task-detail {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    height: 90vh;
+    width: 525px;
+    margin: 10px;
+    padding: 30px 20px;
+    border-radius: 26px;
+    position: relative;
+    left: 100%;
+    transform: translateX(100%);
+    transition: all 0.7s ease-in-out;
+    z-index: 1001;
+}
+
+.task-detail.show {
+    left: 0;
+    transform: translateX(0);
+}
+
+.task-detail .task-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0 20px;
+}
+
+.close-btn-task-detail {
+    cursor: pointer;
+}
+
+.task-detail .userStory {
+    margin: 0;
+}
+
+.task-detail .task-detail-body{
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    height: 87%;
+}
+
+.task-detail h1 {
+    font-size: 61px;
+}
+
+.task-detail p {
+    font-size: 18px;
+    margin: 30px 0;
+}
+
+.task-detail h1+p {
+    margin-bottom: 5px;
+}
+
+.task-term {
+    display: flex;
+    gap: 30px;
+    margin-bottom: -30px;
+}
+
+.contributor-placement {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: -30px 0px 5px;
+}
+
+.overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background: rgba(0, 0, 0, 0.508);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.edit-task-subtask-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.subtask-checkbox {
+    margin: 2px 30px 30px;
+}
+
+.checkbox-svg {
+    margin-right: 15px;
+}
+
+.checkbox-img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+.checkbox-tick-img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+.check-subtask {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.subtask p {
+    margin-top: unset;
+}
+
+.task-edit-delete {
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+    padding: 10px 0;
+    position: sticky;
+    bottom: 0;
+    background: white;
+}
+
+.task-edit-delete-btn {
+    border: unset;
+    background-color: unset;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+}
+
+.task-edit-delete-btn .icon{
+    line-height: 1;
+}
+
+.task-edit-delete-btn:hover {
+    cursor: pointer;
+    color: #29ABE2;
+}
+
+.task-edit-delete.confirm-delete {
+    justify-content: space-between;
+}
+
+.edit-task {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    height: 90vh;
+    width: 525px;
+    margin: 10px;
+    padding: 30px 20px;
+    border-radius: 26px;
+    position: relative;
+    left: 100%;
+    transform: translateX(100%);
+    transition: all 0.7s ease-in-out;
+    z-index: 1001;
+}
+
+.edit-task.show {
+    left: 0;
+    transform: translateX(0);
+}
+
+.edit-task-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 10px 0 20px;
+}
+
+.edit-task .edit-task-form-column {
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    padding-right: 10px;
+}
+
+.priority-assignment p {
+    margin: 16px 0;
+}
+
+.edit-task-priority {
+    margin: 0px 30px 0;
+}
+
+.edit-task-prio-options {
+    display: flex !important;
+    gap: 70px !important;
+}
+
+.assigned-contributors-to-task {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.edit-assigned-contributors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: -15px;
+    flex-direction: column;
+}
+
+.dropdown-container {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+}
+
+.dropdown-selected {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.custom-dropdown::after {
+    content: '▿';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #333;
+    pointer-events: none;
+}
+
+.assigned-contributors-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.assigned-contributors-wrapper::after {
+    content: '▿';
+    font-size: 16px;
+    color: #333;
+    position: absolute;
+    right: 20px;
+    top: 20%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.assigned-label {
+    margin: 0px 0px 10px;
+}
+
+.assigned-contributors-to-task select {
+    width: 100%;
+}
+
+.assigned-contributors-to-task select:focus {
+    outline: none;
+    border-color: #29abe2;
+}
+
+.edit-assigned-contributors .contributor {
+    margin: 10px 2px;
+}
+
+.subtasks-label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.subtask-dot {
+    display: inline-block;
+    height: 5px;
+    width: 5px;
+    background-color: rgb(23, 16, 16);
+    border-radius: 50%;
+    margin: 2px 15px;
+}
+
+.edit-task-subtask-listing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.edit-task-subtask-listing:hover {
+    background-color: #f0f0f0;
+}
+
+.edit-task-subtask-listing-icons {
+    display: none;
+}
+
+.edit-task-subtask-listing:hover .edit-task-subtask-listing-icons {
+    display: flex;
+    gap: 10px;
+    margin-right: 12px;
+}
+
+.edit-task-subtask-save-icons {
+    display: flex;
+    gap: 10px;
+    margin-right: 12px;
+}
+
+.edit-subtask-input {
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-bottom: 2px solid blue;
+    margin-right: 10px;
+}
+
+.edit-task-subtask-listing-icons img {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.edit-task-subtask-listing-wrapper {
+    position: relative;
+}
+
+.edit-task-btn {
+    padding: 8px 8px;
+    background-color: #2A3647;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-task-btn:hover {
+    border: 1px solid #29abe2;
+    background-color: #29abe2;
+}
+
+.edit-task-confirm-btn {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 20px 10px;
+    background-color: white;
+    position: sticky;
+    bottom: 0;
+}

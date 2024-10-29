@@ -9,7 +9,11 @@ let showNewTask;
  */
 async function loadTasksFromDatabase() {
   tasks = await getData("tasks");
-  renderBoards();
+}
+
+async function renderAllBoards() {
+  await loadTasksFromDatabase();
+  await renderBoards();
 }
 
 /**
@@ -116,7 +120,7 @@ async function taskTemplate(taskId, taskDetail) {
   let categoryDetail = await getData("categories/" + taskDetail.category);
   let priorityDetail = await getData("priorities/" + taskDetail.priority);
 
-  return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail()">
+  return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail('${taskId}')">
                       <div class="task-view-top">
                         <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
                         <div class="task-description">
@@ -188,25 +192,23 @@ function openAddTask(status) {
  * Adds a click event to close and reset the add task overlay.
  */
 function eventListenerCloseAddTask() {
-  const overlay = document.getElementById("add-task-overlay");
+  const overlay = document.getElementById('add-task-overlay');
   const closeTrigger = function (e) {
     if (e.target !== e.currentTarget) return;
     closeAddTask();
     resetAddTask();
-    overlay.removeEventListener("click", closeTrigger);
+    overlay.removeEventListener('click', closeTrigger);
   };
-  overlay.addEventListener("click", closeTrigger);
+  overlay.addEventListener('click', closeTrigger);
 }
 
 /**
  * Closes the add task overlay by resetting styles.
  */
 function closeAddTask() {
-  document.getElementById("add-task-overlay").style.backgroundColor =
-    "rgb(0 0 0 / 0%)";
-  document.getElementById("add-task-container").style.transform =
-    "translateX(200%)";
-  document.getElementById("add-task-overlay").style.zIndex = -1;
+  document.getElementById('add-task-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
+  document.getElementById('add-task-container').style.transform = 'translateX(200%)';
+  document.getElementById('add-task-overlay').style.zIndex = -1;
 }
 
 /**
@@ -221,7 +223,7 @@ async function renderTaskAfterCreateTask() {
  * Fetches tasks, filters, and renders the board for the new task.
  */
 async function renderBoardForNewTask() {
-  tasks = await getData("tasks");
+  await loadTasksFromDatabase();
   filterTasks = Object.entries(tasks);
 
   await renderTasks(showNewTask + "-tasks", getTasksByStatus(showNewTask));

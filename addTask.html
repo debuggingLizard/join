@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./assets/css/icons/icons.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
+    <link rel="stylesheet" href="./assets/css/assignees-subtasks.css">
     <link rel="stylesheet" href="./assets/css/addTask-responsive.css">
     <script src="./script.js"></script>
     <script src="./assets/js/firebase-connect.js"></script>
@@ -18,7 +19,7 @@
 </head>
 
 <body
-    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task'); initEventListenerAddTask(); renderAddTaskData(); setPlaceholder();">
+    onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-task'); initEventListenerAddTask(); renderAddTaskData(); setPlaceholder('#add-task-form');">
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
@@ -51,7 +52,7 @@
                             <div>Assigned to</div>
                             <div>
                                 <input type="search" name="assignees" id="assignees"
-                                    placeholder="Select contacts to assign" onclick="toggleContactDropdown()">
+                                    placeholder="Select contacts to assign" onclick="toggleContactDropdown('#add-task-form')">
                                 <div id="assignees-list" class="assignees-list d-none"></div>
                                 <div id="assigned-to" class="assigned-to"></div>
                             </div>
@@ -63,8 +64,8 @@
                         <!-- due date -->
                         <label for="due-date" class="date-label">
                             <div>Due date<span class="required">*</span></div>
-                            <input type="date" class="picker" id="due-date" name="due-date" onfocus="clearPlaceholder()"
-                                onblur="setPlaceholder()" onchange="formatDate()" required>
+                            <input type="date" class="picker" id="due-date" name="due-date" onfocus="clearPlaceholder('#add-task-form')"
+                                onblur="setPlaceholder('#add-task-form')" onchange="formatDate('#add-task-form')" required>
                             <span class="due-date-error error d-none"></span>
                         </label>
 
@@ -73,14 +74,14 @@
                             <label>
                                 <div>Prio</div>
                                 <div class="prio-options">
-                                    <div class="prio-btn urgent" onclick="selectPrio('urgent', '-O9M0Iky4rEYMLq5JwoZ')">
+                                    <div class="prio-btn urgent" onclick="selectPrio('#add-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
                                         Urgent<span class="icon-urgent"></span>
                                     </div>
                                     <div class="prio-btn medium active"
-                                        onclick="selectPrio('medium', '-O9M0Iky4rEYMLq5Jwo_')">
+                                        onclick="selectPrio('#add-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
                                         Medium<span class="icon-medium"></span>
                                     </div>
-                                    <div class="prio-btn low" onclick="selectPrio('low', '-O9M0IlWMv7MvM-vtcJ-')">
+                                    <div class="prio-btn low" onclick="selectPrio('#add-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
                                         Low <span class="icon-low"></span>
                                     </div>
                                 </div>
@@ -103,8 +104,8 @@
                                 <div class="subtask-row">
                                     <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
                                     <div class="subtask-buttons">
-                                        <span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput()"></span>
-                                        <span class="add-subtask-btn icon-add" onclick="addSubtask()"></span>
+                                        <span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput('#add-task-form')"></span>
+                                        <span class="add-subtask-btn icon-add" onclick="addSubtask('#add-task-form')"></span>
                                     </div>
                                 </div>
                                 <ul id="subtask-list" class="subtask-list">
