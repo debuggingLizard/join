@@ -115,26 +115,9 @@
 
     .form-row {
         max-height: calc(600px - 84.4px - 90.8px);
-        overflow-y: scroll;
+        overflow-y: auto;
         justify-content: flex-start;
         padding-right: 4px;
-    }
-
-    .form-row::-webkit-scrollbar {
-        width: 4px;
-    }
-    
-    .form-row::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-    
-    .form-row::-webkit-scrollbar-thumb {
-        background: #A8A8A8;
-        border-radius: 8px;
-    }
-    
-    .form-row::-webkit-scrollbar-thumb:hover {
-        background: #999999;
     }
 
     .form-actions {

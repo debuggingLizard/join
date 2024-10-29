@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="./assets/css/icons/icons.css">
     <link rel="stylesheet" href="./responsive.css">
     <link rel="stylesheet" href="./assets/css/board.css">
-    <link rel="stylesheet" href="./assets/css/task.css">
+    <link rel="stylesheet" href="./assets/css/task-detail-edit.css">
     <link rel="stylesheet" href="./assets/css/addTask.css">
+    <link rel="stylesheet" href="./assets/css/assignees-subtasks.css">
     <link rel="stylesheet" href="./assets/css/addTask-responsive.css">
     <link rel="stylesheet" href="./assets/css/board-responsive.css">
     <script src="script.js"></script>
@@ -96,7 +97,7 @@
 
                 </div>
                 <div class="edit-task d-none" id="edit-task" onclick="event.stopPropagation();">
-                    
+
                 </div>
             </div>
 
@@ -106,7 +107,6 @@
                     <span class="close-add-task icon-close" onclick="closeAddTask(); resetAddTask()"></span>
                     <h2 id="add-task-title">Add Task</h2>
 
-                    <!-- <form id="add-task-form" class="add-task-form" onsubmit="event.preventDefault(); createAndRenderTask()"> -->
                     <form id="add-task-form" class="add-task-form" novalidate>
                         <div class="form-row">
                             <!-- Left column -->
@@ -129,7 +129,8 @@
                                     </div>
                                     <div>
                                         <input type="search" name="assignees" id="assignees"
-                                            placeholder="Select contacts to assign" onclick="toggleContactDropdown('#add-task-form')">
+                                            placeholder="Select contacts to assign"
+                                            onclick="toggleContactDropdown('#add-task-form')">
                                         <div id="assignees-list" class="assignees-list d-none"></div>
                                         <div id="assigned-to" class="assigned-to"></div>
                                     </div>
@@ -143,8 +144,9 @@
                                 <label for="due-date" class="date-label">
                                     <div>Due date<span class="required">*</span></div>
                                     <input type="date" class="picker" id="due-date" name="due-date"
-                                        onfocus="clearPlaceholder('#add-task-form')" onblur="setPlaceholder('#add-task-form')" onchange="formatDate('#add-task-form')"
-                                        required>
+                                        onfocus="clearPlaceholder('#add-task-form')"
+                                        onblur="setPlaceholder('#add-task-form')"
+                                        onchange="formatDate('#add-task-form')" required>
                                     <span class="due-date-error error d-none"></span>
                                 </label>
 
@@ -160,7 +162,8 @@
                                             onclick="selectPrio('#add-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
                                             Medium<span class="icon-medium"></span>
                                         </div>
-                                        <div class="prio-btn low" onclick="selectPrio('#add-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
+                                        <div class="prio-btn low"
+                                            onclick="selectPrio('#add-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
                                             Low <span class="icon-low"></span>
                                         </div>
                                     </div>

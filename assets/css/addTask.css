@@ -1,4 +1,3 @@
-/* Basic Structure */
 .add-task-content {
     display: flex;
     flex-direction: column;
@@ -17,14 +16,13 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 0px 60px 32px;
-    width:100%;
+    width: 100%;
     max-width: 1440px;
 }
 
 .form-row {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
 }
 
 .form-column {
@@ -35,14 +33,12 @@
 }
 
 .form-column.left {
-    padding-right: 40px;
+    padding-right: 24px;
     border-right: solid 1px #D1D1D1;
 }
 
 .form-column.right {
     padding-left: 24px;
-    display: flex;
-    flex-direction: column;
 }
 
 .form-column .right-compact {
@@ -108,7 +104,6 @@ select {
     padding-right: 30px;
 }
 
-/* Remove the dropdown arrow in Firefox */
 select::-ms-expand {
     display: none;
 }
@@ -156,7 +151,6 @@ select::-ms-expand {
 .assign-label:hover::after {
     border-radius: 50%;
     background: #d1d1d181;
-
 }
 
 textarea {
@@ -224,7 +218,6 @@ label {
 .prio-btn.low {
     background-color: white;
     color: black;
-    min-width: 110px;
 }
 
 .prio-btn.urgent.active,
@@ -250,6 +243,18 @@ label {
 .prio-btn.low.active span {
     font-weight: 700;
     color: white;
+}
+
+.prio-btn.urgent.active {
+    background-color: #FF3D00;
+}
+
+.prio-btn.medium.active {
+    background-color: #FFA800;
+}
+
+.prio-btn.low.active {
+    background-color: #7AE229;
 }
 
 .form-actions {
@@ -335,8 +340,6 @@ label {
 .create-task-btn:disabled:hover {
     box-shadow: none;
 }
-
-
 
 .required-text.mobile {
     display: none;

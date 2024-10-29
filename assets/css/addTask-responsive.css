@@ -4,7 +4,7 @@
     }
 
     .add-task-content {
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     .form-row {
@@ -75,9 +75,5 @@
 
     .prio-options {
         gap: 4px;
-    }
-
-    .prio-btn {
-        min-width: 50px !important;
     }
 }
