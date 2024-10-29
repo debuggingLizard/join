@@ -487,14 +487,14 @@ function setPlaceholder(formId) {
 function clearPlaceholder(formId) {
   const dateInput = document.querySelector(`${formId} *[name = due-date]`);
   let newValue = '';
-  if (dateInput.value !== "dd/mm/yyyy") {    
+  if (dateInput.value !== "dd/mm/yyyy") {
     newValue = convertDateFormatWithDash(dateInput.value);
   }
 
   dateInput.value = '';
   dateInput.setAttribute("type", "date"); // Switch back to date type
   dateInput.classList.remove("text-date");
-  
+
   setTimeout(() => {
     dateInput.value = newValue;
     dateInput.showPicker();
@@ -506,15 +506,17 @@ function clearPlaceholder(formId) {
  */
 function formatDate(formId) {
   const dateInput = document.querySelector(`${formId} *[name = due-date]`);
-  const selectedDate = new Date(dateInput.value);
-  const day = String(selectedDate.getDate()).padStart(2, "0");
-  const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-  const year = selectedDate.getFullYear();
+  if (dateInput.value !== '') {
+    const selectedDate = new Date(dateInput.value);
+    const day = String(selectedDate.getDate()).padStart(2, "0");
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const year = selectedDate.getFullYear();
 
-  dateInput.setAttribute("type", "text");
-  dateInput.classList.add("text-date");
-  dateInput.blur();
-  dateInput.value = `${day}/${month}/${year}`;
+    dateInput.setAttribute("type", "text");
+    dateInput.classList.add("text-date");
+    dateInput.blur();
+    dateInput.value = `${day}/${month}/${year}`;
+  }
 }
 
 function convertDateFormatWithDash(dateString) {
