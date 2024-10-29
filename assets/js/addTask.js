@@ -12,20 +12,17 @@ let createFormErrors = {
 async function renderAddTaskData() {
   await renderContacts("#add-task-form");
   await renderCategories();
+  initializeTaskForm();
+}
 
+function initializeTaskForm() {
   let formElement = document.getElementById("add-task-form");
-
   formElement.addEventListener("submit", async function (e) {
     e.preventDefault();
     checkCreateInputValidation("title", "The title field is required");
     checkCreateInputValidation("due-date", "The Date field is required");
     checkCreateInputValidation("category", "The Category field is required");
-
-    if (
-      createFormErrors.title === 0 &&
-      createFormErrors.dueDate === 0 &&
-      createFormErrors.category === 0
-    ) {
+    if (createFormErrors.title === 0 && createFormErrors.dueDate === 0 && createFormErrors.category === 0) {
       await createTask();
       if (typeof renderTaskAfterCreateTask === "function") {
         await renderTaskAfterCreateTask();
@@ -40,10 +37,7 @@ async function renderAddTaskData() {
  * @param {string} message - The error message to display if validation fails.
  */
 function checkCreateInputValidation(inputName, message) {
-  let inputElement = document.querySelector(
-    `#add-task-form *[name = ${inputName}]`
-  );
-
+  let inputElement = document.querySelector(`#add-task-form *[name = ${inputName}]`)
   if (!inputElement.checkValidity()) {
     showInputValidationError("#add-task-form", inputName, message);
     createFormErrors[inputName] = 1;
@@ -51,7 +45,6 @@ function checkCreateInputValidation(inputName, message) {
     hideInputValidationError("#add-task-form", inputName);
     createFormErrors[inputName] = 0;
   }
-
   if (inputElement.value === "dd/mm/yyyy") {
     showInputValidationError("#add-task-form", inputName, message);
     createFormErrors[inputName] = 1;
@@ -66,14 +59,11 @@ async function renderContacts(form, assignedUsers = []) {
   let sortedContacts = Object.keys(contacts)
     .map((id) => ({ id, ...contacts[id] }))
     .sort((a, b) => a.name.localeCompare(b.name));
-
   let assigneesListElement = document.querySelector(`${form} .assignees-list`);
-
   assigneesListElement.innerHTML = "";
-  sortedContacts.forEach(contact => {
+  sortedContacts.forEach((contact) => {
     assigneesListElement.innerHTML += getAssigneesListTemplate(contact, assignedUsers);
   });
-
   updateAssignedContacts(form);
 }
 
@@ -84,12 +74,14 @@ async function renderContacts(form, assignedUsers = []) {
  */
 function getAssigneesListTemplate(contact, assignedUsers = []) {
   return /*html*/ `
-    <label for="${contact.id}" class='${assignedUsers.includes(contact.id) ? 'active' : ''}'>
+    <label for="${contact.id}" class='${assignedUsers.includes(contact.id) ? "active" : ""}'>
       <div>
         <span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span>
         <span class="contact-profile-name">${contact.name}</span>
       </div>
-      <input type="checkbox" ${assignedUsers.includes(contact.id) ? 'checked' : ''} id="${contact.id}" value="${contact.id}" name="contact" data-id="${contact.id}" data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)">
+      <input type="checkbox" ${assignedUsers.includes(contact.id) ? "checked" : ""} id="${contact.id}" 
+      value="${contact.id}" name="contact" data-id="${contact.id}" 
+      data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)">
     </label>
   `;
 }
@@ -104,19 +96,25 @@ function updateAssignedContacts(form) {
     const checkbox = event.target;
     const assignedContactsDiv = document.querySelector(`${form} .assigned-to`);
     if (checkbox.checked) {
-      const id = checkbox.dataset.id;
-      const color = checkbox.dataset.color;
-      const initials = checkbox.dataset.initials;
-      assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
+      addAssignedContact(checkbox, assignedContactsDiv);
     } else {
-      const spanToRemove = Array.from(assignedContactsDiv.children).find(
-        (span) => span.id === checkbox.id
-      );
-      if (spanToRemove) {
-        assignedContactsDiv.removeChild(spanToRemove);
-      }
+      removeAssignedContact(checkbox, assignedContactsDiv);
     }
   });
+}
+
+function addAssignedContact(checkbox, assignedContactsDiv) {
+  const id = checkbox.dataset.id;
+  const color = checkbox.dataset.color;
+  const initials = checkbox.dataset.initials;
+  assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
+}
+
+function removeAssignedContact(assignedContactsDiv, checkbox) {
+  const spanToRemove = Array.from(assignedContactsDiv.children).find((span) => span.id === checkbox.id);
+  if (spanToRemove) {
+    assignedContactsDiv.removeChild(spanToRemove);
+  }
 }
 
 /**
@@ -127,9 +125,9 @@ function updateAssignedContacts(form) {
 function styleLabel(checkbox) {
   let label = checkbox.parentElement;
   if (checkbox.checked) {
-    label.classList.add('active');
+    label.classList.add("active");
   } else {
-    label.classList.remove('active');
+    label.classList.remove("active");
   }
 }
 
@@ -140,12 +138,9 @@ function styleLabel(checkbox) {
 async function renderCategories() {
   let categories = await getData("categories");
   let categorySelect = document.getElementById("category");
-  categorySelect.innerHTML =
-    '<option value="" disabled selected hidden>Select task category</option>';
+  categorySelect.innerHTML = '<option value="" disabled selected hidden>Select task category</option>';
   Object.keys(categories).forEach((id) => {
-    categorySelect.innerHTML += /*html*/ `
-      <option value="${id}">${categories[id].title}</option>
-    `;
+    categorySelect.innerHTML += `<option value="${id}">${categories[id].title}</option>`;
   });
 }
 
@@ -170,19 +165,13 @@ function selectPrio(formId, selected, id) {
  * - Assignees list can be close by clicking outside of list/input
  */
 function initEventListenerAddTask() {
-  initDateInput('#add-task-form');
-  initSubtaskFunctions('#add-task-form');
-
-  let formFields = document.querySelectorAll(
-    "input[required], select[required], textarea[required]"
-  );
-  formFields.forEach((field) => {
-    field.addEventListener("input", checkRequiredFields);
-  });
+  initDateInput("#add-task-form");
+  initSubtaskFunctions("#add-task-form");
+  initFormFieldListeners("#add-task-form");
   checkRequiredFields();
-
-  initContactDropdownList('#add-task-form');
+  initContactDropdownList("#add-task-form");
 }
+
 /**
  * Initializes the minimum date for a date input field to today's date.
  * Ensures that the selected date cannot be set before the current date.
@@ -197,27 +186,12 @@ function initDateInput(formId) {
     dueDateInput.setAttribute("min", today);
   }
 }
-/**
- * Initializes a contact dropdown list, adding functionality to hide the dropdown 
- * when clicking outside of the input field or dropdown list.
- *
- * @param {string} formId - The CSS selector for the form containing the assignee input 
- *                          and dropdown list. This should include the form's ID (e.g., "#myForm").
- */
-function initContactDropdownList(formId) {
-  document.addEventListener("click", function (event) {
-    const input = document.querySelector(`${formId} *[name = assignees]`);
-    const dropdown = document.querySelector(`${formId} .assignees-list`);
-    if (!input.contains(event.target) && !dropdown.contains(event.target)) {
-      dropdown.classList.add("d-none");
-    }
-  });
-}
+
 /**
  * Initializes the subtask functions within a form, enabling the addition of subtasks with the "Enter" key,
  * displaying clear and add buttons based on input, and allowing for subtask editing on double-click.
  *
- * @param {string} formId - The CSS selector for the form containing the subtask input, 
+ * @param {string} formId - The CSS selector for the form containing the subtask input,
  *                          clear and add buttons, and the subtask list.
  *                          This should include the form's ID (e.g., "#myForm").
  */
@@ -262,19 +236,62 @@ function initSubtaskFunctions(formId) {
     });
   }
 }
+
+function initFormFieldListeners(formSelector) { 
+  let formFields = document.querySelectorAll(`${formSelector} input[required], ${formSelector} select[required], ${formSelector} textarea[required]`); 
+  formFields.forEach((field) => { field.addEventListener("input", checkRequiredFields); 
+  });
+}
+
 /**
- * Toggles the visibility of the contact dropdown list and updates the label's style 
+ * Checks if all required fields are filled and enables/disables the "Create Task" button.
+ */
+function checkRequiredFields() {
+  let requiredFields = document.querySelectorAll("input[required], select[required], textarea[required]");
+  let allFilled = Array.from(requiredFields).every((field) => field.value.trim() !== "");
+  const dateInput = document.querySelector("#add-task-form *[name = due-date]");
+  if (dateInput.value === "dd/mm/yyyy") {
+    allFilled = false;
+  }
+  toggleCreateTaskButton(allFilled);
+}
+
+function toggleCreateTaskButton(enabled) { 
+  let createTaskBtn = document.getElementById("createTaskBtn"); 
+  createTaskBtn.disabled = !enabled;
+}
+
+/**
+ * Initializes a contact dropdown list, adding functionality to hide the dropdown
+ * when clicking outside of the input field or dropdown list.
+ *
+ * @param {string} formId - The CSS selector for the form containing the assignee input
+ *                          and dropdown list. This should include the form's ID (e.g., "#myForm").
+ */
+function initContactDropdownList(formId) {
+  document.addEventListener("click", function (event) {
+    const input = document.querySelector(`${formId} *[name = assignees]`);
+    const dropdown = document.querySelector(`${formId} .assignees-list`);
+    if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.add("d-none");
+    }
+  });
+}
+
+/**
+ * Toggles the visibility of the contact dropdown list and updates the label's style
  * to reflect its open or closed state.
  *
- * @param {string} formId - The CSS selector for the form containing the assignees list 
+ * @param {string} formId - The CSS selector for the form containing the assignees list
  *                          dropdown and the assign label. This should include the form's ID (e.g., "#myForm").
  */
 function toggleContactDropdown(formId) {
   document.querySelector(`${formId} .assignees-list`).classList.toggle("d-none");
-  document.querySelector(`${formId} .assign-label`).classList.toggle('open');
+  document.querySelector(`${formId} .assign-label`).classList.toggle("open");
 }
+
 /**
- * Toggles the open state of the category label, updating its style to reflect 
+ * Toggles the open state of the category label, updating its style to reflect
  * whether the dropdown is open or closed.
  */
 function categoryDropDown() {
@@ -377,43 +394,28 @@ function clearSubtaskInput(formId) {
 }
 
 /**
- * Checks if all required fields are filled and enables/disables the "Create Task" button.
- */
-function checkRequiredFields() {
-  let requiredFields = document.querySelectorAll(
-    "input[required], select[required], textarea[required]"
-  );
-  let allFilled = true;
-  requiredFields.forEach((field) => {
-    if (!field.value.trim()) {
-      allFilled = false;
-    }
-  });
-
-  const dateInput = document.querySelector("#add-task-form *[name = due-date]");
-  if (dateInput.value === "dd/mm/yyyy") {
-    allFilled = false;
-  }
-
-  let createTaskBtn = document.getElementById("createTaskBtn");
-  createTaskBtn.disabled = !allFilled;
-}
-
-/**
  * Collects input values and creates a new task with title, description, assigned users, date, priority, category, and subtasks.
  * Resets the form and posts the task data to storage.
  */
 async function createTask() {
   let title = document.querySelector("#add-task-form *[name = title]").value;
-  let description = document.querySelector("#add-task-form *[name = description]").value || '';
-  let assignedSpans = document.querySelector("#add-task-form .assigned-to").querySelectorAll("span");
+  let description =
+    document.querySelector("#add-task-form *[name = description]").value || "";
+  let assignedSpans = document
+    .querySelector("#add-task-form .assigned-to")
+    .querySelectorAll("span");
   let users = Array.from(assignedSpans).map((span) => span.id);
   let date = document.querySelector("#add-task-form *[name = due-date]").value;
   let priority = document.querySelector("#add-task-form *[name = prio]").value;
   let category = document.getElementById("category").value;
 
-  let subtasks = Array.from(document.querySelector("#add-task-form .subtask-list").children).map((li) => ({
-    done: li.querySelector(".subtask-title").getAttribute('status') == 'true' ? true : false,
+  let subtasks = Array.from(
+    document.querySelector("#add-task-form .subtask-list").children
+  ).map((li) => ({
+    done:
+      li.querySelector(".subtask-title").getAttribute("status") == "true"
+        ? true
+        : false,
     title: li.querySelector(".subtask-title").textContent,
   }));
   let status = addTaskstatus;
@@ -486,12 +488,12 @@ function setPlaceholder(formId) {
  */
 function clearPlaceholder(formId) {
   const dateInput = document.querySelector(`${formId} *[name = due-date]`);
-  let newValue = '';
+  let newValue = "";
   if (dateInput.value !== "dd/mm/yyyy") {
     newValue = convertDateFormatWithDash(dateInput.value);
   }
 
-  dateInput.value = '';
+  dateInput.value = "";
   dateInput.setAttribute("type", "date"); // Switch back to date type
   dateInput.classList.remove("text-date");
 
@@ -506,7 +508,7 @@ function clearPlaceholder(formId) {
  */
 function formatDate(formId) {
   const dateInput = document.querySelector(`${formId} *[name = due-date]`);
-  if (dateInput.value !== '') {
+  if (dateInput.value !== "") {
     const selectedDate = new Date(dateInput.value);
     const day = String(selectedDate.getDate()).padStart(2, "0");
     const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
