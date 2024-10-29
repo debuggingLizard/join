@@ -1,109 +1,3 @@
-.main {
-    padding-bottom: 50px;
-}
-
-.task-view {
-    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
-    padding: 20px;
-    border-radius: 26px;
-    cursor: pointer;
-    background-color: white;
-    user-select: none; /* Prevent text selection during dragging */
-    transition: none; /* Disable any CSS transitions during drag */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.task-view h2 {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 10px 0;
-}
-
-.task-view p {
-    font-size: 16px;
-    font-weight: 400;
-    color: rgb(168, 168, 168);
-    margin: 10px 0;
-}
-
-.userStory {
-    color: white;
-    font-size: 16px;
-    font-weight: 400;
-    display: inline-block;
-    border-radius: 8px;
-    padding: 6px 18px;
-    margin: 10px 0px 26px;
-}
-
-.progress {
-    background-color: #e9ecef;
-    border-radius: 5px;
-    width: 80%;
-    height: 18px;
-}
-
-.progress-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.progress {
-    background-color: #e9ecef;
-    border-radius: 5px;
-    width: 60%;
-    height: 8px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    background-color: #007bff;
-    height: 100%;
-    width: 50%;
-}
-
-.progress-text {
-    font-size: 12px;
-}
-
-.task-contributors {
-    display: flex;
-    align-items: center;
-}
-
-.task-contributors .contributor:first-child {
-    margin-left: 0;
-}
-
-.contributor-listing .icon {
-    font-size: 20px;
-    line-height: 0;
-}
-
-.contributor {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    color: white;
-    font-weight: 400;
-    margin-left: 5px;
-    border: 2px solid white;
-}
-
-.contributor-listing {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-
 .task-detail {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: white;
@@ -140,27 +34,9 @@
 }
 
 .task-detail .task-detail-body{
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: calc(100vh - 200px);
     height: 87%;
-}
-
-.task-detail .task-detail-body::-webkit-scrollbar {
-    width: 10px;
-}
-
-.task-detail .task-detail-body::-webkit-scrollbar-track {
-    background: white;
-}
-
-.task-detail .task-detail-body::-webkit-scrollbar-thumb {
-    background-color: #dfdcdc;
-    border-radius: 10px;
-    border: 2px solid #f1f1f1;
-}
-
-.task-detail .task-detail-body::-webkit-scrollbar-thumb:hover {
-    background: #555;
 }
 
 .task-detail h1 {
@@ -205,7 +81,6 @@
 .edit-task-subtask-row {
     display: flex;
     flex-direction: column;
-
 }
 
 .subtask-checkbox {
@@ -305,27 +180,9 @@
 }
 
 .edit-task .edit-task-form-column {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: calc(100vh - 200px);
     padding-right: 10px;
-}
-
-.edit-task .edit-task-form-column::-webkit-scrollbar {
-    width: 10px;
-}
-
-.edit-task .edit-task-form-column::-webkit-scrollbar-track {
-    background: white;
-}
-
-.edit-task .edit-task-form-column::-webkit-scrollbar-thumb {
-    background-color: #dfdcdc;
-    border-radius: 10px;
-    border: 2px solid #f1f1f1;
-}
-
-.edit-task .edit-task-form-column::-webkit-scrollbar-thumb:hover {
-    background: #555;
 }
 
 .priority-assignment p {
@@ -397,8 +254,6 @@
     background-color: #f0f0f0;
 }
 
-
-
 .custom-dropdown::after {
     content: '▿';
     position: absolute;
@@ -468,7 +323,6 @@
 }
 
 .edit-task-subtask-listing:hover {
-
     background-color: #f0f0f0;
 }
 
@@ -504,7 +358,6 @@
 
 .edit-task-subtask-listing-wrapper {
     position: relative;
-
 }
 
 .edit-task-btn {

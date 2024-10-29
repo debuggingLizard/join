@@ -4,7 +4,7 @@
     }
 
     .add-task-content {
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     .form-row {
@@ -56,6 +56,16 @@
     .required-text.desktop {
         display: none;
     }
+
+    .add-task-form {
+        padding: 0 20px 0;
+    }
+
+    .cancel-btn,
+    .create-task-btn {
+        padding: 12px 15px;
+
+    }
 }
 
 @media (max-width: 400px) {
@@ -65,9 +75,5 @@
 
     .prio-options {
         gap: 4px;
-    }
-
-    .prio-btn {
-        min-width: 50px !important;
     }
 }
