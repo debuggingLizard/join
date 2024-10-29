@@ -24,10 +24,11 @@
 
         <!-- Main content -->
         <main class="main">
-            <section class="summary-header">
-                <h1>Join 360</h1>
-                <p>Key Metrics at a Glance</p>
-            </section>
+            <div class="summary-header">
+                <h1 class="title">Join 360</h1>
+                <span class="divider"></span>
+                <p class="subtitle">Key Metrics at a Glance</p>
+            </div>
 
             <div class="summary-content">
                 <section class="metrics">
@@ -40,7 +41,12 @@
                             </div>
                         </div>
                         <div class="metric-tile">
-                            <div class="metric-icon"><img src="./assets/buttons/doneIcon.svg" alt="Done Icon"></div>
+                            <div class="metric-icon">
+                                <img class="default-done" src="./assets/buttons/doneIcon.svg" alt="Done Icon">
+                                <img src="./assets/buttons/doneIconHover.svg" alt="Done Icon Hover"
+                                    class="doneIconHover">
+                                <!-- Weißes Icon -->
+                            </div>
                             <div class="metric-data">
                                 <p>1</p>
                                 <span>Done</span>
@@ -56,8 +62,11 @@
                             </div>
                         </div>
                         <div class="metric-data-date">
-                            <p>October 16, 2022</p>
-                            <span>Upcoming Deadline</span>
+                            <div class="vertical-divider"></div>
+                            <div class="date-content">
+                                <span class="date-bold">October 16, 2022</span>
+                                <p>Upcoming Deadline</p>
+                            </div>
                         </div>
                     </div>
                     <div class="metric-row">
@@ -82,9 +91,9 @@
                     </div>
                 </section>
 
-                <section class="greeting">
-                    <p>Good morning, <span class="user-name">Sofia Müller</span></p>
-                </section>
+                <div class="greeting-container">
+                    <p class="greeting">Good morning, <span class="user-name">Sofia Müller</span></p>
+                </div>
             </div>
         </main>
     </div>
