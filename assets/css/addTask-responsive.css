@@ -56,6 +56,16 @@
     .required-text.desktop {
         display: none;
     }
+
+    .add-task-form {
+        padding: 0 20px 0;
+    }
+
+    .cancel-btn,
+    .create-task-btn {
+        padding: 12px 15px;
+
+    }
 }
 
 @media (max-width: 400px) {
