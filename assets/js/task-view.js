@@ -186,6 +186,7 @@ function editTaskTemplate() {
                 <ul id="subtask-list" class="subtask-list">
                     ${(taskInformation.subtasks || []).map((subtask, index) => `
                         <li class="subtask-item">
+                            <span class="subtask-dot"></span>
                             <span ondbclick="editSubtask(this)" class="subtask-title" status="${subtask.done}">${subtask.title}</span>
                             <div class="subtask-actions">
                                 <div class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></div>
