@@ -183,7 +183,13 @@ function initEventListenerAddTask() {
 
   initContactDropdownList('#add-task-form');
 }
-
+/**
+ * Initializes the minimum date for a date input field to today's date.
+ * Ensures that the selected date cannot be set before the current date.
+ *
+ * @param {string} formId - The CSS selector for the form containing the date input.
+ *                           This should include the form's ID (e.g., "#myForm").
+ */
 function initDateInput(formId) {
   let dueDateInput = document.querySelector(`${formId} *[name = due-date]`);
   let today = new Date().toISOString().split("T")[0];
@@ -191,7 +197,13 @@ function initDateInput(formId) {
     dueDateInput.setAttribute("min", today);
   }
 }
-
+/**
+ * Initializes a contact dropdown list, adding functionality to hide the dropdown 
+ * when clicking outside of the input field or dropdown list.
+ *
+ * @param {string} formId - The CSS selector for the form containing the assignee input 
+ *                          and dropdown list. This should include the form's ID (e.g., "#myForm").
+ */
 function initContactDropdownList(formId) {
   document.addEventListener("click", function (event) {
     const input = document.querySelector(`${formId} *[name = assignees]`);
@@ -201,7 +213,14 @@ function initContactDropdownList(formId) {
     }
   });
 }
-
+/**
+ * Initializes the subtask functions within a form, enabling the addition of subtasks with the "Enter" key,
+ * displaying clear and add buttons based on input, and allowing for subtask editing on double-click.
+ *
+ * @param {string} formId - The CSS selector for the form containing the subtask input, 
+ *                          clear and add buttons, and the subtask list.
+ *                          This should include the form's ID (e.g., "#myForm").
+ */
 function initSubtaskFunctions(formId) {
   let subtaskInput = document.querySelector(`${formId} *[name = subtasks]`);
   let clearSubtaskBtn = document.querySelector(`${formId} .clear-subtask-btn`);
@@ -243,12 +262,21 @@ function initSubtaskFunctions(formId) {
     });
   }
 }
-
+/**
+ * Toggles the visibility of the contact dropdown list and updates the label's style 
+ * to reflect its open or closed state.
+ *
+ * @param {string} formId - The CSS selector for the form containing the assignees list 
+ *                          dropdown and the assign label. This should include the form's ID (e.g., "#myForm").
+ */
 function toggleContactDropdown(formId) {
   document.querySelector(`${formId} .assignees-list`).classList.toggle("d-none");
   document.querySelector(`${formId} .assign-label`).classList.toggle('open');
 }
-
+/**
+ * Toggles the open state of the category label, updating its style to reflect 
+ * whether the dropdown is open or closed.
+ */
 function categoryDropDown() {
   document.querySelector(".category-label").classList.toggle("open");
 }
