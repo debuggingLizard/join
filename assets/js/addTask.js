@@ -125,6 +125,11 @@ function updateAssignedContacts(form) {
   });
 }
 
+/**
+ * Adds a selected contact to the assigned contacts display.
+ * @param {HTMLElement} checkbox - The checkbox element of the selected contact.
+ * @param {HTMLElement} assignedContactsDiv - The div displaying assigned contacts.
+ */
 function addAssignedContact(checkbox, assignedContactsDiv) {
   const id = checkbox.dataset.id;
   const color = checkbox.dataset.color;
@@ -132,6 +137,11 @@ function addAssignedContact(checkbox, assignedContactsDiv) {
   assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
 }
 
+/**
+ * Removes an unselected contact from the assigned contacts display.
+ * @param {HTMLElement} assignedContactsDiv - The div displaying assigned contacts.
+ * @param {HTMLElement} checkbox - The checkbox element of the unselected contact.
+ */
 function removeAssignedContact(assignedContactsDiv, checkbox) {
   const spanToRemove = Array.from(assignedContactsDiv.children).find(
     (span) => span.id === checkbox.id
