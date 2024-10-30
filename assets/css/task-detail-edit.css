@@ -375,6 +375,7 @@
     justify-content: flex-end;
     width: 100%;
     padding: 20px 10px;
-    position: sticky;
-    bottom: 0;
+    position: fixed;
+    right: 23px;
+    bottom: 5px;
 }
