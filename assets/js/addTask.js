@@ -108,48 +108,37 @@ function getAssigneesListTemplate(contact, assignedUsers = []) {
   `;
 }
 
-/**
- * Updates assigned contacts display based on selected checkboxes.
- * Adds or removes contact profile images in the assigned contacts section.
- */
+
 function updateAssignedContacts(form) {
   let assigneesListElement = document.querySelector(`${form} .assignees-list`);
-  assigneesListElement.addEventListener("change", function (event) {
-    const checkbox = event.target;
-    const assignedContactsDiv = document.querySelector(`${form} .assigned-to`);
-    if (checkbox.checked) {
-      addAssignedContact(checkbox, assignedContactsDiv);
-    } else {
-      removeAssignedContact(checkbox, assignedContactsDiv);
-    }
-  });
+  assigneesListElement.addEventListener("change", handleAssigneeChange.bind(null, form));
 }
 
-/**
- * Adds a selected contact to the assigned contacts display.
- * @param {HTMLElement} checkbox - The checkbox element of the selected contact.
- * @param {HTMLElement} assignedContactsDiv - The div displaying assigned contacts.
- */
-function addAssignedContact(checkbox, assignedContactsDiv) {
-  const id = checkbox.dataset.id;
-  const color = checkbox.dataset.color;
-  const initials = checkbox.dataset.initials;
+function handleAssigneeChange(form, event) {
+  const checkbox = event.target;
+  const assignedContactsDiv = document.querySelector(`${form} .assigned-to`);
+
+  if (checkbox.checked) {
+      addContact(assignedContactsDiv, checkbox);
+  } else {
+      removeContact(assignedContactsDiv, checkbox);
+  }
+}
+
+function addContact(assignedContactsDiv, checkbox) {
+  const { id, color, initials } = checkbox.dataset;
   assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
 }
 
-/**
- * Removes an unselected contact from the assigned contacts display.
- * @param {HTMLElement} assignedContactsDiv - The div displaying assigned contacts.
- * @param {HTMLElement} checkbox - The checkbox element of the unselected contact.
- */
-function removeAssignedContact(assignedContactsDiv, checkbox) {
+function removeContact(assignedContactsDiv, checkbox) {
   const spanToRemove = Array.from(assignedContactsDiv.children).find(
-    (span) => span.id === checkbox.dataset.id
+      (span) => span.id === checkbox.id
   );
   if (spanToRemove) {
-    assignedContactsDiv.removeChild(spanToRemove);
+      assignedContactsDiv.removeChild(spanToRemove);
   }
 }
+
 
 /**
  * Styles the label of a checkbox when selected or deselected.
