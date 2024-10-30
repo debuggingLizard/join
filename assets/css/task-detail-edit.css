@@ -4,7 +4,7 @@
     height: 90vh;
     width: 525px;
     margin: 10px;
-    padding: 30px 20px;
+    padding: 30px 45px;
     border-radius: 26px;
     position: relative;
     left: 100%;
@@ -37,6 +37,9 @@
     overflow-y: auto;
     max-height: calc(100vh - 200px);
     height: 87%;
+}
+.task-detail .task-detail-body::-webkit-scrollbar {
+    display: none; 
 }
 
 .task-detail h1 {
@@ -98,6 +101,8 @@
     display: inline-block;
     vertical-align: middle;
     margin-right: 15px;
+    margin-left: -16px;
+    
 }
 
 .checkbox-tick-img {
@@ -107,6 +112,8 @@
     display: inline-block;
     vertical-align: middle;
     margin-right: 15px;
+    margin-left: -16px;
+    
 }
 
 .check-subtask {
@@ -176,13 +183,15 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: 10px 0 20px;
+    margin: 20px 25px 20px;
 }
 
 .edit-task .edit-task-form-column {
     overflow-y: auto;
     max-height: calc(100vh - 200px);
     padding-right: 10px;
+    margin-left: 30px;
+    height: 85%;
 }
 
 .priority-assignment p {
@@ -254,32 +263,10 @@
     background-color: #f0f0f0;
 }
 
-.custom-dropdown::after {
-    content: '▿';
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    font-size: 14px;
-    color: #333;
-    pointer-events: none;
-}
-
 .assigned-contributors-wrapper {
     position: relative;
     display: inline-block;
     width: 100%;
-}
-
-.assigned-contributors-wrapper::after {
-    content: '▿';
-    font-size: 16px;
-    color: #333;
-    position: absolute;
-    right: 20px;
-    top: 20%;
-    transform: translateY(-50%);
-    pointer-events: none;
 }
 
 .assigned-label {
@@ -304,13 +291,15 @@
     margin-bottom: 10px;
 }
 
-.subtask-dot {
+.subtask-item .subtask-dot {
     display: inline-block;
+    flex: 0 0 auto;
     height: 5px;
     width: 5px;
     background-color: rgb(23, 16, 16);
     border-radius: 50%;
-    margin: 2px 15px;
+    margin: 2px 10px;
+    transform: translateY(4px);
 }
 
 .edit-task-subtask-listing {
@@ -382,7 +371,6 @@
     justify-content: flex-end;
     width: 100%;
     padding: 20px 10px;
-    background-color: white;
     position: sticky;
     bottom: 0;
 }

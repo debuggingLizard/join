@@ -125,7 +125,7 @@ function editTaskTemplate() {
 
         <form id="edit-task-form" class="form-column edit-task-form-column" novalidate>
             <label for="title">
-                <div>Title<span class="required">*</span></div>
+                <div>Title</div>
                 <input type="text" id="title" name="title" placeholder="Enter a title" value="${taskInformation.title}" required>
                 <span class="title-error error d-none"></span>
             </label>
@@ -137,14 +137,14 @@ function editTaskTemplate() {
             </label>
 
             <label for="due-date" class="date-label">
-                <div>Due date<span class="required">*</span></div>
+                <div>Due date</div>
                 <input type="text" class="picker text-date" id="due-date" name="due-date" value="${taskInformation.date}" onfocus="clearPlaceholder('#edit-task-form')"
                     onblur="setPlaceholder('#edit-task-form')" onchange="formatDate('#edit-task-form')" required>
                 <span class="due-date-error error d-none"></span>
             </label>
 
             <label>
-                <div>Prio</div>
+                <div>Priority</div>
                 <div class="prio-options">
                     <div class="prio-btn urgent ${taskPriority.title === 'Urgent' ? 'active' : ''}" onclick="selectPrio('#edit-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
                         Urgent<span class="icon-urgent"></span>
@@ -186,6 +186,7 @@ function editTaskTemplate() {
                 <ul id="subtask-list" class="subtask-list">
                     ${(taskInformation.subtasks || []).map((subtask, index) => `
                         <li class="subtask-item">
+                            <span class="subtask-dot"></span>
                             <span ondbclick="editSubtask(this)" class="subtask-title" status="${subtask.done}">${subtask.title}</span>
                             <div class="subtask-actions">
                                 <div class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></div>
@@ -196,12 +197,13 @@ function editTaskTemplate() {
                 </ul>
             </label>
 
-            <div class="edit-task-confirm-btn">
+            
+        </form>   
+        <div class="edit-task-confirm-btn">
                 <button id="editTaskBtn" type="submit" class="create-task-btn">
                     Ok<span class="icon-check"></span>
                 </button>
-            </div>
-        </form>                                    
+            </div>                                 
     `;
 }
 
