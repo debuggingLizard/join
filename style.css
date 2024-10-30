@@ -222,10 +222,8 @@ select.input-error {
     border: 1px solid #FF8190;
 }
 
-/* Feedback Overlay */
 .feedback-overlay {
     display: none;
-    /* Startet versteckt */
     position: fixed;
     top: 50%;
     left: 50%;
@@ -246,7 +244,7 @@ select.input-error {
     vertical-align: middle;
 }
 
-/* Help Page */
+/* Info Pages */
 .info-pages-container {
     padding: 60px;
     display: flex;
