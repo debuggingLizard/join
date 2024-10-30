@@ -73,7 +73,7 @@ h1 {
 }
 
 .metric-tile:hover .metric-icon circle {
-    fill:#FFFFFF;
+    fill: #FFFFFF;
 }
 
 .metric-tile:hover .metric-icon path {
@@ -82,7 +82,7 @@ h1 {
 
 .metric-tile:hover .metric-todo path,
 .metric-tile:active .metric-icon circle {
-    fill:#2A3647;
+    fill: #2A3647;
 }
 
 .metric-tile:active {
@@ -106,7 +106,7 @@ h1 {
 }
 
 .metric-tile:active .metric-todo path {
-    fill:#FFFFFF;
+    fill: #FFFFFF;
 }
 
 .urgent {
@@ -140,7 +140,7 @@ h1 {
 
 .metric-data-date {
     display: flex;
-    flex:1;
+    flex: 1;
     align-items: center;
     gap: 40px;
 }
@@ -183,7 +183,7 @@ h1 {
 
 .greeting .greeting-msg {
     color: #2A3647;
-    font-size:32px;
+    font-size: 32px;
 }
 
 .user-name {
