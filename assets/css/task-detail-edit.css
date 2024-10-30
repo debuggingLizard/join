@@ -191,6 +191,7 @@
     max-height: calc(100vh - 200px);
     padding-right: 10px;
     margin-left: 30px;
+    height: 85%;
 }
 
 .priority-assignment p {
@@ -370,7 +371,6 @@
     justify-content: flex-end;
     width: 100%;
     padding: 20px 10px;
-    background-color: white;
     position: sticky;
     bottom: 0;
 }

@@ -197,12 +197,13 @@ function editTaskTemplate() {
                 </ul>
             </label>
 
-            <div class="edit-task-confirm-btn">
+            
+        </form>   
+        <div class="edit-task-confirm-btn">
                 <button id="editTaskBtn" type="submit" class="create-task-btn">
                     Ok<span class="icon-check"></span>
                 </button>
-            </div>
-        </form>                                    
+            </div>                                 
     `;
 }
 
