@@ -3,7 +3,7 @@ async function renderSummaryData() {
     console.log(tasks);
     renderTasksAmountByStatus(tasks, "todo");
     renderTasksAmountByStatus(tasks, "done");
-    renderUrgentTasksAmount(tasks);
+    renderUrgentTasks(tasks);
     renderAllTasksAmount(tasks);
     renderTasksAmountByStatus(tasks, "progress");
     renderTasksAmountByStatus(tasks, "await-feedback");
@@ -28,30 +28,48 @@ function renderAllTasksAmount(tasks) {
     `
 }
 
-async function renderUrgentTasksAmount(tasks) {
+async function renderUrgentTasks(tasks) {
+    let priority = await getPriorityID();
+    let amount = getUrgentTasksAmount(tasks, priority);
+    let nextDeadline = getNextUrgentDeadline(tasks, priority);
+
+    document.getElementById("urgent-tasks-amount").innerHTML = amount;
+    document.getElementById("next-deadline").innerHTML =
+        nextDeadline.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+async function getPriorityID() {
     let priorities = await getData("priorities");
     let priority;
-    let priorityAmount = document.getElementById("urgent-tasks-amount");
-    let nextDeadline = document.getElementById("next-deadline");
-    let amount = 0;
-    let closestDeadline = null;
     for (const key in priorities) {
         if (priorities[key].title === "Urgent") {
             priority = key;
         }
     }
-    console.log(priority);
+    return priority;
+}
 
+function getUrgentTasksAmount(tasks, priority) {
+    let amount = 0;
     for (const key in tasks) {
         if (tasks[key].priority === priority) {
             amount++;
+        }
+    }
+    return amount;
+}
+
+function getNextUrgentDeadline(tasks, priority) {
+    let nextDeadline = null;
+    for (const key in tasks) {
+        if (tasks[key].priority === priority) {
             const taskDeadline = new Date(tasks[key].date.split("/").reverse().join("-"));
-            if (!closestDeadline || taskDeadline < closestDeadline) {
-                closestDeadline = taskDeadline;
+            if (!nextDeadline || taskDeadline < nextDeadline) {
+                nextDeadline = taskDeadline;
             }
         }
     }
-    priorityAmount.innerHTML = amount;
-    nextDeadline.innerHTML = closestDeadline.toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
+    return nextDeadline;
 }
+
 
