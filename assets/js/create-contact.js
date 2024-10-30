@@ -9,7 +9,6 @@ let createFormErrors = {
  */
 function eventListenerCreateContact() {
   let formElement = document.getElementById("create-contact-form");
-
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
     checkCreateInputValidation("name", "Enter name & surname.");
@@ -18,7 +17,6 @@ function eventListenerCreateContact() {
       "phone",
       "Enter a valid phone number with country code."
     );
-
     if (
       createFormErrors.name === 0 &&
       createFormErrors.email === 0 &&
