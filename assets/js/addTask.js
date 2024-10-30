@@ -144,7 +144,7 @@ function addAssignedContact(checkbox, assignedContactsDiv) {
  */
 function removeAssignedContact(assignedContactsDiv, checkbox) {
   const spanToRemove = Array.from(assignedContactsDiv.children).find(
-    (span) => span.id === checkbox.id
+    (span) => span.id === checkbox.dataset.id
   );
   if (spanToRemove) {
     assignedContactsDiv.removeChild(spanToRemove);
