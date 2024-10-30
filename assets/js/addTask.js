@@ -693,11 +693,9 @@ function clearPlaceholder(formId) {
   if (dateInput.value !== "dd/mm/yyyy") {
     newValue = convertDateFormatWithDash(dateInput.value);
   }
-
   dateInput.value = "";
   dateInput.setAttribute("type", "date"); // Switch back to date type
   dateInput.classList.remove("text-date");
-
   setTimeout(() => {
     dateInput.value = newValue;
     dateInput.showPicker();
@@ -714,7 +712,6 @@ function formatDate(formId) {
     const day = String(selectedDate.getDate()).padStart(2, "0");
     const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
     const year = selectedDate.getFullYear();
-
     dateInput.setAttribute("type", "text");
     dateInput.classList.add("text-date");
     dateInput.blur();
