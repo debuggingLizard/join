@@ -11,6 +11,9 @@ async function loadTasksFromDatabase() {
   tasks = await getData("tasks");
 }
 
+/**
+ * Loads tasks from the database and renders all boards.
+ */
 async function renderAllBoards() {
   await loadTasksFromDatabase();
   await renderBoards();
@@ -162,7 +165,6 @@ function subTaskTemplate(taskDetail) {
     (subtask) => subtask.done === true
   ).length;
   let progressBarPercent = (allDoneTasks * 100) / allSubTasks;
-
   return /*html*/ `<div class="progress" title="${allDoneTasks} of ${allSubTasks} Subtasks done">
     <div class="progress-bar" style="width: ${progressBarPercent}%;"></div>
     </div>
@@ -182,7 +184,6 @@ async function taskContributorTemplate(userId) {
  */
 function search(query) {
   clearTimeout(timeoutId);
-
   timeoutId = setTimeout(function () {
     searchValue = query.trim().toLowerCase();
     renderBoards();
