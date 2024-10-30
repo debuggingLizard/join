@@ -420,6 +420,7 @@ function createSubtaskListItem(subtaskValue) {
   let listItem = document.createElement("li");
   listItem.classList.add("subtask-item");
   listItem.innerHTML = `
+    <span class="subtask-dot"></span>
     <span ondblclick="editSubtask(this)" class="subtask-title">${subtaskValue}</span>
     <div class="subtask-actions">
       <button type="button" class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></button>
