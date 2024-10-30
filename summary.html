@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="./assets/css/summary.css">
     <link rel="stylesheet" href="./responsive.css">
     <script src="script.js"></script>
+    <script src="./assets/js/firebase-connect.js"></script>
+    <script src="./assets/js/summary.js"></script>
 </head>
 
-<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-summary')">
+<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-summary'); renderSummaryData()">
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
     </aside>
@@ -46,7 +48,7 @@
                                 </g>
                                 </svg>
                             <div class="metric-data">
-                                <p>1</p>
+                                <p id="todo-tasks-amount">0</p>
                                 <span>To-do</span>
                             </div>
                         </div>
@@ -57,7 +59,7 @@
                                     <path d="M19.9229 34.8085L31.1516 45.8745L49.8662 23.7424" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                             <div class="metric-data">
-                                <p>1</p>
+                                <p id="done-tasks-amount">0</p>
                                 <span>Done</span>
                             </div>
                         </div>
@@ -78,14 +80,14 @@
                                 </defs>
                                 </svg>
                             <div class="metric-data">
-                                <p>1</p>
+                                <p id="urgent-tasks-amount">0</p>
                                 <span>Urgent</span>
                             </div>
                         </div>
                         <div class="metric-data-date">
                             <div class="vertical-divider"></div>
                             <div class="date-content">
-                                <span>October 16, 2022</span>
+                                <span id="next-deadline">October 16, 2022</span>
                                 <p>Upcoming Deadline</p>
                             </div>
                         </div>
@@ -94,21 +96,21 @@
                         <!-- All Tasks in Board -->
                         <div class="metric-tile">
                             <div class="metric-data">
-                                <p>5</p>
+                                <p id="all-tasks-amount">0</p>
                                 <span>Tasks in Board</span>
                             </div>
                         </div>
                         <!-- # of Tasks in Progress -->
                         <div class="metric-tile">
                             <div class="metric-data">
-                                <p>2</p>
+                                <p id="progress-tasks-amount">0</p>
                                 <span>Tasks In Progress</span>
                             </div>
                         </div>
                         <!-- # of Tasks awaiting Feedback -->
                         <div class="metric-tile">
                             <div class="metric-data">
-                                <p>2</p>
+                                <p id="await-feedback-tasks-amount">0</p>
                                 <span>Awaiting Feedback</span>
                             </div>
                         </div>

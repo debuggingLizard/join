@@ -63,8 +63,6 @@ function openHeaderProfileInfo() {
   document.getElementById("user-info-links").classList.toggle("d-none");
 }
 
-// muss in render-funktion von jeder HTML-Seite aufgerufen werden (bzw. im onload), damit die Nav-Links entsprechend optisch angepasst werden.
-// The parameter is the ID of the link, e.g., 'sidebar-nav-board'
 /**
  * Updates the active state of navigation links.
  * @param {string} navLinkID - ID of the navigation link to activate.
