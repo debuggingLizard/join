@@ -1,4 +1,5 @@
 async function renderSummaryData() {
+    setGreeting();
     let tasks = await getData("tasks");
     renderTasksAmountByStatus(tasks, "todo");
     renderTasksAmountByStatus(tasks, "done");
@@ -68,6 +69,27 @@ function getNextUrgentDeadline(tasks, priority) {
         }
     }
     return nextDeadline;
+}
+
+function setGreeting() {
+    document.getElementById('greeting').innerText = getGreeting();
+}
+
+function getGreeting() {
+    let now = new Date();
+    let hours = now.getHours();
+    let greeting;
+    switch (true) {
+        case (hours < 12):
+            greeting = "Good Morning";
+            break;
+        case (hours < 18):
+            greeting = "Good Afternoon";
+            break;
+        default: 
+            greeting = "Good Evening";
+    }
+    return greeting; 
 }
 
 

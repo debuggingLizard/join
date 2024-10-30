@@ -162,6 +162,10 @@ h1 {
     text-align: left;
 }
 
+.date-content p {
+    text-align: left;
+}
+
 .metric-tile span,
 .date-content p {
     color: #2A3647;
