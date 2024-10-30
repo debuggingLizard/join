@@ -22,7 +22,11 @@ function initializeTaskForm() {
     checkCreateInputValidation("title", "The title field is required");
     checkCreateInputValidation("due-date", "The Date field is required");
     checkCreateInputValidation("category", "The Category field is required");
-    if (createFormErrors.title === 0 && createFormErrors.dueDate === 0 && createFormErrors.category === 0) {
+    if (
+      createFormErrors.title === 0 &&
+      createFormErrors.dueDate === 0 &&
+      createFormErrors.category === 0
+    ) {
       await createTask();
       if (typeof renderTaskAfterCreateTask === "function") {
         await renderTaskAfterCreateTask();
@@ -37,7 +41,9 @@ function initializeTaskForm() {
  * @param {string} message - The error message to display if validation fails.
  */
 function checkCreateInputValidation(inputName, message) {
-  let inputElement = document.querySelector(`#add-task-form *[name = ${inputName}]`)
+  let inputElement = document.querySelector(
+    `#add-task-form *[name = ${inputName}]`
+  );
   if (!inputElement.checkValidity()) {
     showInputValidationError("#add-task-form", inputName, message);
     createFormErrors[inputName] = 1;
@@ -62,7 +68,10 @@ async function renderContacts(form, assignedUsers = []) {
   let assigneesListElement = document.querySelector(`${form} .assignees-list`);
   assigneesListElement.innerHTML = "";
   sortedContacts.forEach((contact) => {
-    assigneesListElement.innerHTML += getAssigneesListTemplate(contact, assignedUsers);
+    assigneesListElement.innerHTML += getAssigneesListTemplate(
+      contact,
+      assignedUsers
+    );
   });
   updateAssignedContacts(form);
 }
@@ -74,14 +83,22 @@ async function renderContacts(form, assignedUsers = []) {
  */
 function getAssigneesListTemplate(contact, assignedUsers = []) {
   return /*html*/ `
-    <label for="${contact.id}" class='${assignedUsers.includes(contact.id) ? "active" : ""}'>
+    <label for="${contact.id}" class='${
+    assignedUsers.includes(contact.id) ? "active" : ""
+  }'>
       <div>
-        <span class="contact-profile-image" style="background-color:${contact.color}">${contact.profileImage}</span>
+        <span class="contact-profile-image" style="background-color:${
+          contact.color
+        }">${contact.profileImage}</span>
         <span class="contact-profile-name">${contact.name}</span>
       </div>
-      <input type="checkbox" ${assignedUsers.includes(contact.id) ? "checked" : ""} id="${contact.id}" 
+      <input type="checkbox" ${
+        assignedUsers.includes(contact.id) ? "checked" : ""
+      } id="${contact.id}" 
       value="${contact.id}" name="contact" data-id="${contact.id}" 
-      data-color="${contact.color}" data-initials="${contact.profileImage}" onclick="styleLabel(this)">
+      data-color="${contact.color}" data-initials="${
+    contact.profileImage
+  }" onclick="styleLabel(this)">
     </label>
   `;
 }
@@ -111,7 +128,9 @@ function addAssignedContact(checkbox, assignedContactsDiv) {
 }
 
 function removeAssignedContact(assignedContactsDiv, checkbox) {
-  const spanToRemove = Array.from(assignedContactsDiv.children).find((span) => span.id === checkbox.id);
+  const spanToRemove = Array.from(assignedContactsDiv.children).find(
+    (span) => span.id === checkbox.id
+  );
   if (spanToRemove) {
     assignedContactsDiv.removeChild(spanToRemove);
   }
@@ -138,7 +157,8 @@ function styleLabel(checkbox) {
 async function renderCategories() {
   let categories = await getData("categories");
   let categorySelect = document.getElementById("category");
-  categorySelect.innerHTML = '<option value="" disabled selected hidden>Select task category</option>';
+  categorySelect.innerHTML =
+    '<option value="" disabled selected hidden>Select task category</option>';
   Object.keys(categories).forEach((id) => {
     categorySelect.innerHTML += `<option value="${id}">${categories[id].title}</option>`;
   });
@@ -153,7 +173,9 @@ function selectPrio(formId, selected, id) {
   document.querySelectorAll(`${formId} .prio-btn`).forEach((button) => {
     button.classList.remove("active");
   });
-  document.querySelector(`${formId} .prio-btn.${selected}`).classList.add("active");
+  document
+    .querySelector(`${formId} .prio-btn.${selected}`)
+    .classList.add("active");
   document.querySelector(`${formId} *[name = prio]`).value = id;
 }
 
@@ -188,58 +210,97 @@ function initDateInput(formId) {
 }
 
 /**
- * Initializes the subtask functions within a form, enabling the addition of subtasks with the "Enter" key,
- * displaying clear and add buttons based on input, and allowing for subtask editing on double-click.
- *
- * @param {string} formId - The CSS selector for the form containing the subtask input,
- *                          clear and add buttons, and the subtask list.
- *                          This should include the form's ID (e.g., "#myForm").
+ * Initializes subtask functionalities such as input handling, button visibility, and subtask editing.
+ * @param {string} formId - The ID of the form element where subtasks are managed.
  */
 function initSubtaskFunctions(formId) {
-  let subtaskInput = document.querySelector(`${formId} *[name = subtasks]`);
-  let clearSubtaskBtn = document.querySelector(`${formId} .clear-subtask-btn`);
-  let addBtn = document.querySelector(`${formId} .add-subtask-btn`);
-  let subtaskList = document.querySelector(`${formId} .subtask-list`);
+  const subtaskInput = document.querySelector(`${formId} *[name=subtasks]`);
+  const clearSubtaskBtn = document.querySelector(
+    `${formId} .clear-subtask-btn`
+  );
+  const addBtn = document.querySelector(`${formId} .add-subtask-btn`);
+  const subtaskList = document.querySelector(`${formId} .subtask-list`);
+
   if (subtaskInput) {
-    subtaskInput.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        addSubtask();
-      }
-    });
-
-    subtaskInput.addEventListener("input", function () {
-      if (subtaskInput.value.length > 0) {
-        clearSubtaskBtn.style.display = "flex";
-        addBtn.classList.remove("icon-add");
-        addBtn.classList.add("icon-check");
-      } else {
-        clearSubtaskBtn.style.display = "none";
-        addBtn.classList.remove("icon-check");
-        addBtn.classList.add("icon-add");
-      }
-    });
-
-    clearSubtaskBtn.addEventListener("click", function () {
-      subtaskInput.value = "";
-      clearSubtaskBtn.style.display = "none";
-      addBtn.classList.remove("icon-check");
-      addBtn.classList.add("icon-add");
-    });
-
-    subtaskList.addEventListener("dblclick", function (event) {
-      if (event.target && event.target.classList.contains("subtask-title")) {
-        let editButton =
-          event.target.parentElement.querySelector(".edit-subtask-btn");
-        editSubtask(editButton);
-      }
-    });
+    handleSubtaskInput(subtaskInput, addBtn, clearSubtaskBtn);
+    setupClearButton(clearSubtaskBtn, subtaskInput, addBtn);
+    enableSubtaskEditing(subtaskList);
   }
 }
 
-function initFormFieldListeners(formSelector) { 
-  let formFields = document.querySelectorAll(`${formSelector} input[required], ${formSelector} select[required], ${formSelector} textarea[required]`); 
-  formFields.forEach((field) => { field.addEventListener("input", checkRequiredFields); 
+/**
+ * Handles 'Enter' key event for adding subtasks and input event to manage button visibility.
+ * @param {HTMLElement} input - The subtask input element.
+ * @param {HTMLElement} addBtn - The add button for subtasks.
+ * @param {HTMLElement} clearBtn - The clear button for the subtask input.
+ */
+function handleSubtaskInput(input, addBtn, clearBtn) {
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addSubtask();
+    }
+  });
+  input.addEventListener("input", () =>
+    toggleButtonVisibility(input, addBtn, clearBtn)
+  );
+}
+
+/**
+ * Toggles the visibility and icon of add and clear buttons based on the input value.
+ * @param {HTMLElement} input - The subtask input element.
+ * @param {HTMLElement} addBtn - The add button for subtasks.
+ * @param {HTMLElement} clearBtn - The clear button for the subtask input.
+ */
+function toggleButtonVisibility(input, addBtn, clearBtn) {
+  const hasValue = input.value.length > 0;
+  clearBtn.style.display = hasValue ? "flex" : "none";
+  addBtn.classList.toggle("icon-check", hasValue);
+  addBtn.classList.toggle("icon-add", !hasValue);
+}
+
+/**
+ * Sets up the clear button to reset the input field and buttons to default state.
+ * @param {HTMLElement} clearBtn - The clear button for the subtask input.
+ * @param {HTMLElement} input - The subtask input element.
+ * @param {HTMLElement} addBtn - The add button for subtasks.
+ */
+function setupClearButton(clearBtn, input, addBtn) {
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+    clearBtn.style.display = "none";
+    addBtn.classList.add("icon-add");
+    addBtn.classList.remove("icon-check");
+  });
+}
+
+/**
+ * Enables subtask editing when a subtask title is double-clicked.
+ * @param {HTMLElement} subtaskList - The container element for subtasks.
+ */
+function enableSubtaskEditing(subtaskList) {
+  subtaskList.addEventListener("dblclick", (e) => {
+    if (e.target.classList.contains("subtask-title")) {
+      const editButton =
+        e.target.parentElement.querySelector(".edit-subtask-btn");
+      editSubtask(editButton);
+    }
+  });
+}
+
+/**
+ * Initializes input listeners on required form fields to trigger validation.
+ * Adds an "input" event listener to each required field (input, select, textarea)
+ * in the specified form, which calls the `checkRequiredFields` function on change.
+ *
+ * @param {string} formSelector - CSS selector for the form containing required fields.
+ */
+function initFormFieldListeners(formSelector) {
+  let formFields = document.querySelectorAll(
+    `${formSelector} input[required], ${formSelector} select[required], ${formSelector} textarea[required]`
+  );
+  formFields.forEach((field) => {
+    field.addEventListener("input", checkRequiredFields);
   });
 }
 
@@ -247,8 +308,12 @@ function initFormFieldListeners(formSelector) {
  * Checks if all required fields are filled and enables/disables the "Create Task" button.
  */
 function checkRequiredFields() {
-  let requiredFields = document.querySelectorAll("input[required], select[required], textarea[required]");
-  let allFilled = Array.from(requiredFields).every((field) => field.value.trim() !== "");
+  let requiredFields = document.querySelectorAll(
+    "input[required], select[required], textarea[required]"
+  );
+  let allFilled = Array.from(requiredFields).every(
+    (field) => field.value.trim() !== ""
+  );
   const dateInput = document.querySelector("#add-task-form *[name = due-date]");
   if (dateInput.value === "dd/mm/yyyy") {
     allFilled = false;
@@ -256,8 +321,13 @@ function checkRequiredFields() {
   toggleCreateTaskButton(allFilled);
 }
 
-function toggleCreateTaskButton(enabled) { 
-  let createTaskBtn = document.getElementById("createTaskBtn"); 
+/**
+ * Toggles the enabled state of the "Create Task" button.
+ *
+ * @param {boolean} enabled - If true, enables the button; otherwise, disables it.
+ */
+function toggleCreateTaskButton(enabled) {
+  let createTaskBtn = document.getElementById("createTaskBtn");
   createTaskBtn.disabled = !enabled;
 }
 
@@ -286,7 +356,9 @@ function initContactDropdownList(formId) {
  *                          dropdown and the assign label. This should include the form's ID (e.g., "#myForm").
  */
 function toggleContactDropdown(formId) {
-  document.querySelector(`${formId} .assignees-list`).classList.toggle("d-none");
+  document
+    .querySelector(`${formId} .assignees-list`)
+    .classList.toggle("d-none");
   document.querySelector(`${formId} .assign-label`).classList.toggle("open");
 }
 
@@ -299,65 +371,162 @@ function categoryDropDown() {
 }
 
 /**
- * Adds a new subtask, clears the input field, resets the add button to '+', and hides the clear button.
+ * Initializes the subtask addition by retrieving the input value and calling subsequent actions.
+ *
+ * @param {string} formId - The ID of the form containing the subtask.
  */
 function addSubtask(formId) {
-  let subtaskInput = document.querySelector(`${formId} *[name = subtasks]`);
+  let subtaskInput = getSubtaskInput(formId);
   let subtaskValue = subtaskInput.value.trim();
-  let addBtn = document.querySelector(`${formId} .add-subtask-btn`);
-  let clearBtn = document.querySelector(`${formId} .clear-subtask-btn`);
   if (subtaskValue) {
-    let subtaskList = document.querySelector(`${formId} .subtask-list`);
-    let listItem = document.createElement("li");
-    listItem.classList.add("subtask-item");
-    listItem.innerHTML = `
-      <span ondbclick="editSubtask(this)" class="subtask-title">${subtaskValue}</span>
-      <div class="subtask-actions">
-        <button type="button" class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></button>
-        <button type="button" class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></button>
-      </div>
-    `;
-    subtaskList.appendChild(listItem);
-    subtaskInput.value = "";
-    addBtn.classList.remove("icon-check");
-    addBtn.classList.add("icon-add");
-    clearBtn.style.display = "none";
+    appendSubtaskToList(formId, subtaskValue);
+    resetSubtaskInput(formId);
   }
 }
 
 /**
- * Enables inline subtask editing with an input field.
- * Save changes by clicking the checkmark or pressing Enter.
+ * Retrieves the subtask input element from the form.
  *
- * @param {HTMLElement} button - The edit button clicked.
+ * @param {string} formId - The ID of the form.
+ * @returns {HTMLElement} - The subtask input element.
+ */
+function getSubtaskInput(formId) {
+  return document.querySelector(`${formId} *[name = subtasks]`);
+}
+
+/**
+ * Creates a new subtask list item and appends it to the subtask list.
+ *
+ * @param {string} formId - The ID of the form containing the subtask list.
+ * @param {string} subtaskValue - The text content of the subtask.
+ */
+function appendSubtaskToList(formId, subtaskValue) {
+  let subtaskList = document.querySelector(`${formId} .subtask-list`);
+  let listItem = createSubtaskListItem(subtaskValue);
+  subtaskList.appendChild(listItem);
+}
+
+/**
+ * Creates a new list item element for the subtask with necessary actions.
+ *
+ * @param {string} subtaskValue - The text content of the subtask.
+ * @returns {HTMLElement} - The created list item element.
+ */
+function createSubtaskListItem(subtaskValue) {
+  let listItem = document.createElement("li");
+  listItem.classList.add("subtask-item");
+  listItem.innerHTML = `
+    <span ondblclick="editSubtask(this)" class="subtask-title">${subtaskValue}</span>
+    <div class="subtask-actions">
+      <button type="button" class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></button>
+      <button type="button" class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></button>
+    </div>
+  `;
+  return listItem;
+}
+
+/**
+ * Resets the subtask input field and updates the button states.
+ *
+ * @param {string} formId - The ID of the form.
+ */
+function resetSubtaskInput(formId) {
+  let subtaskInput = getSubtaskInput(formId);
+  let addBtn = document.querySelector(`${formId} .add-subtask-btn`);
+  let clearBtn = document.querySelector(`${formId} .clear-subtask-btn`);
+  subtaskInput.value = "";
+  addBtn.classList.remove("icon-check");
+  addBtn.classList.add("icon-add");
+  clearBtn.style.display = "none";
+}
+
+/**
+ * Initializes subtask editing by replacing the title with an input field and displaying the save button.
+ *
+ * @param {HTMLElement} button - The edit button clicked to initiate editing.
  */
 function editSubtask(button) {
   let listItem = button.parentElement.parentElement;
+  let inputField = createEditInputField(listItem);
+  toggleEditButtonVisibility(button, false);
+  let saveBtn = createSaveButton(listItem, button, inputField);
+  handleSaveOnEnter(inputField, saveBtn, listItem, button);
+}
+
+/**
+ * Creates an input field for editing the subtask title.
+ *
+ * @param {HTMLElement} listItem - The list item containing the subtask.
+ * @returns {HTMLInputElement} - The created input field.
+ */
+function createEditInputField(listItem) {
   let subtaskTitle = listItem.querySelector(".subtask-title");
   let inputField = document.createElement("input");
   inputField.type = "text";
   inputField.value = subtaskTitle.textContent;
   inputField.classList.add("edit-input");
   listItem.replaceChild(inputField, subtaskTitle);
-  button.style.display = "none";
+  inputField.focus();
+  return inputField;
+}
+
+/**
+ * Creates the save button and appends it to the actions container.
+ *
+ * @param {HTMLElement} listItem - The list item containing the subtask.
+ * @param {HTMLElement} button - The original edit button.
+ * @param {HTMLInputElement} inputField - The input field for editing.
+ * @returns {HTMLElement} - The created save button.
+ */
+function createSaveButton(listItem, button, inputField) {
   let saveBtn = document.createElement("button");
-  saveBtn.classList.add("save-subtask-btn");
-  saveBtn.classList.add("icon-check");
+  saveBtn.classList.add("save-subtask-btn", "icon-check");
   let actionsContainer = button.parentElement;
   actionsContainer.appendChild(saveBtn);
   saveBtn.addEventListener("click", function () {
-    saveSubtaskEdit(listItem, inputField);
-    button.style.display = "inline-block";
-    saveBtn.remove();
+    finalizeEdit(listItem, inputField, button, saveBtn);
   });
+  return saveBtn;
+}
+
+/**
+ * Toggles the visibility of the edit button.
+ *
+ * @param {HTMLElement} button - The edit button.
+ * @param {boolean} visible - Visibility state for the button.
+ */
+function toggleEditButtonVisibility(button, visible) {
+  button.style.display = visible ? "inline-block" : "none";
+}
+
+/**
+ * Saves the subtask edit when the Enter key is pressed.
+ *
+ * @param {HTMLInputElement} inputField - The input field for editing.
+ * @param {HTMLElement} saveBtn - The save button.
+ * @param {HTMLElement} listItem - The list item containing the subtask.
+ * @param {HTMLElement} button - The original edit button.
+ */
+function handleSaveOnEnter(inputField, saveBtn, listItem, button) {
   inputField.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-      saveSubtaskEdit(listItem, inputField);
-      button.style.display = "inline-block";
-      saveBtn.remove();
+      finalizeEdit(listItem, inputField, button, saveBtn);
     }
   });
-  inputField.focus();
+}
+
+/**
+ * Finalizes the subtask edit by replacing the input field with updated text and restoring the edit button.
+ *
+ * @param {HTMLElement} listItem - The list item containing the subtask.
+ * @param {HTMLInputElement} inputField - The input field for editing.
+ * @param {HTMLElement} button - The original edit button.
+ * @param {HTMLElement} saveBtn - The save button to remove after saving.
+ */
+function finalizeEdit(listItem, inputField, button, saveBtn) {
+  saveSubtaskEdit(listItem, inputField);
+  toggleEditButtonVisibility(button, true);
+  saveBtn.remove();
 }
 
 /**
@@ -394,43 +563,11 @@ function clearSubtaskInput(formId) {
 }
 
 /**
- * Collects input values and creates a new task with title, description, assigned users, date, priority, category, and subtasks.
+ * Collects input values and creates a new task.
  * Resets the form and posts the task data to storage.
  */
 async function createTask() {
-  let title = document.querySelector("#add-task-form *[name = title]").value;
-  let description =
-    document.querySelector("#add-task-form *[name = description]").value || "";
-  let assignedSpans = document
-    .querySelector("#add-task-form .assigned-to")
-    .querySelectorAll("span");
-  let users = Array.from(assignedSpans).map((span) => span.id);
-  let date = document.querySelector("#add-task-form *[name = due-date]").value;
-  let priority = document.querySelector("#add-task-form *[name = prio]").value;
-  let category = document.getElementById("category").value;
-
-  let subtasks = Array.from(
-    document.querySelector("#add-task-form .subtask-list").children
-  ).map((li) => ({
-    done:
-      li.querySelector(".subtask-title").getAttribute("status") == "true"
-        ? true
-        : false,
-    title: li.querySelector(".subtask-title").textContent,
-  }));
-  let status = addTaskstatus;
-
-  const data = {
-    title: title,
-    description: description,
-    users: users.length > 0 ? users : [],
-    date: date,
-    priority: priority,
-    category: category,
-    subtasks: subtasks.length > 0 ? subtasks : [],
-    status: status,
-  };
-
+  const data = gatherTaskData();
   resetAddTask();
   await postData("tasks", data);
   addTaskstatus = "todo";
@@ -438,37 +575,104 @@ async function createTask() {
 }
 
 /**
- * Resets the add task form, clearing inputs, unchecking checkboxes, removing validation errors, and setting defaults.
+ * Gathers task data from form inputs, including title, description, assigned users, date, priority, category, and subtasks.
+ * @returns {Object} An object containing the task data.
  */
-function resetAddTask() {
+function gatherTaskData() {
+  return {
+    title: getInputValue("#add-task-form *[name = title]"),
+    description: getInputValue("#add-task-form *[name = description]"),
+    users: getAssignedUsers(),
+    date: getInputValue("#add-task-form *[name = due-date]"),
+    priority: getInputValue("#add-task-form *[name = prio]"),
+    category: getInputValue("#category"),
+    subtasks: getSubtasks(),
+    status: addTaskstatus,
+  };
+}
+
+/**
+ * Retrieves the value from a form input field.
+ * @param {string} selector - The selector for the input field.
+ * @returns {string} The input value or an empty string if not found.
+ */
+function getInputValue(selector) {
+  return document.querySelector(selector)?.value || "";
+}
+
+/**
+ * Collects assigned user IDs from the form.
+ * @returns {Array<string>} An array of assigned user IDs.
+ */
+function getAssignedUsers() {
+  const assignedSpans = document.querySelectorAll(
+    "#add-task-form .assigned-to span"
+  );
+  return Array.from(assignedSpans).map((span) => span.id);
+}
+
+/**
+ * Collects subtasks from the form, with each subtask containing its title and completion status.
+ * @returns {Array<Object>} An array of subtasks.
+ */
+function getSubtasks() {
+  const subtasks = document.querySelector(
+    "#add-task-form .subtask-list"
+  ).children;
+  return Array.from(subtasks).map((li) => ({
+    done: li.querySelector(".subtask-title").getAttribute("status") === "true",
+    title: li.querySelector(".subtask-title").textContent,
+  }));
+}
+
+/**
+ * Clears input fields for title, description, due date, and assigned users,
+ * and resets validation errors for each field.
+ */
+function resetFormInputs() {
   document.querySelector("#add-task-form *[name = title]").value = "";
   hideInputValidationError("#add-task-form", "title");
   createFormErrors["title"] = 0;
 
   document.querySelector("#add-task-form *[name = description]").value = "";
-  let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach((checkbox) => {
-    checkbox.checked = false;
-    styleLabel(checkbox);
-  });
   document.querySelector("#add-task-form .assigned-to").innerHTML = "";
+
   document.querySelector("#add-task-form *[name = due-date]").value = "";
   hideInputValidationError("#add-task-form", "due-date");
   createFormErrors["dueDate"] = 0;
+}
+
+/**
+ * Resets additional form elements including checkboxes, priority buttons,
+ * category selection, subtasks, and disables the "Create Task" button.
+ */
+function resetAdditionalElements() {
+  document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+    checkbox.checked = false;
+    styleLabel(checkbox);
+  });
 
   document.querySelectorAll(".prio-btn").forEach((button) => {
     button.classList.remove("active");
   });
-  document.querySelector(`.prio-btn.medium`).classList.add("active");
+  document.querySelector(".prio-btn.medium").classList.add("active");
   document.getElementById("selectedPrio").value = "-O9M0Iky4rEYMLq5Jwo_";
+
   document.getElementById("category").value = "";
   hideInputValidationError("#add-task-form", "category");
   createFormErrors["category"] = 0;
 
   document.querySelector("#add-task-form .subtask-list").innerHTML = "";
   setPlaceholder("#add-task-form");
-  let createTaskBtn = document.getElementById("createTaskBtn");
-  createTaskBtn.disabled = true;
+  document.getElementById("createTaskBtn").disabled = true;
+}
+
+/**
+ * Fully resets the add task form by calling functions to reset inputs and additional elements.
+ */
+function resetAddTask() {
+  resetFormInputs();
+  resetAdditionalElements();
 }
 
 /**
