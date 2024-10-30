@@ -1,0 +1,195 @@
+.summary-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 60px 0 40px 60px;
+    max-width: 1440px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: black;
+    margin: 0;
+}
+
+.divider {
+    width: 2px;
+    height: 40px;
+    background-color: #29ABE2;
+}
+
+.subtitle {
+    font-size: 25px;
+    color: #2A3647;
+    margin: 0;
+}
+
+.summary-content {
+    display: flex;
+    gap: 50px;
+    padding: 0 0 20px 60px;
+    max-width: 1440px;
+    width: 100%;
+}
+
+.metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.metric-row {
+    display: flex;
+    gap: 20px;
+}
+
+.metric-tile {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 80ms ease-in-out;
+}
+
+.metric-tile:hover {
+    background-color: #2A3647;
+    transform: scale(1.06);
+    color: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.metric-tile:hover span,
+.metric-tile:hover p {
+    color: #FFFFFF;
+}
+
+.metric-tile:hover .metric-icon circle {
+    fill: #FFFFFF;
+}
+
+.metric-tile:hover .metric-icon path {
+    stroke: #2A3647;
+}
+
+.metric-tile:hover .metric-todo path,
+.metric-tile:active .metric-icon circle {
+    fill: #2A3647;
+}
+
+.metric-tile:active {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    color: #2A3647;
+    transform: scale(1);
+}
+
+.metric-tile:active span,
+.metric-tile:active .date-content p {
+    color: #2A3647;
+}
+
+.metric-tile:active p {
+    color: black;
+}
+
+.metric-tile:active .metric-icon path {
+    stroke: #FFFFFF;
+}
+
+.metric-tile:active .metric-todo path {
+    fill: #FFFFFF;
+}
+
+.urgent {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 40px;
+}
+
+.urgent-data {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.metric-icon,
+.metric-icon-urgent {
+    width: 45px;
+    height: 45px;
+}
+
+.metric-data {
+    text-align: center;
+}
+
+.metric-data p {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.metric-data-date {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 40px;
+}
+
+.vertical-divider {
+    width: 2px;
+    height: 80px;
+    background-color: #E0E0E0;
+}
+
+.date-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.date-content span {
+    font-weight: bold;
+    text-align: left;
+}
+
+.date-content p {
+    text-align: left;
+}
+
+.metric-tile span,
+.date-content p {
+    color: #2A3647;
+}
+
+.greeting-container {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+}
+
+.greeting {
+    display: flex;
+    flex-direction: column;
+    padding-right: 16px;
+}
+
+.greeting .greeting-msg {
+    color: #2A3647;
+    font-size: 32px;
+}
+
+.user-name {
+    color: #29ABE2;
+    font-weight: bold;
+    font-size: 54px;
+}
