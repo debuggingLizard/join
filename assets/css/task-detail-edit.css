@@ -186,6 +186,10 @@
     margin: 20px 25px 20px;
 }
 
+.edit-task form {
+    display: inline;
+}
+
 .edit-task .edit-task-form-column {
     overflow-y: auto;
     max-height: calc(100vh - 200px);
