@@ -1,13 +1,11 @@
 async function renderSummaryData() {
     let tasks = await getData("tasks");
-    console.log(tasks);
     renderTasksAmountByStatus(tasks, "todo");
     renderTasksAmountByStatus(tasks, "done");
     renderUrgentTasks(tasks);
     renderAllTasksAmount(tasks);
     renderTasksAmountByStatus(tasks, "progress");
     renderTasksAmountByStatus(tasks, "await-feedback");
-
 }
 
 function renderTasksAmountByStatus(tasks, status) {
