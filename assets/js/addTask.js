@@ -15,6 +15,11 @@ async function renderAddTaskData() {
   initializeTaskForm();
 }
 
+/**
+ * Initializes the task form by adding a submit event listener.
+ * Validates required fields (title, due date, category) before creating the task.
+ * Calls renderTaskAfterCreateTask() if defined, after successful task creation.
+ */
 function initializeTaskForm() {
   let formElement = document.getElementById("add-task-form");
   formElement.addEventListener("submit", async function (e) {
