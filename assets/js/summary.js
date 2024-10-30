@@ -9,6 +9,27 @@ async function renderSummaryData() {
     renderTasksAmountByStatus(tasks, "await-feedback");
 }
 
+function setGreeting() {
+    document.getElementById('greeting').innerText = getGreeting();
+}
+
+function getGreeting() {
+    let now = new Date();
+    let hours = now.getHours();
+    let greeting;
+    switch (true) {
+        case (hours < 12):
+            greeting = "Good Morning";
+            break;
+        case (hours < 18):
+            greeting = "Good Afternoon";
+            break;
+        default: 
+            greeting = "Good Evening";
+    }
+    return greeting; 
+}
+
 function renderTasksAmountByStatus(tasks, status) {
     let statusAmount = document.getElementById(status + "-tasks-amount")
     let amount = 0;
@@ -18,13 +39,6 @@ function renderTasksAmountByStatus(tasks, status) {
         }
     }
     statusAmount.innerHTML = amount;
-}
-
-function renderAllTasksAmount(tasks) {
-    let allTasks = document.getElementById('all-tasks-amount');
-    allTasks.innerHTML = /*html*/`
-        ${Object.keys(tasks).length}
-    `
 }
 
 async function renderUrgentTasks(tasks) {
@@ -71,25 +85,9 @@ function getNextUrgentDeadline(tasks, priority) {
     return nextDeadline;
 }
 
-function setGreeting() {
-    document.getElementById('greeting').innerText = getGreeting();
+function renderAllTasksAmount(tasks) {
+    let allTasks = document.getElementById('all-tasks-amount');
+    allTasks.innerHTML = /*html*/`
+        ${Object.keys(tasks).length}
+    `
 }
-
-function getGreeting() {
-    let now = new Date();
-    let hours = now.getHours();
-    let greeting;
-    switch (true) {
-        case (hours < 12):
-            greeting = "Good Morning";
-            break;
-        case (hours < 18):
-            greeting = "Good Afternoon";
-            break;
-        default: 
-            greeting = "Good Evening";
-    }
-    return greeting; 
-}
-
-
