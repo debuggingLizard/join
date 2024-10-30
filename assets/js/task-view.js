@@ -261,7 +261,7 @@ async function getDataFromDatabase() {
     taskInformation = await getData("tasks/" + taskId);
     taskPriority = await getData("priorities/" + taskInformation.priority);
     taskCategory = await getData("categories/" + taskInformation.category);
-    assignedUsers = await getAssignedUsers();
+    assignedUsers = await getDetailAssignedUsers();
   } catch (error) {
     console.error("Get data failed:");
   }
@@ -275,7 +275,7 @@ async function getDataFromDatabase() {
  * @returns {Promise<Array<Object>>} An array of user objects with their details, including the user ID.
  * Returns an empty array if no users are assigned to the task.
  */
-async function getAssignedUsers() {
+async function getDetailAssignedUsers() {
   if (taskInformation.users != undefined && taskInformation.users.length > 0) {
     const userDetails = [];
     for (const userId of taskInformation.users) {
