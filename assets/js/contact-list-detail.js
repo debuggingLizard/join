@@ -121,7 +121,6 @@ function renderResponsiveEditButtons(id) {
                     <span class="dot"></span>
                     <span class="dot"></span>
                 </div>
-
                 <div class="slide-in" id="slideIn">
                   <div class="slide-in-content"></div>
                 </div>
