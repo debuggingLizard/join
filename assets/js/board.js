@@ -11,6 +11,9 @@ async function loadTasksFromDatabase() {
   tasks = await getData("tasks");
 }
 
+/**
+ * Loads tasks from the database and renders all boards.
+ */
 async function renderAllBoards() {
   await loadTasksFromDatabase();
   await renderBoards();
@@ -114,28 +117,43 @@ async function renderTaskContributors(taskId, taskDetail) {
 }
 
 /**
- * Creates an HTML template for a task card with category, description, subtasks, contributors, and priority.
+ * Fetches task data and returns the HTML template.
+ * @param {string} taskId - Task ID.
+ * @param {object} taskDetail - Task details.
+ * @returns {Promise<string>} - Task HTML as a string.
  */
 async function taskTemplate(taskId, taskDetail) {
   let categoryDetail = await getData("categories/" + taskDetail.category);
   let priorityDetail = await getData("priorities/" + taskDetail.priority);
 
+  return createTaskHtml(taskId, taskDetail, categoryDetail, priorityDetail);
+}
+
+/**
+ * Creates HTML for task view.
+ * @param {string} taskId - Task ID.
+ * @param {object} taskDetail - Task details.
+ * @param {object} categoryDetail - Category info (color, title).
+ * @param {object} priorityDetail - Priority info (icon, color, title).
+ * @returns {string} - HTML template.
+ */
+function createTaskHtml(taskId, taskDetail, categoryDetail, priorityDetail) {
   return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail('${taskId}')">
-                      <div class="task-view-top">
-                        <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
-                        <div class="task-description">
-                          <h2>${taskDetail.title}</h2>
-                          <p>${taskDetail.description}</p>
-                        </div>
+                    <div class="task-view-top">
+                      <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
+                      <div class="task-description">
+                        <h2>${taskDetail.title}</h2>
+                        <p>${taskDetail.description}</p>
                       </div>
-                      <div class="task-view-bottom">
-                        <div class="progress-wrapper" id="subtask-wrapper${taskId}"></div>
-                        <div class="contributor-listing">
-                          <div class="task-contributors" id="task-contributors${taskId}"></div>
-                          <div class="icon ${priorityDetail.icon}" style="color:${priorityDetail.color}" title="${priorityDetail.title}"></div>
-                        </div>
-                      </div>                     
-                    </div>`;
+                    </div>
+                    <div class="task-view-bottom">
+                      <div class="progress-wrapper" id="subtask-wrapper${taskId}"></div>
+                      <div class="contributor-listing">
+                        <div class="task-contributors" id="task-contributors${taskId}"></div>
+                        <div class="icon ${priorityDetail.icon}" style="color:${priorityDetail.color}" title="${priorityDetail.title}"></div>
+                      </div>
+                    </div>
+                  </div>`;
 }
 
 /**
@@ -147,7 +165,6 @@ function subTaskTemplate(taskDetail) {
     (subtask) => subtask.done === true
   ).length;
   let progressBarPercent = (allDoneTasks * 100) / allSubTasks;
-
   return /*html*/ `<div class="progress" title="${allDoneTasks} of ${allSubTasks} Subtasks done">
     <div class="progress-bar" style="width: ${progressBarPercent}%;"></div>
     </div>
@@ -167,7 +184,6 @@ async function taskContributorTemplate(userId) {
  */
 function search(query) {
   clearTimeout(timeoutId);
-
   timeoutId = setTimeout(function () {
     searchValue = query.trim().toLowerCase();
     renderBoards();
@@ -192,23 +208,25 @@ function openAddTask(status) {
  * Adds a click event to close and reset the add task overlay.
  */
 function eventListenerCloseAddTask() {
-  const overlay = document.getElementById('add-task-overlay');
+  const overlay = document.getElementById("add-task-overlay");
   const closeTrigger = function (e) {
     if (e.target !== e.currentTarget) return;
     closeAddTask();
     resetAddTask();
-    overlay.removeEventListener('click', closeTrigger);
+    overlay.removeEventListener("click", closeTrigger);
   };
-  overlay.addEventListener('click', closeTrigger);
+  overlay.addEventListener("click", closeTrigger);
 }
 
 /**
  * Closes the add task overlay by resetting styles.
  */
 function closeAddTask() {
-  document.getElementById('add-task-overlay').style.backgroundColor = 'rgb(0 0 0 / 0%)'
-  document.getElementById('add-task-container').style.transform = 'translateX(200%)';
-  document.getElementById('add-task-overlay').style.zIndex = -1;
+  document.getElementById("add-task-overlay").style.backgroundColor =
+    "rgb(0 0 0 / 0%)";
+  document.getElementById("add-task-container").style.transform =
+    "translateX(200%)";
+  document.getElementById("add-task-overlay").style.zIndex = -1;
 }
 
 /**

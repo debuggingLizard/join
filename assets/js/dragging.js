@@ -15,23 +15,14 @@ let isOverDropTarget = false;
  */
 function dragstart(e, taskId) {
   currentDraggingElementId = taskId;
-
   e.dataTransfer.setData("text/plain", null);
-
   currentDraggable = e.target;
-
-  // Get the width and height of the element
   width = currentDraggable.offsetWidth;
   height = currentDraggable.offsetHeight;
-
-  // Set the width and height to the element when drag starts
   currentDraggable.style.width = `${width}px`;
   currentDraggable.style.height = `${height}px`;
-
-  offsetX = e.clientX - currentDraggable.getBoundingClientRect().left; // Calculate the offset
+  offsetX = e.clientX - currentDraggable.getBoundingClientRect().left;
   offsetY = e.clientY - currentDraggable.getBoundingClientRect().top;
-
-  // Prevent the default drag ghost
   e.dataTransfer.setDragImage(new Image(), 0, 0);
 }
 

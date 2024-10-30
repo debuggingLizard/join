@@ -36,7 +36,6 @@ function getRandomColor() {
     "#FF4646",
     "#FFBB2B",
   ];
-
   const rndInt = randomIntFromInterval(0, colors.length - 1);
   return colors[rndInt];
 }
@@ -67,34 +66,35 @@ function randomIntFromInterval(min, max) {
 }
 
 /**
- * Removes error styles and messages from contact creation and edit forms.
+ * Removes all error styles and messages from contact forms.
  */
 function removeAllErrors() {
-  let createInputElements = document.querySelectorAll(
-    `#create-contact-form input`
-  );
-  createInputElements.forEach((element) => {
-    element.classList.remove("input-error");
-  });
+  removeInputErrors();
+  hideErrorMessages();
+}
 
-  let editInputElements = document.querySelectorAll(`#edit-contact-form input`);
-  editInputElements.forEach((element) => {
-    element.classList.remove("input-error");
-  });
+/**
+ * Removes error styles from input fields in contact creation and edit forms.
+ */
+function removeInputErrors() {
+  const createInputs = document.querySelectorAll(`#create-contact-form input`);
+  createInputs.forEach((element) => element.classList.remove("input-error"));
+  const editInputs = document.querySelectorAll(`#edit-contact-form input`);
+  editInputs.forEach((element) => element.classList.remove("input-error"));
+}
 
-  let createErrorMessageElements = document.querySelectorAll(
+/**
+ * Hides error messages in contact creation and edit forms.
+ */
+function hideErrorMessages() {
+  const createErrorMessages = document.querySelectorAll(
     "#create-contact-form [class$='-error']"
   );
-  createErrorMessageElements.forEach((element) => {
-    element.classList.add("d-none");
-  });
-
-  let editErrorMessageElements = document.querySelectorAll(
+  createErrorMessages.forEach((element) => element.classList.add("d-none"));
+  const editErrorMessages = document.querySelectorAll(
     "#edit-contact-form [class$='-error']"
   );
-  editErrorMessageElements.forEach((element) => {
-    element.classList.add("d-none");
-  });
+  editErrorMessages.forEach((element) => element.classList.add("d-none"));
 }
 
 /**

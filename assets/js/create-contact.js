@@ -9,7 +9,6 @@ let createFormErrors = {
  */
 function eventListenerCreateContact() {
   let formElement = document.getElementById("create-contact-form");
-
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
     checkCreateInputValidation("name", "Enter name & surname.");
@@ -18,7 +17,6 @@ function eventListenerCreateContact() {
       "phone",
       "Enter a valid phone number with country code."
     );
-
     if (
       createFormErrors.name === 0 &&
       createFormErrors.email === 0 &&
@@ -27,7 +25,6 @@ function eventListenerCreateContact() {
       createContact();
     }
   });
-
   document
     .getElementById("add-contact-overlay")
     .addEventListener("click", function (e) {
@@ -118,7 +115,6 @@ function checkCreateInputValidation(inputName, message) {
   let inputElement = document.querySelector(
     `#create-contact-form input[name = ${inputName}]`
   );
-
   if (!inputElement.checkValidity()) {
     showInputValidationError("#create-contact-form", inputName, message);
     createFormErrors[inputName] = 1;

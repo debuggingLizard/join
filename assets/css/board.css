@@ -182,7 +182,7 @@
 .edit-task .edit-task-form-column::-webkit-scrollbar,
 .task-detail .task-detail-body::-webkit-scrollbar,
 .form-row::-webkit-scrollbar {
-    width: 4px;
+    width: 7px;
 }
 
 .edit-task .edit-task-form-column::-webkit-scrollbar-track,
@@ -194,7 +194,7 @@
 .edit-task .edit-task-form-column::-webkit-scrollbar-thumb,
 .task-detail .task-detail-body::-webkit-scrollbar-thumb,
 .form-row::-webkit-scrollbar-thumb {
-    background: #A8A8A8;
+    background: #d8d6d6;
     border-radius: 8px;
 }
 
