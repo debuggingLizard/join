@@ -19,13 +19,13 @@ function getGreeting() {
     let greeting;
     switch (true) {
         case (hours < 12):
-            greeting = "Good Morning";
+            greeting = "Good Morning,";
             break;
         case (hours < 18):
-            greeting = "Good Afternoon";
+            greeting = "Good Afternoon,";
             break;
         default: 
-            greeting = "Good Evening";
+            greeting = "Good Evening,";
     }
     return greeting; 
 }

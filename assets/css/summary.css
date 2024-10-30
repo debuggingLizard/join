@@ -178,11 +178,16 @@ h1 {
 }
 
 .greeting {
-    width: 70%;
-    font-size: 50px;
+    width: 80%;
+}
+
+.greeting .greeting-msg {
+    color: #2A3647;
+    font-size:32px;
 }
 
 .user-name {
     color: #29ABE2;
     font-weight: bold;
+    font-size: 54px;
 }
