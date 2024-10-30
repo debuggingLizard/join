@@ -651,17 +651,14 @@ function resetAdditionalElements() {
     checkbox.checked = false;
     styleLabel(checkbox);
   });
-
   document.querySelectorAll(".prio-btn").forEach((button) => {
     button.classList.remove("active");
   });
   document.querySelector(".prio-btn.medium").classList.add("active");
   document.getElementById("selectedPrio").value = "-O9M0Iky4rEYMLq5Jwo_";
-
   document.getElementById("category").value = "";
   hideInputValidationError("#add-task-form", "category");
   createFormErrors["category"] = 0;
-
   document.querySelector("#add-task-form .subtask-list").innerHTML = "";
   setPlaceholder("#add-task-form");
   document.getElementById("createTaskBtn").disabled = true;
@@ -725,6 +722,11 @@ function formatDate(formId) {
   }
 }
 
+/**
+ * Converts a date from "dd/mm/yyyy" format to "yyyy-mm-dd" format.
+ * @param {string} dateString - The date in "dd/mm/yyyy" format.
+ * @returns {string} The date formatted as "yyyy-mm-dd".
+ */
 function convertDateFormatWithDash(dateString) {
   const [day, month, year] = dateString.split("/");
   return `${year}-${month}-${day}`;
