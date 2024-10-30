@@ -9,17 +9,14 @@ let editFormErrors = {
  */
 function eventListenerEditContact() {
   let formElement = document.getElementById("edit-contact-form");
-
   formElement.addEventListener("submit", function (e) {
     e.preventDefault();
-
     checkEditInputValidation("name", "Enter name & surname.");
     checkEditInputValidation("email", "Enter a valid email address.");
     checkEditInputValidation(
       "phone",
       "Enter a valid phone number with country code."
     );
-
     if (
       editFormErrors.name === 0 &&
       editFormErrors.email === 0 &&
@@ -28,7 +25,6 @@ function eventListenerEditContact() {
       editContact();
     }
   });
-
   document
     .getElementById("edit-contact-overlay")
     .addEventListener("click", function (e) {
@@ -43,7 +39,6 @@ function eventListenerEditContact() {
  */
 async function openEditContactModal(userId) {
   let user = await getData("users/" + userId);
-
   document.querySelector("#edit-contact-form input[name = id]").value = userId;
   document.querySelector("#edit-contact-form input[name = name]").value =
     user.name;
@@ -56,7 +51,6 @@ async function openEditContactModal(userId) {
   ).style.backgroundColor = user.color;
   document.querySelector("#edit-contact-overlay .person-img").innerHTML =
     user.profileImage;
-
   showEditContactOverlay();
 }
 
@@ -74,9 +68,7 @@ async function editContact() {
   let mobile = document.querySelector(
     "#edit-contact-form input[name = phone]"
   ).value;
-
   let currentUserDetail = await getData("users/" + id);
-
   if ((await isEmailExist(email)) && currentUserDetail.email != email) {
     showInputValidationError(
       "#edit-contact-form",
@@ -91,7 +83,6 @@ async function editContact() {
       color: currentUserDetail.color,
       profileImage: getProfileImage(name),
     };
-
     await putData("users", id, data);
     renderContactDetail(id, "detail");
     renderContactList();
@@ -131,7 +122,6 @@ function checkEditInputValidation(inputName, message) {
   let inputElement = document.querySelector(
     `#edit-contact-form input[name = ${inputName}]`
   );
-
   if (!inputElement.checkValidity()) {
     showInputValidationError("#edit-contact-form", inputName, message);
     editFormErrors[inputName] = 1;
