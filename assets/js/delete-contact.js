@@ -3,17 +3,17 @@
  * @param {string} id - The ID of the contact to delete.
  */
 async function deleteContact(id) {
-    await deleteData('users', id);
-    await renderContactList();
-    document.getElementById('contact-detail-view').innerHTML = '';
-    await hideEditContactOverlay();
-    showNotification('Contact succesfully deleted');
+  await deleteData("users", id);
+  await renderContactList();
+  document.getElementById("contact-detail-view").innerHTML = "";
+  await hideEditContactOverlay();
+  showNotification("Contact succesfully deleted");
 }
 
 /**
  * Deletes the contact currently open in Edit form.
  */
 function deleteContactFromEditForm() {
-    let id = document.querySelector('#edit-contact-form input[name = id]').value;    
-    deleteContact(id);
+  let id = document.querySelector("#edit-contact-form input[name = id]").value;
+  deleteContact(id);
 }
