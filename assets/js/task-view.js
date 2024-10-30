@@ -144,105 +144,87 @@ function editTaskTemplate() {
             <div class="close-btn-task-detail icon icon-close" onclick="closeTaskDetail()"></div>
         </div>
 
-        <form id="edit-task-form" class="form-column edit-task-form-column" novalidate>
-            <label for="title">
-                <div>Title</div>
-                <input type="text" id="title" name="title" placeholder="Enter a title" value="${taskInformation.title}" required>
-                <span class="title-error error d-none"></span>
-            </label>
+        <form id="edit-task-form" novalidate>
+            <div class="form-column edit-task-form-column">
+                <label for="title">
+                    <div>Title</div>
+                    <input type="text" id="title" name="title" placeholder="Enter a title" value="${taskInformation.title}" required>
+                    <span class="title-error error d-none"></span>
+                </label>
 
-            <label for="description">
-                <div>Description</div>
-                <textarea id="description" name="description" rows="4"
-                    placeholder="Enter a Description">${
-                      taskInformation.description
-                    }</textarea>
-            </label>
+                <label for="description">
+                    <div>Description</div>
+                    <textarea id="description" name="description" rows="4"
+                        placeholder="Enter a Description">${taskInformation.description}</textarea>
+                </label>
 
-            <label for="due-date" class="date-label">
-                <div>Due date</div>
-                <input type="text" class="picker text-date" id="due-date" name="due-date" value="${taskInformation.date}" onfocus="clearPlaceholder('#edit-task-form')"
-                    onblur="setPlaceholder('#edit-task-form')" onchange="formatDate('#edit-task-form')" required>
-                <span class="due-date-error error d-none"></span>
-            </label>
+                <label for="due-date" class="date-label">
+                    <div>Due date</div>
+                    <input type="text" class="picker text-date" id="due-date" name="due-date" value="${taskInformation.date}" onfocus="clearPlaceholder('#edit-task-form')"
+                        onblur="setPlaceholder('#edit-task-form')" onchange="formatDate('#edit-task-form')" required>
+                    <span class="due-date-error error d-none"></span>
+                </label>
 
-            <label>
-                <div>Priority</div>
-                <div class="prio-options">
-                    <div class="prio-btn urgent ${
-                      taskPriority.title === "Urgent" ? "active" : ""
-                    }" onclick="selectPrio('#edit-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
-                        Urgent<span class="icon-urgent"></span>
+                <label>
+                    <div>Priority</div>
+                    <div class="prio-options">
+                        <div class="prio-btn urgent ${taskPriority.title === 'Urgent' ? 'active' : ''}" onclick="selectPrio('#edit-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
+                            Urgent<span class="icon-urgent"></span>
+                        </div>
+                        <div class="prio-btn medium ${taskPriority.title === 'Medium' ? 'active' : ''}"
+                            onclick="selectPrio('#edit-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
+                            Medium<span class="icon-medium"></span>
+                        </div>
+                        <div class="prio-btn low ${taskPriority.title === 'Low' ? 'active' : ''}" onclick="selectPrio('#edit-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
+                            Low <span class="icon-low"></span>
+                        </div>
                     </div>
-                    <div class="prio-btn medium ${
-                      taskPriority.title === "Medium" ? "active" : ""
-                    }"
-                        onclick="selectPrio('#edit-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
-                        Medium<span class="icon-medium"></span>
-                    </div>
-                    <div class="prio-btn low ${
-                      taskPriority.title === "Low" ? "active" : ""
-                    }" onclick="selectPrio('#edit-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
-                        Low <span class="icon-low"></span>
-                    </div>
-                </div>
-                <input type="hidden" id="selectedPrio" name="prio" value="${
-                  taskInformation.priority
-                }">
-            </label>
+                    <input type="hidden" id="selectedPrio" name="prio" value="${taskInformation.priority}">
+                </label>
 
-            <label for="assignees" class="assign-label">
-                <div>Assigned to</div>
-                <div>
-                    <input type="search" name="assignees" id="assignees"
-                        placeholder="Select contacts to assign" onclick="toggleContactDropdown('#edit-task-form')">
-                    <div class="assignees-list d-none"></div>
-                    <div id="assigned-to" class="assigned-to">
-                        ${assignedUsers
-                          .map(
-                            (user) => `
-                            <span id="${user.id}" class="contact-profile-image" style="background-color:${user.color}">${user.profileImage}</span>
-                        `
-                          )
-                          .join("")}
+                <label for="assignees" class="assign-label">
+                    <div>Assigned to</div>
+                    <div>
+                        <input type="search" name="assignees" id="assignees"
+                            placeholder="Select contacts to assign" onclick="toggleContactDropdown('#edit-task-form')">
+                        <div class="assignees-list d-none"></div>
+                        <div id="assigned-to" class="assigned-to">
+                            ${(assignedUsers).map(user => `
+                                <span id="${user.id}" class="contact-profile-image" style="background-color:${user.color}">${user.profileImage}</span>
+                            `).join('')}
+                        </div>
                     </div>
-                </div>
-            </label>
+                </label>
 
-            <label for="subtasks">
-                <div>Subtasks</div>
-                <div class="subtask-row">
-                    <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                    <div class="subtask-buttons">
-                        <span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput('#edit-task-form')"></span>
-                        <span class="add-subtask-btn icon-add" onclick="addSubtask('#edit-task-form')"></span>
+                <label for="subtasks">
+                    <div>Subtasks</div>
+                    <div class="subtask-row">
+                        <input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
+                        <div class="subtask-buttons">
+                            <span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput('#edit-task-form')"></span>
+                            <span class="add-subtask-btn icon-add" onclick="addSubtask('#edit-task-form')"></span>
+                        </div>
                     </div>
-                </div>
-                <ul id="subtask-list" class="subtask-list">
-                    ${(taskInformation.subtasks || [])
-                      .map(
-                        (subtask, index) => `
-                        <li class="subtask-item">
-                            <span class="subtask-dot"></span>
-                            <span ondbclick="editSubtask(this)" class="subtask-title" status="${subtask.done}">${subtask.title}</span>
-                            <div class="subtask-actions">
-                                <div class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></div>
-                                <div class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></div>
-                            </div>
-                        </li>
-                    `
-                      )
-                      .join("")}
-                </ul>
-            </label>
-
-            
-        </form>   
-        <div class="edit-task-confirm-btn">
+                    <ul id="subtask-list" class="subtask-list">
+                        ${(taskInformation.subtasks || []).map((subtask, index) => `
+                            <li class="subtask-item">
+                                <span class="subtask-dot"></span>
+                                <span ondbclick="editSubtask(this)" class="subtask-title" status="${subtask.done}">${subtask.title}</span>
+                                <div class="subtask-actions">
+                                    <div class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></div>
+                                    <div class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></div>
+                                </div>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </label>
+            </div>
+            <div class="edit-task-confirm-btn">
                 <button id="editTaskBtn" type="submit" class="create-task-btn">
                     Ok<span class="icon-check"></span>
                 </button>
-            </div>                                 
+            </div> 
+        </form>                    
     `;
 }
 
