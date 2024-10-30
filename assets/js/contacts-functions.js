@@ -36,7 +36,6 @@ function getRandomColor() {
     "#FF4646",
     "#FFBB2B",
   ];
-
   const rndInt = randomIntFromInterval(0, colors.length - 1);
   return colors[rndInt];
 }
@@ -80,7 +79,6 @@ function removeAllErrors() {
 function removeInputErrors() {
   const createInputs = document.querySelectorAll(`#create-contact-form input`);
   createInputs.forEach((element) => element.classList.remove("input-error"));
-
   const editInputs = document.querySelectorAll(`#edit-contact-form input`);
   editInputs.forEach((element) => element.classList.remove("input-error"));
 }
@@ -93,7 +91,6 @@ function hideErrorMessages() {
     "#create-contact-form [class$='-error']"
   );
   createErrorMessages.forEach((element) => element.classList.add("d-none"));
-
   const editErrorMessages = document.querySelectorAll(
     "#edit-contact-form [class$='-error']"
   );
