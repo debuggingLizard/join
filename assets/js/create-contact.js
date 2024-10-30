@@ -25,7 +25,6 @@ function eventListenerCreateContact() {
       createContact();
     }
   });
-
   document
     .getElementById("add-contact-overlay")
     .addEventListener("click", function (e) {
@@ -116,7 +115,6 @@ function checkCreateInputValidation(inputName, message) {
   let inputElement = document.querySelector(
     `#create-contact-form input[name = ${inputName}]`
   );
-
   if (!inputElement.checkValidity()) {
     showInputValidationError("#create-contact-form", inputName, message);
     createFormErrors[inputName] = 1;
