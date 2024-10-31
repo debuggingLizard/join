@@ -25,7 +25,7 @@
         height: 100%;
         z-index: 90;
         background-color: #f6f7f8;
-        display: none;
+        display: flex;
         justify-content: center;
         align-items: center;
         opacity: 1;
@@ -35,6 +35,10 @@
     .greeting-container.hidden {
         opacity: 0;
         pointer-events: none;
+    }
+
+    .greeting-container.no-show {
+        display: none;
     }
 }
 

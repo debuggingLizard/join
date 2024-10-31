@@ -1,17 +1,18 @@
 function showGreetingScreen() {
   let greetingScreen = document.getElementById('greeting-container');
+  let mainContainer = document.querySelector('.main');
     if (window.innerWidth <= 800) {
-      greetingScreen.style.display = 'flex'
+      mainContainer.style.overflow = 'hidden';
       setTimeout(() => { 
         greetingScreen.classList.add('hidden'); 
+        mainContainer.style.overflow = '';
         setTimeout(() => { 
-          greetingScreen.style.display = ''; 
+          greetingScreen.classList.add('no-show');
           greetingScreen.classList.remove('hidden'); 
         }, 1000);
-      }, 2000);
+      }, 1500);
     }
 }
-
 
 /**
  * Renders summary data for tasks in various statuses.
