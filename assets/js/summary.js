@@ -1,93 +1,146 @@
+/**
+ * Renders summary data for tasks in various statuses.
+ * Sets greeting, retrieves tasks, and displays task counts and urgent tasks.
+ */
 async function renderSummaryData() {
-    setGreeting();
-    let tasks = await getData("tasks");
-    renderTasksAmountByStatus(tasks, "todo");
-    renderTasksAmountByStatus(tasks, "done");
-    renderUrgentTasks(tasks);
-    renderAllTasksAmount(tasks);
-    renderTasksAmountByStatus(tasks, "progress");
-    renderTasksAmountByStatus(tasks, "await-feedback");
+  setGreeting();
+  let tasks = await getData("tasks");
+  renderTasksAmountByStatus(tasks, "todo");
+  renderTasksAmountByStatus(tasks, "done");
+  renderUrgentTasks(tasks);
+  renderAllTasksAmount(tasks);
+  renderTasksAmountByStatus(tasks, "progress");
+  renderTasksAmountByStatus(tasks, "await-feedback");
 }
 
+/**
+ * Sets the greeting text in the greeting element.
+ */
 function setGreeting() {
-    document.getElementById('greeting').innerText = getGreeting();
+  document.getElementById("greeting").innerText = getGreeting();
 }
 
+/**
+ * Returns a greeting based on the current time of day.
+ * - Morning: before 12 PM
+ * - Afternoon: 12 PM to 6 PM
+ * - Evening: after 6 PM
+ * @returns {string} Appropriate greeting message.
+ */
 function getGreeting() {
-    let now = new Date();
-    let hours = now.getHours();
-    let greeting;
-    switch (true) {
-        case (hours < 12):
-            greeting = "Good Morning,";
-            break;
-        case (hours < 18):
-            greeting = "Good Afternoon,";
-            break;
-        default: 
-            greeting = "Good Evening,";
-    }
-    return greeting; 
+  let now = new Date();
+  let hours = now.getHours();
+  let greeting;
+  switch (true) {
+    case hours < 12:
+      greeting = "Good Morning,";
+      break;
+    case hours < 18:
+      greeting = "Good Afternoon,";
+      break;
+    default:
+      greeting = "Good Evening,";
+  }
+  return greeting;
 }
 
+/**
+ * Updates the displayed count of tasks for a specified status.
+ * Iterates over tasks to count the number matching the given status and updates the DOM.
+ * @param {Object} tasks - All tasks data.
+ * @param {string} status - Status type to filter and count tasks by.
+ */
 function renderTasksAmountByStatus(tasks, status) {
-    let statusAmount = document.getElementById(status + "-tasks-amount")
-    let amount = 0;
-    for (const key in tasks) {
-        if (tasks[key].status === status) {
-            amount++;
-        }
+  let statusAmount = document.getElementById(status + "-tasks-amount");
+  let amount = 0;
+  for (const key in tasks) {
+    if (tasks[key].status === status) {
+      amount++;
     }
-    statusAmount.innerHTML = amount;
+  }
+  statusAmount.innerHTML = amount;
 }
 
+/**
+ * Renders the count and next deadline of urgent tasks based on priority.
+ * Fetches priority ID, calculates the count and nearest deadline of urgent tasks,
+ * and updates the respective DOM elements.
+ * @param {Object} tasks - All tasks data.
+ */
 async function renderUrgentTasks(tasks) {
-    let priority = await getPriorityID();
-    let amount = getUrgentTasksAmount(tasks, priority);
-    let nextDeadline = getNextUrgentDeadline(tasks, priority);
+  let priority = await getPriorityID();
+  let amount = getUrgentTasksAmount(tasks, priority);
+  let nextDeadline = getNextUrgentDeadline(tasks, priority);
 
-    document.getElementById("urgent-tasks-amount").innerHTML = amount;
-    document.getElementById("next-deadline").innerHTML =
-        nextDeadline.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  document.getElementById("urgent-tasks-amount").innerHTML = amount;
+  document.getElementById("next-deadline").innerHTML =
+    nextDeadline.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
 }
 
+/**
+ * Retrieves the priority ID for tasks marked as "Urgent".
+ * Fetches priority data and finds the ID corresponding to the "Urgent" priority title.
+ * @returns {string} - The ID of the "Urgent" priority.
+ */
 async function getPriorityID() {
-    let priorities = await getData("priorities");
-    let priority;
-    for (const key in priorities) {
-        if (priorities[key].title === "Urgent") {
-            priority = key;
-        }
+  let priorities = await getData("priorities");
+  let priority;
+  for (const key in priorities) {
+    if (priorities[key].title === "Urgent") {
+      priority = key;
     }
-    return priority;
+  }
+  return priority;
 }
 
+/**
+ * Counts the number of tasks with the specified urgent priority.
+ * @param {Object} tasks - Collection of all tasks.
+ * @param {string} priority - Priority ID to match for urgent tasks.
+ * @returns {number} - Count of urgent tasks.
+ */
 function getUrgentTasksAmount(tasks, priority) {
-    let amount = 0;
-    for (const key in tasks) {
-        if (tasks[key].priority === priority) {
-            amount++;
-        }
+  let amount = 0;
+  for (const key in tasks) {
+    if (tasks[key].priority === priority) {
+      amount++;
     }
-    return amount;
+  }
+  return amount;
 }
 
+/**
+ * Finds the earliest deadline among tasks with the specified urgent priority.
+ * @param {Object} tasks - Collection of all tasks.
+ * @param {string} priority - Priority ID to match for urgent tasks.
+ * @returns {Date|null} - The date of the next urgent deadline, or null if none found.
+ */
 function getNextUrgentDeadline(tasks, priority) {
-    let nextDeadline = null;
-    for (const key in tasks) {
-        if (tasks[key].priority === priority) {
-            const taskDeadline = new Date(tasks[key].date.split("/").reverse().join("-"));
-            if (!nextDeadline || taskDeadline < nextDeadline) {
-                nextDeadline = taskDeadline;
-            }
-        }
+  let nextDeadline = null;
+  for (const key in tasks) {
+    if (tasks[key].priority === priority) {
+      const taskDeadline = new Date(
+        tasks[key].date.split("/").reverse().join("-")
+      );
+      if (!nextDeadline || taskDeadline < nextDeadline) {
+        nextDeadline = taskDeadline;
+      }
     }
-    return nextDeadline;
+  }
+  return nextDeadline;
 }
 
+/**
+ * Renders the total count of all tasks.
+ * @param {Object} tasks - Collection of all tasks.
+ */
 function renderAllTasksAmount(tasks) {
-    let allTasks = document.getElementById('all-tasks-amount');
-    allTasks.innerHTML = /*html*/`
+  let allTasks = document.getElementById("all-tasks-amount");
+  allTasks.innerHTML = /*html*/ `
         ${Object.keys(tasks).length}
-    `
+    `;
 }
