@@ -50,7 +50,7 @@ function getHeaderTemplate() {
                 <a href="help.html" onclick="saveCurrentPage()" class="user-info-links-help">Help</a>
                 <a href="legal-notice.html" onclick="saveCurrentPage()">Legal Notice</a>
                 <a href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
-                <a href="">Log Out</a>
+                <a href="#" onclick="logout()">Log Out</a>
             </div>
         </div>
     `;
