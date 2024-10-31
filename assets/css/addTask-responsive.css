@@ -39,7 +39,7 @@
     }
 
     .add-task-button-wrapper {
-        justify-content: center;
+        justify-content:right;
         padding: 15px 0;
 
     }
