@@ -68,36 +68,39 @@ async function drop(e, targetStatus) {
  */
 function loadDropTargets() {
   const dropTargets = document.querySelectorAll(".drop-target");
+  dropTargets.forEach(addDragQueenEventListeners);
+}
 
-  dropTargets.forEach((target) => {
-    target.addEventListener("dragover", (e) => {
-      e.preventDefault();
+function addDragQueenEventListeners(target) {
+  target.addEventListener("dragover", handleDragOver);
+  target.addEventListener("dragenter", handleDragEnter);
+  target.addEventListener("dragleave", handleDragLeave);
+}
 
-      if (!elementAdded) {
-        const newElement = document.createElement("div");
-        newElement.classList.add("dragging-target-area");
-        newElement.style.width = `${width}px`;
-        newElement.style.height = `${height}px`;
+function handleDragOver(e) {
+  e.preventDefault();
+  if (!elementAdded) {
+    const newElement = document.createElement("div");
+    newElement.classList.add("dragging-target-area");
+    newElement.style.width = `${width}px`;
+    newElement.style.height = `${height}px`;
+    e.currentTarget.appendChild(newElement);
+    elementAdded = true;
+    addedElement = newElement;
+  }
+}
 
-        target.appendChild(newElement);
-        elementAdded = true;
-        addedElement = newElement;
-      }
-    });
+function handleDragEnter() {
+  isOverDropTarget = true;
+}
 
-    target.addEventListener("dragenter", () => {
-      isOverDropTarget = true;
-    });
-
-    target.addEventListener("dragleave", (e) => {
-      if (isOverDropTarget && !target.contains(e.relatedTarget)) {
-        if (addedElement) {
-          target.removeChild(addedElement);
-          elementAdded = false;
-          addedElement = null;
-        }
-        isOverDropTarget = false;
-      }
-    });
-  });
+function handleDragLeave(e) {
+  if (isOverDropTarget && !e.currentTarget.contains(e.relatedTarget)) {
+    if (addedElement) {
+      e.currentTarget.removeChild(addedElement);
+      elementAdded = false;
+      addedElement = null;
+    }
+    isOverDropTarget = false;
+  }
 }

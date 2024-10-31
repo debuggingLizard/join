@@ -9,6 +9,7 @@ let editFormErrors = {
   title: 0,
   dueDate: 0,
 };
+
 /**
  * Generates the HTML template for displaying detailed information about a task.
  * Also provides buttons for editing and deleting of the task.
@@ -148,19 +149,25 @@ function editTaskTemplate() {
             <div class="form-column edit-task-form-column">
                 <label for="title">
                     <div>Title</div>
-                    <input type="text" id="title" name="title" placeholder="Enter a title" value="${taskInformation.title}" required>
+                    <input type="text" id="title" name="title" placeholder="Enter a title" value="${
+                      taskInformation.title
+                    }" required>
                     <span class="title-error error d-none"></span>
                 </label>
 
                 <label for="description">
                     <div>Description</div>
                     <textarea id="description" name="description" rows="4"
-                        placeholder="Enter a Description">${taskInformation.description}</textarea>
+                        placeholder="Enter a Description">${
+                          taskInformation.description
+                        }</textarea>
                 </label>
 
                 <label for="due-date" class="date-label">
                     <div>Due date</div>
-                    <input type="text" class="picker text-date" id="due-date" name="due-date" value="${taskInformation.date}" onfocus="clearPlaceholder('#edit-task-form')"
+                    <input type="text" class="picker text-date" id="due-date" name="due-date" value="${
+                      taskInformation.date
+                    }" onfocus="clearPlaceholder('#edit-task-form')"
                         onblur="setPlaceholder('#edit-task-form')" onchange="formatDate('#edit-task-form')" required>
                     <span class="due-date-error error d-none"></span>
                 </label>
@@ -168,18 +175,26 @@ function editTaskTemplate() {
                 <label>
                     <div>Priority</div>
                     <div class="prio-options">
-                        <div class="prio-btn urgent ${taskPriority.title === 'Urgent' ? 'active' : ''}" onclick="selectPrio('#edit-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
+                        <div class="prio-btn urgent ${
+                          taskPriority.title === "Urgent" ? "active" : ""
+                        }" onclick="selectPrio('#edit-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
                             Urgent<span class="icon-urgent"></span>
                         </div>
-                        <div class="prio-btn medium ${taskPriority.title === 'Medium' ? 'active' : ''}"
+                        <div class="prio-btn medium ${
+                          taskPriority.title === "Medium" ? "active" : ""
+                        }"
                             onclick="selectPrio('#edit-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
                             Medium<span class="icon-medium"></span>
                         </div>
-                        <div class="prio-btn low ${taskPriority.title === 'Low' ? 'active' : ''}" onclick="selectPrio('#edit-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
+                        <div class="prio-btn low ${
+                          taskPriority.title === "Low" ? "active" : ""
+                        }" onclick="selectPrio('#edit-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
                             Low <span class="icon-low"></span>
                         </div>
                     </div>
-                    <input type="hidden" id="selectedPrio" name="prio" value="${taskInformation.priority}">
+                    <input type="hidden" id="selectedPrio" name="prio" value="${
+                      taskInformation.priority
+                    }">
                 </label>
 
                 <label for="assignees" class="assign-label">
@@ -189,9 +204,13 @@ function editTaskTemplate() {
                             placeholder="Select contacts to assign" onclick="toggleContactDropdown('#edit-task-form')">
                         <div class="assignees-list d-none"></div>
                         <div id="assigned-to" class="assigned-to">
-                            ${(assignedUsers).map(user => `
+                            ${assignedUsers
+                              .map(
+                                (user) => `
                                 <span id="${user.id}" class="contact-profile-image" style="background-color:${user.color}">${user.profileImage}</span>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                     </div>
                 </label>
@@ -206,7 +225,9 @@ function editTaskTemplate() {
                         </div>
                     </div>
                     <ul id="subtask-list" class="subtask-list">
-                        ${(taskInformation.subtasks || []).map((subtask, index) => `
+                        ${(taskInformation.subtasks || [])
+                          .map(
+                            (subtask, index) => `
                             <li class="subtask-item">
                                 <span class="subtask-dot"></span>
                                 <span ondbclick="editSubtask(this)" class="subtask-title" status="${subtask.done}">${subtask.title}</span>
@@ -215,7 +236,9 @@ function editTaskTemplate() {
                                     <div class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></div>
                                 </div>
                             </li>
-                        `).join('')}
+                        `
+                          )
+                          .join("")}
                     </ul>
                 </label>
             </div>
@@ -263,10 +286,8 @@ async function getDetailAssignedUsers() {
       user["id"] = userId;
       userDetails.push(user);
     }
-
     return userDetails;
   }
-
   return [];
 }
 
@@ -275,10 +296,8 @@ async function getDetailAssignedUsers() {
  */
 async function openTaskDetail(id) {
   taskId = id;
-
   await getDataFromDatabase();
   await loadTemplates();
-
   document.getElementById("overlay").classList.remove("d-none");
   document.getElementById("task-detail").classList.remove("d-none");
   setTimeout(() => {
@@ -331,12 +350,10 @@ function hideDeleteConfirm() {
 async function openEditTaskForm() {
   document.getElementById("task-detail").classList.add("d-none");
   document.getElementById("edit-task").classList.remove("d-none");
-
   renderContacts("#edit-task-form", taskInformation.users);
   initSubtaskFunctions("#edit-task-form");
   initDateInput("#edit-task-form");
   initContactDropdownList("#edit-task-form");
-
   editFormEventListener();
 }
 
@@ -347,17 +364,18 @@ async function openEditTaskForm() {
  */
 function editFormEventListener() {
   let formElement = document.getElementById("edit-task-form");
-
-  formElement.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    checkEditFormValidation("title", "The title field is required");
-    checkEditFormValidation("due-date", "The Date field is required");
-
-    if (editFormErrors.title === 0 && editFormErrors.dueDate === 0) {
-      await confirmEdit();
-    }
-  });
+  formElement.addEventListener("submit", handleEditFormSubmit);
 }
+
+async function handleEditFormSubmit(e) {
+  e.preventDefault();
+  checkEditFormValidation("title", "The title field is required");
+  checkEditFormValidation("due-date", "The Date field is required");
+  if (editFormErrors.title === 0 && editFormErrors.dueDate === 0) {
+    await confirmEdit();
+  }
+}
+
 /**
  * Checks the validity of an input field within the edit task form. Displays an error message
  * if the input is invalid or matches a placeholder value, and updates the validation status
@@ -377,12 +395,12 @@ function checkEditFormValidation(inputName, message) {
     hideInputValidationError("#edit-task-form", inputName);
     editFormErrors[inputName] = 0;
   }
-
   if (inputElement.value === "dd/mm/yyyy") {
     showInputValidationError("#edit-task-form", inputName, message);
     editFormErrors[inputName] = 1;
   }
 }
+
 /**
  * Confirms the task edit by updating task data in the database, reloading task details,
  * and switching the view back to the task detail display. Also refreshes the tasks list.
@@ -393,12 +411,7 @@ async function confirmEdit() {
   await updateTaskData();
   await getDataFromDatabase();
   await loadTemplates();
-
-  document.getElementById("task-detail").classList.remove("d-none");
-  document.getElementById("task-detail").classList.add("show");
-  document.getElementById("edit-task").classList.add("d-none");
-  document.getElementById("edit-task").classList.add("show");
-
+  hideEditTaskShowDetailView();
   await loadTasksFromDatabase();
   filterTasks = Object.entries(tasks);
   await renderTasks(
@@ -406,6 +419,14 @@ async function confirmEdit() {
     getTasksByStatus(taskInformation.status)
   );
 }
+
+function hideEditTaskShowDetailView() {
+  document.getElementById("task-detail").classList.remove("d-none");
+  document.getElementById("task-detail").classList.add("show");
+  document.getElementById("edit-task").classList.add("d-none");
+  document.getElementById("edit-task").classList.add("show");
+}
+
 /**
  * Confirms the deletion of a task by removing task data from the database,
  * hiding the task detail and edit views, and updating the task list.
@@ -414,11 +435,9 @@ async function confirmEdit() {
  */
 async function confirmDelete() {
   await deleteTaskData();
-
   document.getElementById("task-detail").classList.remove("show");
   document.getElementById("edit-task").classList.remove("show");
   document.getElementById("overlay").classList.add("d-none");
-
   await loadTasksFromDatabase();
   filterTasks = Object.entries(tasks);
   await renderTasks(
@@ -440,16 +459,30 @@ async function toggleSubtask(index) {
   const checked = document.getElementById(`checked-${index}`);
   subtaskElement.style.pointerEvents = "none";
   if (taskInformation.subtasks[index].done) {
-    taskInformation.subtasks[index].done = false;
-    subTaskStatus = false;
-    unchecked.classList.remove("d-none");
-    checked.classList.add("d-none");
+    markSubtaskAsNotDone(index, subTaskStatus, unchecked, checked);
   } else {
-    taskInformation.subtasks[index].done = true;
-    subTaskStatus = true;
-    unchecked.classList.add("d-none");
-    checked.classList.remove("d-none");
+    markSubstaskAsDone(index, subTaskStatus, unchecked, checked);
   }
+  await updateTaskDataForSubtaskStatusChange(index, subTaskStatus);
+  document.getElementById("edit-task").innerHTML = editTaskTemplate();
+  subtaskElement.style.pointerEvents = "auto";
+}
+
+function markSubtaskAsNotDone(index, subTaskStatus, unchecked, checked) {
+  taskInformation.subtasks[index].done = false;
+  subTaskStatus = false;
+  unchecked.classList.remove("d-none");
+  checked.classList.add("d-none");
+}
+
+function markSubstaskAsDone(index, subTaskStatus, unchecked, checked) {
+  taskInformation.subtasks[index].done = true;
+  subTaskStatus = true;
+  unchecked.classList.add("d-none");
+  checked.classList.remove("d-none");
+}
+
+async function updateTaskDataForSubtaskStatusChange(index, subTaskStatus) {
   await putData(
     "tasks",
     taskId + "/subtasks/" + index + "/done",
@@ -461,8 +494,6 @@ async function toggleSubtask(index) {
     taskInformation.status + "-tasks",
     getTasksByStatus(taskInformation.status)
   );
-  document.getElementById("edit-task").innerHTML = editTaskTemplate();
-  subtaskElement.style.pointerEvents = "auto";
 }
 
 /**
@@ -475,50 +506,84 @@ async function toggleSubtask(index) {
  */
 async function updateTaskData() {
   try {
-    let title = document.querySelector("#edit-task-form *[name = title]").value;
-    let description =
-      document.querySelector("#edit-task-form *[name = description]").value ||
-      "";
-
-    let assignedSpans = document
-      .querySelector("#edit-task-form .assigned-to")
-      .querySelectorAll("span");
-    let users = Array.from(assignedSpans).map((span) => span.id);
-    let date = document.querySelector(
-      "#edit-task-form *[name = due-date]"
-    ).value;
-    let priority = document.querySelector(
-      "#edit-task-form *[name = prio]"
-    ).value;
-    let category = taskInformation.category;
-
-    let subtasks = Array.from(
-      document.querySelector("#edit-task-form .subtask-list").children
-    ).map((li) => ({
-      done:
-        li.querySelector(".subtask-title").getAttribute("status") == "true"
-          ? true
-          : false,
-      title: li.querySelector(".subtask-title").textContent,
-    }));
-    let status = taskInformation.status;
-
-    const data = {
-      title: title,
-      description: description,
-      users: users.length > 0 ? users : [],
-      date: date,
-      priority: priority,
-      category: category,
-      subtasks: subtasks.length > 0 ? subtasks : [],
-      status: status,
-    };
-
+    const {
+      title,
+      description,
+      users,
+      date,
+      priority,
+      category,
+      subtasks,
+      status,
+    } = gatherTaskFormData();
+    const data = createTaskDataObject(
+      title,
+      description,
+      users,
+      date,
+      priority,
+      category,
+      subtasks,
+      status
+    );
     await putData("tasks", taskId, data);
   } catch (error) {
     console.error(`Error updating task ${taskId}:`, error);
   }
 }
+
+function gatherTaskFormData() {
+  let title = document.querySelector("#edit-task-form *[name=title]").value;
+  let description =
+    document.querySelector("#edit-task-form *[name=description]").value || "";
+  let assignedSpans = document
+    .querySelector("#edit-task-form .assigned-to")
+    .querySelectorAll("span");
+  let users = Array.from(assignedSpans).map((span) => span.id);
+  let date = document.querySelector("#edit-task-form *[name=due-date]").value;
+  let priority = document.querySelector("#edit-task-form *[name=prio]").value;
+  let category = taskInformation.category;
+  let subtasks = Array.from(
+    document.querySelector("#edit-task-form .subtask-list").children
+  ).map((li) => ({
+    done: li.querySelector(".subtask-title").getAttribute("status") == "true",
+    title: li.querySelector(".subtask-title").textContent,
+  }));
+  let status = taskInformation.status;
+  return {
+    title,
+    description,
+    users,
+    date,
+    priority,
+    category,
+    subtasks,
+    status,
+  };
+}
+
+function createTaskDataObject(
+  title,
+  description,
+  users,
+  date,
+  priority,
+  category,
+  subtasks,
+  status
+) {
+  return {
+    title: title,
+    description: description,
+    users: users.length > 0 ? users : [],
+    date: date,
+    priority: priority,
+    category: category,
+    subtasks: subtasks.length > 0 ? subtasks : [],
+    status: status,
+  };
+}
+
 /**
  * Deletes the task data from the database based on the `taskId`.
  *

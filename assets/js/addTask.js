@@ -128,7 +128,6 @@ function updateAssignedContacts(form) {
 function handleAssigneeChange(form, event) {
   const checkbox = event.target;
   const assignedContactsDiv = document.querySelector(`${form} .assigned-to`);
-
   if (checkbox.checked) {
     addContact(assignedContactsDiv, checkbox);
   } else {
@@ -244,7 +243,6 @@ function initSubtaskFunctions(formId) {
   );
   const addBtn = document.querySelector(`${formId} .add-subtask-btn`);
   const subtaskList = document.querySelector(`${formId} .subtask-list`);
-
   if (subtaskInput) {
     handleSubtaskInput(subtaskInput, addBtn, clearSubtaskBtn);
     setupClearButton(clearSubtaskBtn, subtaskInput, addBtn);
@@ -439,15 +437,19 @@ function appendSubtaskToList(formId, subtaskValue) {
 function createSubtaskListItem(subtaskValue) {
   let listItem = document.createElement("li");
   listItem.classList.add("subtask-item");
-  listItem.innerHTML = `
-    <span class="subtask-dot"></span>
+  listItem.innerHTML = getSubtaskListItemTemplate(subtaskValue);
+  return listItem;
+}
+
+function getSubtaskListItemTemplate(subtaskValue) {
+  return `
+      <span class="subtask-dot"></span>
     <span ondblclick="editSubtask(this)" class="subtask-title">${subtaskValue}</span>
     <div class="subtask-actions">
       <button type="button" class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></button>
       <button type="button" class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></button>
     </div>
-  `;
-  return listItem;
+  `
 }
 
 /**
@@ -658,10 +660,8 @@ function resetFormInputs() {
   document.querySelector("#add-task-form *[name = title]").value = "";
   hideInputValidationError("#add-task-form", "title");
   createFormErrors["title"] = 0;
-
   document.querySelector("#add-task-form *[name = description]").value = "";
   document.querySelector("#add-task-form .assigned-to").innerHTML = "";
-
   document.querySelector("#add-task-form *[name = due-date]").value = "";
   hideInputValidationError("#add-task-form", "due-date");
   createFormErrors["dueDate"] = 0;
@@ -704,7 +704,7 @@ function setPlaceholder(formId) {
   const dateInput = document.querySelector(`${formId} *[name = due-date]`);
   dateInput.setAttribute("type", "text");
   if (dateInput.value === "") {
-    dateInput.value = "dd/mm/yyyy"; // Placeholder text
+    dateInput.value = "dd/mm/yyyy"; 
     dateInput.classList.remove("text-date");
   }
 }
@@ -719,7 +719,7 @@ function clearPlaceholder(formId) {
     newValue = convertDateFormatWithDash(dateInput.value);
   }
   dateInput.value = "";
-  dateInput.setAttribute("type", "date"); // Switch back to date type
+  dateInput.setAttribute("type", "date"); 
   dateInput.classList.remove("text-date");
   setTimeout(() => {
     dateInput.value = newValue;

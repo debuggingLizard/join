@@ -76,17 +76,21 @@ async function renderTasks(boardElementId, boardTasks) {
   if (boardTasks.length === 0) {
     boardElement.innerHTML = `<div class="no-tasks">No tasks ${boardTitle}</div>`;
   } else {
-    boardElement.innerHTML = "";
-    for await (const task of boardTasks) {
-      let taskId = task[0];
-      let taskDetail = task[1];
-      boardElement.innerHTML += await taskTemplate(taskId, taskDetail);
-      if (taskDetail.users != undefined && taskDetail.users.length > 0) {
-        await renderTaskContributors(taskId, taskDetail);
-      }
-      if (taskDetail.subtasks != undefined && taskDetail.subtasks.length > 0) {
-        renderSubtasks(taskId, taskDetail);
-      }
+    await renderTasksThatExist(boardElement, boardTasks);
+  }
+}
+
+async function renderTasksThatExist(boardElement, boardTasks) {
+  boardElement.innerHTML = "";
+  for await (const task of boardTasks) {
+    let taskId = task[0];
+    let taskDetail = task[1];
+    boardElement.innerHTML += await taskTemplate(taskId, taskDetail);
+    if (taskDetail.users != undefined && taskDetail.users.length > 0) {
+      await renderTaskContributors(taskId, taskDetail);
+    }
+    if (taskDetail.subtasks != undefined && taskDetail.subtasks.length > 0) {
+      renderSubtasks(taskId, taskDetail);
     }
   }
 }

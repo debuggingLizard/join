@@ -1,17 +1,21 @@
 function showGreetingScreen() {
-  let greetingScreen = document.getElementById('greeting-container');
-  let mainContainer = document.querySelector('.main');
-    if (window.innerWidth <= 800) {
-      mainContainer.style.overflow = 'hidden';
-      setTimeout(() => { 
-        greetingScreen.classList.add('hidden'); 
-        mainContainer.style.overflow = '';
-        setTimeout(() => { 
-          greetingScreen.classList.add('no-show');
-          greetingScreen.classList.remove('hidden'); 
-        }, 1000);
-      }, 1500);
-    }
+  let greetingScreen = document.getElementById("greeting-container");
+  let mainContainer = document.querySelector(".main");
+  if (window.innerWidth <= 800) {
+    setGreetingScreenVisibility(mainContainer, greetingScreen);
+  }
+}
+
+function setGreetingScreenVisibility(mainContainer, greetingScreen) {
+  mainContainer.style.overflow = "hidden";
+  setTimeout(() => {
+    greetingScreen.classList.add("hidden");
+    mainContainer.style.overflow = "";
+    setTimeout(() => {
+      greetingScreen.classList.add("no-show");
+      greetingScreen.classList.remove("hidden");
+    }, 1000);
+  }, 1500);
 }
 
 /**
@@ -87,7 +91,6 @@ async function renderUrgentTasks(tasks) {
   let priority = await getPriorityID();
   let amount = getUrgentTasksAmount(tasks, priority);
   let nextDeadline = getNextUrgentDeadline(tasks, priority);
-
   document.getElementById("urgent-tasks-amount").innerHTML = amount;
   document.getElementById("next-deadline").innerHTML =
     nextDeadline.toLocaleDateString("en-US", {

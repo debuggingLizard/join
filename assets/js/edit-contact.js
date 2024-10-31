@@ -8,29 +8,38 @@ let editFormErrors = {
  * Adds event listeners to the edit contact form and overlay.
  */
 function eventListenerEditContact() {
-  let formElement = document.getElementById("edit-contact-form");
-  formElement.addEventListener("submit", function (e) {
-    e.preventDefault();
-    checkEditInputValidation("name", "Enter name & surname.");
-    checkEditInputValidation("email", "Enter a valid email address.");
-    checkEditInputValidation(
-      "phone",
-      "Enter a valid phone number with country code."
-    );
-    if (
-      editFormErrors.name === 0 &&
-      editFormErrors.email === 0 &&
-      editFormErrors.phone === 0
-    ) {
-      editContact();
-    }
-  });
+  document
+    .getElementById("edit-contact-form")
+    .addEventListener("submit", handleEditContactSubmit);
   document
     .getElementById("edit-contact-overlay")
-    .addEventListener("click", function (e) {
-      if (e.target !== e.currentTarget) return;
-      hideEditContactOverlay();
-    });
+    .addEventListener("click", handleEditContactOverlayClick);
+}
+
+function handleEditContactSubmit(event) {
+  event.preventDefault();
+  validateEditContactInputs();
+  if (
+    editFormErrors.name === 0 &&
+    editFormErrors.email === 0 &&
+    editFormErrors.phone === 0
+  ) {
+    editContact();
+  }
+}
+
+function validateEditContactInputs() {
+  checkEditInputValidation("name", "Enter name & surname.");
+  checkEditInputValidation("email", "Enter a valid email address.");
+  checkEditInputValidation(
+    "phone",
+    "Enter a valid phone number with country code."
+  );
+}
+
+function handleEditContactOverlayClick(event) {
+  if (event.target !== event.currentTarget) return;
+  hideEditContactOverlay();
 }
 
 /**
@@ -76,19 +85,27 @@ async function editContact() {
       "Email already exists, please choose another!"
     );
   } else {
-    const data = {
-      name: name,
-      mobile: mobile,
-      email: email,
-      color: currentUserDetail.color,
-      profileImage: getProfileImage(name),
-    };
-    await putData("users", id, data);
-    renderContactDetail(id, "detail");
-    renderContactList();
-    hideEditContactOverlay();
-    showNotification("Contact succesfully updated");
+    await editValidContact(name, mobile, email, currentUserDetail, id);
   }
+}
+
+async function editValidContact(name, mobile, email, currentUserDetail, id) {
+  const data = gatherEditedContactData(name, mobile, email, currentUserDetail);
+  await putData("users", id, data);
+  renderContactDetail(id, "detail");
+  renderContactList();
+  hideEditContactOverlay();
+  showNotification("Contact succesfully updated");
+}
+
+function gatherEditedContactData(name, mobile, email, currentUserDetail) {
+  return {
+    name: name,
+    mobile: mobile,
+    email: email,
+    color: currentUserDetail.color,
+    profileImage: getProfileImage(name),
+  };
 }
 
 /**
@@ -111,7 +128,6 @@ function hideEditContactOverlay() {
   document.getElementById("edit-contact-overlay-container").style.transform =
     "translateX(200%)";
   document.getElementById("edit-contact-overlay").style.zIndex = -1;
-
   removeAllErrors();
 }
 

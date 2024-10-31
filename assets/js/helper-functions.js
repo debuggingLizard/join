@@ -7,16 +7,13 @@
  * @param {string} message - Die anzuzeigende Fehlermeldung.
  */
 function showInputValidationError(form, inputName, message) {
-    let inputElement = document.querySelector(
-        `${form} *[name = ${inputName}]`
-    );
-    let errorMessageElement = document.querySelector(
-        `${form} .${inputName}-error`
-    );
-
-    inputElement.classList.add("input-error");
-    errorMessageElement.innerHTML = message;
-    errorMessageElement.classList.remove("d-none");
+  let inputElement = document.querySelector(`${form} *[name = ${inputName}]`);
+  let errorMessageElement = document.querySelector(
+    `${form} .${inputName}-error`
+  );
+  inputElement.classList.add("input-error");
+  errorMessageElement.innerHTML = message;
+  errorMessageElement.classList.remove("d-none");
 }
 
 /**
@@ -27,14 +24,11 @@ function showInputValidationError(form, inputName, message) {
  * @param {string} inputName - Der Name des Eingabefelds.
  */
 function hideInputValidationError(form, inputName) {
-    let inputElement = document.querySelector(
-        `${form} *[name = ${inputName}]`
-    );
-    let errorMessageElement = document.querySelector(
-        `${form} .${inputName}-error`
-    );
-
-    inputElement.classList.remove("input-error");
-    errorMessageElement.innerHTML = "";
-    errorMessageElement.classList.add("d-none");
+  let inputElement = document.querySelector(`${form} *[name = ${inputName}]`);
+  let errorMessageElement = document.querySelector(
+    `${form} .${inputName}-error`
+  );
+  inputElement.classList.remove("input-error");
+  errorMessageElement.innerHTML = "";
+  errorMessageElement.classList.add("d-none");
 }

@@ -64,17 +64,6 @@ function openHeaderProfileInfo() {
 }
 
 /**
- * Displays a feedback overlay temporarily, then hides it after 1 second.
- */
-function showFeedbackOverlay() {
-  const overlay = document.getElementById("feedback-overlay");
-  overlay.classList.add("show");
-  setTimeout(() => {
-    overlay.classList.remove("show");
-  }, 1000);
-}
-
-/**
  * Saves the current page URL in session storage under 'previousPage' key.
  */
 function saveCurrentPage() {

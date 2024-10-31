@@ -8,29 +8,38 @@ let createFormErrors = {
  * Adds event listeners to the create contact form and overlay.
  */
 function eventListenerCreateContact() {
-  let formElement = document.getElementById("create-contact-form");
-  formElement.addEventListener("submit", function (e) {
-    e.preventDefault();
-    checkCreateInputValidation("name", "Enter name & surname.");
-    checkCreateInputValidation("email", "Enter a valid email address.");
-    checkCreateInputValidation(
-      "phone",
-      "Enter a valid phone number with country code."
-    );
-    if (
-      createFormErrors.name === 0 &&
-      createFormErrors.email === 0 &&
-      createFormErrors.phone === 0
-    ) {
-      createContact();
-    }
-  });
+  document
+    .getElementById("create-contact-form")
+    .addEventListener("submit", handleCreateContactSubmit);
   document
     .getElementById("add-contact-overlay")
-    .addEventListener("click", function (e) {
-      if (e.target !== e.currentTarget) return;
-      hideAddContactOverlay();
-    });
+    .addEventListener("click", handleAddContactOverlayClick);
+}
+
+function handleCreateContactSubmit(event) {
+  event.preventDefault();
+  validateCreateContactInputs();
+  if (
+    createFormErrors.name === 0 &&
+    createFormErrors.email === 0 &&
+    createFormErrors.phone === 0
+  ) {
+    createContact();
+  }
+}
+
+function validateCreateContactInputs() {
+  checkCreateInputValidation("name", "Enter name & surname.");
+  checkCreateInputValidation("email", "Enter a valid email address.");
+  checkCreateInputValidation(
+    "phone",
+    "Enter a valid phone number with country code."
+  );
+}
+
+function handleAddContactOverlayClick(event) {
+  if (event.target !== event.currentTarget) return;
+  hideAddContactOverlay();
 }
 
 /**
@@ -50,7 +59,6 @@ async function createContact() {
   let mobile = document.querySelector(
     "#create-contact-form input[name = phone]"
   ).value;
-
   if (await isEmailExist(email)) {
     showInputValidationError(
       "#create-contact-form",
@@ -58,20 +66,27 @@ async function createContact() {
       "Email already exists, please choose another!"
     );
   } else {
-    const data = {
-      name: name,
-      mobile: mobile,
-      email: email,
-      color: getRandomColor(),
-      profileImage: getProfileImage(name),
-    };
-
-    await postData("users", data);
-    resetCreateContactForm();
-    renderContactList();
-    hideAddContactOverlay();
-    showNotification("Contact succesfully created");
+    await createValidContact(name, mobile, email);
   }
+}
+
+async function createValidContact(name, mobile, email) {
+  const data = gatherNewContactData(name, mobile, email);
+  await postData("users", data);
+  resetCreateContactForm();
+  renderContactList();
+  hideAddContactOverlay();
+  showNotification("Contact succesfully created");
+}
+
+function gatherNewContactData(name, mobile, email) {
+  return {
+    name: name,
+    mobile: mobile,
+    email: email,
+    color: getRandomColor(),
+    profileImage: getProfileImage(name),
+  };
 }
 
 /**
@@ -103,7 +118,6 @@ function hideAddContactOverlay() {
   document.getElementById("add-contact-overlay-container").style.transform =
     "translateX(200%)";
   document.getElementById("add-contact-overlay").style.zIndex = -1;
-
   resetCreateContactForm();
   removeAllErrors();
 }
