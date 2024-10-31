@@ -360,3 +360,8 @@
     align-items: center;
     margin-top: 20px;
 }
+
+.board-page-form-row {
+    overflow-y: auto;
+    max-height: 45vh;
+}
