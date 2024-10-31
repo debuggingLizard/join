@@ -252,12 +252,10 @@ function editTaskTemplate() {
 }
 
 /**
- * Asynchronously retrieves task information, priority, category, and assigned users from the database.
- * Uses `getData` to fetch task details based on `taskId`, then retrieves priority and category information
- * linked to the task. Also retrieves the list of assigned users.
+ * Fetches task-related data from the database, including task information,
+ * priority, category, and assigned users. Logs an error message if any of the data retrieval operations fail.
  *
- * @async
- * @throws {Error} Logs an error to the console if data retrieval fails.
+ * @returns {Promise<void>}
  */
 async function getDataFromDatabase() {
   try {
@@ -269,14 +267,13 @@ async function getDataFromDatabase() {
     console.error("Get data failed:");
   }
 }
+
 /**
- * Asynchronously retrieves detailed information for each assigned user based on their user IDs
- * found in `taskInformation.users`. Each user's details are fetched from the database and stored
- * in an array.
+ * Retrieves detailed information for the users assigned to the current task.
+ * Iterates over the user IDs in the task information, fetches user data from the database,
+ * and returns an array of user details. If no users are assigned, returns an empty array.
  *
- * @async
- * @returns {Promise<Array<Object>>} An array of user objects with their details, including the user ID.
- * Returns an empty array if no users are assigned to the task.
+ * @returns {Promise<Array>} - An array of user details.
  */
 async function getDetailAssignedUsers() {
   if (taskInformation.users != undefined && taskInformation.users.length > 0) {
@@ -292,7 +289,12 @@ async function getDetailAssignedUsers() {
 }
 
 /**
- * Opens the task detail overlay and displays the task details.
+ * Opens the task detail view by setting the task ID, fetching the necessary data from the database,
+ * loading the templates, and displaying the task detail overlay. Adds a brief delay before showing
+ * the task detail and edit task elements for a smoother transition.
+ *
+ * @param {string} id - The ID of the task to display the details for.
+ * @returns {Promise<void>}
  */
 async function openTaskDetail(id) {
   taskId = id;
@@ -306,6 +308,12 @@ async function openTaskDetail(id) {
   }, 100);
 }
 
+/**
+ * Loads the task detail and edit task templates into their respective HTML elements.
+ * Replaces the inner HTML of the task detail and edit task containers with the generated templates.
+ *
+ * @returns {Promise<void>}
+ */
 async function loadTemplates() {
   document.getElementById("task-detail").innerHTML = taskDetailTemplate();
   document.getElementById("edit-task").innerHTML = editTaskTemplate();
@@ -322,6 +330,7 @@ function closeTaskDetail() {
     document.getElementById("overlay").classList.add("d-none");
   }, 500);
 }
+
 /**
  * Displays the delete confirmation section by hiding the edit/delete buttons
  * and showing the delete confirmation prompt in the task detail view.
@@ -332,6 +341,7 @@ function showDeleteConfirm() {
     .getElementById("task-detail-delete-confirm")
     .classList.remove("d-none");
 }
+
 /**
  * Hides the delete confirmation prompt by restoring the edit/delete buttons
  * in the task detail view.
@@ -342,10 +352,11 @@ function hideDeleteConfirm() {
 }
 
 /**
- * Opens the edit task form by hiding the task detail view and displaying the edit form.
- * Initializes contacts, subtasks, date input, and dropdown list functionality in the form.
+ * Opens the edit task form by hiding the task detail view and displaying the edit task view.
+ * Initializes various form elements including contacts, subtasks, date input, and contact dropdown list.
+ * Also sets up the event listeners for the edit task form.
  *
- * @async
+ * @returns {Promise<void>}
  */
 async function openEditTaskForm() {
   document.getElementById("task-detail").classList.add("d-none");
@@ -367,6 +378,14 @@ function editFormEventListener() {
   formElement.addEventListener("submit", handleEditFormSubmit);
 }
 
+/**
+ * Handles the submit event for the edit task form.
+ * Prevents the default form submission behavior, validates the title and due date fields,
+ * and proceeds to confirm the edit if the fields are valid (no errors).
+ *
+ * @param {Event} e - The submit event object.
+ * @returns {Promise<void>}
+ */
 async function handleEditFormSubmit(e) {
   e.preventDefault();
   checkEditFormValidation("title", "The title field is required");
@@ -402,10 +421,11 @@ function checkEditFormValidation(inputName, message) {
 }
 
 /**
- * Confirms the task edit by updating task data in the database, reloading task details,
- * and switching the view back to the task detail display. Also refreshes the tasks list.
+ * Confirms the edit of a task by updating the task data, re-fetching the task details,
+ * reloading the templates, and refreshing the task list. Hides the edit task view
+ * and shows the updated task detail view.
  *
- * @async
+ * @returns {Promise<void>}
  */
 async function confirmEdit() {
   await updateTaskData();
@@ -420,6 +440,10 @@ async function confirmEdit() {
   );
 }
 
+/**
+ * Hides the edit task view and shows the task detail view.
+ * Updates the CSS classes of the relevant HTML elements to manage their visibility.
+ */
 function hideEditTaskShowDetailView() {
   document.getElementById("task-detail").classList.remove("d-none");
   document.getElementById("task-detail").classList.add("show");
@@ -445,6 +469,7 @@ async function confirmDelete() {
     getTasksByStatus(taskInformation.status)
   );
 }
+
 /**
  * Toggles the completion status of a subtask, updating its visual state and storing the
  * change in the database. Refreshes the task list and the edit task template after updating.
@@ -468,6 +493,14 @@ async function toggleSubtask(index) {
   subtaskElement.style.pointerEvents = "auto";
 }
 
+/**
+ * Marks a subtask as not done by updating its status and adjusting the visibility of the corresponding UI elements.
+ *
+ * @param {number} index - The index of the subtask in the taskInformation object.
+ * @param {boolean} subTaskStatus - The status of the subtask, set to false.
+ * @param {Element} unchecked - The HTML element representing the unchecked state of the subtask.
+ * @param {Element} checked - The HTML element representing the checked state of the subtask.
+ */
 function markSubtaskAsNotDone(index, subTaskStatus, unchecked, checked) {
   taskInformation.subtasks[index].done = false;
   subTaskStatus = false;
@@ -475,6 +508,14 @@ function markSubtaskAsNotDone(index, subTaskStatus, unchecked, checked) {
   checked.classList.add("d-none");
 }
 
+/**
+ * Marks a subtask as done by updating its status and adjusting the visibility of the corresponding UI elements.
+ *
+ * @param {number} index - The index of the subtask in the taskInformation object.
+ * @param {boolean} subTaskStatus - The status of the subtask, set to true.
+ * @param {Element} unchecked - The HTML element representing the unchecked state of the subtask.
+ * @param {Element} checked - The HTML element representing the checked state of the subtask.
+ */
 function markSubstaskAsDone(index, subTaskStatus, unchecked, checked) {
   taskInformation.subtasks[index].done = true;
   subTaskStatus = true;
@@ -482,6 +523,15 @@ function markSubstaskAsDone(index, subTaskStatus, unchecked, checked) {
   checked.classList.remove("d-none");
 }
 
+/**
+ * Updates the task data in the database to reflect the status change of a subtask.
+ * Posts the updated subtask status, reloads the tasks from the database,
+ * updates the task list, and re-renders the tasks by their status.
+ *
+ * @param {number} index - The index of the subtask in the task information.
+ * @param {boolean} subTaskStatus - The updated status of the subtask.
+ * @returns {Promise<void>}
+ */
 async function updateTaskDataForSubtaskStatusChange(index, subTaskStatus) {
   await putData(
     "tasks",
@@ -532,6 +582,12 @@ async function updateTaskData() {
   }
 }
 
+/**
+ * Gathers task data from the edit task form, including title, description, assigned users,
+ * due date, priority, category, subtasks, and status.
+ *
+ * @returns {Object} - An object containing the gathered task data.
+ */
 function gatherTaskFormData() {
   let title = document.querySelector("#edit-task-form *[name=title]").value;
   let description =
@@ -562,6 +618,20 @@ function gatherTaskFormData() {
   };
 }
 
+/**
+ * Creates a task data object with the provided task details.
+ * Ensures that the users and subtasks arrays are not empty.
+ *
+ * @param {string} title - The title of the task.
+ * @param {string} description - The description of the task.
+ * @param {Array<string>} users - An array of user IDs assigned to the task.
+ * @param {string} date - The due date of the task.
+ * @param {string} priority - The priority level of the task.
+ * @param {string} category - The category of the task.
+ * @param {Array<Object>} subtasks - An array of subtask objects.
+ * @param {string} status - The status of the task.
+ * @returns {Object} - An object containing the task data.
+ */
 function createTaskDataObject(
   title,
   description,

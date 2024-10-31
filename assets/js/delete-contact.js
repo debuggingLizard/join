@@ -19,6 +19,14 @@ function deleteContactFromEditForm() {
   deleteContact(id);
 }
 
+/**
+ * Removes a contact from all tasks they are assigned to.
+ * Iterates through all tasks and removes the user ID from the users array of each task.
+ * Updates each modified task in the database.
+ *
+ * @param {string} userId - The ID of the user to remove from all tasks.
+ * @returns {Promise<void>}
+ */
 async function removeContactFromTasks(userId) {
   try {
       const tasks = await getData("tasks");

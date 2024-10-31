@@ -1,3 +1,9 @@
+/**
+ * Displays the greeting screen overlay on smaller screens (800px or less).
+ * Adjusts the visibility of the main container and the greeting screen.
+ *
+ * @param {string} formId - The selector of the form containing the due date input field.
+ */
 function showGreetingScreen() {
   let greetingScreen = document.getElementById("greeting-container");
   let mainContainer = document.querySelector(".main");
@@ -6,6 +12,14 @@ function showGreetingScreen() {
   }
 }
 
+/**
+ * Sets the visibility of the greeting screen.
+ * Temporarily hides the overflow of the main container, hides the greeting screen after a delay,
+ * and then fully hides the greeting screen after an additional delay, resetting the overflow style.
+ *
+ * @param {Element} mainContainer - The main container element whose overflow style will be adjusted.
+ * @param {Element} greetingScreen - The greeting screen element to be hidden.
+ */
 function setGreetingScreenVisibility(mainContainer, greetingScreen) {
   mainContainer.style.overflow = "hidden";
   setTimeout(() => {

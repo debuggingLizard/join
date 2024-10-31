@@ -16,6 +16,13 @@ function eventListenerEditContact() {
     .addEventListener("click", handleEditContactOverlayClick);
 }
 
+/**
+ * Handles the submit event for the edit contact form.
+ * Prevents the default form submission behavior, validates the input fields,
+ * and edits the contact if all fields are valid (no errors).
+ *
+ * @param {Event} event - The submit event object.
+ */
 function handleEditContactSubmit(event) {
   event.preventDefault();
   validateEditContactInputs();
@@ -28,6 +35,11 @@ function handleEditContactSubmit(event) {
   }
 }
 
+/**
+ * Validates the input fields in the edit contact form.
+ * Checks the validity of the name, email, and phone fields,
+ * and displays appropriate validation error messages if the fields are invalid.
+ */
 function validateEditContactInputs() {
   checkEditInputValidation("name", "Enter name & surname.");
   checkEditInputValidation("email", "Enter a valid email address.");
@@ -37,6 +49,13 @@ function validateEditContactInputs() {
   );
 }
 
+/**
+ * Handles the click event for the edit contact overlay.
+ * If the click target is not the overlay itself, the function returns early.
+ * Otherwise, it hides the edit contact overlay.
+ *
+ * @param {Event} event - The click event object.
+ */
 function handleEditContactOverlayClick(event) {
   if (event.target !== event.currentTarget) return;
   hideEditContactOverlay();
@@ -89,6 +108,18 @@ async function editContact() {
   }
 }
 
+/**
+ * Edits a valid contact by gathering the updated contact data, posting it to the server,
+ * rendering the updated contact detail and contact list, hiding the edit contact overlay,
+ * and displaying a success notification.
+ *
+ * @param {string} name - The updated name of the contact.
+ * @param {string} mobile - The updated mobile number of the contact.
+ * @param {string} email - The updated email address of the contact.
+ * @param {Object} currentUserDetail - The current details of the contact before the update.
+ * @param {string} id - The ID of the contact to be updated.
+ * @returns {Promise<void>}
+ */
 async function editValidContact(name, mobile, email, currentUserDetail, id) {
   const data = gatherEditedContactData(name, mobile, email, currentUserDetail);
   await putData("users", id, data);
@@ -98,6 +129,16 @@ async function editValidContact(name, mobile, email, currentUserDetail, id) {
   showNotification("Contact succesfully updated");
 }
 
+/**
+ * Gathers the edited contact data, including the updated name, mobile, email, and profile image.
+ * Retains the existing color from the current user details.
+ *
+ * @param {string} name - The updated name of the contact.
+ * @param {string} mobile - The updated mobile number of the contact.
+ * @param {string} email - The updated email address of the contact.
+ * @param {Object} currentUserDetail - The current details of the contact before the update.
+ * @returns {Object} - An object containing the gathered contact data.
+ */
 function gatherEditedContactData(name, mobile, email, currentUserDetail) {
   return {
     name: name,
@@ -132,7 +173,11 @@ function hideEditContactOverlay() {
 }
 
 /**
- * Check edit form input field validation
+ * Validates the input element specified by its name within the edit contact form.
+ * If the input is invalid, it shows an error message and updates the error state in the `editFormErrors` object.
+ *
+ * @param {string} inputName - The name attribute of the input element to validate.
+ * @param {string} message - The validation error message to display if the input is invalid.
  */
 function checkEditInputValidation(inputName, message) {
   let inputElement = document.querySelector(

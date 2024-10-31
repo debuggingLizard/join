@@ -5,7 +5,9 @@ let createFormErrors = {
 };
 
 /**
- * Adds event listeners to the create contact form and overlay.
+ * Adds event listeners to the create contact form and add contact overlay elements.
+ * The submit event listener triggers the handleCreateContactSubmit function,
+ * while the click event listener on the overlay triggers the handleAddContactOverlayClick function.
  */
 function eventListenerCreateContact() {
   document
@@ -16,6 +18,13 @@ function eventListenerCreateContact() {
     .addEventListener("click", handleAddContactOverlayClick);
 }
 
+/**
+ * Handles the submit event for the create contact form.
+ * Prevents the default form submission behavior, validates the input fields,
+ * and creates a new contact if all fields are valid (no errors).
+ *
+ * @param {Event} event - The submit event object.
+ */
 function handleCreateContactSubmit(event) {
   event.preventDefault();
   validateCreateContactInputs();
@@ -28,6 +37,11 @@ function handleCreateContactSubmit(event) {
   }
 }
 
+/**
+ * Validates the input fields in the create contact form.
+ * Checks the validity of the name, email, and phone fields,
+ * and displays appropriate validation error messages if the fields are invalid.
+ */
 function validateCreateContactInputs() {
   checkCreateInputValidation("name", "Enter name & surname.");
   checkCreateInputValidation("email", "Enter a valid email address.");
@@ -37,17 +51,24 @@ function validateCreateContactInputs() {
   );
 }
 
+/**
+ * Handles the click event for the add contact overlay.
+ * If the click target is not the overlay itself, the function returns early.
+ * Otherwise, it hides the add contact overlay.
+ *
+ * @param {Event} event - The click event object.
+ */
 function handleAddContactOverlayClick(event) {
   if (event.target !== event.currentTarget) return;
   hideAddContactOverlay();
 }
 
 /**
- * Creates a new contact.
- * Checks whether an e-mail exists already (e-mails must be unique)
- * If e-mail doesn't exist, object data is created.
- * data contains the input values, a randomly chosen color for the use and the initials of the user.
- * Random color is chosen by function getRandomColor(). Initials are created by getprofileImage(name), using the name from the input.
+ * Creates a new contact by gathering input values from the create contact form.
+ * If the email already exists, it displays a validation error.
+ * Otherwise, it proceeds to create a valid contact.
+ *
+ * @returns {Promise<void>}
  */
 async function createContact() {
   let name = document.querySelector(
@@ -70,6 +91,16 @@ async function createContact() {
   }
 }
 
+/**
+ * Creates a valid contact by gathering the contact data, posting it to the server,
+ * resetting the create contact form, rendering the updated contact list, hiding the add contact overlay,
+ * and displaying a success notification.
+ *
+ * @param {string} name - The name of the new contact.
+ * @param {string} mobile - The mobile number of the new contact.
+ * @param {string} email - The email address of the new contact.
+ * @returns {Promise<void>}
+ */
 async function createValidContact(name, mobile, email) {
   const data = gatherNewContactData(name, mobile, email);
   await postData("users", data);
@@ -79,6 +110,14 @@ async function createValidContact(name, mobile, email) {
   showNotification("Contact succesfully created");
 }
 
+/**
+ * Gathers the data for a new contact, including name, mobile, email, color, and profile image.
+ *
+ * @param {string} name - The name of the new contact.
+ * @param {string} mobile - The mobile number of the new contact.
+ * @param {string} email - The email address of the new contact.
+ * @returns {Object} - An object containing the gathered contact data.
+ */
 function gatherNewContactData(name, mobile, email) {
   return {
     name: name,
@@ -123,7 +162,11 @@ function hideAddContactOverlay() {
 }
 
 /**
- * Check create form input field validation
+ * Validates the input element specified by its name within the create contact form.
+ * If the input is invalid, it shows an error message and updates the error state in the `createFormErrors` object.
+ *
+ * @param {string} inputName - The name attribute of the input element to validate.
+ * @param {string} message - The validation error message to display if the input is invalid.
  */
 function checkCreateInputValidation(inputName, message) {
   let inputElement = document.querySelector(

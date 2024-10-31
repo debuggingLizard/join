@@ -14,7 +14,10 @@ async function renderContactList() {
 }
 
 /**
- * Groups users by the first letter of their names.
+ * Groups users by the first letter of their name and sorts them alphabetically.
+ * Each user is added to the `groupedUsers` object under the corresponding first letter.
+ *
+ * @param {Object} users - An object containing user data, where the key is the user ID and the value is the user details.
  */
 function getFirstLetters(users) {
   let sortedUsers = Object.keys(users).sort((a, b) => {
@@ -31,9 +34,11 @@ function getFirstLetters(users) {
 }
 
 /**
- * This function uses the global groupedUsers object and creates HTML for every key-value pair of that object, i.e. displaying the users.
- * It first gets the template for the basic HTML structure for the letter category.
- * Then, it gets the template for every user, placing these within the respective letter category that they belong to.
+ * Displays the contact list grouped by the first letter of users' names.
+ * Iterates over the grouped users and adds the HTML templates for each letter group
+ * and each user contact list item to the specified list reference.
+ *
+ * @param {Element} listRef - The DOM element where the contact list will be rendered.
  */
 function displayContactList(listRef) {
   Object.keys(groupedUsers).forEach((letter) => {
@@ -81,15 +86,20 @@ function getUserContactListTemplate(user) {
 }
 
 /**
- * Renders the contact details for a given contact ID.
- * @param {string} id - The ID of the contact to render details for.
+ * Renders the contact detail view for a specific user.
+ * Fetches user data, updates the contact detail view, and handles responsive view adjustments
+ * for smaller screens by rendering edit buttons, activating slide-in close functionality,
+ * and toggling the visibility of the contact detail element.
+ *
+ * @param {string} id - The ID of the user whose details are to be rendered.
+ * @param {string} showElement - The element to show for responsive visibility handling.
+ * @returns {Promise<void>}
  */
 async function renderContactDetail(id, showElement) {
   let detailRef = document.getElementById("contact-detail-view");
   let detailUser = await getData("users/" + id);
   detailRef.innerHTML = "";
   detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
-
   if (window.innerWidth <= 860) {
     renderResponsiveEditButtons(id);
     activateCloseSlideIn();
@@ -107,15 +117,29 @@ function toggleResponsiveVisibilityContact(showElement) {
 }
 
 /**
- * Renders the responsive edit buttons for a contact.
- * @param {string} id - The ID of the contact.
+ * Renders the responsive edit and delete buttons for a specific contact.
+ * Clears the current content of the edit button container and appends the edit and delete button templates.
+ *
+ * @param {string} id - The ID of the user for whom the edit and delete buttons are to be rendered.
  */
 function renderResponsiveEditButtons(id) {
   let responsiveEditRef = document.getElementById(
     "contact-detail-responsive-edit-delete-wrapper"
   );
   responsiveEditRef.innerHTML = "";
-  responsiveEditRef.innerHTML += /*html*/ `
+  responsiveEditRef.innerHTML += getResponsiveEditDeleteBtnTemplate(id);
+}
+
+/**
+ * Generates the HTML template for the responsive edit and delete buttons.
+ * The template includes a button with three dots that triggers the `openSlideIn` function
+ * and a slide-in container for additional content.
+ *
+ * @param {string} id - The ID of the user for whom the edit and delete buttons are to be generated.
+ * @returns {string} - The HTML string for the responsive edit and delete buttons.
+ */
+function getResponsiveEditDeleteBtnTemplate(id) {
+  return /*html*/ `
     <div class="edit-delete-btn-responsive" onclick="openSlideIn('${id}')">
                     <span class="dot"></span>
                     <span class="dot"></span>
@@ -190,6 +214,13 @@ function openSlideIn(id) {
   slideIn.classList.add("visible");
 }
 
+/**
+ * Generates the HTML template for the slide-in menu.
+ * The template includes buttons for editing and deleting a contact, each with their corresponding icons and actions.
+ *
+ * @param {string} id - The ID of the user for whom the slide-in menu is generated.
+ * @returns {string} - The HTML string for the slide-in menu.
+ */
 function getSlideInTemplate(id) {
   return /*html*/ `
     <button class="contact-detail-btn" onclick="openEditContactModal('${id}'); closeSlideIn()">

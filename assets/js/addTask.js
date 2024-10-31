@@ -41,9 +41,12 @@ function initializeTaskForm() {
 }
 
 /**
- * Validates a specific form input; shows or hides error messages.
- * @param {string} inputName - The name of the input field to validate.
- * @param {string} message - The error message to display if validation fails.
+ * Validates the input element specified by its name within the create task form.
+ * If the input is invalid or contains a default value, it shows an error message
+ * and updates the error state in the `createFormErrors` object.
+ *
+ * @param {string} inputName - The name attribute of the input element to validate.
+ * @param {string} message - The validation error message to display if the input is invalid.
  */
 function checkCreateInputValidation(inputName, message) {
   let inputElement = document.querySelector(
@@ -63,7 +66,13 @@ function checkCreateInputValidation(inputName, message) {
 }
 
 /**
- * Fetches and sorts contacts, renders them in the assignees list, and updates assignments.
+ * Renders the list of contacts within the specified form. It fetches the contact data,
+ * sorts the contacts by name, and updates the assignees list in the form.
+ * Optionally, it can also mark certain users as already assigned.
+ *
+ * @param {string} form - The selector of the form in which to render the contacts.
+ * @param {Array<string>} [assignedUsers=[]] - An array of user IDs that should be marked as assigned.
+ * @returns {Promise<void>}
  */
 async function renderContacts(form, assignedUsers = []) {
   let contacts = await getData("users");
@@ -82,9 +91,12 @@ async function renderContacts(form, assignedUsers = []) {
 }
 
 /**
- * Generates the HTML template for an assignee contact with a profile image, name, and checkbox.
- * @param {object} contact - The contact data, including id, color, profileImage, and name.
- * @returns {string} HTML template for the contact element.
+ * Generates the HTML template for an assignee list item, including a label and checkbox.
+ * The template marks the contact as active and checked if they are in the assignedUsers array.
+ *
+ * @param {Object} contact - The contact object containing details such as id, color, and profileImage.
+ * @param {Array<string>} [assignedUsers=[]] - An array of user IDs that are already assigned.
+ * @returns {string} - The HTML string for the assignee list item.
  */
 function getAssigneesListTemplate(contact, assignedUsers = []) {
   return /*html*/ `
@@ -188,9 +200,12 @@ async function renderCategories() {
 }
 
 /**
- * Sets the selected priority button as active and removes the active class from others.
+ * Updates the priority selection in the form by adding an active class to the selected button,
+ * and updates the hidden input field with the selected priority ID.
  *
+ * @param {string} formId - The ID of the form containing the priority buttons.
  * @param {string} selected - The class name of the selected priority button.
+ * @param {string} id - The ID value to set in the hidden priority input field.
  */
 function selectPrio(formId, selected, id) {
   document.querySelectorAll(`${formId} .prio-btn`).forEach((button) => {
@@ -203,11 +218,9 @@ function selectPrio(formId, selected, id) {
 }
 
 /**
- * Initializes event listeners and validations:
- * - Sets the minimum date for the due date and prevents selecting past dates.
- * - Manages subtask input: shows/hides the clear button, toggles the add button, and enables subtask editing.
- * - Validates required fields and enables/disables the "Create Task" button.
- * - Assignees list can be close by clicking outside of list/input
+ * Initializes various event listeners and functions for the add task form.
+ * This includes initializing date input, subtask functions, form field listeners,
+ * required field checks, and the contact dropdown list.
  */
 function initEventListenerAddTask() {
   initDateInput("#add-task-form");
@@ -218,11 +231,10 @@ function initEventListenerAddTask() {
 }
 
 /**
- * Initializes the minimum date for a date input field to today's date.
- * Ensures that the selected date cannot be set before the current date.
+ * Initializes the date input field within the specified form.
+ * Sets the minimum date attribute of the due date input field to today's date.
  *
- * @param {string} formId - The CSS selector for the form containing the date input.
- *                           This should include the form's ID (e.g., "#myForm").
+ * @param {string} formId - The selector of the form containing the due date input field.
  */
 function initDateInput(formId) {
   let dueDateInput = document.querySelector(`${formId} *[name = due-date]`);
@@ -311,11 +323,11 @@ function enableSubtaskEditing(subtaskList) {
 }
 
 /**
- * Initializes input listeners on required form fields to trigger validation.
- * Adds an "input" event listener to each required field (input, select, textarea)
- * in the specified form, which calls the `checkRequiredFields` function on change.
+ * Initializes event listeners for all required form fields within the specified form.
+ * Adds an 'input' event listener to each required input, select, and textarea field
+ * to trigger the `checkRequiredFields` function when the field value changes.
  *
- * @param {string} formSelector - CSS selector for the form containing required fields.
+ * @param {string} formSelector - The selector of the form containing the required fields.
  */
 function initFormFieldListeners(formSelector) {
   let formFields = document.querySelectorAll(
@@ -354,11 +366,11 @@ function toggleCreateTaskButton(enabled) {
 }
 
 /**
- * Initializes a contact dropdown list, adding functionality to hide the dropdown
- * when clicking outside of the input field or dropdown list.
+ * Initializes the contact dropdown list within the specified form.
+ * Adds a document-wide click event listener to hide the dropdown list
+ * if the click occurs outside of the input field or the dropdown list.
  *
- * @param {string} formId - The CSS selector for the form containing the assignee input
- *                          and dropdown list. This should include the form's ID (e.g., "#myForm").
+ * @param {string} formId - The selector of the form containing the assignees input and dropdown list.
  */
 function initContactDropdownList(formId) {
   document.addEventListener("click", function (event) {
@@ -371,11 +383,10 @@ function initContactDropdownList(formId) {
 }
 
 /**
- * Toggles the visibility of the contact dropdown list and updates the label's style
- * to reflect its open or closed state.
+ * Toggles the visibility of the contact dropdown list and the open state of the assign label
+ * within the specified form.
  *
- * @param {string} formId - The CSS selector for the form containing the assignees list
- *                          dropdown and the assign label. This should include the form's ID (e.g., "#myForm").
+ * @param {string} formId - The selector of the form containing the assignees list and assign label.
  */
 function toggleContactDropdown(formId) {
   document
@@ -441,6 +452,13 @@ function createSubtaskListItem(subtaskValue) {
   return listItem;
 }
 
+/**
+ * Generates the HTML template for a subtask list item.
+ * The template includes the subtask dot, title, and action buttons for editing and deleting.
+ *
+ * @param {string} subtaskValue - The value or title of the subtask.
+ * @returns {string} - The HTML string for the subtask list item.
+ */
 function getSubtaskListItemTemplate(subtaskValue) {
   return `
       <span class="subtask-dot"></span>
@@ -449,7 +467,7 @@ function getSubtaskListItemTemplate(subtaskValue) {
       <button type="button" class="edit-subtask-btn icon-edit" onclick="editSubtask(this)"></button>
       <button type="button" class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)"></button>
     </div>
-  `
+  `;
 }
 
 /**
@@ -590,8 +608,11 @@ function clearSubtaskInput(formId) {
 }
 
 /**
- * Collects input values and creates a new task.
- * Resets the form and posts the task data to storage.
+ * Creates a new task by gathering task data, resetting the add task form,
+ * posting the data to the server, setting the task status to "todo",
+ * and displaying the feedback overlay.
+ *
+ * @returns {Promise<void>}
  */
 async function createTask() {
   const data = gatherTaskData();
@@ -602,8 +623,10 @@ async function createTask() {
 }
 
 /**
- * Gathers task data from form inputs, including title, description, assigned users, date, priority, category, and subtasks.
- * @returns {Object} An object containing the task data.
+ * Gathers task data from the add task form, including title, description, assigned users,
+ * due date, priority, category, subtasks, and status.
+ *
+ * @returns {Object} - An object containing the gathered task data.
  */
 function gatherTaskData() {
   return {
@@ -698,19 +721,26 @@ function resetAddTask() {
 }
 
 /**
- * Sets a placeholder for the due date input if it is empty and switches input type to text.
+ * Sets the placeholder text for the due date input field within the specified form.
+ * If the input field is empty, it sets the value to "dd/mm/yyyy" and removes the "text-date" class.
+ *
+ * @param {string} formId - The selector of the form containing the due date input field.
  */
 function setPlaceholder(formId) {
   const dateInput = document.querySelector(`${formId} *[name = due-date]`);
   dateInput.setAttribute("type", "text");
   if (dateInput.value === "") {
-    dateInput.value = "dd/mm/yyyy"; 
+    dateInput.value = "dd/mm/yyyy";
     dateInput.classList.remove("text-date");
   }
 }
 
 /**
- * Clears the placeholder for the due date input and switches type back to date, showing the date picker.
+ * Clears the placeholder text for the due date input field within the specified form.
+ * If the current value is not the default "dd/mm/yyyy", it converts the date format,
+ * clears the input, sets the type to "date", and shows the date picker.
+ *
+ * @param {string} formId - The selector of the form containing the due date input field.
  */
 function clearPlaceholder(formId) {
   const dateInput = document.querySelector(`${formId} *[name = due-date]`);
@@ -719,7 +749,7 @@ function clearPlaceholder(formId) {
     newValue = convertDateFormatWithDash(dateInput.value);
   }
   dateInput.value = "";
-  dateInput.setAttribute("type", "date"); 
+  dateInput.setAttribute("type", "date");
   dateInput.classList.remove("text-date");
   setTimeout(() => {
     dateInput.value = newValue;
@@ -728,7 +758,11 @@ function clearPlaceholder(formId) {
 }
 
 /**
- * Formats the selected date as "dd/mm/yyyy" and switches input type to text for display.
+ * Formats the value of the due date input field within the specified form.
+ * Converts the selected date to the format "dd/mm/yyyy" and updates the input field.
+ * Additionally, changes the input type to "text" and adds the "text-date" class.
+ *
+ * @param {string} formId - The selector of the form containing the due date input field.
  */
 function formatDate(formId) {
   const dateInput = document.querySelector(`${formId} *[name = due-date]`);

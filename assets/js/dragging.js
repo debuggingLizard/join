@@ -64,19 +64,33 @@ async function drop(e, targetStatus) {
 }
 
 /**
- * Sets up drop targets to show a placeholder during drag-over and remove it on leave.
+ * Adds drag event listeners to all elements with the class "drop-target".
+ * Iterates through each drop target and attaches the event listeners using the `addDragQueenEventListeners` function.
  */
 function loadDropTargets() {
   const dropTargets = document.querySelectorAll(".drop-target");
   dropTargets.forEach(addDragQueenEventListeners);
 }
 
+/**
+ * Adds drag event listeners to the specified target element.
+ * The event listeners handle the dragover, dragenter, and dragleave events.
+ *
+ * @param {Element} target - The target element to which the drag event listeners will be added.
+ */
 function addDragQueenEventListeners(target) {
   target.addEventListener("dragover", handleDragOver);
   target.addEventListener("dragenter", handleDragEnter);
   target.addEventListener("dragleave", handleDragLeave);
 }
 
+/**
+ * Handles the dragover event on a target element.
+ * Prevents the default behavior, and if an element hasn't been added yet,
+ * creates a new div element with specific dimensions and appends it to the current target element.
+ *
+ * @param {DragEvent} e - The dragover event object.
+ */
 function handleDragOver(e) {
   e.preventDefault();
   if (!elementAdded) {
@@ -90,10 +104,21 @@ function handleDragOver(e) {
   }
 }
 
+/**
+ * Handles the dragenter event on a target element.
+ * Sets the `isOverDropTarget` variable to true, indicating that a draggable element is over a drop target.
+ */
 function handleDragEnter() {
   isOverDropTarget = true;
 }
 
+/**
+ * Handles the dragleave event on a target element.
+ * Checks if a draggable element is over a drop target and if the related target is not contained within the current target.
+ * If an element was added, it removes the added element from the current target and resets the variables.
+ *
+ * @param {DragEvent} e - The dragleave event object.
+ */
 function handleDragLeave(e) {
   if (isOverDropTarget && !e.currentTarget.contains(e.relatedTarget)) {
     if (addedElement) {
