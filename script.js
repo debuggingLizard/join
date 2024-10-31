@@ -74,6 +74,9 @@ function updateActiveStateNavLink(navLinkID) {
   document.getElementById(navLinkID).classList.add("nav-a-active");
 }
 
+/**
+ * Displays a feedback overlay temporarily, then hides it after 1 second.
+ */
 function showFeedbackOverlay() {
   const overlay = document.getElementById("feedback-overlay");
   overlay.classList.add("show");
@@ -82,12 +85,18 @@ function showFeedbackOverlay() {
   }, 1000);
 }
 
+/**
+ * Saves the current page URL in session storage under 'previousPage' key.
+ */
 function saveCurrentPage() {
-  sessionStorage.setItem('previousPage', window.location.href);
+  sessionStorage.setItem("previousPage", window.location.href);
 }
 
+/**
+ * Navigates to the stored previous page if available, otherwise goes back in history.
+ */
 function goBack() {
-  let previousPage = sessionStorage.getItem('previousPage');
+  let previousPage = sessionStorage.getItem("previousPage");
   if (previousPage) {
     window.location.href = previousPage;
   } else {
