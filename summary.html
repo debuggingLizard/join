@@ -15,7 +15,7 @@
     <script src="./assets/js/summary.js"></script>
 </head>
 
-<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-summary'); renderSummaryData()">
+<body onload="renderSidebarHeader(); updateActiveStateNavLink('sidebar-nav-summary'); showGreetingScreen(); renderSummaryData()">
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
     </aside>
@@ -119,7 +119,7 @@
                     </div>
                 </section>
 
-                <div class="greeting-container">
+                <div class="greeting-container" id="greeting-container">
                     <p class="greeting">
                         <span class="greeting-msg" id="greeting">Hello,</span>
                         <span id="user-name" class="user-name">Sofia Müller</span></p>

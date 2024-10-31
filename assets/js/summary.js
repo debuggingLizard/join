@@ -1,3 +1,19 @@
+function showGreetingScreen() {
+  let greetingScreen = document.getElementById('greeting-container');
+  let mainContainer = document.querySelector('.main');
+    if (window.innerWidth <= 800) {
+      mainContainer.style.overflow = 'hidden';
+      setTimeout(() => { 
+        greetingScreen.classList.add('hidden'); 
+        mainContainer.style.overflow = '';
+        setTimeout(() => { 
+          greetingScreen.classList.add('no-show');
+          greetingScreen.classList.remove('hidden'); 
+        }, 1000);
+      }, 1500);
+    }
+}
+
 /**
  * Renders summary data for tasks in various statuses.
  * Sets greeting, retrieves tasks, and displays task counts and urgent tasks.
