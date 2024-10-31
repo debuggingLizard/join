@@ -132,8 +132,6 @@
     justify-content: end;
     gap: 16px;
     padding: 16px;
-    /* background: white;
-    margin-right: 12px; */
 }
 
 .task-edit-delete-btn {
