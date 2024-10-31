@@ -108,37 +108,57 @@ function getAssigneesListTemplate(contact, assignedUsers = []) {
   `;
 }
 
-
+/**
+ * Adds an event listener to update assigned contacts in the specified form.
+ * @param {string} form - The selector of the form to update.
+ */
 function updateAssignedContacts(form) {
   let assigneesListElement = document.querySelector(`${form} .assignees-list`);
-  assigneesListElement.addEventListener("change", handleAssigneeChange.bind(null, form));
+  assigneesListElement.addEventListener(
+    "change",
+    handleAssigneeChange.bind(null, form)
+  );
 }
 
+/**
+ * Manages the addition or removal of a contact based on checkbox state.
+ * @param {string} form - The form selector for updating assigned contacts.
+ * @param {Event} event - The event triggered by the checkbox change.
+ */
 function handleAssigneeChange(form, event) {
   const checkbox = event.target;
   const assignedContactsDiv = document.querySelector(`${form} .assigned-to`);
 
   if (checkbox.checked) {
-      addContact(assignedContactsDiv, checkbox);
+    addContact(assignedContactsDiv, checkbox);
   } else {
-      removeContact(assignedContactsDiv, checkbox);
+    removeContact(assignedContactsDiv, checkbox);
   }
 }
 
+/**
+ * Adds a contact with profile image to the assigned contacts section.
+ * @param {HTMLElement} assignedContactsDiv - The element displaying assigned contacts.
+ * @param {HTMLElement} checkbox - The checkbox element for the selected contact.
+ */
 function addContact(assignedContactsDiv, checkbox) {
   const { id, color, initials } = checkbox.dataset;
   assignedContactsDiv.innerHTML += `<span id="${id}" class="contact-profile-image" style="background-color:${color}">${initials}</span>`;
 }
 
+/**
+ * Removes a contact from the assigned contacts section.
+ * @param {HTMLElement} assignedContactsDiv - The element displaying assigned contacts.
+ * @param {HTMLElement} checkbox - The checkbox element for the contact to remove.
+ */
 function removeContact(assignedContactsDiv, checkbox) {
   const spanToRemove = Array.from(assignedContactsDiv.children).find(
-      (span) => span.id === checkbox.id
+    (span) => span.id === checkbox.id
   );
   if (spanToRemove) {
-      assignedContactsDiv.removeChild(spanToRemove);
+    assignedContactsDiv.removeChild(spanToRemove);
   }
 }
-
 
 /**
  * Styles the label of a checkbox when selected or deselected.
