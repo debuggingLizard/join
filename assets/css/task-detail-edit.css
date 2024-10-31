@@ -35,7 +35,8 @@
 }
 
 .task-detail .task-detail-body{
-    max-height: calc(620px - 31.2px - 39.2px - 60px);
+    height: calc(90vh - 31.2px - 51.2px - 60px);
+    max-height: calc(620px - 31.2px - 51.2px - 60px);
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 4px;
@@ -130,11 +131,9 @@
     display: flex;
     justify-content: end;
     gap: 16px;
-    padding: 10px 0;
-    position: sticky;
-    bottom: 0;
-    background: white;
-    margin-right: 12px;
+    padding: 16px;
+    /* background: white;
+    margin-right: 12px; */
 }
 
 .task-edit-delete-btn {
