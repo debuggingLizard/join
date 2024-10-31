@@ -34,12 +34,10 @@
         flex-direction: column;
         gap: 60px;
         padding: 50px 0 0 0;
-        position: sticky;
-        bottom: 0;
     }
 
     .add-task-button-wrapper {
-        justify-content: flex-end;
+        justify-content:right;
         padding: 15px 0;
 
     }

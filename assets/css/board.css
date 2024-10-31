@@ -243,6 +243,7 @@
 }
 
 .form-row {
+    height: calc(90vh - 130.4px - 80.8px);
     max-height: calc(620px - 130.4px - 80.8px);
     overflow-y: auto;
     overflow-x: hidden;
