@@ -39,7 +39,6 @@
     }
 
     .add-task-button-wrapper {
-        gap: 25px;
         justify-content: flex-end;
         padding: 15px 0;
 
