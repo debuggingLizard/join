@@ -38,9 +38,9 @@
     max-height: calc(100vh - 200px);
     height: 87%;
 }
-.task-detail .task-detail-body::-webkit-scrollbar {
+/* .task-detail .task-detail-body::-webkit-scrollbar {
     display: none; 
-}
+} */
 
 .task-detail h1 {
     font-size: 61px;
