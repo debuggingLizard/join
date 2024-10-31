@@ -1,3 +1,5 @@
+const redirectPage = './index.html';
+
 function initLogin() {
     logoAnimation();
     loginFormEvent();
@@ -37,24 +39,40 @@ async function login(email, password, remember) {
     if (foundAdmin.length > 0) {
         const hashPassword = await hashingPassword(password, foundAdmin[0][1].salt);
         if (hashPassword === foundAdmin[0][1].password) {
+            localStorage.removeItem("joinGuestLoginValidTime");
+
             localStorage.setItem("joinLoginInfo", JSON.stringify({
                 name: foundAdmin[0][1].name,
                 email: foundAdmin[0][1].email,
                 profileImage: foundAdmin[0][1].profileImage
             }));
             localStorage.setItem("joinLoginRemember", remember);
-
-            const validTime = new Date();
-            // Add one hour (1 hour = 3600000 milliseconds)
-            validTime.setTime(validTime.getTime() + 3600000);
-            localStorage.setItem("joinLoginValidTime", validTime.getTime());
-            window.location.href = './index.html';
+            localStorage.setItem("joinLoginValidTime", getNextOneHourTime());
+            window.location.href = redirectPage;
         } else {
             console.log("email and password is wrong");
         }
     } else {
         console.log("email and password is wrong");
     }
+}
+
+function guestLogin() {
+    localStorage.removeItem("joinLoginInfo");
+    localStorage.removeItem("joinLoginRemember");
+    localStorage.removeItem("joinLoginValidTime");
+
+    localStorage.setItem("joinGuestLoginValidTime", getNextOneHourTime());
+
+    window.location.href = redirectPage;
+}
+
+function getNextOneHourTime() {
+    const validTime = new Date();
+    // Add 1 hour (1 hour = 60 minutes * 60 seconds * 1000 milliseconds)
+    validTime.setTime(validTime.getTime() + (1 * 60 * 60 * 1000));
+
+    return validTime.getTime();
 }
 
 function typePassword() {
