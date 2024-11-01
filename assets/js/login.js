@@ -1,4 +1,8 @@
 const redirectPage = './summary.html';
+let loginFormErrors = {
+    email: false,
+    password: false
+}
 
 function initLogin() {
     logoAnimation();
@@ -7,13 +11,13 @@ function initLogin() {
     togglePasswordVisible();
 }
 
-function showLoginForm(){
+function showLoginForm() {
     document.getElementById('signup-form').classList.add('d-none');
     document.getElementById('login-form').classList.remove('d-none');
     document.getElementById('header-right').classList.remove('d-none');
 }
 
-function showSignupForm(){
+function showSignupForm() {
     document.getElementById('login-form').classList.add('d-none');
     document.getElementById('header-right').classList.add('d-none');
     document.getElementById('signup-form').classList.remove('d-none');
@@ -39,36 +43,65 @@ async function loginFormEvent() {
         e.preventDefault();
 
         const email = document.querySelector('#login-form input[name = email]').value;
+        checkInputValidity('login-form', 'email', loginFormErrors, 'Enter a valid email address.');
+
         const password = document.querySelector('#login-form input[name = password]').value;
+        checkInputValidity('login-form', 'password', loginFormErrors, 'Enter a valid password address.');
+
         const remember = document.querySelector('#login-form input[name = remember]').checked;
 
-        login(email, password, remember);
+        if (loginFormErrors.email === false && loginFormErrors.password === false) {
+            login(email, password, remember);
+        }
     })
+}
+
+function checkInputValidity(form, input, errorsObject, message) {
+    if (!document.querySelector(`#${form} input[name = ${input}]`).checkValidity()) {
+        errorsObject[input] = true;
+        document.querySelector(`#${form} input[name = ${input}]`).classList.add('input-error');
+        document.querySelector(`#${form} .${input}-error`).classList.remove('d-none');
+        document.querySelector(`#${form} .${input}-error`).innerHTML = message;
+    } else {
+        errorsObject[input] = false;
+        document.querySelector(`#${form} input[name = ${input}]`).classList.remove('input-error');
+        document.querySelector(`#${form} .${input}-error`).classList.add('d-none');
+    }
 }
 
 async function login(email, password, remember) {
     const admins = await getData('admins');
     const adminsArray = Object.entries(admins);
     let foundAdmin = adminsArray.filter((admin) => admin[1].email === email);
-    if (foundAdmin.length > 0) {
-        const hashPassword = await hashingPassword(password, foundAdmin[0][1].salt);
-        if (hashPassword === foundAdmin[0][1].password) {
-            localStorage.removeItem("joinGuestLoginValidTime");
 
-            localStorage.setItem("joinLoginInfo", JSON.stringify({
-                name: foundAdmin[0][1].name,
-                email: foundAdmin[0][1].email,
-                profileImage: foundAdmin[0][1].profileImage
-            }));
-            localStorage.setItem("joinLoginRemember", remember);
-            localStorage.setItem("joinLoginValidTime", getNextOneHourTime());
-            window.location.href = redirectPage;
-        } else {
-            console.log("email and password is wrong");
-        }
-    } else {
-        console.log("email and password is wrong");
+    if (foundAdmin.length <= 0) {
+        showLoginError();
+        return;
     }
+
+    const hashPassword = await hashingPassword(password, foundAdmin[0][1].salt);
+
+    if (hashPassword !== foundAdmin[0][1].password) {
+        showLoginError();
+        return;
+    }
+
+    localStorage.removeItem("joinGuestLoginValidTime");
+    localStorage.setItem("joinLoginInfo", JSON.stringify({
+        name: foundAdmin[0][1].name,
+        email: foundAdmin[0][1].email,
+        profileImage: foundAdmin[0][1].profileImage
+    }));
+    localStorage.setItem("joinLoginRemember", remember);
+    localStorage.setItem("joinLoginValidTime", getNextOneHourTime());
+    window.location.href = redirectPage;
+}
+
+function showLoginError() {
+    document.querySelector(`#login-form input[name = email]`).classList.add('input-error');
+    document.querySelector(`#login-form input[name = password]`).classList.add('input-error');
+    document.querySelector(`#login-form .password-error`).classList.remove('d-none');
+    document.querySelector(`#login-form .password-error`).innerHTML = 'Check your email and password. Please try again.';
 }
 
 function guestLogin() {
@@ -96,6 +129,7 @@ function typePassword() {
             let iconElement = passwordInputElement.nextElementSibling;
             if (passwordInputElement.value.length >= 1) {
                 iconElement.classList.remove('icon-lock');
+                iconElement.classList.add('c-pointer');
                 if (passwordInputElement.type === 'password') {
                     iconElement.classList.add('icon-visibility-off');
                 } else {
@@ -105,6 +139,7 @@ function typePassword() {
                 passwordInputElement.type = 'password';
                 iconElement.classList.remove('icon-visibility-off');
                 iconElement.classList.remove('icon-visibility');
+                iconElement.classList.remove('c-pointer');
                 iconElement.classList.add('icon-lock');
             }
         })

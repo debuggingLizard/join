@@ -24,6 +24,10 @@ body {
     display: none !important;
 }
 
+.c-pointer{
+    cursor: pointer;
+}
+
 .logo-wrapper {
     height: 100vh;
     display: flex;
@@ -186,8 +190,8 @@ main {
     position: relative;
 }
 
-.name-label span,
-.email-label span {
+.name-label span.icon,
+.email-label span.icon {
     color: #A8A8A8;
     position: absolute;
     font-size: 16px;
@@ -195,12 +199,23 @@ main {
     right: 21px;
 }
 
-.password-label span {
+.password-label span.icon {
     color: #A8A8A8;
     position: absolute;
     font-size: 18px;
     top: 11px;
     right: 19px;
+}
+
+.input-error {
+    border: 1px solid #FF001F !important;
+}
+
+.form-elements span.error {
+    color: #FF8190;
+    font-size: 11px;
+    margin-top: 5px;
+    display: inline-block;
 }
 
 .footer-login label {
