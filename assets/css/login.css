@@ -264,6 +264,14 @@ main {
     text-decoration: none;
 }
 
+.footer-login .accept.error {
+    color: #FF8190;
+}
+
+.footer-login .accept.error a {
+    color: #FF8190;
+}
+
 .footer-login .accept a:hover {
     text-decoration: underline;
 }
