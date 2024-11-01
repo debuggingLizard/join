@@ -16,23 +16,33 @@ function renderSidebarHeader() {
  * @returns {string} The HTML template for the sidebar.
  */
 function getSidebarTemplate() {
-  return /*html*/ `
-        <div class="logo">
-            <a href="index.html">
-              <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
-            </a>
-        </div>
-        <nav>
-            <a href="summary.html" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/Summary.svg" alt="SummaryButton"><span>Summary</span></a>
-            <a href="addTask.html" id="sidebar-nav-task" class="sidebar-nav-a"><img src="./assets/buttons/AddTask.svg" alt="AddTask"><span>Add Task</span></a>
-            <a href="board.html" id="sidebar-nav-board" class="sidebar-nav-a"><img src="./assets/buttons/Board.svg" alt="Board"><span>Board</span></a>
-            <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/Contacts.svg" alt="Contacts"><span>Contacts</span></a>
-        </nav>
-        <footer>
-            <a tabindex="0" href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
-            <a tabindex="0" href="legal-notice.html"onclick="saveCurrentPage()">Legal notice</a>
-        </footer>
+  let sidebarTemplate = `
+    <div class="logo">
+        <a href="summary.html">
+          <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
+        </a>
+    </div>
+  `;
+
+  if (isAdminLogin() || isGuestLogin()) {
+    sidebarTemplate += `
+      <nav>
+          <a href="summary.html" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/Summary.svg" alt="SummaryButton"><span>Summary</span></a>
+          <a href="addTask.html" id="sidebar-nav-task" class="sidebar-nav-a"><img src="./assets/buttons/AddTask.svg" alt="AddTask"><span>Add Task</span></a>
+          <a href="board.html" id="sidebar-nav-board" class="sidebar-nav-a"><img src="./assets/buttons/Board.svg" alt="Board"><span>Board</span></a>
+          <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/Contacts.svg" alt="Contacts"><span>Contacts</span></a>
+      </nav>
     `;
+  }
+
+  sidebarTemplate += `
+    <footer>
+        <a tabindex="0" href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
+        <a tabindex="0" href="legal-notice.html"onclick="saveCurrentPage()">Legal notice</a>
+    </footer>
+  `;
+
+  return sidebarTemplate;
 }
 
 /**
@@ -40,22 +50,31 @@ function getSidebarTemplate() {
  * @returns {string} The HTML template for the header.
  */
 function getHeaderTemplate() {
-  return /*html*/ `
-         <div class="header-content">
-            <img class="header-responsive-logo" src="./assets/img/JoinLogoResponsive.svg" alt="">
-            <h2>Kanban Project Management Tool</h2>
-            <div class="user-info">
-                <a href="help.html" onclick="saveCurrentPage()" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>
-                <div class="user-info-profile" onclick="openHeaderProfileInfo()">${getAdminProfileImage()}</div>
-            </div>
-            <div id="user-info-links" class="user-info-links d-none">
-                <a href="help.html" onclick="saveCurrentPage()" class="user-info-links-help">Help</a>
-                <a href="legal-notice.html" onclick="saveCurrentPage()">Legal Notice</a>
-                <a href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
-                <a href="#" onclick="logout()">Log Out</a>
-            </div>
-        </div>
+  let headerTemplate = `<div class="header-content">`;
+
+  headerTemplate += `
+    <img class="header-responsive-logo" src="./assets/img/JoinLogoResponsive.svg" alt="">
+    <h2>Kanban Project Management Tool</h2>
+  `;
+
+  if (isAdminLogin() || isGuestLogin()) {
+    headerTemplate += `
+      <div class="user-info">
+          <a href="help.html" onclick="saveCurrentPage()" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>
+          <div class="user-info-profile" onclick="openHeaderProfileInfo()">${getAdminProfileImage()}</div>
+      </div>
+      <div id="user-info-links" class="user-info-links d-none">
+          <a href="help.html" onclick="saveCurrentPage()" class="user-info-links-help">Help</a>
+          <a href="legal-notice.html" onclick="saveCurrentPage()">Legal Notice</a>
+          <a href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
+          <a href="#" onclick="logout()">Log Out</a>
+      </div>
     `;
+  }
+
+  headerTemplate += `</div>`;
+
+  return headerTemplate;
 }
 
 /**
