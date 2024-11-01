@@ -4,7 +4,7 @@ function checkLogin() {
     const now = new Date();
     let keepLogin = false;
 
-    if (localStorage.getItem("joinLoginValidTime") !== null) {
+    if (isAdminLogin()) {
         if (localStorage.getItem("joinLoginValidTime") > now.getTime()) {
             keepLogin = true;
         } else {
@@ -15,7 +15,7 @@ function checkLogin() {
         }
     }
 
-    if (localStorage.getItem("joinGuestLoginValidTime") !== null) {
+    if (isGuestLogin()) {
         if (localStorage.getItem("joinGuestLoginValidTime") > now.getTime()) {
             keepLogin = true;
         }
@@ -32,6 +32,31 @@ function getNextOneHourTime() {
     validTime.setTime(validTime.getTime() + (1 * 60 * 60 * 1000));
 
     return validTime.getTime();
+}
+
+function getAdminProfileImage() {
+    if (isAdminLogin()) {
+        return JSON.parse(localStorage.getItem("joinLoginInfo")).profileImage;
+    } else {
+        return 'G';
+    }
+}
+
+function showAdminName() {
+    adminNameElement = document.getElementById('user-name');
+    if (isAdminLogin()) {
+        adminNameElement.innerHTML = JSON.parse(localStorage.getItem("joinLoginInfo")).name;
+    } else {
+        adminNameElement.innerHTML = '';
+    }
+}
+
+function isAdminLogin() {
+    return localStorage.getItem("joinLoginValidTime") !== null;
+}
+
+function isGuestLogin() {
+    return localStorage.getItem("joinGuestLoginValidTime") !== null;
 }
 
 function logout() {

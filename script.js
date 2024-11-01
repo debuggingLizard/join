@@ -18,10 +18,12 @@ function renderSidebarHeader() {
 function getSidebarTemplate() {
   return /*html*/ `
         <div class="logo">
-            <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
+            <a href="index.html">
+              <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
+            </a>
         </div>
         <nav>
-            <a href="summary.html" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/Summary.svg" alt="SummaryButton"><span>Summary</span></a>
+            <a href="index.html" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/Summary.svg" alt="SummaryButton"><span>Summary</span></a>
             <a href="addTask.html" id="sidebar-nav-task" class="sidebar-nav-a"><img src="./assets/buttons/AddTask.svg" alt="AddTask"><span>Add Task</span></a>
             <a href="board.html" id="sidebar-nav-board" class="sidebar-nav-a"><img src="./assets/buttons/Board.svg" alt="Board"><span>Board</span></a>
             <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/Contacts.svg" alt="Contacts"><span>Contacts</span></a>
@@ -44,7 +46,7 @@ function getHeaderTemplate() {
             <h2>Kanban Project Management Tool</h2>
             <div class="user-info">
                 <a href="help.html" onclick="saveCurrentPage()" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>
-                <div class="user-info-profile" onclick="openHeaderProfileInfo()">SM</div>
+                <div class="user-info-profile" onclick="openHeaderProfileInfo()">${getAdminProfileImage()}</div>
             </div>
             <div id="user-info-links" class="user-info-links d-none">
                 <a href="help.html" onclick="saveCurrentPage()" class="user-info-links-help">Help</a>
