@@ -10,7 +10,7 @@ function initSubtaskFunctions(formId) {
     const addBtn = document.querySelector(`${formId} .add-subtask-btn`);
     const subtaskList = document.querySelector(`${formId} .subtask-list`);
     if (subtaskInput) {
-      handleSubtaskInput(subtaskInput, addBtn, clearSubtaskBtn);
+      handleSubtaskInput(formId, subtaskInput, addBtn, clearSubtaskBtn);
       setupClearButton(clearSubtaskBtn, subtaskInput, addBtn);
       enableSubtaskEditing(subtaskList);
     }
@@ -22,11 +22,11 @@ function initSubtaskFunctions(formId) {
    * @param {HTMLElement} addBtn - The add button for subtasks.
    * @param {HTMLElement} clearBtn - The clear button for the subtask input.
    */
-  function handleSubtaskInput(input, addBtn, clearBtn) {
+  function handleSubtaskInput(formId, input, addBtn, clearBtn) {
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        addSubtask();
+        addSubtask(formId);
       }
     });
     input.addEventListener("input", () =>

@@ -484,9 +484,9 @@ async function toggleSubtask(index) {
   const checked = document.getElementById(`checked-${index}`);
   subtaskElement.style.pointerEvents = "none";
   if (taskInformation.subtasks[index].done) {
-    markSubtaskAsNotDone(index, subTaskStatus, unchecked, checked);
+    subTaskStatus = markSubtaskAsNotDone(index, unchecked, checked);
   } else {
-    markSubstaskAsDone(index, subTaskStatus, unchecked, checked);
+    subTaskStatus = markSubstaskAsDone(index, unchecked, checked);
   }
   await updateTaskDataForSubtaskStatusChange(index, subTaskStatus);
   document.getElementById("edit-task").innerHTML = editTaskTemplate();
@@ -501,11 +501,11 @@ async function toggleSubtask(index) {
  * @param {Element} unchecked - The HTML element representing the unchecked state of the subtask.
  * @param {Element} checked - The HTML element representing the checked state of the subtask.
  */
-function markSubtaskAsNotDone(index, subTaskStatus, unchecked, checked) {
+function markSubtaskAsNotDone(index, unchecked, checked) {
   taskInformation.subtasks[index].done = false;
-  subTaskStatus = false;
   unchecked.classList.remove("d-none");
   checked.classList.add("d-none");
+  return false;
 }
 
 /**
@@ -516,11 +516,11 @@ function markSubtaskAsNotDone(index, subTaskStatus, unchecked, checked) {
  * @param {Element} unchecked - The HTML element representing the unchecked state of the subtask.
  * @param {Element} checked - The HTML element representing the checked state of the subtask.
  */
-function markSubstaskAsDone(index, subTaskStatus, unchecked, checked) {
+function markSubstaskAsDone(index, unchecked, checked) {
   taskInformation.subtasks[index].done = true;
-  subTaskStatus = true;
   unchecked.classList.add("d-none");
   checked.classList.remove("d-none");
+  return true;
 }
 
 /**
