@@ -116,6 +116,8 @@ main {
     align-items: center;
     padding: 45px 100px;
     box-shadow: 0px 2px 3px 0px #0000001a;
+    width: 72%;
+    max-width: 356px;
 }
 
 .login-form .login-form-title {
@@ -156,6 +158,7 @@ main {
     flex-direction: column;
     justify-content: space-between;
     gap: 25px;
+    width: 100%;
 }
 
 #signup-form .form-elements {
@@ -165,7 +168,9 @@ main {
 .form-elements input {
     border: 1px solid #D1D1D1;
     border-radius: 10px;
-    width: 315px;
+    /* width: 315px; */
+    width:100%;
+    box-sizing: border-box;
     font-size: 16px;
     outline: none;
     padding: 11px 20px;
