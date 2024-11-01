@@ -59,7 +59,7 @@
                 </div>
             </form>
 
-            <form id="signup-form" class="login-form d-none">
+            <form id="signup-form" class="login-form d-none" novalidate>
                 <div class="login-form-title">
                     <img onclick="showLoginForm()" class="go-back" src="./assets/img/arrow-left-line.svg">
                     <h1>Sign up</h1>
@@ -69,18 +69,22 @@
                     <label class="name-label">
                         <input type="text" name="name" placeholder="Name" required>
                         <span class="icon icon-person"></span>
+                        <span class="error name-error d-none"></span>
                     </label>
                     <label class="email-label">
                         <input type="email" name="email" placeholder="Email" required>
                         <span class="icon icon-mail"></span>
+                        <span class="error email-error d-none"></span>
                     </label>
                     <label class="password-label">
                         <input type="password" name="password" placeholder="Password" required>
                         <span class="icon icon-lock"></span>
+                        <span class="error password-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="password-confirm" placeholder="Confirm Password" required>
+                        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
                         <span class="icon icon-lock"></span>
+                        <span class="error confirm_password-error d-none"></span>
                     </label>
                 </div>
                 <div class="footer-login">
@@ -90,7 +94,7 @@
                             <img class="checkbox-img unchecked-button" src="./assets/img/unchecked-button.svg">
                             <img class="checkbox-img checked-button" src="./assets/img/checked-button.svg">
                         </span>
-                        <span class="accept">I accept the <a href="privacy-policy.html">Privacy policy</a></span>
+                        <span class="accept"><span id="accept_change">I</span> accept the <a href="privacy-policy.html">Privacy policy</a></span>
                     </label>
                     <div class="button-container">
                         <button class="login-button" type="submit">Sign up</button>

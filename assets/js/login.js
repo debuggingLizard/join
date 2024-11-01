@@ -1,12 +1,22 @@
 const redirectPage = './summary.html';
+
 let loginFormErrors = {
     email: false,
     password: false
 }
 
+let signUpFormErrors = {
+    name: false,
+    email: false,
+    password: false,
+    confirm_password: false,
+    accept: false
+}
+
 function initLogin() {
     logoAnimation();
     loginFormEvent();
+    signUpFormEvent();
     typePassword();
     togglePasswordVisible();
 }
@@ -46,12 +56,37 @@ async function loginFormEvent() {
         checkInputValidity('login-form', 'email', loginFormErrors, 'Enter a valid email address.');
 
         const password = document.querySelector('#login-form input[name = password]').value;
-        checkInputValidity('login-form', 'password', loginFormErrors, 'Enter a valid password address.');
+        checkInputValidity('login-form', 'password', loginFormErrors, 'Enter a valid password.');
 
         const remember = document.querySelector('#login-form input[name = remember]').checked;
 
-        if (loginFormErrors.email === false && loginFormErrors.password === false) {
+        if (Object.values(loginFormErrors).every(value => value === false)) {
             login(email, password, remember);
+        }
+    })
+}
+
+async function signUpFormEvent() {
+    document.getElementById('signup-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const name = document.querySelector('#signup-form input[name = name]').value;
+        checkInputValidity('signup-form', 'name', signUpFormErrors, 'Enter a valid name.');
+
+        const email = document.querySelector('#signup-form input[name = email]').value;
+        checkInputValidity('signup-form', 'email', signUpFormErrors, 'Enter a valid email address.');
+
+        const password = document.querySelector('#signup-form input[name = password]').value;
+        const confirmPassword = document.querySelector('#signup-form input[name = confirm_password]').value;
+        checkPasswordAndConfirmPassword(password, confirmPassword);
+        checkInputValidity('signup-form', 'password', signUpFormErrors, 'Enter a valid password.');
+        checkInputValidity('signup-form', 'confirm_password', signUpFormErrors, "Your passwords don't match. Please try again.");
+
+        const accept = document.querySelector('#signup-form input[name = accept]').checked;
+        checkAcceptPrivacyPolicy(accept);
+
+        if (Object.values(signUpFormErrors).every(value => value === false)) {
+            signup(name, email, password);
         }
     })
 }
@@ -69,18 +104,36 @@ function checkInputValidity(form, input, errorsObject, message) {
     }
 }
 
+function checkPasswordAndConfirmPassword(password, confirmPassword) {
+    if (password !== confirmPassword) {
+        document.querySelector(`#signup-form input[name = confirm_password]`).setCustomValidity("Passwords do not match.");
+    } else {
+        document.querySelector(`#signup-form input[name = confirm_password]`).setCustomValidity("");
+    }
+}
+
+function checkAcceptPrivacyPolicy(accept) {
+    if (accept == false) {
+        signUpFormErrors['accept'] = true;
+        document.querySelector(`#signup-form .accept`).classList.add('error');
+        document.getElementById('accept_change').innerHTML = 'Please';
+    } else {
+        signUpFormErrors['accept'] = false;
+        document.querySelector(`#signup-form .accept`).classList.remove('error');
+        document.getElementById('accept_change').innerHTML = 'I';
+    }
+}
+
 async function login(email, password, remember) {
     const admins = await getData('admins');
     const adminsArray = Object.entries(admins);
     let foundAdmin = adminsArray.filter((admin) => admin[1].email === email);
-
     if (foundAdmin.length <= 0) {
         showLoginError();
         return;
     }
 
     const hashPassword = await hashingPassword(password, foundAdmin[0][1].salt);
-
     if (hashPassword !== foundAdmin[0][1].password) {
         showLoginError();
         return;
@@ -108,10 +161,24 @@ function guestLogin() {
     localStorage.removeItem("joinLoginInfo");
     localStorage.removeItem("joinLoginRemember");
     localStorage.removeItem("joinLoginValidTime");
-
     localStorage.setItem("joinGuestLoginValidTime", getNextOneHourTime());
-
     window.location.href = redirectPage;
+}
+
+async function signup(name, email, password) {
+    const salt = generateSalt();
+    const hashPassword = await hashingPassword(password, salt);
+
+    let Data = {
+        name: name,
+        email: email,
+        password: hashPassword,
+        salt: salt,
+        profileImage: getProfileImage(name)
+    }
+
+    await postData("admins", Data);
+    await login(email, password, false);
 }
 
 function getNextOneHourTime() {
@@ -164,25 +231,22 @@ function togglePasswordVisible() {
             }
         })
     });
-
 }
 
-// async function newUser() {
-//     const password = "admin1234";
-//     const salt = generateSalt();
-
-//     const hashPassword = await hashingPassword(password, salt);
-
-//     let Data = {
-//         name: "Super Admin",
-//         email: "admin@gmail.com",
-//         password: hashPassword,
-//         salt: salt,
-//         profileImage: "SA"
-//     }
-
-//     await postData("admins", Data);
-// }
+/**
+ * Generates a profile image string based on a user's name.
+ * @param {string} name - The user's name.
+ * @returns {string} The profile image string.
+ */
+function getProfileImage(name) {
+    const parts = name.trim().split(" ");
+    const firstInitial = parts[0].charAt(0).toUpperCase();
+    const lastInitial =
+        parts.length < 2
+            ? parts[0].charAt(0).toUpperCase()
+            : parts[1].charAt(0).toUpperCase();
+    return firstInitial + lastInitial;
+}
 
 // Generate a SHA-256 hash
 async function hashingPassword(password, salt) {
