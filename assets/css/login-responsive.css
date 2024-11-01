@@ -8,6 +8,10 @@
     .login-form {
         padding: 32px 60px;
     }
+
+    .login-form .go-back {
+        left: -20px;
+    }
 }
 
 @media (max-width: 460px) {
@@ -52,9 +56,17 @@
     #signup-form .footer-login {
         margin-top: 0;
     }
+
+    .login-form .go-back {
+        left: 0;
+    }
+
+    .login-form .login-form-title h1 {
+        font-size: 42px;
+    }
 }
 
-@media (max-width: 460px) {
+@media (max-width: 360px) {
     .login-form {
         padding: 32px 16px;
     }
