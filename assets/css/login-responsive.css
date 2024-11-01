@@ -1,13 +1,29 @@
+@media (max-width: 960px) {
+    .login-logo-after-init {
+        height: 60px !important;
+        top: 32px !important;
+        left: 32px !important;
+    }
+}
+
 @media (max-width: 860px) {
     .header-right {
         padding: 32px;
     }
-}
-
-@media (max-width: 600px) {
+    
     .login-form {
         padding: 32px 60px;
     }
+
+    .login-logo-after-init {
+        height: 48px !important;
+        top: 24px !important;
+        left: 24px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    
 
     .login-form .go-back {
         left: -20px;
