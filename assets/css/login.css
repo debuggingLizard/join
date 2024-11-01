@@ -11,6 +11,10 @@ body {
     flex-direction: column;
 }
 
+.d-none {
+    display: none !important;
+}
+
 .logo-wrapper {
     height: 100vh;
     display: flex;
@@ -113,11 +117,26 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.login-form .go-back {
+    width: 32px;
+    position: absolute;
+    top: 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    left: -40px;
+}
+
+.login-form .go-back:hover {
+    background-color: #ebebeb;
 }
 
 .login-form .login-form-title h1 {
     font-size: 50px;
-    padding: 10px;
+    padding: 0 0 10px 0;
     margin: 0;
 }
 
@@ -133,6 +152,10 @@ main {
     gap: 25px;
 }
 
+#signup-form .form-elements {
+    gap: 20px;
+}
+
 .form-elements input {
     border: 1px solid #D1D1D1;
     border-radius: 10px;
@@ -146,12 +169,13 @@ main {
     color: #D1D1D1;
 }
 
+.name-label,
 .email-label,
 .password-label {
     position: relative;
 }
 
-.email-label span {
+.name-label span, .email-label span {
     color: #A8A8A8;
     position: absolute;
     font-size: 16px;
@@ -167,9 +191,7 @@ main {
     right: 19px;
 }
 
-
-
-.remember-me {
+.footer-login label {
     display: flex;
     justify-content: flex-start;
     gap: 10px;
@@ -178,26 +200,39 @@ main {
     color: #2a3647;
 }
 
-.remember-me input[type="checkbox"] {
+.footer-login input[type="checkbox"] {
     display: none;
 }
 
-.remember-me .checkbox-img {
+.footer-login .checkbox-img {
     width: 18px;
     height: 18px;
     display: inline-block;
 }
 
-.remember-me .checked-button {
+.footer-login .checked-button {
     display: none;
 }
 
-.remember-me input[type="checkbox"]:checked+.custom-checkbox .unchecked-button {
+.footer-login input[type="checkbox"]:checked+.custom-checkbox .unchecked-button {
     display: none;
 }
 
-.remember-me input[type="checkbox"]:checked+.custom-checkbox .checked-button {
+.footer-login input[type="checkbox"]:checked+.custom-checkbox .checked-button {
     display: inline-block;
+}
+
+.footer-login .accept {
+    color: #A8A8A8;
+}
+
+.footer-login .accept a {
+    color: #29ABE2;
+    text-decoration: none;
+}
+
+.footer-login .accept a:hover {
+    text-decoration: underline;
 }
 
 .login-container {
@@ -266,6 +301,13 @@ main {
     gap: 30px;
     align-items: flex-start;
     margin-top: 15px;
+}
+
+#signup-form .footer-login {
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    gap: 22px;
 }
 
 footer {

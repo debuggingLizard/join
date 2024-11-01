@@ -3,6 +3,20 @@ const redirectPage = './index.html';
 function initLogin() {
     logoAnimation();
     loginFormEvent();
+    typePassword();
+    togglePasswordVisible();
+}
+
+function showLoginForm(){
+    document.getElementById('signup-form').classList.add('d-none');
+    document.getElementById('login-form').classList.remove('d-none');
+    document.getElementById('header-right').classList.remove('d-none');
+}
+
+function showSignupForm(){
+    document.getElementById('login-form').classList.add('d-none');
+    document.getElementById('header-right').classList.add('d-none');
+    document.getElementById('signup-form').classList.remove('d-none');
 }
 
 function logoAnimation() {
@@ -76,35 +90,46 @@ function getNextOneHourTime() {
 }
 
 function typePassword() {
-    let passwordInputElement = document.getElementById('password-input');
-    if (passwordInputElement.value.length >= 1) {
-        document.querySelector('.password-label span').classList.remove('icon-lock');
-        if (passwordInputElement.type === 'password') {
-            document.querySelector('.password-label span').classList.add('icon-visibility-off');
-        } else {
-            document.querySelector('.password-label span').classList.add('icon-visibility');
-        }
-    } else {
-        passwordInputElement.type = 'password';
-        document.querySelector('.password-label span').classList.remove('icon-visibility-off');
-        document.querySelector('.password-label span').classList.remove('icon-visibility');
-        document.querySelector('.password-label span').classList.add('icon-lock');
-    }
+    let passwordInputElements = document.querySelectorAll('input[type = password]');
+    passwordInputElements.forEach(passwordInputElement => {
+        passwordInputElement.addEventListener('keyup', function () {
+            let iconElement = passwordInputElement.nextElementSibling;
+            if (passwordInputElement.value.length >= 1) {
+                iconElement.classList.remove('icon-lock');
+                if (passwordInputElement.type === 'password') {
+                    iconElement.classList.add('icon-visibility-off');
+                } else {
+                    iconElement.classList.add('icon-visibility');
+                }
+            } else {
+                passwordInputElement.type = 'password';
+                iconElement.classList.remove('icon-visibility-off');
+                iconElement.classList.remove('icon-visibility');
+                iconElement.classList.add('icon-lock');
+            }
+        })
+    });
 }
 
 function togglePasswordVisible() {
-    let passwordInputElement = document.getElementById('password-input');
-    if (passwordInputElement.value.length >= 1) {
-        if (passwordInputElement.type === 'password') {
-            passwordInputElement.type = 'text';
-            document.querySelector('.password-label span').classList.add('icon-visibility');
-            document.querySelector('.password-label span').classList.remove('icon-visibility-off');
-        } else {
-            passwordInputElement.type = 'password';
-            document.querySelector('.password-label span').classList.add('icon-visibility-off');
-            document.querySelector('.password-label span').classList.remove('icon-visibility');
-        }
-    }
+    let iconLockInputElements = document.querySelectorAll('.icon-lock');
+    iconLockInputElements.forEach(iconLockInputElement => {
+        iconLockInputElement.addEventListener('click', function () {
+            let passwordInputElement = iconLockInputElement.previousElementSibling;
+            if (passwordInputElement.value.length >= 1) {
+                if (passwordInputElement.type === 'password') {
+                    passwordInputElement.type = 'text';
+                    iconLockInputElement.classList.add('icon-visibility');
+                    iconLockInputElement.classList.remove('icon-visibility-off');
+                } else {
+                    passwordInputElement.type = 'password';
+                    iconLockInputElement.classList.add('icon-visibility-off');
+                    iconLockInputElement.classList.remove('icon-visibility');
+                }
+            }
+        })
+    });
+
 }
 
 // async function newUser() {

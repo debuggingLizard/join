@@ -20,11 +20,11 @@
     <div class="logo-wrapper">
         <img class="login-logo" src="./assets/img/login-logo.svg" alt="join-logo">
     </div>
-    
+
     <header>
-        <div class="header-right">
+        <div class="header-right" id="header-right">
             <span>Not a join user?</span>
-            <button>Sign up</button>
+            <button onclick="showSignupForm()">Sign up</button>
         </div>
     </header>
     <main>
@@ -35,29 +35,66 @@
                     <div></div>
                 </div>
                 <div class="form-elements">
-                    <label for="email" class="email-label">
-                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    <label class="email-label">
+                        <input type="email" name="email" placeholder="Email" required>
                         <span class="icon icon-mail"></span>
                     </label>
-                    <label for="password" class="password-label">
-                        <input type="password" id="password-input" name="password" placeholder="Password" onkeyup="typePassword()" required>
-                        <span class="icon icon-lock" onclick="togglePasswordVisible()"></span>    
+                    <label class="password-label">
+                        <input type="password" name="password" placeholder="Password" required>
+                        <span class="icon icon-lock"></span>
                     </label>
                 </div>
                 <div class="footer-login">
-                    <label class="remember-me" for="custom-checkbox">
+                    <label for="custom-checkbox">
                         <input type="checkbox" name="remember" id="custom-checkbox">
                         <span class="custom-checkbox">
-                            <img class="checkbox-img unchecked-button" src="./assets/img/unchecked-button.svg"
-                                alt="checkbox">
-                            <img class="checkbox-img checked-button" src="./assets/img/checked-button.svg"
-                                alt="checkbox">
+                            <img class="checkbox-img unchecked-button" src="./assets/img/unchecked-button.svg">
+                            <img class="checkbox-img checked-button" src="./assets/img/checked-button.svg">
                         </span>
                         <span>Remember me</span>
                     </label>
                     <div class="button-container">
                         <button class="login-button" type="submit">Log in</button>
                         <button class="guest-button" type="button" onclick="guestLogin()">Guest Log in</button>
+                    </div>
+                </div>
+            </form>
+
+            <form id="signup-form" class="login-form d-none">
+                <div class="login-form-title">
+                    <img onclick="showLoginForm()" class="go-back" src="./assets/img/arrow-left-line.svg">
+                    <h1>Sign up</h1>
+                    <div></div>
+                </div>
+                <div class="form-elements">
+                    <label class="name-label">
+                        <input type="text" name="name" placeholder="Name" required>
+                        <span class="icon icon-person"></span>
+                    </label>
+                    <label class="email-label">
+                        <input type="email" name="email" placeholder="Email" required>
+                        <span class="icon icon-mail"></span>
+                    </label>
+                    <label class="password-label">
+                        <input type="password" name="password" placeholder="Password" required>
+                        <span class="icon icon-lock"></span>
+                    </label>
+                    <label class="password-label">
+                        <input type="password" name="password-confirm" placeholder="Confirm Password" required>
+                        <span class="icon icon-lock"></span>
+                    </label>
+                </div>
+                <div class="footer-login">
+                    <label for="custom-checkbox-2">
+                        <input type="checkbox" name="accept" id="custom-checkbox-2">
+                        <span class="custom-checkbox">
+                            <img class="checkbox-img unchecked-button" src="./assets/img/unchecked-button.svg">
+                            <img class="checkbox-img checked-button" src="./assets/img/checked-button.svg">
+                        </span>
+                        <span class="accept">I accept the <a href="#">Privacy policy</a></span>
+                    </label>
+                    <div class="button-container">
+                        <button class="login-button" type="submit">Sign up</button>
                     </div>
                 </div>
             </form>
