@@ -1,4 +1,4 @@
-const redirectPage = './index.html';
+const redirectPage = './summary.html';
 
 function initLogin() {
     logoAnimation();
