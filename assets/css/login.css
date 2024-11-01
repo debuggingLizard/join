@@ -205,10 +205,16 @@ main {
 .footer-login label {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     gap: 10px;
     font-size: 16px;
     cursor: pointer;
     color: #2a3647;
+}
+
+.footer-login .custom-checkbox {
+    display: flex;
+    align-items: center;
 }
 
 .footer-login input[type="checkbox"] {
