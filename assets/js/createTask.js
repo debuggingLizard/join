@@ -1,7 +1,8 @@
 /**
  * Creates a new task by gathering task data, resetting the add task form,
  * posting the data to the server, setting the task status to "todo",
- * and displaying the feedback overlay.
+ * and displaying a feedback overlay. After the feedback overlay is shown,
+ * it redirects to the board page if currently on the add task page.
  *
  * @returns {Promise<void>}
  */
@@ -10,7 +11,11 @@ async function createTask() {
     resetAddTask();
     await postData("tasks", data);
     addTaskstatus = "todo";
-    showFeedbackOverlay();
+    showFeedbackOverlay(() => {
+      if (window.location.pathname.endsWith('addTask.html')) {
+        window.location.href = './board.html';
+      }
+    });
   }
   
   /**
@@ -179,14 +184,19 @@ async function createTask() {
     return `${year}-${month}-${day}`;
   }
   
-  /**
-   * Displays the feedback overlay by adding the "show" class to the overlay element.
-   * Removes the "show" class after 1 second to hide the overlay.
-   */
-  function showFeedbackOverlay() {
+ /**
+ * Displays a feedback overlay and removes it after a short delay.
+ * If a callback function is provided, it is executed after the overlay is hidden.
+ *
+ * @param {Function} [callBack] - An optional callback function to be executed after the overlay is hidden.
+ */
+  function showFeedbackOverlay(callBack) {
     const overlay = document.getElementById("feedback-overlay");
     overlay.classList.add("show");
     setTimeout(() => {
       overlay.classList.remove("show");
+      if (callBack) {
+        callBack();
+      }
     }, 1000);
   }
