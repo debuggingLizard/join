@@ -53,12 +53,10 @@ async function loginFormEvent() {
         e.preventDefault();
 
         const email = document.querySelector('#login-form input[name = email]').value;
-        checkInputValidity('login-form', 'email', loginFormErrors, 'Enter a valid email address.');
-
         const password = document.querySelector('#login-form input[name = password]').value;
-        checkInputValidity('login-form', 'password', loginFormErrors, 'Enter a valid password.');
-
         const remember = document.querySelector('#login-form input[name = remember]').checked;
+
+        checkLoginFormValidation();
 
         if (Object.values(loginFormErrors).every(value => value === false)) {
             login(email, password, remember);
@@ -66,29 +64,35 @@ async function loginFormEvent() {
     })
 }
 
+function checkLoginFormValidation() {
+    checkInputValidity('login-form', 'email', loginFormErrors, 'Enter a valid email address.');
+    checkInputValidity('login-form', 'password', loginFormErrors, 'Enter a valid password.');
+}
+
 async function signUpFormEvent() {
     document.getElementById('signup-form').addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const name = document.querySelector('#signup-form input[name = name]').value;
-        checkInputValidity('signup-form', 'name', signUpFormErrors, 'Enter a valid name.');
-
         const email = document.querySelector('#signup-form input[name = email]').value;
-        checkInputValidity('signup-form', 'email', signUpFormErrors, 'Enter a valid email address.');
-
         const password = document.querySelector('#signup-form input[name = password]').value;
         const confirmPassword = document.querySelector('#signup-form input[name = confirm_password]').value;
         checkPasswordAndConfirmPassword(password, confirmPassword);
-        checkInputValidity('signup-form', 'password', signUpFormErrors, 'Enter a valid password.');
-        checkInputValidity('signup-form', 'confirm_password', signUpFormErrors, "Your passwords don't match. Please try again.");
-
         const accept = document.querySelector('#signup-form input[name = accept]').checked;
         checkAcceptPrivacyPolicy(accept);
+        checkSignUpFormValidation();
 
         if (Object.values(signUpFormErrors).every(value => value === false)) {
             signup(name, email, password);
         }
     })
+}
+
+function checkSignUpFormValidation() {
+    checkInputValidity('signup-form', 'name', signUpFormErrors, 'Enter a valid name.');
+    checkInputValidity('signup-form', 'email', signUpFormErrors, 'Enter a valid email address.');
+    checkInputValidity('signup-form', 'password', signUpFormErrors, 'Enter a valid password.');
+    checkInputValidity('signup-form', 'confirm_password', signUpFormErrors, "Your passwords don't match. Please try again.");
 }
 
 function checkInputValidity(form, input, errorsObject, message) {
