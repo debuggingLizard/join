@@ -27,6 +27,7 @@ async function renderSummaryData() {
   renderAllTasksAmount(tasks);
   renderTasksAmountByStatus(tasks, "progress");
   renderTasksAmountByStatus(tasks, "await-feedback");
+  showAdminName();
 }
 
 /**
@@ -49,15 +50,23 @@ function getGreeting() {
   let greeting;
   switch (true) {
     case hours < 12:
-      greeting = "Good Morning,";
+      greeting = "Good Morning" + commaForGreeting();
       break;
     case hours < 18:
-      greeting = "Good Afternoon,";
+      greeting = "Good Afternoon" + commaForGreeting();
       break;
     default:
-      greeting = "Good Evening,";
+      greeting = "Good Evening" + commaForGreeting();
   }
   return greeting;
+}
+
+/**
+ * Returns , if admin login
+ * @returns {string}.
+ */
+function commaForGreeting() {
+  return isAdminLogin() ? "," : "";
 }
 
 /**
