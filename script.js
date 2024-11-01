@@ -18,7 +18,9 @@ function renderSidebarHeader() {
 function getSidebarTemplate() {
   return /*html*/ `
         <div class="logo">
-            <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
+            <a href="index.html">
+              <img src="./assets/img/JoinLogo.svg" alt="JoinLogo">
+            </a>
         </div>
         <nav>
             <a href="summary.html" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/Summary.svg" alt="SummaryButton"><span>Summary</span></a>
@@ -44,13 +46,13 @@ function getHeaderTemplate() {
             <h2>Kanban Project Management Tool</h2>
             <div class="user-info">
                 <a href="help.html" onclick="saveCurrentPage()" class="help-icon"><img src="./assets/buttons/help.svg" alt="Help"></a>
-                <div class="user-info-profile" onclick="openHeaderProfileInfo()">SM</div>
+                <div class="user-info-profile" onclick="openHeaderProfileInfo()">${getAdminProfileImage()}</div>
             </div>
             <div id="user-info-links" class="user-info-links d-none">
                 <a href="help.html" onclick="saveCurrentPage()" class="user-info-links-help">Help</a>
                 <a href="legal-notice.html" onclick="saveCurrentPage()">Legal Notice</a>
                 <a href="privacy-policy.html" onclick="saveCurrentPage()">Privacy Policy</a>
-                <a href="">Log Out</a>
+                <a href="#" onclick="logout()">Log Out</a>
             </div>
         </div>
     `;
