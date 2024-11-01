@@ -23,7 +23,7 @@ function getSidebarTemplate() {
             </a>
         </div>
         <nav>
-            <a href="index.html" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/Summary.svg" alt="SummaryButton"><span>Summary</span></a>
+            <a href="summary.html" id="sidebar-nav-summary" class="sidebar-nav-a"><img src="./assets/buttons/Summary.svg" alt="SummaryButton"><span>Summary</span></a>
             <a href="addTask.html" id="sidebar-nav-task" class="sidebar-nav-a"><img src="./assets/buttons/AddTask.svg" alt="AddTask"><span>Add Task</span></a>
             <a href="board.html" id="sidebar-nav-board" class="sidebar-nav-a"><img src="./assets/buttons/Board.svg" alt="Board"><span>Board</span></a>
             <a href="contacts.html" id="sidebar-nav-contacts" class="sidebar-nav-a"><img src="./assets/buttons/Contacts.svg" alt="Contacts"><span>Contacts</span></a>
