@@ -67,6 +67,8 @@ function logout() {
     window.location.href = loginPage;
 }
 
+checkLogin();
+
 setInterval(() => {
     checkLogin();
 }, 5000);
