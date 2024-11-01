@@ -76,17 +76,31 @@ async function renderTasks(boardElementId, boardTasks) {
   if (boardTasks.length === 0) {
     boardElement.innerHTML = `<div class="no-tasks">No tasks ${boardTitle}</div>`;
   } else {
-    boardElement.innerHTML = "";
-    for await (const task of boardTasks) {
-      let taskId = task[0];
-      let taskDetail = task[1];
-      boardElement.innerHTML += await taskTemplate(taskId, taskDetail);
-      if (taskDetail.users != undefined && taskDetail.users.length > 0) {
-        await renderTaskContributors(taskId, taskDetail);
-      }
-      if (taskDetail.subtasks != undefined && taskDetail.subtasks.length > 0) {
-        renderSubtasks(taskId, taskDetail);
-      }
+    await renderTasksThatExist(boardElement, boardTasks);
+  }
+}
+
+/**
+ * Renders existing tasks in the specified board element.
+ * Clears the current content of the board element, then iterates over the tasks,
+ * generating and appending the task templates. If a task has users or subtasks,
+ * it renders the contributors and subtasks accordingly.
+ *
+ * @param {Element} boardElement - The DOM element where the tasks will be rendered.
+ * @param {Array} boardTasks - An array of tasks, where each task is represented by a [taskId, taskDetail] pair.
+ * @returns {Promise<void>}
+ */
+async function renderTasksThatExist(boardElement, boardTasks) {
+  boardElement.innerHTML = "";
+  for await (const task of boardTasks) {
+    let taskId = task[0];
+    let taskDetail = task[1];
+    boardElement.innerHTML += await taskTemplate(taskId, taskDetail);
+    if (taskDetail.users != undefined && taskDetail.users.length > 0) {
+      await renderTaskContributors(taskId, taskDetail);
+    }
+    if (taskDetail.subtasks != undefined && taskDetail.subtasks.length > 0) {
+      renderSubtasks(taskId, taskDetail);
     }
   }
 }
@@ -157,7 +171,12 @@ function createTaskHtml(taskId, taskDetail, categoryDetail, priorityDetail) {
 }
 
 /**
- * Generates an HTML template for a subtask progress bar, showing completed and total subtasks.
+ * Generates the HTML template for displaying the progress of subtasks within a task.
+ * Calculates the number of completed subtasks, the total number of subtasks, and
+ * the percentage progress. Creates a progress bar and a text indicator.
+ *
+ * @param {Object} taskDetail - The task detail object containing an array of subtasks.
+ * @returns {string} - The HTML string for the subtask progress display.
  */
 function subTaskTemplate(taskDetail) {
   let allSubTasks = taskDetail.subtasks.length;
@@ -172,7 +191,12 @@ function subTaskTemplate(taskDetail) {
 }
 
 /**
- * Returns HTML for a task contributor.
+ * Generates the HTML template for a task contributor.
+ * Fetches the user details based on the provided userId and creates a styled div element
+ * with the user's profile image and background color.
+ *
+ * @param {string} userId - The ID of the user to fetch details for.
+ * @returns {Promise<string>} - The HTML string for the task contributor.
  */
 async function taskContributorTemplate(userId) {
   let userDetail = await getData("users/" + userId);
@@ -180,7 +204,11 @@ async function taskContributorTemplate(userId) {
 }
 
 /**
- * Debounces and updates search query, then renders boards.
+ * Initiates a search with a debouncing mechanism to avoid excessive function calls.
+ * Clears any existing timeout, sets a new timeout to update the search value after 500ms,
+ * and triggers the rendering of the boards.
+ *
+ * @param {string} query - The search query entered by the user.
  */
 function search(query) {
   clearTimeout(timeoutId);
@@ -191,7 +219,10 @@ function search(query) {
 }
 
 /**
- * Opens the add task overlay and sets task status.
+ * Opens the add task overlay and sets its visual properties.
+ * Initializes the task status and prepares the overlay for adding a new task.
+ *
+ * @param {string} status - The status of the task to be added.
  */
 function openAddTask(status) {
   eventListenerCloseAddTask();

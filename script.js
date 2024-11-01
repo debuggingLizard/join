@@ -66,28 +66,6 @@ function openHeaderProfileInfo() {
 }
 
 /**
- * Updates the active state of navigation links.
- * @param {string} navLinkID - ID of the navigation link to activate.
- */
-function updateActiveStateNavLink(navLinkID) {
-  document
-    .querySelectorAll("sidebar-nav-a")
-    .forEach((link) => link.classList.remove("nav-a-active"));
-  document.getElementById(navLinkID).classList.add("nav-a-active");
-}
-
-/**
- * Displays a feedback overlay temporarily, then hides it after 1 second.
- */
-function showFeedbackOverlay() {
-  const overlay = document.getElementById("feedback-overlay");
-  overlay.classList.add("show");
-  setTimeout(() => {
-    overlay.classList.remove("show");
-  }, 1000);
-}
-
-/**
  * Saves the current page URL in session storage under 'previousPage' key.
  */
 function saveCurrentPage() {
@@ -104,4 +82,15 @@ function goBack() {
   } else {
     window.history.back();
   }
+}
+
+/**
+ * Updates the active state of navigation links.
+ * @param {string} navLinkID - ID of the navigation link to activate.
+ */
+function updateActiveStateNavLink(navLinkID) {
+  document
+    .querySelectorAll("sidebar-nav-a")
+    .forEach((link) => link.classList.remove("nav-a-active"));
+  document.getElementById(navLinkID).classList.add("nav-a-active");
 }
