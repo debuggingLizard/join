@@ -21,9 +21,19 @@ function checkLogin() {
         }
     }
 
+    const pageName = getPageName();
+    if (pageName === 'privacy-policy.html' || pageName === 'legal-notice.html') {
+        keepLogin = true;
+    }
+
     if (keepLogin === false) {
         logout();
     }
+}
+
+function getPageName() {
+    const path = window.location.pathname;
+    return path.substring(path.lastIndexOf('/') + 1);
 }
 
 function getNextOneHourTime() {
