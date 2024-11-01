@@ -153,7 +153,7 @@ function gatherEditedContactData(name, mobile, email, currentUserDetail) {
  * Shows the edit contact overlay.
  */
 function showEditContactOverlay() {
-  document.getElementById("edit-contact-overlay").style.zIndex = 100;
+  document.getElementById("edit-contact-overlay").style.zIndex = 999;
   document.getElementById("edit-contact-overlay").style.backgroundColor =
     "rgb(0 0 0 / 30%)";
   document.getElementById("edit-contact-overlay-container").style.transform =
