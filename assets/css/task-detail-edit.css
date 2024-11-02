@@ -35,8 +35,8 @@
 }
 
 .task-detail .task-detail-body{
-    height: calc(90vh - 31.2px - 51.2px - 60px);
-    max-height: calc(620px - 31.2px - 51.2px - 60px);
+    height: calc(90vh - 31.2px - 70.4px - 60px);
+    max-height: calc(620px - 31.2px - 70.4px - 60px);
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 4px;
@@ -147,6 +147,10 @@
     line-height: 1;
 }
 
+.task-edit-delete-btn .icon-check {
+    font-size: 20px;
+}
+
 .task-edit-delete-btn:hover {
     cursor: pointer;
     color: #29ABE2;
@@ -154,6 +158,7 @@
 
 .task-edit-delete.confirm-delete {
     justify-content: space-between;
+    padding: 16px 0;
 }
 
 .edit-task {
