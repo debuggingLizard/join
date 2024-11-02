@@ -289,15 +289,27 @@
 }
 
 .task-view .category-move-task-container .move-task-menu {
-    height: 24px;
+    display: none;
+    height: 28px;
     aspect-ratio: 1/1;
     position: relative;
+    border-radius: 50%;
+    padding: 4px;
+    transition: all 0.1s ease;
+}
+
+.task-view .category-move-task-container .move-task-menu:hover {
+    background-color: #0C2E621F;
+}
+
+.task-view .category-move-task-container .move-task-menu:hover path {
+    fill: #2A3647;
 }
 
 .move-task-menu .move-task-dropdown {
     position: absolute;
     right: 0;
-    top: 24px;
+    top: 28px;
     border-radius: 12px 0 12px 12px;
     box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.08);
     background-color: white;

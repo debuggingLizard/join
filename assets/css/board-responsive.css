@@ -9,12 +9,11 @@
     }
 
     .userStory {
-        padding: 6px 10px;
+        padding: 6px 6px;
     }
 }
 
 @media (max-width: 1084px) {
-
     .board-middle {
         flex-direction: column;
         align-items: center;
@@ -40,6 +39,10 @@
 
     .userStory {
         padding: 6px 18px;
+    }
+
+    .task-view .category-move-task-container .move-task-menu {
+        display: block;
     }
 
 }
@@ -123,6 +126,10 @@
     .form-actions {
         padding-top: 20px;
     }
+
+    .userStory {
+        padding: 6px 4px;
+    }
 }
 
 @media (max-width: 700px) {
@@ -149,6 +156,10 @@
     .board-tasks .task-view {
         flex: 1 1 calc(90%);
         max-width: 90%;
+    }
+
+    .userStory {
+        padding: 6px 10px;
     }
 }
 
