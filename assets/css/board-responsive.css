@@ -135,6 +135,12 @@
     }
 }
 
+@media(max-width: 500px) {
+    .confirm-delete .task-edit-delete-btn span {
+        display: none;
+    }
+}
+
 @media (max-width: 486px) {
     .board-header h1 {
         font-size: 40px;
