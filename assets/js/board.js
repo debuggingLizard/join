@@ -154,7 +154,22 @@ async function taskTemplate(taskId, taskDetail) {
 function createTaskHtml(taskId, taskDetail, categoryDetail, priorityDetail) {
   return /*html*/ `<div class="task-view" draggable="true" ondrag="drag(event)" ondragstart="dragstart(event, '${taskId}')" ondragend="dragEnd()" onclick="openTaskDetail('${taskId}')">
                     <div class="task-view-top">
-                      <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
+                      <div class="category-move-task-container">
+                        <div class="userStory" style="background:${categoryDetail.color}">${categoryDetail.title}</div>
+                        <div class="move-task-menu">
+                        <svg onclick="openMoveTaskDropdown(event, '${taskId}')" enable-background="new 0 0 16 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+                          <path d="M13,16c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,14.346,13,16z" id="XMLID_294_" fill="#a8a8a8"/> 
+                          <path d="M13,26c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,24.346,13,26z" id="XMLID_295_" fill="#a8a8a8"/> 
+                          <path d="M13,6c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,4.346,13,6z" id="XMLID_297_" fill="#a8a8a8"/> 
+                        </svg>
+                        <div id="move-task-dropdown-${taskId}" class="move-task-dropdown d-none" onclick="event.stopPropagation()">
+                          <p onclick="changeStatus('todo', '${taskId}')">To do</p>
+                          <p onclick="changeStatus('progress', '${taskId}')">In progress</p>
+                          <p onclick="changeStatus('await-feedback', '${taskId}')">Await Feedback</p>
+                          <p onclick="changeStatus('done', '${taskId}')">Done</p>
+                        </div>
+                        </div>
+                      </div>
                       <div class="task-description">
                         <h2>${taskDetail.title}</h2>
                         <p>${taskDetail.description}</p>

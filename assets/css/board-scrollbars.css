@@ -1,0 +1,25 @@
+/* Scrollbars for Adding Task, Showing Task and Editing Task*/
+.edit-task .edit-task-form-column::-webkit-scrollbar,
+.task-detail .task-detail-body::-webkit-scrollbar,
+.form-row::-webkit-scrollbar {
+    width: 7px;
+}
+
+.edit-task .edit-task-form-column::-webkit-scrollbar-track,
+.task-detail .task-detail-body::-webkit-scrollbar-track,
+.form-row::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.edit-task .edit-task-form-column::-webkit-scrollbar-thumb,
+.task-detail .task-detail-body::-webkit-scrollbar-thumb,
+.form-row::-webkit-scrollbar-thumb {
+    background: #d8d6d6;
+    border-radius: 8px;
+}
+
+.edit-task .edit-task-form-column::-webkit-scrollbar-thumb:hover,
+.task-detail .task-detail-body::-webkit-scrollbar-thumb:hover,
+.form-row::-webkit-scrollbar-thumb:hover {
+    background: #999999;
+}

@@ -5,24 +5,23 @@
 
     .board-middle {
         padding: 0 30px;
-        gap:20px;
+        gap: 20px;
     }
 
     .userStory {
-        padding: 6px 10px;
+        padding: 6px 6px;
     }
 }
 
 @media (max-width: 1084px) {
-
     .board-middle {
         flex-direction: column;
         align-items: center;
-        gap:30px;
+        gap: 30px;
     }
 
     .boards {
-        display:flex;
+        display: flex;
         flex-direction: column;
         width: 100%;
     }
@@ -42,9 +41,14 @@
         padding: 6px 18px;
     }
 
+    .task-view .category-move-task-container .move-task-menu {
+        display: block;
+    }
+
 }
 
 @media (max-width: 1000px) {
+
     .form-column.left,
     .form-column.right {
         min-width: 300px;
@@ -57,7 +61,7 @@
 
 @media (max-width: 800px) {
     .right-board-header input {
-        width:100%;
+        width: 100%;
     }
 
     .board-header {
@@ -73,9 +77,9 @@
     }
 
     .left-board-header {
-       display: flex;
-       justify-content: space-between;
-       align-items: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .right-board-header {
@@ -105,7 +109,7 @@
         font-size: 17px;
     }
 
-    .add-task-container{
+    .add-task-container {
         border-radius: 20px;
     }
 
@@ -123,6 +127,10 @@
     .form-actions {
         padding-top: 20px;
     }
+
+    .userStory {
+        padding: 6px 4px;
+    }
 }
 
 @media (max-width: 700px) {
@@ -130,6 +138,7 @@
         flex: 1 1 calc(45%);
         max-width: 45%;
     }
+
     .task-detail h1 {
         font-size: 40px;
     }
@@ -149,6 +158,10 @@
     .board-tasks .task-view {
         flex: 1 1 calc(90%);
         max-width: 90%;
+    }
+
+    .userStory {
+        padding: 6px 10px;
     }
 }
 
