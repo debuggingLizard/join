@@ -86,8 +86,10 @@ function initContactDropdownList(formId) {
   document.addEventListener("click", function (event) {
     const input = document.querySelector(`${formId} *[name = assignees]`);
     const dropdown = document.querySelector(`${formId} .assignees-list`);
-    if (!input.contains(event.target) && !dropdown.contains(event.target)) {
-      dropdown.classList.add("d-none");
+    if (input && dropdown) {
+      if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.classList.add("d-none");
+      }
     }
   });
 }
