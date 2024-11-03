@@ -204,7 +204,7 @@
     transform: translateX(200%);
     margin: 0 20px;
     z-index: 1000;
-    height: 90vh;
+    height: 90dvh;
     max-height: 620px;
 }
 
@@ -217,7 +217,7 @@
 }
 
 .form-row {
-    height: calc(90vh - 130.4px - 80.8px);
+    height: calc(90dvh - 130.4px - 80.8px);
     max-height: calc(620px - 130.4px - 80.8px);
     overflow-y: auto;
     overflow-x: hidden;

@@ -1,7 +1,7 @@
 .task-detail {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: white;
-    height: 90vh;
+    height: 90dvh;
     max-height: 620px;
     width: 525px;
     margin: 10px;
@@ -35,7 +35,7 @@
 }
 
 .task-detail .task-detail-body{
-    height: calc(90vh - 31.2px - 70.4px - 60px);
+    height: calc(90dvh - 31.2px - 70.4px - 60px);
     max-height: calc(620px - 31.2px - 70.4px - 60px);
     overflow-y: auto;
     overflow-x: hidden;
@@ -164,7 +164,7 @@
 .edit-task {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: white;
-    height: 90vh;
+    height: 90dvh;
     max-height: 620px;
     width: 525px;
     margin: 10px;
