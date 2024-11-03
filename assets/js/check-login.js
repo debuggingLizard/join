@@ -107,6 +107,15 @@ function isGuestLogin() {
 }
 
 /**
+ * Checks if redirect from login page.
+ *
+ * @returns {boolean} - True if redirect from login page, false otherwise.
+ */
+function isMoveFromLoginPage() {
+  return localStorage.getItem("redirectFromLogin") !== null;
+}
+
+/**
  * Logs the user out by removing all relevant login information from local storage
  * and redirecting the user to the login page.
  */
