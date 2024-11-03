@@ -118,7 +118,7 @@ function categoryDropDown() {
  * Listens for form submission, checks required fields, and creates the task if valid.
  */
 async function renderAddTaskData() {
-  await renderContacts("#add-task-form");
+  await renderContacts("#add-task-form", []);
   await renderCategories();
   initializeTaskForm();
 }
