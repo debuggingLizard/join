@@ -87,6 +87,8 @@ function closeTaskDetail() {
   setTimeout(() => {
     document.getElementById("edit-task").classList.add("d-none");
     document.getElementById("overlay").classList.add("d-none");
+    document.getElementById("edit-task").innerHTML = "";
+    document.getElementById("task-detail").innerHTML ="";
   }, 500);
 }
 
