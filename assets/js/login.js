@@ -1,4 +1,4 @@
-const redirectPage = "./summary.html";
+const redirectPage = "./index.html";
 
 let loginFormErrors = {
   email: false,
