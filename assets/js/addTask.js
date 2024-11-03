@@ -141,6 +141,7 @@ async function renderContacts(form, assignedUsers = []) {
   assigneesListElement.innerHTML = "";
   sortedContacts.forEach((contact) => {
     assigneesListElement.innerHTML += getAssigneesListTemplate(
+      form,
       contact,
       assignedUsers
     );
@@ -156,9 +157,9 @@ async function renderContacts(form, assignedUsers = []) {
  * @param {Array<string>} [assignedUsers=[]] - An array of user IDs that are already assigned.
  * @returns {string} - The HTML string for the assignee list item.
  */
-function getAssigneesListTemplate(contact, assignedUsers = []) {
+function getAssigneesListTemplate(form, contact, assignedUsers = []) {
   return /*html*/ `
-    <label for="${contact.id}" class='${
+    <label for="${form + contact.id}" class='${
     assignedUsers.includes(contact.id) ? "active" : ""
   }'>
       <div>
@@ -169,7 +170,7 @@ function getAssigneesListTemplate(contact, assignedUsers = []) {
       </div>
       <input type="checkbox" ${
         assignedUsers.includes(contact.id) ? "checked" : ""
-      } id="${contact.id}" 
+      } id="${form + contact.id}" 
       value="${contact.id}" name="contact" data-id="${contact.id}" 
       data-color="${contact.color}" data-initials="${
     contact.profileImage
@@ -286,7 +287,7 @@ function addContact(assignedContactsDiv, checkbox) {
  */
 function removeContact(assignedContactsDiv, checkbox) {
   const spanToRemove = Array.from(assignedContactsDiv.children).find(
-    (span) => span.id === checkbox.id
+    (span) => span.id === checkbox.dataset.id
   );
   if (spanToRemove) {
     assignedContactsDiv.removeChild(spanToRemove);
