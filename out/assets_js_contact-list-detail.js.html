@@ -42,7 +42,10 @@ async function renderContactList() {
 }
 
 /**
- * Groups users by the first letter of their names.
+ * Groups users by the first letter of their name and sorts them alphabetically.
+ * Each user is added to the `groupedUsers` object under the corresponding first letter.
+ *
+ * @param {Object} users - An object containing user data, where the key is the user ID and the value is the user details.
  */
 function getFirstLetters(users) {
   let sortedUsers = Object.keys(users).sort((a, b) => {
@@ -59,9 +62,11 @@ function getFirstLetters(users) {
 }
 
 /**
- * This function uses the global groupedUsers object and creates HTML for every key-value pair of that object, i.e. displaying the users.
- * It first gets the template for the basic HTML structure for the letter category.
- * Then, it gets the template for every user, placing these within the respective letter category that they belong to.
+ * Displays the contact list grouped by the first letter of users' names.
+ * Iterates over the grouped users and adds the HTML templates for each letter group
+ * and each user contact list item to the specified list reference.
+ *
+ * @param {Element} listRef - The DOM element where the contact list will be rendered.
  */
 function displayContactList(listRef) {
   Object.keys(groupedUsers).forEach((letter) => {
@@ -109,15 +114,20 @@ function getUserContactListTemplate(user) {
 }
 
 /**
- * Renders the contact details for a given contact ID.
- * @param {string} id - The ID of the contact to render details for.
+ * Renders the contact detail view for a specific user.
+ * Fetches user data, updates the contact detail view, and handles responsive view adjustments
+ * for smaller screens by rendering edit buttons, activating slide-in close functionality,
+ * and toggling the visibility of the contact detail element.
+ *
+ * @param {string} id - The ID of the user whose details are to be rendered.
+ * @param {string} showElement - The element to show for responsive visibility handling.
+ * @returns {Promise&lt;void>}
  */
 async function renderContactDetail(id, showElement) {
   let detailRef = document.getElementById("contact-detail-view");
   let detailUser = await getData("users/" + id);
   detailRef.innerHTML = "";
   detailRef.innerHTML = getContactDetailTemplate(id, detailUser);
-
   if (window.innerWidth &lt;= 860) {
     renderResponsiveEditButtons(id);
     activateCloseSlideIn();
@@ -135,21 +145,34 @@ function toggleResponsiveVisibilityContact(showElement) {
 }
 
 /**
- * Renders the responsive edit buttons for a contact.
- * @param {string} id - The ID of the contact.
+ * Renders the responsive edit and delete buttons for a specific contact.
+ * Clears the current content of the edit button container and appends the edit and delete button templates.
+ *
+ * @param {string} id - The ID of the user for whom the edit and delete buttons are to be rendered.
  */
 function renderResponsiveEditButtons(id) {
   let responsiveEditRef = document.getElementById(
     "contact-detail-responsive-edit-delete-wrapper"
   );
   responsiveEditRef.innerHTML = "";
-  responsiveEditRef.innerHTML += /*html*/ `
+  responsiveEditRef.innerHTML += getResponsiveEditDeleteBtnTemplate(id);
+}
+
+/**
+ * Generates the HTML template for the responsive edit and delete buttons.
+ * The template includes a button with three dots that triggers the `openSlideIn` function
+ * and a slide-in container for additional content.
+ *
+ * @param {string} id - The ID of the user for whom the edit and delete buttons are to be generated.
+ * @returns {string} - The HTML string for the responsive edit and delete buttons.
+ */
+function getResponsiveEditDeleteBtnTemplate(id) {
+  return /*html*/ `
     &lt;div class="edit-delete-btn-responsive" onclick="openSlideIn('${id}')">
                     &lt;span class="dot">&lt;/span>
                     &lt;span class="dot">&lt;/span>
                     &lt;span class="dot">&lt;/span>
                 &lt;/div>
-
                 &lt;div class="slide-in" id="slideIn">
                   &lt;div class="slide-in-content">&lt;/div>
                 &lt;/div>
@@ -214,8 +237,21 @@ function getContactDetailTemplate(id, detailUser) {
  */
 function openSlideIn(id) {
   const slideInContent = document.querySelector(".slide-in-content");
-  slideInContent.innerHTML = `
-      &lt;button class="contact-detail-btn" onclick="openEditContactModal('${id}'); closeSlideIn()">
+  slideInContent.innerHTML = getSlideInTemplate(id);
+  const slideIn = document.getElementById("slideIn");
+  slideIn.classList.add("visible");
+}
+
+/**
+ * Generates the HTML template for the slide-in menu.
+ * The template includes buttons for editing and deleting a contact, each with their corresponding icons and actions.
+ *
+ * @param {string} id - The ID of the user for whom the slide-in menu is generated.
+ * @returns {string} - The HTML string for the slide-in menu.
+ */
+function getSlideInTemplate(id) {
+  return /*html*/ `
+    &lt;button class="contact-detail-btn" onclick="openEditContactModal('${id}'); closeSlideIn()">
           &lt;img src="./assets/img/edit.svg" alt="">
           &lt;span>Edit&lt;/span>
       &lt;/button>
@@ -224,8 +260,6 @@ function openSlideIn(id) {
           &lt;span>Delete&lt;/span>
       &lt;/button>
   `;
-  const slideIn = document.getElementById("slideIn");
-  slideIn.classList.add("visible");
 }
 
 /**
@@ -253,7 +287,6 @@ function activateCloseSlideIn() {
   document.addEventListener("click", function (event) {
     const slideIn = document.getElementById("slideIn");
     const button = document.querySelector(".edit-delete-btn-responsive");
-
     if (
       slideIn.classList.contains("visible") &amp;&amp;
       !slideIn.contains(event.target) &amp;&amp;
@@ -273,13 +306,13 @@ function activateCloseSlideIn() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateCloseSlideIn">activateCloseSlideIn</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#checkCreateInputValidation">checkCreateInputValidation</a></li><li><a href="global.html#checkEditInputValidation">checkEditInputValidation</a></li><li><a href="global.html#checkRequiredFields">checkRequiredFields</a></li><li><a href="global.html#checkSearchValue">checkSearchValue</a></li><li><a href="global.html#clearPlaceholder">clearPlaceholder</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeAddTask">closeAddTask</a></li><li><a href="global.html#closeSlideIn">closeSlideIn</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#drag">drag</a></li><li><a href="global.html#dragEnd">dragEnd</a></li><li><a href="global.html#dragstart">dragstart</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#eventListenerCloseAddTask">eventListenerCloseAddTask</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getAssigneesListTemplate">getAssigneesListTemplate</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getTasksByStatus">getTasksByStatus</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#hideInputValidationError">hideInputValidationError</a></li><li><a href="global.html#initEventListenerAddTask">initEventListenerAddTask</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#loadDropTargets">loadDropTargets</a></li><li><a href="global.html#loadTasksFromDatabase">loadTasksFromDatabase</a></li><li><a href="global.html#openAddTask">openAddTask</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#openSlideIn">openSlideIn</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#removeAllErrors">removeAllErrors</a></li><li><a href="global.html#removeResponsiveEditAfterDelete">removeResponsiveEditAfterDelete</a></li><li><a href="global.html#renderAddTaskData">renderAddTaskData</a></li><li><a href="global.html#renderBoardForNewTask">renderBoardForNewTask</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#renderBoardsByStatus">renderBoardsByStatus</a></li><li><a href="global.html#renderCategories">renderCategories</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderResponsiveEditButtons">renderResponsiveEditButtons</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderTaskAfterCreateTask">renderTaskAfterCreateTask</a></li><li><a href="global.html#renderTaskContributors">renderTaskContributors</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#resetAddTask">resetAddTask</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#selectPrio">selectPrio</a></li><li><a href="global.html#setPlaceholder">setPlaceholder</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#showFeedbackOverlay">showFeedbackOverlay</a></li><li><a href="global.html#showInputValidationError">showInputValidationError</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#styleLabel">styleLabel</a></li><li><a href="global.html#subTaskTemplate">subTaskTemplate</a></li><li><a href="global.html#taskContributorTemplate">taskContributorTemplate</a></li><li><a href="global.html#taskTemplate">taskTemplate</a></li><li><a href="global.html#toggleResponsiveVisibilityContact">toggleResponsiveVisibilityContact</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li><li><a href="global.html#updateAssignedContacts">updateAssignedContacts</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateCloseSlideIn">activateCloseSlideIn</a></li><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addDragQueenEventListeners">addDragQueenEventListeners</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#appendSubtaskToList">appendSubtaskToList</a></li><li><a href="global.html#categoryDropDown">categoryDropDown</a></li><li><a href="global.html#changeStatus">changeStatus</a></li><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkCreateInputValidation">checkCreateInputValidation</a></li><li><a href="global.html#checkEditFormValidation">checkEditFormValidation</a></li><li><a href="global.html#checkEditInputValidation">checkEditInputValidation</a></li><li><a href="global.html#checkInputValidity">checkInputValidity</a></li><li><a href="global.html#checkLogin">checkLogin</a></li><li><a href="global.html#checkLoginFormValidation">checkLoginFormValidation</a></li><li><a href="global.html#checkPasswordAndConfirmPassword">checkPasswordAndConfirmPassword</a></li><li><a href="global.html#checkRequiredFields">checkRequiredFields</a></li><li><a href="global.html#checkSearchValue">checkSearchValue</a></li><li><a href="global.html#checkSignUpFormValidation">checkSignUpFormValidation</a></li><li><a href="global.html#clearPlaceholder">clearPlaceholder</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeAddTask">closeAddTask</a></li><li><a href="global.html#closeSlideIn">closeSlideIn</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#commaForGreeting">commaForGreeting</a></li><li><a href="global.html#confirmDelete">confirmDelete</a></li><li><a href="global.html#confirmEdit">confirmEdit</a></li><li><a href="global.html#convertDateFormatWithDash">convertDateFormatWithDash</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createEditInputField">createEditInputField</a></li><li><a href="global.html#createSaveButton">createSaveButton</a></li><li><a href="global.html#createSubtaskListItem">createSubtaskListItem</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#createTaskDataObject">createTaskDataObject</a></li><li><a href="global.html#createTaskHtml">createTaskHtml</a></li><li><a href="global.html#createValidContact">createValidContact</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTaskData">deleteTaskData</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#drag">drag</a></li><li><a href="global.html#dragEnd">dragEnd</a></li><li><a href="global.html#dragstart">dragstart</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editFormEventListener">editFormEventListener</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTaskTemplate">editTaskTemplate</a></li><li><a href="global.html#editValidContact">editValidContact</a></li><li><a href="global.html#enableSubtaskEditing">enableSubtaskEditing</a></li><li><a href="global.html#eventListenerCloseAddTask">eventListenerCloseAddTask</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#finalizeEdit">finalizeEdit</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#gatherEditedContactData">gatherEditedContactData</a></li><li><a href="global.html#gatherNewContactData">gatherNewContactData</a></li><li><a href="global.html#gatherTaskData">gatherTaskData</a></li><li><a href="global.html#gatherTaskFormData">gatherTaskFormData</a></li><li><a href="global.html#generateSalt">generateSalt</a></li><li><a href="global.html#getAdminProfileImage">getAdminProfileImage</a></li><li><a href="global.html#getAssignedUsers">getAssignedUsers</a></li><li><a href="global.html#getAssigneesListTemplate">getAssigneesListTemplate</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getDataFromDatabase">getDataFromDatabase</a></li><li><a href="global.html#getDetailAssignedUsers">getDetailAssignedUsers</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getNextOneHourTime">getNextOneHourTime</a></li><li><a href="global.html#getNextUrgentDeadline">getNextUrgentDeadline</a></li><li><a href="global.html#getPageName">getPageName</a></li><li><a href="global.html#getPriorityID">getPriorityID</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getResponsiveEditDeleteBtnTemplate">getResponsiveEditDeleteBtnTemplate</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getSlideInTemplate">getSlideInTemplate</a></li><li><a href="global.html#getSubtaskInput">getSubtaskInput</a></li><li><a href="global.html#getSubtaskListItemTemplate">getSubtaskListItemTemplate</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTasksByStatus">getTasksByStatus</a></li><li><a href="global.html#getUrgentTasksAmount">getUrgentTasksAmount</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#goBack">goBack</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleAddContactOverlayClick">handleAddContactOverlayClick</a></li><li><a href="global.html#handleAssigneeChange">handleAssigneeChange</a></li><li><a href="global.html#handleCreateContactSubmit">handleCreateContactSubmit</a></li><li><a href="global.html#handleDragEnter">handleDragEnter</a></li><li><a href="global.html#handleDragLeave">handleDragLeave</a></li><li><a href="global.html#handleDragOver">handleDragOver</a></li><li><a href="global.html#handleEditContactOverlayClick">handleEditContactOverlayClick</a></li><li><a href="global.html#handleEditContactSubmit">handleEditContactSubmit</a></li><li><a href="global.html#handleEditFormSubmit">handleEditFormSubmit</a></li><li><a href="global.html#handleSaveOnEnter">handleSaveOnEnter</a></li><li><a href="global.html#handleSubtaskInput">handleSubtaskInput</a></li><li><a href="global.html#hashingPassword">hashingPassword</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideDeleteConfirm">hideDeleteConfirm</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#hideEditTaskShowDetailView">hideEditTaskShowDetailView</a></li><li><a href="global.html#hideErrorMessages">hideErrorMessages</a></li><li><a href="global.html#hideInputValidationError">hideInputValidationError</a></li><li><a href="global.html#initContactDropdownList">initContactDropdownList</a></li><li><a href="global.html#initDateInput">initDateInput</a></li><li><a href="global.html#initEventListenerAddTask">initEventListenerAddTask</a></li><li><a href="global.html#initFormFieldListeners">initFormFieldListeners</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initSubtaskFunctions">initSubtaskFunctions</a></li><li><a href="global.html#initializeTaskForm">initializeTaskForm</a></li><li><a href="global.html#isAdminLogin">isAdminLogin</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#isGuestLogin">isGuestLogin</a></li><li><a href="global.html#loadDropTargets">loadDropTargets</a></li><li><a href="global.html#loadTasksFromDatabase">loadTasksFromDatabase</a></li><li><a href="global.html#loadTemplates">loadTemplates</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginFormEvent">loginFormEvent</a></li><li><a href="global.html#logoAnimation">logoAnimation</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#markSubstaskAsDone">markSubstaskAsDone</a></li><li><a href="global.html#markSubtaskAsNotDone">markSubtaskAsNotDone</a></li><li><a href="global.html#openAddTask">openAddTask</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openEditTaskForm">openEditTaskForm</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#openMoveTaskDropdown">openMoveTaskDropdown</a></li><li><a href="global.html#openSlideIn">openSlideIn</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#removeAllErrors">removeAllErrors</a></li><li><a href="global.html#removeContact">removeContact</a></li><li><a href="global.html#removeContactFromTasks">removeContactFromTasks</a></li><li><a href="global.html#removeInputErrors">removeInputErrors</a></li><li><a href="global.html#removeResponsiveEditAfterDelete">removeResponsiveEditAfterDelete</a></li><li><a href="global.html#renderAddTaskData">renderAddTaskData</a></li><li><a href="global.html#renderAllBoards">renderAllBoards</a></li><li><a href="global.html#renderAllTasksAmount">renderAllTasksAmount</a></li><li><a href="global.html#renderBoardForNewTask">renderBoardForNewTask</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#renderBoardsByStatus">renderBoardsByStatus</a></li><li><a href="global.html#renderCategories">renderCategories</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderResponsiveEditButtons">renderResponsiveEditButtons</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSummaryData">renderSummaryData</a></li><li><a href="global.html#renderTaskAfterCreateTask">renderTaskAfterCreateTask</a></li><li><a href="global.html#renderTaskContributors">renderTaskContributors</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#renderTasksAmountByStatus">renderTasksAmountByStatus</a></li><li><a href="global.html#renderTasksThatExist">renderTasksThatExist</a></li><li><a href="global.html#renderUrgentTasks">renderUrgentTasks</a></li><li><a href="global.html#resetAddTask">resetAddTask</a></li><li><a href="global.html#resetAdditionalElements">resetAdditionalElements</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#resetFormInputs">resetFormInputs</a></li><li><a href="global.html#resetSubtaskInput">resetSubtaskInput</a></li><li><a href="global.html#saveCurrentPage">saveCurrentPage</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#selectPrio">selectPrio</a></li><li><a href="global.html#setGreeting">setGreeting</a></li><li><a href="global.html#setGreetingScreenVisibility">setGreetingScreenVisibility</a></li><li><a href="global.html#setPlaceholder">setPlaceholder</a></li><li><a href="global.html#setupClearButton">setupClearButton</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showAdminName">showAdminName</a></li><li><a href="global.html#showDeleteConfirm">showDeleteConfirm</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#showFeedbackOverlay">showFeedbackOverlay</a></li><li><a href="global.html#showGreetingScreen">showGreetingScreen</a></li><li><a href="global.html#showInputValidationError">showInputValidationError</a></li><li><a href="global.html#showLoginError">showLoginError</a></li><li><a href="global.html#showLoginForm">showLoginForm</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#showSignupForm">showSignupForm</a></li><li><a href="global.html#signUpFormEvent">signUpFormEvent</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#styleLabel">styleLabel</a></li><li><a href="global.html#subTaskTemplate">subTaskTemplate</a></li><li><a href="global.html#taskContributorTemplate">taskContributorTemplate</a></li><li><a href="global.html#taskDetailTemplate">taskDetailTemplate</a></li><li><a href="global.html#taskTemplate">taskTemplate</a></li><li><a href="global.html#toggleButtonVisibility">toggleButtonVisibility</a></li><li><a href="global.html#toggleContactDropdown">toggleContactDropdown</a></li><li><a href="global.html#toggleCreateTaskButton">toggleCreateTaskButton</a></li><li><a href="global.html#toggleEditButtonVisibility">toggleEditButtonVisibility</a></li><li><a href="global.html#togglePasswordVisible">togglePasswordVisible</a></li><li><a href="global.html#toggleResponsiveVisibilityContact">toggleResponsiveVisibilityContact</a></li><li><a href="global.html#toggleSubtask">toggleSubtask</a></li><li><a href="global.html#typePassword">typePassword</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li><li><a href="global.html#updateAssignedContacts">updateAssignedContacts</a></li><li><a href="global.html#updateTaskData">updateTaskData</a></li><li><a href="global.html#updateTaskDataForSubtaskStatusChange">updateTaskDataForSubtaskStatusChange</a></li><li><a href="global.html#validateCreateContactInputs">validateCreateContactInputs</a></li><li><a href="global.html#validateEditContactInputs">validateEditContactInputs</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri Oct 25 2024 20:14:16 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sun Nov 03 2024 15:57:56 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

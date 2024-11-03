@@ -118,7 +118,7 @@
     }
 
     .form-row {
-        height: calc(90vh - 84.4px - 94.8px);
+        height: calc(90dvh - 84.4px - 94.8px);
         max-height: calc(620px - 84.4px - 94.8px);
         justify-content: flex-start;
         padding-right: 4px;

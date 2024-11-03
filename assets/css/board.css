@@ -204,7 +204,7 @@
     transform: translateX(200%);
     margin: 0 20px;
     z-index: 1000;
-    height: 90vh;
+    height: 90dvh;
     max-height: 620px;
 }
 
@@ -217,7 +217,7 @@
 }
 
 .form-row {
-    height: calc(90vh - 130.4px - 80.8px);
+    height: calc(90dvh - 130.4px - 80.8px);
     max-height: calc(620px - 130.4px - 80.8px);
     overflow-y: auto;
     overflow-x: hidden;
@@ -367,15 +367,13 @@
 .task-contributors {
     display: flex;
     align-items: center;
-}
-
-.task-contributors .contributor:first-child {
-    margin-left: 0;
+    flex-wrap: wrap;
 }
 
 .contributor-listing .icon {
     font-size: 20px;
     line-height: 0;
+    align-self: flex-end;
 }
 
 .contributor {
@@ -388,7 +386,7 @@
     font-size: 12px;
     color: white;
     font-weight: 400;
-    margin-left: 5px;
+    margin: 2px 2px 0 0;
     border: 2px solid white;
 }
 
@@ -396,5 +394,5 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 16px;
 }
