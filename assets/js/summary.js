@@ -21,15 +21,22 @@ function showGreetingScreen() {
  * @param {Element} greetingScreen - The greeting screen element to be hidden.
  */
 function setGreetingScreenVisibility(mainContainer, greetingScreen) {
-  mainContainer.style.overflow = "hidden";
-  setTimeout(() => {
-    greetingScreen.classList.add("hidden");
-    mainContainer.style.overflow = "";
+  if(isMoveFromLoginPage()) {
+    mainContainer.style.overflow = "hidden";
     setTimeout(() => {
-      greetingScreen.classList.add("no-show");
-      greetingScreen.classList.remove("hidden");
-    }, 1000);
-  }, 1500);
+      greetingScreen.classList.add("hidden");
+      mainContainer.style.overflow = "";
+      setTimeout(() => {
+        greetingScreen.classList.add("no-show");
+        greetingScreen.classList.remove("hidden");
+      }, 1000);
+    }, 1500);
+    localStorage.removeItem("redirectFromLogin");
+  } else {
+    greetingScreen.classList.add("hidden");
+    greetingScreen.classList.add("no-show");
+    greetingScreen.classList.remove("hidden");
+  }
 }
 
 /**

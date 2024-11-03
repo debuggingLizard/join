@@ -283,6 +283,7 @@ async function login(email, password, remember) {
   );
   localStorage.setItem("joinLoginRemember", remember);
   localStorage.setItem("joinLoginValidTime", getNextOneHourTime());
+  localStorage.setItem("redirectFromLogin", true);
   window.location.href = redirectPage;
 }
 
@@ -313,6 +314,7 @@ function guestLogin() {
   localStorage.removeItem("joinLoginRemember");
   localStorage.removeItem("joinLoginValidTime");
   localStorage.setItem("joinGuestLoginValidTime", getNextOneHourTime());
+  localStorage.setItem("redirectFromLogin", true);
   window.location.href = redirectPage;
 }
 
