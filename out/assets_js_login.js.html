@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: assets/js/create-contact.js</title>
+    <title>JSDoc: Source: assets/js/login.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: assets/js/create-contact.js</h1>
+    <h1 class="page-title">Source: assets/js/login.js</h1>
 
     
 
@@ -26,187 +26,461 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let createFormErrors = {
-  name: 0,
-  email: 0,
-  phone: 0,
+            <pre class="prettyprint source linenums"><code>const redirectPage = "./index.html";
+
+let loginFormErrors = {
+  email: false,
+  password: false,
+};
+
+let signUpFormErrors = {
+  name: false,
+  email: false,
+  password: false,
+  confirm_password: false,
+  accept: false,
 };
 
 /**
- * Adds event listeners to the create contact form and add contact overlay elements.
- * The submit event listener triggers the handleCreateContactSubmit function,
- * while the click event listener on the overlay triggers the handleAddContactOverlayClick function.
+ * Initializes the login functionality by executing various setup functions.
+ * This includes logo animation, event listeners for the login and sign-up forms, password typing functionality, and toggling password visibility.
  */
-function eventListenerCreateContact() {
-  document
-    .getElementById("create-contact-form")
-    .addEventListener("submit", handleCreateContactSubmit);
-  document
-    .getElementById("add-contact-overlay")
-    .addEventListener("click", handleAddContactOverlayClick);
+function initLogin() {
+  logoAnimation();
+  loginFormEvent();
+  signUpFormEvent();
+  typePassword();
+  togglePasswordVisible();
 }
 
 /**
- * Handles the submit event for the create contact form.
- * Prevents the default form submission behavior, validates the input fields,
- * and creates a new contact if all fields are valid (no errors).
- *
- * @param {Event} event - The submit event object.
+ * Displays the login form by hiding the sign-up form and showing the login form.
+ * Also ensures that the header-right element is visible.
  */
-function handleCreateContactSubmit(event) {
-  event.preventDefault();
-  validateCreateContactInputs();
-  if (
-    createFormErrors.name === 0 &amp;&amp;
-    createFormErrors.email === 0 &amp;&amp;
-    createFormErrors.phone === 0
-  ) {
-    createContact();
-  }
+function showLoginForm() {
+  document.getElementById("signup-form").classList.add("d-none");
+  document.getElementById("login-form").classList.remove("d-none");
+  document.getElementById("header-right").classList.remove("d-none");
 }
 
 /**
- * Validates the input fields in the create contact form.
- * Checks the validity of the name, email, and phone fields,
- * and displays appropriate validation error messages if the fields are invalid.
+ * Displays the sign-up form by hiding the login form and header-right element,
+ * and showing the sign-up form.
  */
-function validateCreateContactInputs() {
-  checkCreateInputValidation("name", "Enter name &amp; surname.");
-  checkCreateInputValidation("email", "Enter a valid email address.");
-  checkCreateInputValidation(
-    "phone",
-    "Enter a valid phone number with country code."
+function showSignupForm() {
+  document.getElementById("login-form").classList.add("d-none");
+  document.getElementById("header-right").classList.add("d-none");
+  document.getElementById("signup-form").classList.remove("d-none");
+}
+
+/**
+ * Animates the login logo by setting its initial position and then applying CSS classes
+ * to transition it to its final state. Adjusts the opacity of the header, main, and footer
+ * elements to make them visible.
+ */
+function logoAnimation() {
+  const loginLogoImage = document.querySelector(".login-logo");
+  const loginLogoImageRect = loginLogoImage.getBoundingClientRect();
+  loginLogoImage.style.top = loginLogoImageRect.top + "px";
+  loginLogoImage.style.left = loginLogoImageRect.left + "px";
+  setTimeout(() => {
+    document
+      .querySelector(".login-logo")
+      .classList.add("login-logo-after-init");
+    document
+      .querySelector(".logo-wrapper")
+      .classList.add("logo-wrapper-after-init");
+    document.querySelector("header").style.opacity = 1;
+    document.querySelector("main").style.opacity = 1;
+    document.querySelector("footer").style.opacity = 1;
+  }, 100);
+}
+
+/**
+ * Attaches an event listener to the login form to handle the submit event.
+ * Prevents the default form submission behavior, retrieves the email, password, and remember me values,
+ * validates the login form, and calls the login function if there are no validation errors.
+ */
+async function loginFormEvent() {
+  document
+    .getElementById("login-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const email = document.querySelector(
+        "#login-form input[name = email]"
+      ).value;
+      const password = document.querySelector(
+        "#login-form input[name = password]"
+      ).value;
+      const remember = document.querySelector(
+        "#login-form input[name = remember]"
+      ).checked;
+      checkLoginFormValidation();
+      if (Object.values(loginFormErrors).every((value) => value === false)) {
+        login(email, password, remember);
+      }
+    });
+}
+
+/**
+ * Validates the login form by checking the input validity for email and password fields.
+ * Updates the loginFormErrors object with error messages if the inputs are invalid.
+ */
+function checkLoginFormValidation() {
+  checkInputValidity(
+    "login-form",
+    "email",
+    loginFormErrors,
+    "Enter a valid email address."
+  );
+  checkInputValidity(
+    "login-form",
+    "password",
+    loginFormErrors,
+    "Enter a valid password."
   );
 }
 
 /**
- * Handles the click event for the add contact overlay.
- * If the click target is not the overlay itself, the function returns early.
- * Otherwise, it hides the add contact overlay.
- *
- * @param {Event} event - The click event object.
+ * Attaches an event listener to the sign-up form to handle the submit event.
+ * Prevents the default form submission behavior, retrieves the name, email, password, confirm password,
+ * and accept privacy policy values. Validates the form inputs and calls the signup function if there are no validation errors.
  */
-function handleAddContactOverlayClick(event) {
-  if (event.target !== event.currentTarget) return;
-  hideAddContactOverlay();
+async function signUpFormEvent() {
+  document
+    .getElementById("signup-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const name = document.querySelector(
+        "#signup-form input[name = name]"
+      ).value;
+      const email = document.querySelector(
+        "#signup-form input[name = email]"
+      ).value;
+      const password = document.querySelector(
+        "#signup-form input[name = password]"
+      ).value;
+      const confirmPassword = document.querySelector(
+        "#signup-form input[name = confirm_password]"
+      ).value;
+      checkPasswordAndConfirmPassword(password, confirmPassword);
+      const accept = document.querySelector(
+        "#signup-form input[name = accept]"
+      ).checked;
+      checkAcceptPrivacyPolicy(accept);
+      checkSignUpFormValidation();
+      if (Object.values(signUpFormErrors).every((value) => value === false)) {
+        signup(name, email, password);
+      }
+    });
 }
 
 /**
- * Creates a new contact by gathering input values from the create contact form.
- * If the email already exists, it displays a validation error.
- * Otherwise, it proceeds to create a valid contact.
- *
- * @returns {Promise&lt;void>}
+ * Validates the sign-up form by checking the input validity for name, email, password, and confirm password fields.
+ * Updates the signUpFormErrors object with error messages if the inputs are invalid.
  */
-async function createContact() {
-  let name = document.querySelector(
-    "#create-contact-form input[name = name]"
-  ).value;
-  let email = document.querySelector(
-    "#create-contact-form input[name = email]"
-  ).value;
-  let mobile = document.querySelector(
-    "#create-contact-form input[name = phone]"
-  ).value;
-  if (await isEmailExist(email)) {
-    showInputValidationError(
-      "#create-contact-form",
-      "email",
-      "Email already exists, please choose another!"
-    );
+function checkSignUpFormValidation() {
+  checkInputValidity(
+    "signup-form",
+    "name",
+    signUpFormErrors,
+    "Enter a valid name."
+  );
+  checkInputValidity(
+    "signup-form",
+    "email",
+    signUpFormErrors,
+    "Enter a valid email address."
+  );
+  checkInputValidity(
+    "signup-form",
+    "password",
+    signUpFormErrors,
+    "Enter a valid password."
+  );
+  checkInputValidity(
+    "signup-form",
+    "confirm_password",
+    signUpFormErrors,
+    "Your passwords don't match. Please try again."
+  );
+}
+
+/**
+ * Validates a specific input field within a form.
+ * If the input is invalid, updates the errorsObject, adds an error class to the input,
+ * displays an error message, and makes the error message visible.
+ * If the input is valid, removes the error class and hides the error message.
+ *
+ * @param {string} form - The ID of the form containing the input field.
+ * @param {string} input - The name of the input field to validate.
+ * @param {Object} errorsObject - An object to track validation errors.
+ * @param {string} message - The error message to display if the input is invalid.
+ */
+function checkInputValidity(form, input, errorsObject, message) {
+  if (
+    !document.querySelector(`#${form} input[name = ${input}]`).checkValidity()
+  ) {
+    errorsObject[input] = true;
+    document
+      .querySelector(`#${form} input[name = ${input}]`)
+      .classList.add("input-error");
+    document
+      .querySelector(`#${form} .${input}-error`)
+      .classList.remove("d-none");
+    document.querySelector(`#${form} .${input}-error`).innerHTML = message;
   } else {
-    await createValidContact(name, mobile, email);
+    errorsObject[input] = false;
+    document
+      .querySelector(`#${form} input[name = ${input}]`)
+      .classList.remove("input-error");
+    document.querySelector(`#${form} .${input}-error`).classList.add("d-none");
   }
 }
 
 /**
- * Creates a valid contact by gathering the contact data, posting it to the server,
- * resetting the create contact form, rendering the updated contact list, hiding the add contact overlay,
- * and displaying a success notification.
+ * Checks if the password and confirm password fields match.
+ * If they do not match, sets a custom validity message on the confirm password input.
+ * If they match, clears any custom validity message.
  *
- * @param {string} name - The name of the new contact.
- * @param {string} mobile - The mobile number of the new contact.
- * @param {string} email - The email address of the new contact.
- * @returns {Promise&lt;void>}
+ * @param {string} password - The password value.
+ * @param {string} confirmPassword - The confirm password value.
  */
-async function createValidContact(name, mobile, email) {
-  const data = gatherNewContactData(name, mobile, email);
-  await postData("users", data);
-  resetCreateContactForm();
-  renderContactList();
-  hideAddContactOverlay();
-  showNotification("Contact succesfully created");
+function checkPasswordAndConfirmPassword(password, confirmPassword) {
+  if (password !== confirmPassword) {
+    document
+      .querySelector(`#signup-form input[name = confirm_password]`)
+      .setCustomValidity("Passwords do not match.");
+  } else {
+    document
+      .querySelector(`#signup-form input[name = confirm_password]`)
+      .setCustomValidity("");
+  }
 }
 
 /**
- * Gathers the data for a new contact, including name, mobile, email, color, and profile image.
+ * Checks if the user has accepted the privacy policy.
+ * If not accepted, marks the 'accept' field as having an error, updates the error message,
+ * and applies an error class to the relevant element.
+ * If accepted, clears the error and resets the error message.
  *
- * @param {string} name - The name of the new contact.
- * @param {string} mobile - The mobile number of the new contact.
- * @param {string} email - The email address of the new contact.
- * @returns {Object} - An object containing the gathered contact data.
+ * @param {boolean} accept - The acceptance status of the privacy policy.
  */
-function gatherNewContactData(name, mobile, email) {
-  return {
+function checkAcceptPrivacyPolicy(accept) {
+  if (accept == false) {
+    signUpFormErrors["accept"] = true;
+    document.querySelector(`#signup-form .accept`).classList.add("error");
+    document.getElementById("accept_change").innerHTML = "Please";
+  } else {
+    signUpFormErrors["accept"] = false;
+    document.querySelector(`#signup-form .accept`).classList.remove("error");
+    document.getElementById("accept_change").innerHTML = "I";
+  }
+}
+
+/**
+ * Authenticates the user by checking the email and password against stored admin data.
+ * If the credentials are valid, stores the login information in local storage and redirects to the specified page.
+ * If the credentials are invalid, displays a login error message.
+ *
+ * @param {string} email - The email address of the user.
+ * @param {string} password - The password of the user.
+ * @param {boolean} remember - Whether to remember the login for future sessions.
+ */
+async function login(email, password, remember) {
+  const admins = await getData("admins");
+  const adminsArray = Object.entries(admins);
+  let foundAdmin = adminsArray.filter((admin) => admin[1].email === email);
+  if (foundAdmin.length &lt;= 0) {
+    showLoginError();
+    return;
+  }
+  const hashPassword = await hashingPassword(password, foundAdmin[0][1].salt);
+  if (hashPassword !== foundAdmin[0][1].password) {
+    showLoginError();
+    return;
+  }
+  localStorage.removeItem("joinGuestLoginValidTime");
+  localStorage.setItem(
+    "joinLoginInfo",
+    JSON.stringify({
+      name: foundAdmin[0][1].name,
+      email: foundAdmin[0][1].email,
+      profileImage: foundAdmin[0][1].profileImage,
+    })
+  );
+  localStorage.setItem("joinLoginRemember", remember);
+  localStorage.setItem("joinLoginValidTime", getNextOneHourTime());
+  window.location.href = redirectPage;
+}
+
+/**
+ * Displays a login error message by adding error classes to the email and password input fields,
+ * making the password error message visible, and updating the error message content.
+ */
+function showLoginError() {
+  document
+    .querySelector(`#login-form input[name = email]`)
+    .classList.add("input-error");
+  document
+    .querySelector(`#login-form input[name = password]`)
+    .classList.add("input-error");
+  document
+    .querySelector(`#login-form .password-error`)
+    .classList.remove("d-none");
+  document.querySelector(`#login-form .password-error`).innerHTML =
+    "Check your email and password. Please try again.";
+}
+
+/**
+ * Logs the user in as a guest by clearing admin login data from local storage,
+ * setting a valid time for the guest login session, and redirecting to the specified page.
+ */
+function guestLogin() {
+  localStorage.removeItem("joinLoginInfo");
+  localStorage.removeItem("joinLoginRemember");
+  localStorage.removeItem("joinLoginValidTime");
+  localStorage.setItem("joinGuestLoginValidTime", getNextOneHourTime());
+  window.location.href = redirectPage;
+}
+
+/**
+ * Registers a new user by generating a salt, hashing the password, and creating a new admin data object.
+ * Posts the data to the server, then logs the user in with the provided credentials.
+ *
+ * @param {string} name - The name of the user.
+ * @param {string} email - The email address of the user.
+ * @param {string} password - The password of the user.
+ */
+async function signup(name, email, password) {
+  const salt = generateSalt();
+  const hashPassword = await hashingPassword(password, salt);
+  let Data = {
     name: name,
-    mobile: mobile,
     email: email,
-    color: getRandomColor(),
+    password: hashPassword,
+    salt: salt,
     profileImage: getProfileImage(name),
   };
+  await postData("admins", Data);
+  await login(email, password, false);
 }
 
 /**
- * Resets the create contact form fields.
- */
-function resetCreateContactForm() {
-  document.querySelector("#create-contact-form input[name = name]").value = "";
-  document.querySelector("#create-contact-form input[name = email]").value = "";
-  document.querySelector("#create-contact-form input[name = phone]").value = "";
-}
-
-/**
- * Shows the add contact overlay.
- */
-function showAddContactOverlay() {
-  document.getElementById("add-contact-overlay").style.zIndex = 999;
-  document.getElementById("add-contact-overlay").style.backgroundColor =
-    "rgb(0 0 0 / 30%)";
-  document.getElementById("add-contact-overlay-container").style.transform =
-    "translateX(0)";
-}
-
-/**
- * Hides the add contact overlay.
- */
-function hideAddContactOverlay() {
-  document.getElementById("add-contact-overlay").style.backgroundColor =
-    "rgb(0 0 0 / 0%)";
-  document.getElementById("add-contact-overlay-container").style.transform =
-    "translateX(200%)";
-  document.getElementById("add-contact-overlay").style.zIndex = -1;
-  resetCreateContactForm();
-  removeAllErrors();
-}
-
-/**
- * Validates the input element specified by its name within the create contact form.
- * If the input is invalid, it shows an error message and updates the error state in the `createFormErrors` object.
+ * Calculates the timestamp one hour from the current time.
+ * Adds one hour (in milliseconds) to the current time and returns the resulting timestamp.
  *
- * @param {string} inputName - The name attribute of the input element to validate.
- * @param {string} message - The validation error message to display if the input is invalid.
+ * @returns {number} - The timestamp one hour from now.
  */
-function checkCreateInputValidation(inputName, message) {
-  let inputElement = document.querySelector(
-    `#create-contact-form input[name = ${inputName}]`
+function getNextOneHourTime() {
+  const validTime = new Date();
+  // Add 1 hour (1 hour = 60 minutes * 60 seconds * 1000 milliseconds)
+  validTime.setTime(validTime.getTime() + 1 * 60 * 60 * 1000);
+  return validTime.getTime();
+}
+
+/**
+ * Adds event listeners to all password input fields to dynamically change the associated icon
+ * based on the input value's length. If the input value is not empty, updates the icon to show
+ * visibility options, otherwise resets to the lock icon.
+ */
+function typePassword() {
+  let passwordInputElements = document.querySelectorAll(
+    "input[type = password]"
   );
-  if (!inputElement.checkValidity()) {
-    showInputValidationError("#create-contact-form", inputName, message);
-    createFormErrors[inputName] = 1;
-  } else {
-    hideInputValidationError("#create-contact-form", inputName);
-    createFormErrors[inputName] = 0;
-  }
+  passwordInputElements.forEach((passwordInputElement) => {
+    passwordInputElement.addEventListener("keyup", function () {
+      let iconElement = passwordInputElement.nextElementSibling;
+      if (passwordInputElement.value.length >= 1) {
+        iconElement.classList.remove("icon-lock");
+        iconElement.classList.add("c-pointer");
+        if (passwordInputElement.type === "password") {
+          iconElement.classList.add("icon-visibility-off");
+        } else {
+          iconElement.classList.add("icon-visibility");
+        }
+      } else {
+        passwordInputElement.type = "password";
+        iconElement.classList.remove("icon-visibility-off");
+        iconElement.classList.remove("icon-visibility");
+        iconElement.classList.remove("c-pointer");
+        iconElement.classList.add("icon-lock");
+      }
+    });
+  });
+}
+
+/**
+ * Toggles the visibility of password input fields when the lock icon is clicked.
+ * Changes the input type between 'password' and 'text' based on the current state
+ * and updates the icon to indicate the visibility status.
+ */
+function togglePasswordVisible() {
+  let iconLockInputElements = document.querySelectorAll(".icon-lock");
+  iconLockInputElements.forEach((iconLockInputElement) => {
+    iconLockInputElement.addEventListener("click", function () {
+      let passwordInputElement = iconLockInputElement.previousElementSibling;
+      if (passwordInputElement.value.length >= 1) {
+        if (passwordInputElement.type === "password") {
+          passwordInputElement.type = "text";
+          iconLockInputElement.classList.add("icon-visibility");
+          iconLockInputElement.classList.remove("icon-visibility-off");
+        } else {
+          passwordInputElement.type = "password";
+          iconLockInputElement.classList.add("icon-visibility-off");
+          iconLockInputElement.classList.remove("icon-visibility");
+        }
+      }
+    });
+  });
+}
+
+/**
+ * Generates a profile image string based on a user's name.
+ * @param {string} name - The user's name.
+ * @returns {string} The profile image string.
+ */
+function getProfileImage(name) {
+  const parts = name.trim().split(" ");
+  const firstInitial = parts[0].charAt(0).toUpperCase();
+  const lastInitial =
+    parts.length &lt; 2
+      ? parts[0].charAt(0).toUpperCase()
+      : parts[1].charAt(0).toUpperCase();
+  return firstInitial + lastInitial;
+}
+
+/**
+ * Hashes a password with a given salt using the SHA-256 algorithm.
+ * Encodes the password and salt, computes the hash, and returns the hash as a hex string.
+ *
+ * @param {string} password - The password to hash.
+ * @param {string} salt - The salt to use in the hashing process.
+ * @returns {Promise&lt;string>} - The hashed password as a hex string.
+ */
+async function hashingPassword(password, salt) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password + salt);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  // Convert ArrayBuffer to hex string
+  return Array.from(new Uint8Array(hashBuffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/**
+ * Generates a cryptographic salt of the specified length using random values.
+ * Converts the generated byte array to a hex string.
+ *
+ * @param {number} [length=16] - The length of the salt in bytes. Defaults to 16.
+ * @returns {string} - The generated salt as a hex string.
+ */
+function generateSalt(length = 16) {
+  const array = new Uint8Array(length);
+  crypto.getRandomValues(array);
+  return Array.from(array)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 </code></pre>
         </article>

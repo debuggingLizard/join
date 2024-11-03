@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: assets/js/helper-functions.js</title>
+    <title>JSDoc: Source: assets/js/move-task.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: assets/js/helper-functions.js</h1>
+    <h1 class="page-title">Source: assets/js/move-task.js</h1>
 
     
 
@@ -27,38 +27,38 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Zeigt einen Validierungsfehler für ein Eingabefeld an.
- * Fügt der Eingabe die Klasse "input-error" hinzu und zeigt die Fehlermeldung an.
+ * Opens the move task dropdown menu for a specific task by toggling its visibility.
+ * Prevents the click event from propagating to parent elements.
+ * Hides the current status move task element and shows the dropdown for moving the task.
  *
- * @param {string} form - Das Formular, in dem sich das Eingabefeld befindet.
- * @param {string} inputName - Der Name des Eingabefelds.
- * @param {string} message - Die anzuzeigende Fehlermeldung.
+ * @param {Event} event - The click event object.
+ * @param {string} taskId - The ID of the task to move.
  */
-function showInputValidationError(form, inputName, message) {
-  let inputElement = document.querySelector(`${form} *[name = ${inputName}]`);
-  let errorMessageElement = document.querySelector(
-    `${form} .${inputName}-error`
-  );
-  inputElement.classList.add("input-error");
-  errorMessageElement.innerHTML = message;
-  errorMessageElement.classList.remove("d-none");
+function openMoveTaskDropdown(event, taskId) {
+  event.stopPropagation();
+  let currentStatus = tasks[taskId].status;
+  document
+    .getElementById("move-task-" + currentStatus + "-" + taskId)
+    .classList.add("d-none");
+  document
+    .getElementById("move-task-dropdown-" + taskId)
+    .classList.toggle("d-none");
 }
 
 /**
- * Versteckt den Validierungsfehler eines Eingabefelds.
- * Entfernt die Fehlerklasse und versteckt die zugehörige Fehlermeldung.
+ * Changes the status of a task if the new status is different from the current status.
+ * Updates the task status, re-renders the boards, and saves the new status to the server.
  *
- * @param {string} form - Das Formular, in dem sich das Eingabefeld befindet.
- * @param {string} inputName - Der Name des Eingabefelds.
+ * @param {string} newStatus - The new status to set for the task.
+ * @param {string} taskId - The ID of the task to update.
  */
-function hideInputValidationError(form, inputName) {
-  let inputElement = document.querySelector(`${form} *[name = ${inputName}]`);
-  let errorMessageElement = document.querySelector(
-    `${form} .${inputName}-error`
-  );
-  inputElement.classList.remove("input-error");
-  errorMessageElement.innerHTML = "";
-  errorMessageElement.classList.add("d-none");
+async function changeStatus(newStatus, taskId) {
+  if (tasks[taskId].status !== newStatus) {
+    let currentStatus = tasks[taskId].status;
+    tasks[taskId].status = newStatus;
+    renderBoardsByStatus(currentStatus, newStatus);
+    await putData("tasks", taskId + "/status", newStatus);
+  }
 }
 </code></pre>
         </article>

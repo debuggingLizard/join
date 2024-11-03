@@ -26,27 +26,354 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Opens the task detail overlay and displays the task details.
+            <pre class="prettyprint source linenums"><code>let taskId;
+let taskInformation;
+let taskPriority;
+let taskCategory;
+let assignedUsers;
+let selectedUserIds = [];
+let isFirstOpen = true;
+let editFormErrors = {
+  title: 0,
+  dueDate: 0,
+};
+
+/**
+ * Fetches task-related data from the database, including task information,
+ * priority, category, and assigned users. Logs an error message if any of the data retrieval operations fail.
+ *
+ * @returns {Promise&lt;void>}
  */
-function openTaskDetail() {
-  const overlay = document.getElementById("overlay");
-  const taskDetail = document.getElementById("task-detail");
-  overlay.style.display = "flex";
+async function getDataFromDatabase() {
+  try {
+    taskInformation = await getData("tasks/" + taskId);
+    taskPriority = await getData("priorities/" + taskInformation.priority);
+    taskCategory = await getData("categories/" + taskInformation.category);
+    assignedUsers = await getDetailAssignedUsers();
+  } catch (error) {
+    console.error("Get data failed:");
+  }
+}
+
+/**
+ * Retrieves detailed information for the users assigned to the current task.
+ * Iterates over the user IDs in the task information, fetches user data from the database,
+ * and returns an array of user details. If no users are assigned, returns an empty array.
+ *
+ * @returns {Promise&lt;Array>} - An array of user details.
+ */
+async function getDetailAssignedUsers() {
+  if (taskInformation.users != undefined &amp;&amp; taskInformation.users.length > 0) {
+    const userDetails = [];
+    for (const userId of taskInformation.users) {
+      const user = await getData("users/" + userId);
+      user["id"] = userId;
+      userDetails.push(user);
+    }
+    return userDetails;
+  }
+  return [];
+}
+
+/**
+ * Opens the task detail view by setting the task ID, fetching the necessary data from the database,
+ * loading the templates, and displaying the task detail overlay. Adds a brief delay before showing
+ * the task detail and edit task elements for a smoother transition.
+ *
+ * @param {string} id - The ID of the task to display the details for.
+ * @returns {Promise&lt;void>}
+ */
+async function openTaskDetail(id) {
+  taskId = id;
+  await getDataFromDatabase();
+  await loadTemplates();
+  document.getElementById("overlay").classList.remove("d-none");
+  document.getElementById("task-detail").classList.remove("d-none");
   setTimeout(() => {
-    taskDetail.classList.add("show");
-  }, 10);
+    document.getElementById("task-detail").classList.add("show");
+    document.getElementById("edit-task").classList.add("show");
+  }, 100);
+}
+
+/**
+ * Loads the task detail and edit task templates into their respective HTML elements.
+ * Replaces the inner HTML of the task detail and edit task containers with the generated templates.
+ *
+ * @returns {Promise&lt;void>}
+ */
+async function loadTemplates() {
+  document.getElementById("task-detail").innerHTML = taskDetailTemplate();
+  document.getElementById("edit-task").innerHTML = editTaskTemplate();
 }
 
 /**
  * Closes the task detail overlay and hides the overlay after a delay.
  */
 function closeTaskDetail() {
-  const taskDetail = document.getElementById("task-detail");
-  taskDetail.classList.remove("show");
+  document.getElementById("task-detail").classList.remove("show");
+  document.getElementById("edit-task").classList.remove("show");
   setTimeout(() => {
-    document.getElementById("overlay").style.display = "none";
-  }, 300);
+    document.getElementById("edit-task").classList.add("d-none");
+    document.getElementById("overlay").classList.add("d-none");
+    document.getElementById("edit-task").innerHTML = "";
+    document.getElementById("task-detail").innerHTML ="";
+  }, 500);
+}
+
+/**
+ * Displays the delete confirmation section by hiding the edit/delete buttons
+ * and showing the delete confirmation prompt in the task detail view.
+ */
+function showDeleteConfirm() {
+  document.getElementById("task-detail-edit-delete").classList.add("d-none");
+  document
+    .getElementById("task-detail-delete-confirm")
+    .classList.remove("d-none");
+}
+
+/**
+ * Hides the delete confirmation prompt by restoring the edit/delete buttons
+ * in the task detail view.
+ */
+function hideDeleteConfirm() {
+  document.getElementById("task-detail-edit-delete").classList.remove("d-none");
+  document.getElementById("task-detail-delete-confirm").classList.add("d-none");
+}
+
+/**
+ * Opens the edit task form by hiding the task detail view and displaying the edit task view.
+ * Initializes various form elements including contacts, subtasks, date input, and contact dropdown list.
+ * Also sets up the event listeners for the edit task form.
+ *
+ * @returns {Promise&lt;void>}
+ */
+async function openEditTaskForm() {
+  document.getElementById("task-detail").classList.add("d-none");
+  document.getElementById("edit-task").classList.remove("d-none");
+  renderContacts("#edit-task-form", taskInformation.users);
+  initSubtaskFunctions("#edit-task-form");
+  initDateInput("#edit-task-form");
+  initContactDropdownList("#edit-task-form");
+  editFormEventListener();
+}
+
+/**
+ * Adds an event listener to the edit task form, handling form submission and
+ * validating required fields. If there are no validation errors, it triggers
+ * the edit confirmation process.
+ */
+function editFormEventListener() {
+  let formElement = document.getElementById("edit-task-form");
+  formElement.addEventListener("submit", handleEditFormSubmit);
+}
+
+/**
+ * Handles the submit event for the edit task form.
+ * Prevents the default form submission behavior, validates the title and due date fields,
+ * and proceeds to confirm the edit if the fields are valid (no errors).
+ *
+ * @param {Event} e - The submit event object.
+ * @returns {Promise&lt;void>}
+ */
+async function handleEditFormSubmit(e) {
+  e.preventDefault();
+  checkEditFormValidation("title", "The title field is required");
+  checkEditFormValidation("due-date", "The Date field is required");
+  if (editFormErrors.title === 0 &amp;&amp; editFormErrors.dueDate === 0) {
+    await confirmEdit();
+  }
+}
+
+/**
+ * Checks the validity of an input field within the edit task form. Displays an error message
+ * if the input is invalid or matches a placeholder value, and updates the validation status
+ * in `editFormErrors`.
+ *
+ * @param {string} inputName - The name attribute of the input element to validate.
+ * @param {string} message - The error message to display if validation fails.
+ */
+function checkEditFormValidation(inputName, message) {
+  let inputElement = document.querySelector(
+    `#edit-task-form *[name = ${inputName}]`
+  );
+  if (!inputElement.checkValidity()) {
+    showInputValidationError("#edit-task-form", inputName, message);
+    editFormErrors[inputName] = 1;
+  } else {
+    hideInputValidationError("#edit-task-form", inputName);
+    editFormErrors[inputName] = 0;
+  }
+  if (inputElement.value === "dd/mm/yyyy") {
+    showInputValidationError("#edit-task-form", inputName, message);
+    editFormErrors[inputName] = 1;
+  }
+}
+
+/**
+ * Confirms the edit of a task by updating the task data, re-fetching the task details,
+ * reloading the templates, and refreshing the task list. Hides the edit task view
+ * and shows the updated task detail view.
+ *
+ * @returns {Promise&lt;void>}
+ */
+async function confirmEdit() {
+  await updateTaskData();
+  await getDataFromDatabase();
+  await loadTemplates();
+  hideEditTaskShowDetailView();
+  await loadTasksFromDatabase();
+  filterTasks = Object.entries(tasks);
+  await renderTasks(
+    taskInformation.status + "-tasks",
+    getTasksByStatus(taskInformation.status)
+  );
+}
+
+/**
+ * Hides the edit task view and shows the task detail view.
+ * Updates the CSS classes of the relevant HTML elements to manage their visibility.
+ */
+function hideEditTaskShowDetailView() {
+  document.getElementById("task-detail").classList.remove("d-none");
+  document.getElementById("task-detail").classList.add("show");
+  document.getElementById("edit-task").classList.add("d-none");
+  document.getElementById("edit-task").classList.add("show");
+}
+
+/**
+ * Confirms the deletion of a task by removing task data from the database,
+ * hiding the task detail and edit views, and updating the task list.
+ *
+ * @async
+ */
+async function confirmDelete() {
+  await deleteTaskData();
+  document.getElementById("task-detail").classList.remove("show");
+  document.getElementById("edit-task").classList.remove("show");
+  document.getElementById("overlay").classList.add("d-none");
+  await loadTasksFromDatabase();
+  filterTasks = Object.entries(tasks);
+  await renderTasks(
+    taskInformation.status + "-tasks",
+    getTasksByStatus(taskInformation.status)
+  );
+}
+
+/**
+ * Updates the task data in the database with the latest form input values, including title,
+ * description, assigned users, due date, priority, category, subtasks, and status.
+ * Collects form data, constructs an updated task object, and saves it to the database.
+ *
+ * @async
+ * @throws {Error} Logs an error to the console if updating the task fails.
+ */
+async function updateTaskData() {
+  try {
+    const {
+      title,
+      description,
+      users,
+      date,
+      priority,
+      category,
+      subtasks,
+      status,
+    } = gatherTaskFormData();
+    const data = createTaskDataObject(
+      title,
+      description,
+      users,
+      date,
+      priority,
+      category,
+      subtasks,
+      status
+    );
+    await putData("tasks", taskId, data);
+  } catch (error) {
+    console.error(`Error updating task ${taskId}:`, error);
+  }
+}
+
+/**
+ * Gathers task data from the edit task form, including title, description, assigned users,
+ * due date, priority, category, subtasks, and status.
+ *
+ * @returns {Object} - An object containing the gathered task data.
+ */
+function gatherTaskFormData() {
+  let title = document.querySelector("#edit-task-form *[name=title]").value;
+  let description =
+    document.querySelector("#edit-task-form *[name=description]").value || "";
+  let assignedSpans = document
+    .querySelector("#edit-task-form .assigned-to")
+    .querySelectorAll("span");
+  let users = Array.from(assignedSpans).map((span) => span.id);
+  let date = document.querySelector("#edit-task-form *[name=due-date]").value;
+  let priority = document.querySelector("#edit-task-form *[name=prio]").value;
+  let category = taskInformation.category;
+  let subtasks = Array.from(
+    document.querySelector("#edit-task-form .subtask-list").children
+  ).map((li) => ({
+    done: li.querySelector(".subtask-title").getAttribute("status") == "true",
+    title: li.querySelector(".subtask-title").textContent,
+  }));
+  let status = taskInformation.status;
+  return {
+    title,
+    description,
+    users,
+    date,
+    priority,
+    category,
+    subtasks,
+    status,
+  };
+}
+
+/**
+ * Creates a task data object with the provided task details.
+ * Ensures that the users and subtasks arrays are not empty.
+ *
+ * @param {string} title - The title of the task.
+ * @param {string} description - The description of the task.
+ * @param {Array&lt;string>} users - An array of user IDs assigned to the task.
+ * @param {string} date - The due date of the task.
+ * @param {string} priority - The priority level of the task.
+ * @param {string} category - The category of the task.
+ * @param {Array&lt;Object>} subtasks - An array of subtask objects.
+ * @param {string} status - The status of the task.
+ * @returns {Object} - An object containing the task data.
+ */
+function createTaskDataObject(
+  title,
+  description,
+  users,
+  date,
+  priority,
+  category,
+  subtasks,
+  status
+) {
+  return {
+    title: title,
+    description: description,
+    users: users.length > 0 ? users : [],
+    date: date,
+    priority: priority,
+    category: category,
+    subtasks: subtasks.length > 0 ? subtasks : [],
+    status: status,
+  };
+}
+
+/**
+ * Deletes the task data from the database based on the `taskId`.
+ *
+ * @async
+ */
+async function deleteTaskData() {
+  await deleteData("tasks", taskId);
 }
 </code></pre>
         </article>
@@ -58,13 +385,13 @@ function closeTaskDetail() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateCloseSlideIn">activateCloseSlideIn</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#checkCreateInputValidation">checkCreateInputValidation</a></li><li><a href="global.html#checkEditInputValidation">checkEditInputValidation</a></li><li><a href="global.html#checkRequiredFields">checkRequiredFields</a></li><li><a href="global.html#checkSearchValue">checkSearchValue</a></li><li><a href="global.html#clearPlaceholder">clearPlaceholder</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeAddTask">closeAddTask</a></li><li><a href="global.html#closeSlideIn">closeSlideIn</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#drag">drag</a></li><li><a href="global.html#dragEnd">dragEnd</a></li><li><a href="global.html#dragstart">dragstart</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#eventListenerCloseAddTask">eventListenerCloseAddTask</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getAssigneesListTemplate">getAssigneesListTemplate</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getTasksByStatus">getTasksByStatus</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#hideInputValidationError">hideInputValidationError</a></li><li><a href="global.html#initEventListenerAddTask">initEventListenerAddTask</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#loadDropTargets">loadDropTargets</a></li><li><a href="global.html#loadTasksFromDatabase">loadTasksFromDatabase</a></li><li><a href="global.html#openAddTask">openAddTask</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#openSlideIn">openSlideIn</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#removeAllErrors">removeAllErrors</a></li><li><a href="global.html#removeResponsiveEditAfterDelete">removeResponsiveEditAfterDelete</a></li><li><a href="global.html#renderAddTaskData">renderAddTaskData</a></li><li><a href="global.html#renderBoardForNewTask">renderBoardForNewTask</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#renderBoardsByStatus">renderBoardsByStatus</a></li><li><a href="global.html#renderCategories">renderCategories</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderResponsiveEditButtons">renderResponsiveEditButtons</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderTaskAfterCreateTask">renderTaskAfterCreateTask</a></li><li><a href="global.html#renderTaskContributors">renderTaskContributors</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#resetAddTask">resetAddTask</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#selectPrio">selectPrio</a></li><li><a href="global.html#setPlaceholder">setPlaceholder</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#showFeedbackOverlay">showFeedbackOverlay</a></li><li><a href="global.html#showInputValidationError">showInputValidationError</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#styleLabel">styleLabel</a></li><li><a href="global.html#subTaskTemplate">subTaskTemplate</a></li><li><a href="global.html#taskContributorTemplate">taskContributorTemplate</a></li><li><a href="global.html#taskTemplate">taskTemplate</a></li><li><a href="global.html#toggleResponsiveVisibilityContact">toggleResponsiveVisibilityContact</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li><li><a href="global.html#updateAssignedContacts">updateAssignedContacts</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateCloseSlideIn">activateCloseSlideIn</a></li><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addDragQueenEventListeners">addDragQueenEventListeners</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#appendSubtaskToList">appendSubtaskToList</a></li><li><a href="global.html#categoryDropDown">categoryDropDown</a></li><li><a href="global.html#changeStatus">changeStatus</a></li><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkCreateInputValidation">checkCreateInputValidation</a></li><li><a href="global.html#checkEditFormValidation">checkEditFormValidation</a></li><li><a href="global.html#checkEditInputValidation">checkEditInputValidation</a></li><li><a href="global.html#checkInputValidity">checkInputValidity</a></li><li><a href="global.html#checkLogin">checkLogin</a></li><li><a href="global.html#checkLoginFormValidation">checkLoginFormValidation</a></li><li><a href="global.html#checkPasswordAndConfirmPassword">checkPasswordAndConfirmPassword</a></li><li><a href="global.html#checkRequiredFields">checkRequiredFields</a></li><li><a href="global.html#checkSearchValue">checkSearchValue</a></li><li><a href="global.html#checkSignUpFormValidation">checkSignUpFormValidation</a></li><li><a href="global.html#clearPlaceholder">clearPlaceholder</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeAddTask">closeAddTask</a></li><li><a href="global.html#closeSlideIn">closeSlideIn</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#commaForGreeting">commaForGreeting</a></li><li><a href="global.html#confirmDelete">confirmDelete</a></li><li><a href="global.html#confirmEdit">confirmEdit</a></li><li><a href="global.html#convertDateFormatWithDash">convertDateFormatWithDash</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createEditInputField">createEditInputField</a></li><li><a href="global.html#createSaveButton">createSaveButton</a></li><li><a href="global.html#createSubtaskListItem">createSubtaskListItem</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#createTaskDataObject">createTaskDataObject</a></li><li><a href="global.html#createTaskHtml">createTaskHtml</a></li><li><a href="global.html#createValidContact">createValidContact</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTaskData">deleteTaskData</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#drag">drag</a></li><li><a href="global.html#dragEnd">dragEnd</a></li><li><a href="global.html#dragstart">dragstart</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editFormEventListener">editFormEventListener</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTaskTemplate">editTaskTemplate</a></li><li><a href="global.html#editValidContact">editValidContact</a></li><li><a href="global.html#enableSubtaskEditing">enableSubtaskEditing</a></li><li><a href="global.html#eventListenerCloseAddTask">eventListenerCloseAddTask</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#finalizeEdit">finalizeEdit</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#gatherEditedContactData">gatherEditedContactData</a></li><li><a href="global.html#gatherNewContactData">gatherNewContactData</a></li><li><a href="global.html#gatherTaskData">gatherTaskData</a></li><li><a href="global.html#gatherTaskFormData">gatherTaskFormData</a></li><li><a href="global.html#generateSalt">generateSalt</a></li><li><a href="global.html#getAdminProfileImage">getAdminProfileImage</a></li><li><a href="global.html#getAssignedUsers">getAssignedUsers</a></li><li><a href="global.html#getAssigneesListTemplate">getAssigneesListTemplate</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getDataFromDatabase">getDataFromDatabase</a></li><li><a href="global.html#getDetailAssignedUsers">getDetailAssignedUsers</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getNextOneHourTime">getNextOneHourTime</a></li><li><a href="global.html#getNextUrgentDeadline">getNextUrgentDeadline</a></li><li><a href="global.html#getPageName">getPageName</a></li><li><a href="global.html#getPriorityID">getPriorityID</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getResponsiveEditDeleteBtnTemplate">getResponsiveEditDeleteBtnTemplate</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getSlideInTemplate">getSlideInTemplate</a></li><li><a href="global.html#getSubtaskInput">getSubtaskInput</a></li><li><a href="global.html#getSubtaskListItemTemplate">getSubtaskListItemTemplate</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTasksByStatus">getTasksByStatus</a></li><li><a href="global.html#getUrgentTasksAmount">getUrgentTasksAmount</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#goBack">goBack</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleAddContactOverlayClick">handleAddContactOverlayClick</a></li><li><a href="global.html#handleAssigneeChange">handleAssigneeChange</a></li><li><a href="global.html#handleCreateContactSubmit">handleCreateContactSubmit</a></li><li><a href="global.html#handleDragEnter">handleDragEnter</a></li><li><a href="global.html#handleDragLeave">handleDragLeave</a></li><li><a href="global.html#handleDragOver">handleDragOver</a></li><li><a href="global.html#handleEditContactOverlayClick">handleEditContactOverlayClick</a></li><li><a href="global.html#handleEditContactSubmit">handleEditContactSubmit</a></li><li><a href="global.html#handleEditFormSubmit">handleEditFormSubmit</a></li><li><a href="global.html#handleSaveOnEnter">handleSaveOnEnter</a></li><li><a href="global.html#handleSubtaskInput">handleSubtaskInput</a></li><li><a href="global.html#hashingPassword">hashingPassword</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideDeleteConfirm">hideDeleteConfirm</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#hideEditTaskShowDetailView">hideEditTaskShowDetailView</a></li><li><a href="global.html#hideErrorMessages">hideErrorMessages</a></li><li><a href="global.html#hideInputValidationError">hideInputValidationError</a></li><li><a href="global.html#initContactDropdownList">initContactDropdownList</a></li><li><a href="global.html#initDateInput">initDateInput</a></li><li><a href="global.html#initEventListenerAddTask">initEventListenerAddTask</a></li><li><a href="global.html#initFormFieldListeners">initFormFieldListeners</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initSubtaskFunctions">initSubtaskFunctions</a></li><li><a href="global.html#initializeTaskForm">initializeTaskForm</a></li><li><a href="global.html#isAdminLogin">isAdminLogin</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#isGuestLogin">isGuestLogin</a></li><li><a href="global.html#loadDropTargets">loadDropTargets</a></li><li><a href="global.html#loadTasksFromDatabase">loadTasksFromDatabase</a></li><li><a href="global.html#loadTemplates">loadTemplates</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginFormEvent">loginFormEvent</a></li><li><a href="global.html#logoAnimation">logoAnimation</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#markSubstaskAsDone">markSubstaskAsDone</a></li><li><a href="global.html#markSubtaskAsNotDone">markSubtaskAsNotDone</a></li><li><a href="global.html#openAddTask">openAddTask</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openEditTaskForm">openEditTaskForm</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#openMoveTaskDropdown">openMoveTaskDropdown</a></li><li><a href="global.html#openSlideIn">openSlideIn</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#removeAllErrors">removeAllErrors</a></li><li><a href="global.html#removeContact">removeContact</a></li><li><a href="global.html#removeContactFromTasks">removeContactFromTasks</a></li><li><a href="global.html#removeInputErrors">removeInputErrors</a></li><li><a href="global.html#removeResponsiveEditAfterDelete">removeResponsiveEditAfterDelete</a></li><li><a href="global.html#renderAddTaskData">renderAddTaskData</a></li><li><a href="global.html#renderAllBoards">renderAllBoards</a></li><li><a href="global.html#renderAllTasksAmount">renderAllTasksAmount</a></li><li><a href="global.html#renderBoardForNewTask">renderBoardForNewTask</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#renderBoardsByStatus">renderBoardsByStatus</a></li><li><a href="global.html#renderCategories">renderCategories</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderResponsiveEditButtons">renderResponsiveEditButtons</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSummaryData">renderSummaryData</a></li><li><a href="global.html#renderTaskAfterCreateTask">renderTaskAfterCreateTask</a></li><li><a href="global.html#renderTaskContributors">renderTaskContributors</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#renderTasksAmountByStatus">renderTasksAmountByStatus</a></li><li><a href="global.html#renderTasksThatExist">renderTasksThatExist</a></li><li><a href="global.html#renderUrgentTasks">renderUrgentTasks</a></li><li><a href="global.html#resetAddTask">resetAddTask</a></li><li><a href="global.html#resetAdditionalElements">resetAdditionalElements</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#resetFormInputs">resetFormInputs</a></li><li><a href="global.html#resetSubtaskInput">resetSubtaskInput</a></li><li><a href="global.html#saveCurrentPage">saveCurrentPage</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#selectPrio">selectPrio</a></li><li><a href="global.html#setGreeting">setGreeting</a></li><li><a href="global.html#setGreetingScreenVisibility">setGreetingScreenVisibility</a></li><li><a href="global.html#setPlaceholder">setPlaceholder</a></li><li><a href="global.html#setupClearButton">setupClearButton</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showAdminName">showAdminName</a></li><li><a href="global.html#showDeleteConfirm">showDeleteConfirm</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#showFeedbackOverlay">showFeedbackOverlay</a></li><li><a href="global.html#showGreetingScreen">showGreetingScreen</a></li><li><a href="global.html#showInputValidationError">showInputValidationError</a></li><li><a href="global.html#showLoginError">showLoginError</a></li><li><a href="global.html#showLoginForm">showLoginForm</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#showSignupForm">showSignupForm</a></li><li><a href="global.html#signUpFormEvent">signUpFormEvent</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#styleLabel">styleLabel</a></li><li><a href="global.html#subTaskTemplate">subTaskTemplate</a></li><li><a href="global.html#taskContributorTemplate">taskContributorTemplate</a></li><li><a href="global.html#taskDetailTemplate">taskDetailTemplate</a></li><li><a href="global.html#taskTemplate">taskTemplate</a></li><li><a href="global.html#toggleButtonVisibility">toggleButtonVisibility</a></li><li><a href="global.html#toggleContactDropdown">toggleContactDropdown</a></li><li><a href="global.html#toggleCreateTaskButton">toggleCreateTaskButton</a></li><li><a href="global.html#toggleEditButtonVisibility">toggleEditButtonVisibility</a></li><li><a href="global.html#togglePasswordVisible">togglePasswordVisible</a></li><li><a href="global.html#toggleResponsiveVisibilityContact">toggleResponsiveVisibilityContact</a></li><li><a href="global.html#toggleSubtask">toggleSubtask</a></li><li><a href="global.html#typePassword">typePassword</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li><li><a href="global.html#updateAssignedContacts">updateAssignedContacts</a></li><li><a href="global.html#updateTaskData">updateTaskData</a></li><li><a href="global.html#updateTaskDataForSubtaskStatusChange">updateTaskDataForSubtaskStatusChange</a></li><li><a href="global.html#validateCreateContactInputs">validateCreateContactInputs</a></li><li><a href="global.html#validateEditContactInputs">validateEditContactInputs</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri Oct 25 2024 20:14:16 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sun Nov 03 2024 15:57:56 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
