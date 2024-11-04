@@ -314,6 +314,27 @@ main {
     color: white;
 }
 
+.login-button:disabled {
+    background: #A8A8A8;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    border: solid 1px #A8A8A8;
+    transition: all 0.1s ease;
+    outline: none;
+    display: flex;
+    align-items: center;
+    cursor: not-allowed;
+}
+
+.login-button:disabled:hover {
+    background-color: #A8A8A8;
+    border: solid 1px #A8A8A8;
+    box-shadow: none;
+    color: white;
+}
+
 .guest-button {
     background-color: white;
     border-radius: 6px;

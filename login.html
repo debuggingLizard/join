@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="./assets/css/login.css">
     <link rel="stylesheet" href="./assets/css/icons/icons.css">
     <link rel="stylesheet" href="./assets/css/login-responsive.css">
+    <script src="./assets/js/login-signup-functions.js"></script>
     <script src="./assets/js/login.js"></script>
+    <script src="./assets/js/signup.js"></script>
     <script src="./assets/js/firebase-connect.js"></script>
     <title>Join</title>
 </head>
 
-<body onload="initLogin()">
+<body onload="initLoginSignupFunctions(); initLogin(); initSignup();">
     <div class="logo-wrapper">
         <img class="login-logo" src="./assets/img/login-logo.svg" alt="join-logo">
     </div>
@@ -33,12 +35,12 @@
                 </div>
                 <div class="form-elements">
                     <label class="email-label">
-                        <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+                        <input type="email" name="email" onkeyup="checkLoginButtonActivity()" placeholder="Email" autocomplete="email" required>
                         <span class="icon icon-mail"></span>
                         <span class="error email-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="password" placeholder="Password" required>
+                        <input type="password" name="password" onkeyup="checkLoginButtonActivity()" placeholder="Password" required>
                         <span class="icon icon-lock"></span>
                         <span class="error password-error d-none"></span>
                     </label>
@@ -53,7 +55,7 @@
                         <span>Remember me</span>
                     </label>
                     <div class="button-container">
-                        <button class="login-button" type="submit">Log in</button>
+                        <button class="login-button" type="submit" disabled>Log in</button>
                         <button class="guest-button" type="button" onclick="guestLogin()">Guest Log in</button>
                     </div>
                 </div>
@@ -67,29 +69,29 @@
                 </div>
                 <div class="form-elements">
                     <label class="name-label">
-                        <input type="text" name="name" placeholder="Name" autocomplete="name" required>
+                        <input type="text" name="name" placeholder="Name" onkeyup="checkSignupButtonActivity()" autocomplete="name" required>
                         <span class="icon icon-person"></span>
                         <span class="error name-error d-none"></span>
                     </label>
                     <label class="email-label">
-                        <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+                        <input type="email" name="email" placeholder="Email" onkeyup="checkSignupButtonActivity()" autocomplete="email" required>
                         <span class="icon icon-mail"></span>
                         <span class="error email-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="password" placeholder="Password" required>
+                        <input type="password" name="password" placeholder="Password" onkeyup="checkSignupButtonActivity()" required>
                         <span class="icon icon-lock"></span>
                         <span class="error password-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                        <input type="password" name="confirm_password" placeholder="Confirm Password" onkeyup="checkSignupButtonActivity()" required>
                         <span class="icon icon-lock"></span>
                         <span class="error confirm_password-error d-none"></span>
                     </label>
                 </div>
                 <div class="footer-login">
                     <label for="custom-checkbox-2">
-                        <input type="checkbox" name="accept" id="custom-checkbox-2">
+                        <input type="checkbox" name="accept" onchange="checkSignupButtonActivity()" id="custom-checkbox-2">
                         <span class="custom-checkbox">
                             <img class="checkbox-img unchecked-button" src="./assets/img/unchecked-button.svg">
                             <img class="checkbox-img checked-button" src="./assets/img/checked-button.svg">
@@ -97,7 +99,7 @@
                         <span class="accept"><span id="accept_change">I</span> accept the <a href="privacy-policy.html">Privacy policy</a></span>
                     </label>
                     <div class="button-container">
-                        <button class="login-button" type="submit">Sign up</button>
+                        <button class="login-button" type="submit" disabled>Sign up</button>
                     </div>
                 </div>
             </form>
