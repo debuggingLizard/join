@@ -79,7 +79,7 @@
                         <span class="error email-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="password" placeholder="Password" onkeyup="checkSignupButtonActivity()" required>
+                        <input type="password" name="password" placeholder="Password" onkeyup="checkSignupButtonActivity()" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}" required>
                         <span class="icon icon-lock"></span>
                         <span class="error password-error d-none"></span>
                     </label>

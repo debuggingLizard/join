@@ -34,9 +34,16 @@ async function signUpFormEvent() {
 }
 
 function checkSignupButtonActivity() {
-  document.querySelector(`#signup-form input[name = confirm_password]`).setCustomValidity("");
-  checkSignUpFormValidation(false);
-  if (Object.values(signUpFormErrors).every((value) => value === false)) {
+  const inputs = document.querySelectorAll("#signup-form input");
+  let allValid = true;
+
+  inputs.forEach(input => {
+    if (input.value.length < 1) {
+      allValid = false;
+    }
+  });
+
+  if (allValid) {
     document.querySelector('#signup-form button[type=submit]').disabled = false;
   } else {
     document.querySelector('#signup-form button[type=submit]').disabled = true;
@@ -57,7 +64,10 @@ function checkSignUpFormValidation(showError = true) {
   if (showError) {
     showInputValidity("signup-form", "name", signUpFormErrors, "Enter a valid name.");
     showInputValidity("signup-form", "email", signUpFormErrors, "Enter a valid email address.");
-    showInputValidity("signup-form", "password", signUpFormErrors, "Enter a valid password.");
+    showInputValidity(
+      "signup-form", "password", signUpFormErrors,
+      "Enter a valid password. Password must be at least 4 characters, with at least one letter and one number."
+    );
     showInputValidity("signup-form", "confirm_password", signUpFormErrors, "Your passwords don't match. Please try again.");
     showAcceptPrivacyPolicyValidity();
   }
