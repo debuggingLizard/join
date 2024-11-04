@@ -53,8 +53,16 @@ async function loginFormEvent() {
 }
 
 function checkLoginButtonActivity() {
-  checkLoginFormValidation(false);
-  if (Object.values(loginFormErrors).every((value) => value === false)) {
+  const inputs = document.querySelectorAll("#login-form input");
+  let allValid = true;
+
+  inputs.forEach(input => {
+    if (input.value.length < 1) {
+      allValid = false;
+    }
+  });
+
+  if (allValid) {
     document.querySelector('#login-form button[type=submit]').disabled = false;
   } else {
     document.querySelector('#login-form button[type=submit]').disabled = true;
