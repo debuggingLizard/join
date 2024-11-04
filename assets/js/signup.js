@@ -48,8 +48,6 @@ function checkSignupButtonActivity() {
  * Updates the signUpFormErrors object with error messages if the inputs are invalid.
  */
 function checkSignUpFormValidation(showError = true) {
-
-
   checkInputValidity("signup-form", "name", signUpFormErrors);
   checkInputValidity("signup-form", "email", signUpFormErrors);
   checkInputValidity("signup-form", "password", signUpFormErrors);
@@ -138,9 +136,6 @@ function showAcceptPrivacyPolicyValidity() {
 function getProfileImage(name) {
   const parts = name.trim().split(" ");
   const firstInitial = parts[0].charAt(0).toUpperCase();
-  const lastInitial =
-    parts.length < 2
-      ? parts[0].charAt(0).toUpperCase()
-      : parts[1].charAt(0).toUpperCase();
+  const lastInitial = parts.length < 2 ? '' : parts[1].charAt(0).toUpperCase();
   return firstInitial + lastInitial;
 }
