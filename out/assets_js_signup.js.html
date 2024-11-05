@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: assets/js/task-view-templates.js</title>
+    <title>JSDoc: Source: assets/js/signup.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: assets/js/task-view-templates.js</h1>
+    <h1 class="page-title">Source: assets/js/signup.js</h1>
 
     
 
@@ -26,245 +26,199 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Generates the HTML template for displaying detailed information about a task.
- * Also provides buttons for editing and deleting of the task.
- *
- * @returns {string} The HTML string template for the task detail view.
- *
- * @description
- * This template includes:
- * - Task category with color-coded background.
- * - Task title, description, due date, and priority with icon.
- * - Assigned users, each with initials and background color.
- * - List of subtasks with checkboxes indicating completion status.
- * - Edit and delete buttons with confirmation for task deletion.
+            <pre class="prettyprint source linenums"><code>let signUpFormErrors = {
+  name: false,
+  email: false,
+  password: false,
+  confirm_password: false,
+  accept: false,
+};
+
+/**
+ * Initializes the signup functionality by executing various setup functions.
  */
-function taskDetailTemplate() {
-  return `
-              &lt;div class="task-detail-header">
-                  &lt;div class="userStory" style="background-color:${
-                    taskCategory.color
-                  }">${taskCategory.title}&lt;/div>
-                  &lt;div class="close-btn-task-detail icon icon-close" onclick="closeTaskDetail()">&lt;/div>
-              &lt;/div>
-  
-              &lt;div class="task-detail-body">
-                  &lt;h1>${taskInformation.title}&lt;/h1>
-                  &lt;p>${taskInformation.description}&lt;/p>
-                  &lt;div class="task-term">
-                      &lt;div>
-                          &lt;p>Due date:&lt;/p>
-                          &lt;p>Priority:&lt;/p>
-                      &lt;/div>
-                      &lt;div>
-                          &lt;p>${taskInformation.date}&lt;/p>
-                          &lt;div class="detail-priority-container">
-                              &lt;span style="margin-right: 8px;">${
-                                taskPriority.title
-                              }&lt;/span>
-                              &lt;span class="icon ${
-                                taskPriority.icon
-                              }" style="color:${taskPriority.color}">&lt;/span>
-                          &lt;/div>
-                      &lt;/div>
-                  &lt;/div>
-                  &lt;div class="assigned">
-                      &lt;p>Assigned To:&lt;/p>
-                      &lt;div id="task-overlay-assigned-contacts">
-                          ${(assignedUsers || [])
-                            .map(
-                              (user) => `
-                              &lt;div class="contributor-placement">
-                                  &lt;div class="contributor" style="background-color: ${user.color};">${user.profileImage}&lt;/div>
-                                  &lt;p>${user.name}&lt;/p>
-                              &lt;/div>
-                          `
-                            )
-                            .join("")}
-                      &lt;/div>
-                  &lt;/div>
-                  &lt;div class="subtask">
-                      &lt;p style="margin-bottom: 10px;">Subtasks&lt;/p>
-                      &lt;div class="subtask-checkbox">
-                      ${
-                        taskInformation.subtasks &amp;&amp;
-                        taskInformation.subtasks.length > 0
-                          ? taskInformation.subtasks
-                              .map(
-                                (subtask, index) => `
-                              &lt;div class="check-subtask" id="subtask-${index}" onclick="toggleSubtask(${index})">
-                                  &lt;img id="unchecked-${index}" class="checkbox-img ${
-                                  subtask.done ? "d-none" : ""
-                                }" src="./assets/img/unchecked-button.svg" alt="checkbox">
-                                  &lt;img id="checked-${index}" class="checkbox-tick-img ${
-                                  subtask.done ? "" : "d-none"
-                                }" src="./assets/img/checked-button.svg" alt="checkbox">
-                                  &lt;span>${subtask.title}&lt;/span>
-                              &lt;/div>
-                          `
-                              )
-                              .join("")
-                          : "&lt;p>No subtasks available&lt;/p>"
-                      }
-                          &lt;/div>
-                  &lt;/div>
-              &lt;/div>
-  
-              &lt;div class="task-edit-delete" id="task-detail-edit-delete">
-                  &lt;div class="task-edit-delete-btn" onclick="showDeleteConfirm()">
-                      &lt;div class="icon icon-delete">&lt;/div>
-                      &lt;span>Delete&lt;/span>
-                  &lt;/div>
-                  &lt;div class="task-edit-delete-btn" onclick="openEditTaskForm()">
-                      &lt;div class="icon icon-edit">&lt;/div>
-                      &lt;span>Edit&lt;/span>
-                  &lt;/div>
-              &lt;/div>
-  
-              &lt;div class="task-edit-delete confirm-delete d-none" id="task-detail-delete-confirm">
-                  &lt;div>
-                      Are you sure you want delete this task?
-                  &lt;/div>
-                  &lt;div class="task-edit-delete-btn" onclick="hideDeleteConfirm()">
-                      &lt;div class="icon icon-close">&lt;/div>
-                      &lt;span>No&lt;/span>
-                  &lt;/div>
-                  &lt;div class="task-edit-delete-btn" onclick="confirmDelete()">
-                      &lt;div class="icon icon-check">&lt;/div>
-                      &lt;span>Yes&lt;/span>
-                  &lt;/div>
-              &lt;/div>
-              `;
+function initSignup() {
+  signUpFormEvent();
 }
 
 /**
- * Generates the HTML template for editing a task, allowing the user to modify
- * the title, description, due date, priority, assignees, and subtasks.
- * Includes validation for required fields and functionality for updating subtasks and assignees.
- *
- * @returns {string} The HTML string template for the task edit view.
- *
- * @description
- * This template includes:
- * - An editable task title with validation.
- * - A description field.
- * - A due date input with placeholder handling and date formatting.
- * - Priority selection buttons, with the currently selected priority highlighted.
- * - An assignees dropdown allowing the selection of contacts.
- * - A subtask input field with clear and add buttons, and a list of existing subtasks.
- * - A confirmation button to submit the edited task details.
+ * Attaches an event listener to the sign-up form to handle the submit event.
+ * Prevents the default form submission behavior, retrieves the name, email, password, confirm password,
+ * and accept privacy policy values. Validates the form inputs and calls the signup function if there are no validation errors.
  */
-function editTaskTemplate() {
-  return `
-          &lt;div class="edit-task-header">
-              &lt;div class="close-btn-task-detail icon icon-close" onclick="closeTaskDetail()">&lt;/div>
-          &lt;/div>
-  
-          &lt;form id="edit-task-form" novalidate>
-              &lt;div class="form-column edit-task-form-column">
-                  &lt;label for="title">
-                      &lt;div>Title&lt;/div>
-                      &lt;input type="text" id="title" name="title" placeholder="Enter a title" value="${
-                        taskInformation.title
-                      }" required>
-                      &lt;span class="title-error error d-none">&lt;/span>
-                  &lt;/label>
-  
-                  &lt;label for="description">
-                      &lt;div>Description&lt;/div>
-                      &lt;textarea id="description" name="description" rows="4"
-                          placeholder="Enter a Description">${
-                            taskInformation.description
-                          }&lt;/textarea>
-                  &lt;/label>
-  
-                  &lt;label for="due-date" class="date-label">
-                      &lt;div>Due date&lt;/div>
-                      &lt;input type="text" class="picker text-date" id="due-date" name="due-date" value="${
-                        taskInformation.date
-                      }" onfocus="clearPlaceholder('#edit-task-form')"
-                          onblur="setPlaceholder('#edit-task-form')" onchange="formatDate('#edit-task-form')" required>
-                      &lt;span class="due-date-error error d-none">&lt;/span>
-                  &lt;/label>
-  
-                  &lt;label>
-                      &lt;div>Priority&lt;/div>
-                      &lt;div class="prio-options">
-                          &lt;div class="prio-btn urgent ${
-                            taskPriority.title === "Urgent" ? "active" : ""
-                          }" onclick="selectPrio('#edit-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
-                              Urgent&lt;span class="icon-urgent">&lt;/span>
-                          &lt;/div>
-                          &lt;div class="prio-btn medium ${
-                            taskPriority.title === "Medium" ? "active" : ""
-                          }"
-                              onclick="selectPrio('#edit-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
-                              Medium&lt;span class="icon-medium">&lt;/span>
-                          &lt;/div>
-                          &lt;div class="prio-btn low ${
-                            taskPriority.title === "Low" ? "active" : ""
-                          }" onclick="selectPrio('#edit-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
-                              Low &lt;span class="icon-low">&lt;/span>
-                          &lt;/div>
-                      &lt;/div>
-                      &lt;input type="hidden" id="selectedPrio" name="prio" value="${
-                        taskInformation.priority
-                      }">
-                  &lt;/label>
-  
-                  &lt;label for="assignees" class="assign-label">
-                      &lt;div>Assigned to&lt;/div>
-                      &lt;div>
-                          &lt;input type="search" name="assignees" id="assignees"
-                              placeholder="Select contacts to assign" onclick="toggleContactDropdown('#edit-task-form')">
-                          &lt;div class="assignees-list d-none">&lt;/div>
-                          &lt;div id="assigned-to" class="assigned-to">
-                              ${assignedUsers
-                                .map(
-                                  (user) => `
-                                  &lt;span id="${user.id}" class="contact-profile-image" style="background-color:${user.color}">${user.profileImage}&lt;/span>
-                              `
-                                )
-                                .join("")}
-                          &lt;/div>
-                      &lt;/div>
-                  &lt;/label>
-  
-                  &lt;label for="subtasks">
-                      &lt;div>Subtasks&lt;/div>
-                      &lt;div class="subtask-row">
-                          &lt;input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                          &lt;div class="subtask-buttons">
-                              &lt;span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput('#edit-task-form')">&lt;/span>
-                              &lt;span class="add-subtask-btn icon-add" onclick="addSubtask('#edit-task-form')">&lt;/span>
-                          &lt;/div>
-                      &lt;/div>
-                      &lt;ul id="subtask-list" class="subtask-list">
-                          ${(taskInformation.subtasks || [])
-                            .map(
-                              (subtask, index) => `
-                              &lt;li class="subtask-item">
-                                  &lt;span class="subtask-dot">&lt;/span>
-                                  &lt;span ondbclick="editSubtask(this)" class="subtask-title" status="${subtask.done}">${subtask.title}&lt;/span>
-                                  &lt;div class="subtask-actions">
-                                      &lt;div class="edit-subtask-btn icon-edit" onclick="editSubtask(this)">&lt;/div>
-                                      &lt;div class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)">&lt;/div>
-                                  &lt;/div>
-                              &lt;/li>
-                          `
-                            )
-                            .join("")}
-                      &lt;/ul>
-                  &lt;/label>
-              &lt;/div>
-              &lt;div class="edit-task-confirm-btn">
-                  &lt;button id="editTaskBtn" type="submit" class="create-task-btn">
-                      Ok&lt;span class="icon-check">&lt;/span>
-                  &lt;/button>
-              &lt;/div> 
-          &lt;/form>                    
-      `;
+async function signUpFormEvent() {
+  document
+    .getElementById("signup-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const name = document.querySelector(
+        "#signup-form input[name = name]"
+      ).value;
+      const email = document.querySelector(
+        "#signup-form input[name = email]"
+      ).value;
+      const password = document.querySelector(
+        "#signup-form input[name = password]"
+      ).value;
+      const confirmPassword = document.querySelector(
+        "#signup-form input[name = confirm_password]"
+      ).value;
+      checkPasswordAndConfirmPassword(password, confirmPassword);
+      checkSignUpFormValidation();
+      if (Object.values(signUpFormErrors).every((value) => value === false)) {
+        signup(name, email, password);
+      }
+    });
+}
+
+/**
+ * Checks the validity of all input fields in the sign-up form.
+ * If all inputs have a value, enables the submit button; otherwise, disables it.
+ */
+function checkSignupButtonActivity() {
+  const inputs = document.querySelectorAll("#signup-form input");
+  let allValid = true;
+  inputs.forEach((input) => {
+    if (input.value.length &lt; 1) {
+      allValid = false;
+    }
+  });
+  if (allValid) {
+    document.querySelector("#signup-form button[type=submit]").disabled = false;
+  } else {
+    document.querySelector("#signup-form button[type=submit]").disabled = true;
+  }
+}
+
+/**
+ * Validates the sign-up form by checking the validity of all input fields and
+ * the acceptance of the privacy policy. If `showError` is true, displays the
+ * corresponding error messages for invalid fields.
+ *
+ * @param {boolean} [showError=true] - Determines whether to show error messages for invalid fields.
+ */
+function checkSignUpFormValidation(showError = true) {
+  checkInputValidity("signup-form", "name", signUpFormErrors);
+  checkInputValidity("signup-form", "email", signUpFormErrors);
+  checkInputValidity("signup-form", "password", signUpFormErrors);
+  checkInputValidity("signup-form", "confirm_password", signUpFormErrors);
+  checkAcceptPrivacyPolicyValidity();
+  if (showError) {
+    showInputValidity(
+      "signup-form",
+      "name",
+      signUpFormErrors,
+      "Enter a valid name."
+    );
+    showInputValidity(
+      "signup-form",
+      "email",
+      signUpFormErrors,
+      "Enter a valid email address."
+    );
+    showInputValidity(
+      "signup-form",
+      "password",
+      signUpFormErrors,
+      "Enter a valid password. Password must be at least 4 characters, with at least one letter and one number."
+    );
+    showInputValidity(
+      "signup-form",
+      "confirm_password",
+      signUpFormErrors,
+      "Your passwords don't match. Please try again."
+    );
+    showAcceptPrivacyPolicyValidity();
+  }
+}
+
+/**
+ * Registers a new user by generating a salt, hashing the password, and creating a new admin data object.
+ * Posts the data to the server, then logs the user in with the provided credentials.
+ *
+ * @param {string} name - The name of the user.
+ * @param {string} email - The email address of the user.
+ * @param {string} password - The password of the user.
+ */
+async function signup(name, email, password) {
+  const salt = generateSalt();
+  const hashPassword = await hashingPassword(password, salt);
+  let Data = {
+    name: name,
+    email: email,
+    password: hashPassword,
+    salt: salt,
+    profileImage: getProfileImage(name),
+  };
+  await postData("admins", Data);
+  await login(email, password, false);
+}
+
+/**
+ * Checks if the password and confirm password fields match.
+ * If they do not match, sets a custom validity message on the confirm password input.
+ * If they match, clears any custom validity message.
+ *
+ * @param {string} password - The password value.
+ * @param {string} confirmPassword - The confirm password value.
+ */
+function checkPasswordAndConfirmPassword(password, confirmPassword) {
+  if (password !== confirmPassword) {
+    document
+      .querySelector(`#signup-form input[name = confirm_password]`)
+      .setCustomValidity("Passwords do not match.");
+  } else {
+    document
+      .querySelector(`#signup-form input[name = confirm_password]`)
+      .setCustomValidity("");
+  }
+}
+
+/**
+ * Checks if the user has accepted the privacy policy.
+ * If not accepted, marks the 'accept' field as having an error, updates the error message,
+ * and applies an error class to the relevant element.
+ * If accepted, clears the error and resets the error message.
+ *
+ * @param {boolean} accept - The acceptance status of the privacy policy.
+ */
+function checkAcceptPrivacyPolicyValidity() {
+  const accept = document.querySelector(
+    "#signup-form input[name = accept]"
+  ).checked;
+  if (accept == false) {
+    signUpFormErrors["accept"] = true;
+  } else {
+    signUpFormErrors["accept"] = false;
+  }
+}
+
+/**
+ * Displays the validity of the acceptance of the privacy policy by adding or removing
+ * an error class and updating the corresponding message. If the 'accept' field has errors,
+ * the message is updated to 'Please'; otherwise, it is set to 'I'.
+ */
+function showAcceptPrivacyPolicyValidity() {
+  if (signUpFormErrors["accept"]) {
+    document.querySelector(`#signup-form .accept`).classList.add("error");
+    document.getElementById("accept_change").innerHTML = "Please";
+  } else {
+    document.querySelector(`#signup-form .accept`).classList.remove("error");
+    document.getElementById("accept_change").innerHTML = "I";
+  }
+}
+
+/**
+ * Generates a profile image string based on a user's name.
+ * @param {string} name - The user's name.
+ * @returns {string} The profile image string.
+ */
+function getProfileImage(name) {
+  const parts = name.trim().split(" ");
+  const firstInitial = parts[0].charAt(0).toUpperCase();
+  const lastInitial =
+    parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
+  return firstInitial + lastInitial;
 }
 </code></pre>
         </article>

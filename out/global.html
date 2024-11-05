@@ -316,7 +316,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line278">line 278</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line280">line 280</a>
     </li></ul></dd>
     
 
@@ -838,7 +838,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line112">line 112</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -1034,7 +1034,7 @@
     
 
     
-    <h4 class="name" id="checkAcceptPrivacyPolicy"><span class="type-signature"></span>checkAcceptPrivacyPolicy<span class="signature">(accept)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="checkAcceptPrivacyPolicyValidity"><span class="type-signature"></span>checkAcceptPrivacyPolicyValidity<span class="signature">(accept)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1135,7 +1135,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line241">line 241</a>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line157">line 157</a>
     </li></ul></dd>
     
 
@@ -1295,7 +1295,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line256">line 256</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line258">line 258</a>
     </li></ul></dd>
     
 
@@ -1981,7 +1981,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line192">line 192</a>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -2105,7 +2105,7 @@
     
 
     
-    <h4 class="name" id="checkLoginFormValidation"><span class="type-signature"></span>checkLoginFormValidation<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="checkLoginButtonActivity"><span class="type-signature"></span>checkLoginButtonActivity<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -2113,7 +2113,7 @@
 
 
 <div class="description">
-    Validates the login form by checking the input validity for email and password fields.Updates the loginFormErrors object with error messages if the inputs are invalid.
+    Checks the validity of all input fields in the login form.If all inputs have a value, enables the submit button; otherwise, disables it.
 </div>
 
 
@@ -2157,7 +2157,164 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line101">line 101</a>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="checkLoginFormValidation"><span class="type-signature"></span>checkLoginFormValidation<span class="signature">(showError<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Validates the login form by checking the validity of email and password fields.If `showError` is true, displays the corresponding error messages for invalid fields.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>showError</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Determines whether to show error messages for invalid fields.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line88">line 88</a>
     </li></ul></dd>
     
 
@@ -2317,7 +2474,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line221">line 221</a>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -2529,7 +2686,7 @@
     
 
     
-    <h4 class="name" id="checkSignUpFormValidation"><span class="type-signature"></span>checkSignUpFormValidation<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="checkSignUpFormValidation"><span class="type-signature"></span>checkSignUpFormValidation<span class="signature">(showError<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -2537,7 +2694,164 @@
 
 
 <div class="description">
-    Validates the sign-up form by checking the input validity for name, email, password, and confirm password fields.Updates the signUpFormErrors object with error messages if the inputs are invalid.
+    Validates the sign-up form by checking the validity of all input fields andthe acceptance of the privacy policy. If `showError` is true, displays thecorresponding error messages for invalid fields.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>showError</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Determines whether to show error messages for invalid fields.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line72">line 72</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="checkSignupButtonActivity"><span class="type-signature"></span>checkSignupButtonActivity<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks the validity of all input fields in the sign-up form.If all inputs have a value, enables the submit button; otherwise, disables it.
 </div>
 
 
@@ -2581,7 +2895,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line154">line 154</a>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -3158,7 +3472,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line86">line 86</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line93">line 93</a>
     </li></ul></dd>
     
 
@@ -7656,6 +7970,168 @@
     
 
     
+    <h4 class="name" id="findAdminByEmail"><span class="type-signature">(async) </span>findAdminByEmail<span class="signature">(email)</span><span class="type-signature"> &rarr; {Object|null}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Searches for an admin by email within the retrieved admin data.Converts the admin data to an array of entries, then searches for an admin with a matching email.Returns the found admin object or null if no match is found.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The email address to search for.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line138">line 138</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - The admin object if found, otherwise null.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="formatDate"><span class="type-signature"></span>formatDate<span class="signature">(formId)</span><span class="type-signature"></span></h4>
     
 
@@ -8567,7 +9043,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line450">line 450</a>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -9001,7 +9477,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line160">line 160</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -9817,7 +10293,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line65">line 65</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line72">line 72</a>
     </li></ul></dd>
     
 
@@ -10453,7 +10929,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line347">line 347</a>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line204">line 204</a>
     </li></ul></dd>
     
 
@@ -10635,7 +11111,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line164">line 164</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line171">line 171</a>
     </li></ul></dd>
     
 
@@ -10858,7 +11334,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line131">line 131</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line138">line 138</a>
     </li></ul></dd>
     
 
@@ -11176,7 +11652,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line415">line 415</a>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
@@ -12483,7 +12959,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line148">line 148</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line155">line 155</a>
     </li></ul></dd>
     
 
@@ -12828,7 +13304,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line311">line 311</a>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line189">line 189</a>
     </li></ul></dd>
     
 
@@ -13125,7 +13601,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line199">line 199</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line201">line 201</a>
     </li></ul></dd>
     
 
@@ -14602,7 +15078,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line433">line 433</a>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line147">line 147</a>
     </li></ul></dd>
     
 
@@ -15064,7 +15540,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line89">line 89</a>
+        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line87">line 87</a>
     </li></ul></dd>
     
 
@@ -15767,7 +16243,7 @@
 
 
 <div class="description">
-    Initializes the login functionality by executing various setup functions.This includes logo animation, event listeners for the login and sign-up forms, password typing functionality, and toggling password visibility.
+    Initializes the login functionality by executing various setup functions.
 </div>
 
 
@@ -15811,7 +16287,183 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line20">line 20</a>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="initLoginSignupFunctions"><span class="type-signature"></span>initLoginSignupFunctions<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initializes the signup functionality by executing various setup functions.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="initSignup"><span class="type-signature"></span>initSignup<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initializes the signup functionality by executing various setup functions.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line12">line 12</a>
     </li></ul></dd>
     
 
@@ -16036,7 +16688,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line228">line 228</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line230">line 230</a>
     </li></ul></dd>
     
 
@@ -16451,6 +17103,116 @@
     
 
     
+    <h4 class="name" id="isMoveFromLoginPage"><span class="type-signature"></span>isMoveFromLoginPage<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks if redirect from login page.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_check-login.js.html">assets/js/check-login.js</a>, <a href="assets_js_check-login.js.html#line114">line 114</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - True if redirect from login page, false otherwise.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="loadDropTargets"><span class="type-signature"></span>loadDropTargets<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -16741,7 +17503,7 @@
 
 
 <div class="description">
-    Authenticates the user by checking the email and password against stored admin data.If the credentials are valid, stores the login information in local storage and redirects to the specified page.If the credentials are invalid, displays a login error message.
+    Authenticates the user by verifying email and password, then stores login dataand redirects to the specified page if successful. Shows an error message if authentication fails.
 </div>
 
 
@@ -16880,7 +17642,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line262">line 262</a>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line115">line 115</a>
     </li></ul></dd>
     
 
@@ -16968,7 +17730,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line76">line 76</a>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -17056,7 +17818,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line53">line 53</a>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -17144,7 +17906,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_check-login.js.html">assets/js/check-login.js</a>, <a href="assets_js_check-login.js.html#line113">line 113</a>
+        <a href="assets_js_check-login.js.html">assets/js/check-login.js</a>, <a href="assets_js_check-login.js.html#line122">line 122</a>
     </li></ul></dd>
     
 
@@ -19123,7 +19885,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line64">line 64</a>
+        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -19233,7 +19995,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line71">line 71</a>
+        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line69">line 69</a>
     </li></ul></dd>
     
 
@@ -19393,7 +20155,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line288">line 288</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line290">line 290</a>
     </li></ul></dd>
     
 
@@ -19636,7 +20398,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line79">line 79</a>
+        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -19812,7 +20574,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line120">line 120</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line122">line 122</a>
     </li></ul></dd>
     
 
@@ -20037,7 +20799,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line183">line 183</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line190">line 190</a>
     </li></ul></dd>
     
 
@@ -20461,7 +21223,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line213">line 213</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line215">line 215</a>
     </li></ul></dd>
     
 
@@ -20919,7 +21681,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line135">line 135</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -21410,7 +22172,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line39">line 39</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line46">line 46</a>
     </li></ul></dd>
     
 
@@ -21978,7 +22740,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line96">line 96</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -22293,7 +23055,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line113">line 113</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line120">line 120</a>
     </li></ul></dd>
     
 
@@ -22646,6 +23408,166 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="assets_js_createTask.js.html">assets/js/createTask.js</a>, <a href="assets_js_createTask.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="resetPasswordIcon"><span class="type-signature"></span>resetPasswordIcon<span class="signature">(passwordInputElement, iconElement)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Resets the icon next to a password input field to the lock iconwhen the input value is empty.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>passwordInputElement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLInputElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The password input field element.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>iconElement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The icon element next to the password input field.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line131">line 131</a>
     </li></ul></dd>
     
 
@@ -23350,7 +24272,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line319">line 319</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line321">line 321</a>
     </li></ul></dd>
     
 
@@ -23438,7 +24360,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line54">line 54</a>
+        <a href="assets_js_summary.js.html">assets/js/summary.js</a>, <a href="assets_js_summary.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -23919,6 +24841,94 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="assets_js_addSubtask.js.html">assets/js/addSubtask.js</a>, <a href="assets_js_addSubtask.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="showAcceptPrivacyPolicyValidity"><span class="type-signature"></span>showAcceptPrivacyPolicyValidity<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Displays the validity of the acceptance of the privacy policy by adding or removingan error class and updating the corresponding message. If the 'accept' field has errors,the message is updated to 'Please'; otherwise, it is set to 'I'.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -24827,7 +25837,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line293">line 293</a>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line171">line 171</a>
     </li></ul></dd>
     
 
@@ -24915,7 +25925,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line32">line 32</a>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -25052,7 +26062,167 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line105">line 105</a>
+        <a href="assets_js_contacts-functions.js.html">assets/js/contacts-functions.js</a>, <a href="assets_js_contacts-functions.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="showPasswordVisibilityIcon"><span class="type-signature"></span>showPasswordVisibilityIcon<span class="signature">(passwordInputElement, iconElement)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates the icon next to a password input field to show password visibility optionswhen the input value is not empty.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>passwordInputElement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLInputElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The password input field element.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>iconElement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The icon element next to the password input field.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -25140,7 +26310,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line42">line 42</a>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -25228,7 +26398,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line121">line 121</a>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -25411,7 +26581,167 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line327">line 327</a>
+        <a href="assets_js_signup.js.html">assets/js/signup.js</a>, <a href="assets_js_signup.js.html#line115">line 115</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="storeLoginData"><span class="type-signature"></span>storeLoginData<span class="signature">(admin, remember)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Stores the admin login data in local storage and removes any guest login valid time.Sets the login information, remember me status, login validity time, and a flag indicating redirection from login.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>admin</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The admin object containing login information.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>remember</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Whether to remember the login for future sessions.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line152">line 152</a>
     </li></ul></dd>
     
 
@@ -25548,7 +26878,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line302">line 302</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line304">line 304</a>
     </li></ul></dd>
     
 
@@ -26478,7 +27808,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line101">line 101</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -26863,7 +28193,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line390">line 390</a>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line68">line 68</a>
     </li></ul></dd>
     
 
@@ -27225,7 +28555,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_login.js.html">assets/js/login.js</a>, <a href="assets_js_login.js.html#line359">line 359</a>
+        <a href="assets_js_login-signup-functions.js.html">assets/js/login-signup-functions.js</a>, <a href="assets_js_login-signup-functions.js.html#line93">line 93</a>
     </li></ul></dd>
     
 
@@ -27636,7 +28966,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line186">line 186</a>
+        <a href="assets_js_addTask.js.html">assets/js/addTask.js</a>, <a href="assets_js_addTask.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
@@ -28153,13 +29483,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateCloseSlideIn">activateCloseSlideIn</a></li><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addDragQueenEventListeners">addDragQueenEventListeners</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#appendSubtaskToList">appendSubtaskToList</a></li><li><a href="global.html#categoryDropDown">categoryDropDown</a></li><li><a href="global.html#changeStatus">changeStatus</a></li><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkCreateInputValidation">checkCreateInputValidation</a></li><li><a href="global.html#checkEditFormValidation">checkEditFormValidation</a></li><li><a href="global.html#checkEditInputValidation">checkEditInputValidation</a></li><li><a href="global.html#checkInputValidity">checkInputValidity</a></li><li><a href="global.html#checkLogin">checkLogin</a></li><li><a href="global.html#checkLoginFormValidation">checkLoginFormValidation</a></li><li><a href="global.html#checkPasswordAndConfirmPassword">checkPasswordAndConfirmPassword</a></li><li><a href="global.html#checkRequiredFields">checkRequiredFields</a></li><li><a href="global.html#checkSearchValue">checkSearchValue</a></li><li><a href="global.html#checkSignUpFormValidation">checkSignUpFormValidation</a></li><li><a href="global.html#clearPlaceholder">clearPlaceholder</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeAddTask">closeAddTask</a></li><li><a href="global.html#closeSlideIn">closeSlideIn</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#commaForGreeting">commaForGreeting</a></li><li><a href="global.html#confirmDelete">confirmDelete</a></li><li><a href="global.html#confirmEdit">confirmEdit</a></li><li><a href="global.html#convertDateFormatWithDash">convertDateFormatWithDash</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createEditInputField">createEditInputField</a></li><li><a href="global.html#createSaveButton">createSaveButton</a></li><li><a href="global.html#createSubtaskListItem">createSubtaskListItem</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#createTaskDataObject">createTaskDataObject</a></li><li><a href="global.html#createTaskHtml">createTaskHtml</a></li><li><a href="global.html#createValidContact">createValidContact</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTaskData">deleteTaskData</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#drag">drag</a></li><li><a href="global.html#dragEnd">dragEnd</a></li><li><a href="global.html#dragstart">dragstart</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editFormEventListener">editFormEventListener</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTaskTemplate">editTaskTemplate</a></li><li><a href="global.html#editValidContact">editValidContact</a></li><li><a href="global.html#enableSubtaskEditing">enableSubtaskEditing</a></li><li><a href="global.html#eventListenerCloseAddTask">eventListenerCloseAddTask</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#finalizeEdit">finalizeEdit</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#gatherEditedContactData">gatherEditedContactData</a></li><li><a href="global.html#gatherNewContactData">gatherNewContactData</a></li><li><a href="global.html#gatherTaskData">gatherTaskData</a></li><li><a href="global.html#gatherTaskFormData">gatherTaskFormData</a></li><li><a href="global.html#generateSalt">generateSalt</a></li><li><a href="global.html#getAdminProfileImage">getAdminProfileImage</a></li><li><a href="global.html#getAssignedUsers">getAssignedUsers</a></li><li><a href="global.html#getAssigneesListTemplate">getAssigneesListTemplate</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getDataFromDatabase">getDataFromDatabase</a></li><li><a href="global.html#getDetailAssignedUsers">getDetailAssignedUsers</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getNextOneHourTime">getNextOneHourTime</a></li><li><a href="global.html#getNextUrgentDeadline">getNextUrgentDeadline</a></li><li><a href="global.html#getPageName">getPageName</a></li><li><a href="global.html#getPriorityID">getPriorityID</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getResponsiveEditDeleteBtnTemplate">getResponsiveEditDeleteBtnTemplate</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getSlideInTemplate">getSlideInTemplate</a></li><li><a href="global.html#getSubtaskInput">getSubtaskInput</a></li><li><a href="global.html#getSubtaskListItemTemplate">getSubtaskListItemTemplate</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTasksByStatus">getTasksByStatus</a></li><li><a href="global.html#getUrgentTasksAmount">getUrgentTasksAmount</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#goBack">goBack</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleAddContactOverlayClick">handleAddContactOverlayClick</a></li><li><a href="global.html#handleAssigneeChange">handleAssigneeChange</a></li><li><a href="global.html#handleCreateContactSubmit">handleCreateContactSubmit</a></li><li><a href="global.html#handleDragEnter">handleDragEnter</a></li><li><a href="global.html#handleDragLeave">handleDragLeave</a></li><li><a href="global.html#handleDragOver">handleDragOver</a></li><li><a href="global.html#handleEditContactOverlayClick">handleEditContactOverlayClick</a></li><li><a href="global.html#handleEditContactSubmit">handleEditContactSubmit</a></li><li><a href="global.html#handleEditFormSubmit">handleEditFormSubmit</a></li><li><a href="global.html#handleSaveOnEnter">handleSaveOnEnter</a></li><li><a href="global.html#handleSubtaskInput">handleSubtaskInput</a></li><li><a href="global.html#hashingPassword">hashingPassword</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideDeleteConfirm">hideDeleteConfirm</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#hideEditTaskShowDetailView">hideEditTaskShowDetailView</a></li><li><a href="global.html#hideErrorMessages">hideErrorMessages</a></li><li><a href="global.html#hideInputValidationError">hideInputValidationError</a></li><li><a href="global.html#initContactDropdownList">initContactDropdownList</a></li><li><a href="global.html#initDateInput">initDateInput</a></li><li><a href="global.html#initEventListenerAddTask">initEventListenerAddTask</a></li><li><a href="global.html#initFormFieldListeners">initFormFieldListeners</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initSubtaskFunctions">initSubtaskFunctions</a></li><li><a href="global.html#initializeTaskForm">initializeTaskForm</a></li><li><a href="global.html#isAdminLogin">isAdminLogin</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#isGuestLogin">isGuestLogin</a></li><li><a href="global.html#loadDropTargets">loadDropTargets</a></li><li><a href="global.html#loadTasksFromDatabase">loadTasksFromDatabase</a></li><li><a href="global.html#loadTemplates">loadTemplates</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginFormEvent">loginFormEvent</a></li><li><a href="global.html#logoAnimation">logoAnimation</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#markSubstaskAsDone">markSubstaskAsDone</a></li><li><a href="global.html#markSubtaskAsNotDone">markSubtaskAsNotDone</a></li><li><a href="global.html#openAddTask">openAddTask</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openEditTaskForm">openEditTaskForm</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#openMoveTaskDropdown">openMoveTaskDropdown</a></li><li><a href="global.html#openSlideIn">openSlideIn</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#removeAllErrors">removeAllErrors</a></li><li><a href="global.html#removeContact">removeContact</a></li><li><a href="global.html#removeContactFromTasks">removeContactFromTasks</a></li><li><a href="global.html#removeInputErrors">removeInputErrors</a></li><li><a href="global.html#removeResponsiveEditAfterDelete">removeResponsiveEditAfterDelete</a></li><li><a href="global.html#renderAddTaskData">renderAddTaskData</a></li><li><a href="global.html#renderAllBoards">renderAllBoards</a></li><li><a href="global.html#renderAllTasksAmount">renderAllTasksAmount</a></li><li><a href="global.html#renderBoardForNewTask">renderBoardForNewTask</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#renderBoardsByStatus">renderBoardsByStatus</a></li><li><a href="global.html#renderCategories">renderCategories</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderResponsiveEditButtons">renderResponsiveEditButtons</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSummaryData">renderSummaryData</a></li><li><a href="global.html#renderTaskAfterCreateTask">renderTaskAfterCreateTask</a></li><li><a href="global.html#renderTaskContributors">renderTaskContributors</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#renderTasksAmountByStatus">renderTasksAmountByStatus</a></li><li><a href="global.html#renderTasksThatExist">renderTasksThatExist</a></li><li><a href="global.html#renderUrgentTasks">renderUrgentTasks</a></li><li><a href="global.html#resetAddTask">resetAddTask</a></li><li><a href="global.html#resetAdditionalElements">resetAdditionalElements</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#resetFormInputs">resetFormInputs</a></li><li><a href="global.html#resetSubtaskInput">resetSubtaskInput</a></li><li><a href="global.html#saveCurrentPage">saveCurrentPage</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#selectPrio">selectPrio</a></li><li><a href="global.html#setGreeting">setGreeting</a></li><li><a href="global.html#setGreetingScreenVisibility">setGreetingScreenVisibility</a></li><li><a href="global.html#setPlaceholder">setPlaceholder</a></li><li><a href="global.html#setupClearButton">setupClearButton</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showAdminName">showAdminName</a></li><li><a href="global.html#showDeleteConfirm">showDeleteConfirm</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#showFeedbackOverlay">showFeedbackOverlay</a></li><li><a href="global.html#showGreetingScreen">showGreetingScreen</a></li><li><a href="global.html#showInputValidationError">showInputValidationError</a></li><li><a href="global.html#showLoginError">showLoginError</a></li><li><a href="global.html#showLoginForm">showLoginForm</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#showSignupForm">showSignupForm</a></li><li><a href="global.html#signUpFormEvent">signUpFormEvent</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#styleLabel">styleLabel</a></li><li><a href="global.html#subTaskTemplate">subTaskTemplate</a></li><li><a href="global.html#taskContributorTemplate">taskContributorTemplate</a></li><li><a href="global.html#taskDetailTemplate">taskDetailTemplate</a></li><li><a href="global.html#taskTemplate">taskTemplate</a></li><li><a href="global.html#toggleButtonVisibility">toggleButtonVisibility</a></li><li><a href="global.html#toggleContactDropdown">toggleContactDropdown</a></li><li><a href="global.html#toggleCreateTaskButton">toggleCreateTaskButton</a></li><li><a href="global.html#toggleEditButtonVisibility">toggleEditButtonVisibility</a></li><li><a href="global.html#togglePasswordVisible">togglePasswordVisible</a></li><li><a href="global.html#toggleResponsiveVisibilityContact">toggleResponsiveVisibilityContact</a></li><li><a href="global.html#toggleSubtask">toggleSubtask</a></li><li><a href="global.html#typePassword">typePassword</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li><li><a href="global.html#updateAssignedContacts">updateAssignedContacts</a></li><li><a href="global.html#updateTaskData">updateTaskData</a></li><li><a href="global.html#updateTaskDataForSubtaskStatusChange">updateTaskDataForSubtaskStatusChange</a></li><li><a href="global.html#validateCreateContactInputs">validateCreateContactInputs</a></li><li><a href="global.html#validateEditContactInputs">validateEditContactInputs</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateCloseSlideIn">activateCloseSlideIn</a></li><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addDragQueenEventListeners">addDragQueenEventListeners</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#appendSubtaskToList">appendSubtaskToList</a></li><li><a href="global.html#categoryDropDown">categoryDropDown</a></li><li><a href="global.html#changeStatus">changeStatus</a></li><li><a href="global.html#checkAcceptPrivacyPolicyValidity">checkAcceptPrivacyPolicyValidity</a></li><li><a href="global.html#checkCreateInputValidation">checkCreateInputValidation</a></li><li><a href="global.html#checkEditFormValidation">checkEditFormValidation</a></li><li><a href="global.html#checkEditInputValidation">checkEditInputValidation</a></li><li><a href="global.html#checkInputValidity">checkInputValidity</a></li><li><a href="global.html#checkLogin">checkLogin</a></li><li><a href="global.html#checkLoginButtonActivity">checkLoginButtonActivity</a></li><li><a href="global.html#checkLoginFormValidation">checkLoginFormValidation</a></li><li><a href="global.html#checkPasswordAndConfirmPassword">checkPasswordAndConfirmPassword</a></li><li><a href="global.html#checkRequiredFields">checkRequiredFields</a></li><li><a href="global.html#checkSearchValue">checkSearchValue</a></li><li><a href="global.html#checkSignUpFormValidation">checkSignUpFormValidation</a></li><li><a href="global.html#checkSignupButtonActivity">checkSignupButtonActivity</a></li><li><a href="global.html#clearPlaceholder">clearPlaceholder</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeAddTask">closeAddTask</a></li><li><a href="global.html#closeSlideIn">closeSlideIn</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#commaForGreeting">commaForGreeting</a></li><li><a href="global.html#confirmDelete">confirmDelete</a></li><li><a href="global.html#confirmEdit">confirmEdit</a></li><li><a href="global.html#convertDateFormatWithDash">convertDateFormatWithDash</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createEditInputField">createEditInputField</a></li><li><a href="global.html#createSaveButton">createSaveButton</a></li><li><a href="global.html#createSubtaskListItem">createSubtaskListItem</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#createTaskDataObject">createTaskDataObject</a></li><li><a href="global.html#createTaskHtml">createTaskHtml</a></li><li><a href="global.html#createValidContact">createValidContact</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteContactFromEditForm">deleteContactFromEditForm</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTaskData">deleteTaskData</a></li><li><a href="global.html#displayContactList">displayContactList</a></li><li><a href="global.html#drag">drag</a></li><li><a href="global.html#dragEnd">dragEnd</a></li><li><a href="global.html#dragstart">dragstart</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editFormEventListener">editFormEventListener</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTaskTemplate">editTaskTemplate</a></li><li><a href="global.html#editValidContact">editValidContact</a></li><li><a href="global.html#enableSubtaskEditing">enableSubtaskEditing</a></li><li><a href="global.html#eventListenerCloseAddTask">eventListenerCloseAddTask</a></li><li><a href="global.html#eventListenerCreateContact">eventListenerCreateContact</a></li><li><a href="global.html#eventListenerEditContact">eventListenerEditContact</a></li><li><a href="global.html#finalizeEdit">finalizeEdit</a></li><li><a href="global.html#findAdminByEmail">findAdminByEmail</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#gatherEditedContactData">gatherEditedContactData</a></li><li><a href="global.html#gatherNewContactData">gatherNewContactData</a></li><li><a href="global.html#gatherTaskData">gatherTaskData</a></li><li><a href="global.html#gatherTaskFormData">gatherTaskFormData</a></li><li><a href="global.html#generateSalt">generateSalt</a></li><li><a href="global.html#getAdminProfileImage">getAdminProfileImage</a></li><li><a href="global.html#getAssignedUsers">getAssignedUsers</a></li><li><a href="global.html#getAssigneesListTemplate">getAssigneesListTemplate</a></li><li><a href="global.html#getContactDetailTemplate">getContactDetailTemplate</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getDataFromDatabase">getDataFromDatabase</a></li><li><a href="global.html#getDetailAssignedUsers">getDetailAssignedUsers</a></li><li><a href="global.html#getFirstLetters">getFirstLetters</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#getLetterGroupTemplate">getLetterGroupTemplate</a></li><li><a href="global.html#getNextOneHourTime">getNextOneHourTime</a></li><li><a href="global.html#getNextUrgentDeadline">getNextUrgentDeadline</a></li><li><a href="global.html#getPageName">getPageName</a></li><li><a href="global.html#getPriorityID">getPriorityID</a></li><li><a href="global.html#getProfileImage">getProfileImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getResponsiveEditDeleteBtnTemplate">getResponsiveEditDeleteBtnTemplate</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getSlideInTemplate">getSlideInTemplate</a></li><li><a href="global.html#getSubtaskInput">getSubtaskInput</a></li><li><a href="global.html#getSubtaskListItemTemplate">getSubtaskListItemTemplate</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTasksByStatus">getTasksByStatus</a></li><li><a href="global.html#getUrgentTasksAmount">getUrgentTasksAmount</a></li><li><a href="global.html#getUserContactListTemplate">getUserContactListTemplate</a></li><li><a href="global.html#goBack">goBack</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleAddContactOverlayClick">handleAddContactOverlayClick</a></li><li><a href="global.html#handleAssigneeChange">handleAssigneeChange</a></li><li><a href="global.html#handleCreateContactSubmit">handleCreateContactSubmit</a></li><li><a href="global.html#handleDragEnter">handleDragEnter</a></li><li><a href="global.html#handleDragLeave">handleDragLeave</a></li><li><a href="global.html#handleDragOver">handleDragOver</a></li><li><a href="global.html#handleEditContactOverlayClick">handleEditContactOverlayClick</a></li><li><a href="global.html#handleEditContactSubmit">handleEditContactSubmit</a></li><li><a href="global.html#handleEditFormSubmit">handleEditFormSubmit</a></li><li><a href="global.html#handleSaveOnEnter">handleSaveOnEnter</a></li><li><a href="global.html#handleSubtaskInput">handleSubtaskInput</a></li><li><a href="global.html#hashingPassword">hashingPassword</a></li><li><a href="global.html#hideAddContactOverlay">hideAddContactOverlay</a></li><li><a href="global.html#hideDeleteConfirm">hideDeleteConfirm</a></li><li><a href="global.html#hideEditContactOverlay">hideEditContactOverlay</a></li><li><a href="global.html#hideEditTaskShowDetailView">hideEditTaskShowDetailView</a></li><li><a href="global.html#hideErrorMessages">hideErrorMessages</a></li><li><a href="global.html#hideInputValidationError">hideInputValidationError</a></li><li><a href="global.html#initContactDropdownList">initContactDropdownList</a></li><li><a href="global.html#initDateInput">initDateInput</a></li><li><a href="global.html#initEventListenerAddTask">initEventListenerAddTask</a></li><li><a href="global.html#initFormFieldListeners">initFormFieldListeners</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initLoginSignupFunctions">initLoginSignupFunctions</a></li><li><a href="global.html#initSignup">initSignup</a></li><li><a href="global.html#initSubtaskFunctions">initSubtaskFunctions</a></li><li><a href="global.html#initializeTaskForm">initializeTaskForm</a></li><li><a href="global.html#isAdminLogin">isAdminLogin</a></li><li><a href="global.html#isEmailExist">isEmailExist</a></li><li><a href="global.html#isGuestLogin">isGuestLogin</a></li><li><a href="global.html#isMoveFromLoginPage">isMoveFromLoginPage</a></li><li><a href="global.html#loadDropTargets">loadDropTargets</a></li><li><a href="global.html#loadTasksFromDatabase">loadTasksFromDatabase</a></li><li><a href="global.html#loadTemplates">loadTemplates</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginFormEvent">loginFormEvent</a></li><li><a href="global.html#logoAnimation">logoAnimation</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#markSubstaskAsDone">markSubstaskAsDone</a></li><li><a href="global.html#markSubtaskAsNotDone">markSubtaskAsNotDone</a></li><li><a href="global.html#openAddTask">openAddTask</a></li><li><a href="global.html#openEditContactModal">openEditContactModal</a></li><li><a href="global.html#openEditTaskForm">openEditTaskForm</a></li><li><a href="global.html#openHeaderProfileInfo">openHeaderProfileInfo</a></li><li><a href="global.html#openMoveTaskDropdown">openMoveTaskDropdown</a></li><li><a href="global.html#openSlideIn">openSlideIn</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#randomIntFromInterval">randomIntFromInterval</a></li><li><a href="global.html#removeAllErrors">removeAllErrors</a></li><li><a href="global.html#removeContact">removeContact</a></li><li><a href="global.html#removeContactFromTasks">removeContactFromTasks</a></li><li><a href="global.html#removeInputErrors">removeInputErrors</a></li><li><a href="global.html#removeResponsiveEditAfterDelete">removeResponsiveEditAfterDelete</a></li><li><a href="global.html#renderAddTaskData">renderAddTaskData</a></li><li><a href="global.html#renderAllBoards">renderAllBoards</a></li><li><a href="global.html#renderAllTasksAmount">renderAllTasksAmount</a></li><li><a href="global.html#renderBoardForNewTask">renderBoardForNewTask</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#renderBoardsByStatus">renderBoardsByStatus</a></li><li><a href="global.html#renderCategories">renderCategories</a></li><li><a href="global.html#renderContactDetail">renderContactDetail</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderResponsiveEditButtons">renderResponsiveEditButtons</a></li><li><a href="global.html#renderSidebarHeader">renderSidebarHeader</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSummaryData">renderSummaryData</a></li><li><a href="global.html#renderTaskAfterCreateTask">renderTaskAfterCreateTask</a></li><li><a href="global.html#renderTaskContributors">renderTaskContributors</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#renderTasksAmountByStatus">renderTasksAmountByStatus</a></li><li><a href="global.html#renderTasksThatExist">renderTasksThatExist</a></li><li><a href="global.html#renderUrgentTasks">renderUrgentTasks</a></li><li><a href="global.html#resetAddTask">resetAddTask</a></li><li><a href="global.html#resetAdditionalElements">resetAdditionalElements</a></li><li><a href="global.html#resetCreateContactForm">resetCreateContactForm</a></li><li><a href="global.html#resetFormInputs">resetFormInputs</a></li><li><a href="global.html#resetPasswordIcon">resetPasswordIcon</a></li><li><a href="global.html#resetSubtaskInput">resetSubtaskInput</a></li><li><a href="global.html#saveCurrentPage">saveCurrentPage</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#selectPrio">selectPrio</a></li><li><a href="global.html#setGreeting">setGreeting</a></li><li><a href="global.html#setGreetingScreenVisibility">setGreetingScreenVisibility</a></li><li><a href="global.html#setPlaceholder">setPlaceholder</a></li><li><a href="global.html#setupClearButton">setupClearButton</a></li><li><a href="global.html#showAcceptPrivacyPolicyValidity">showAcceptPrivacyPolicyValidity</a></li><li><a href="global.html#showAddContactOverlay">showAddContactOverlay</a></li><li><a href="global.html#showAdminName">showAdminName</a></li><li><a href="global.html#showDeleteConfirm">showDeleteConfirm</a></li><li><a href="global.html#showEditContactOverlay">showEditContactOverlay</a></li><li><a href="global.html#showFeedbackOverlay">showFeedbackOverlay</a></li><li><a href="global.html#showGreetingScreen">showGreetingScreen</a></li><li><a href="global.html#showInputValidationError">showInputValidationError</a></li><li><a href="global.html#showLoginError">showLoginError</a></li><li><a href="global.html#showLoginForm">showLoginForm</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#showPasswordVisibilityIcon">showPasswordVisibilityIcon</a></li><li><a href="global.html#showSignupForm">showSignupForm</a></li><li><a href="global.html#signUpFormEvent">signUpFormEvent</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#storeLoginData">storeLoginData</a></li><li><a href="global.html#styleLabel">styleLabel</a></li><li><a href="global.html#subTaskTemplate">subTaskTemplate</a></li><li><a href="global.html#taskContributorTemplate">taskContributorTemplate</a></li><li><a href="global.html#taskDetailTemplate">taskDetailTemplate</a></li><li><a href="global.html#taskTemplate">taskTemplate</a></li><li><a href="global.html#toggleButtonVisibility">toggleButtonVisibility</a></li><li><a href="global.html#toggleContactDropdown">toggleContactDropdown</a></li><li><a href="global.html#toggleCreateTaskButton">toggleCreateTaskButton</a></li><li><a href="global.html#toggleEditButtonVisibility">toggleEditButtonVisibility</a></li><li><a href="global.html#togglePasswordVisible">togglePasswordVisible</a></li><li><a href="global.html#toggleResponsiveVisibilityContact">toggleResponsiveVisibilityContact</a></li><li><a href="global.html#toggleSubtask">toggleSubtask</a></li><li><a href="global.html#typePassword">typePassword</a></li><li><a href="global.html#updateActiveStateContactList">updateActiveStateContactList</a></li><li><a href="global.html#updateActiveStateNavLink">updateActiveStateNavLink</a></li><li><a href="global.html#updateAssignedContacts">updateAssignedContacts</a></li><li><a href="global.html#updateTaskData">updateTaskData</a></li><li><a href="global.html#updateTaskDataForSubtaskStatusChange">updateTaskDataForSubtaskStatusChange</a></li><li><a href="global.html#validateCreateContactInputs">validateCreateContactInputs</a></li><li><a href="global.html#validateEditContactInputs">validateEditContactInputs</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sun Nov 03 2024 15:57:56 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Nov 05 2024 12:04:37 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
