@@ -19,40 +19,55 @@ function initSignup() {
  * and accept privacy policy values. Validates the form inputs and calls the signup function if there are no validation errors.
  */
 async function signUpFormEvent() {
-  document.getElementById("signup-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const name = document.querySelector("#signup-form input[name = name]").value;
-    const email = document.querySelector("#signup-form input[name = email]").value;
-    const password = document.querySelector("#signup-form input[name = password]").value;
-    const confirmPassword = document.querySelector("#signup-form input[name = confirm_password]").value;
-    checkPasswordAndConfirmPassword(password, confirmPassword);
-    checkSignUpFormValidation();
-    if (Object.values(signUpFormErrors).every((value) => value === false)) {
-      signup(name, email, password);
-    }
-  });
+  document
+    .getElementById("signup-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const name = document.querySelector(
+        "#signup-form input[name = name]"
+      ).value;
+      const email = document.querySelector(
+        "#signup-form input[name = email]"
+      ).value;
+      const password = document.querySelector(
+        "#signup-form input[name = password]"
+      ).value;
+      const confirmPassword = document.querySelector(
+        "#signup-form input[name = confirm_password]"
+      ).value;
+      checkPasswordAndConfirmPassword(password, confirmPassword);
+      checkSignUpFormValidation();
+      if (Object.values(signUpFormErrors).every((value) => value === false)) {
+        signup(name, email, password);
+      }
+    });
 }
 
+/**
+ * Checks the validity of all input fields in the sign-up form.
+ * If all inputs have a value, enables the submit button; otherwise, disables it.
+ */
 function checkSignupButtonActivity() {
   const inputs = document.querySelectorAll("#signup-form input");
   let allValid = true;
-
-  inputs.forEach(input => {
+  inputs.forEach((input) => {
     if (input.value.length < 1) {
       allValid = false;
     }
   });
-
   if (allValid) {
-    document.querySelector('#signup-form button[type=submit]').disabled = false;
+    document.querySelector("#signup-form button[type=submit]").disabled = false;
   } else {
-    document.querySelector('#signup-form button[type=submit]').disabled = true;
+    document.querySelector("#signup-form button[type=submit]").disabled = true;
   }
 }
 
 /**
- * Validates the sign-up form by checking the input validity for name, email, password, and confirm password fields.
- * Updates the signUpFormErrors object with error messages if the inputs are invalid.
+ * Validates the sign-up form by checking the validity of all input fields and
+ * the acceptance of the privacy policy. If `showError` is true, displays the
+ * corresponding error messages for invalid fields.
+ *
+ * @param {boolean} [showError=true] - Determines whether to show error messages for invalid fields.
  */
 function checkSignUpFormValidation(showError = true) {
   checkInputValidity("signup-form", "name", signUpFormErrors);
@@ -60,27 +75,43 @@ function checkSignUpFormValidation(showError = true) {
   checkInputValidity("signup-form", "password", signUpFormErrors);
   checkInputValidity("signup-form", "confirm_password", signUpFormErrors);
   checkAcceptPrivacyPolicyValidity();
-
   if (showError) {
-    showInputValidity("signup-form", "name", signUpFormErrors, "Enter a valid name.");
-    showInputValidity("signup-form", "email", signUpFormErrors, "Enter a valid email address.");
     showInputValidity(
-      "signup-form", "password", signUpFormErrors,
+      "signup-form",
+      "name",
+      signUpFormErrors,
+      "Enter a valid name."
+    );
+    showInputValidity(
+      "signup-form",
+      "email",
+      signUpFormErrors,
+      "Enter a valid email address."
+    );
+    showInputValidity(
+      "signup-form",
+      "password",
+      signUpFormErrors,
       "Enter a valid password. Password must be at least 4 characters, with at least one letter and one number."
     );
-    showInputValidity("signup-form", "confirm_password", signUpFormErrors, "Your passwords don't match. Please try again.");
+    showInputValidity(
+      "signup-form",
+      "confirm_password",
+      signUpFormErrors,
+      "Your passwords don't match. Please try again."
+    );
     showAcceptPrivacyPolicyValidity();
   }
 }
 
 /**
-* Registers a new user by generating a salt, hashing the password, and creating a new admin data object.
-* Posts the data to the server, then logs the user in with the provided credentials.
-*
-* @param {string} name - The name of the user.
-* @param {string} email - The email address of the user.
-* @param {string} password - The password of the user.
-*/
+ * Registers a new user by generating a salt, hashing the password, and creating a new admin data object.
+ * Posts the data to the server, then logs the user in with the provided credentials.
+ *
+ * @param {string} name - The name of the user.
+ * @param {string} email - The email address of the user.
+ * @param {string} password - The password of the user.
+ */
 async function signup(name, email, password) {
   const salt = generateSalt();
   const hashPassword = await hashingPassword(password, salt);
@@ -105,9 +136,13 @@ async function signup(name, email, password) {
  */
 function checkPasswordAndConfirmPassword(password, confirmPassword) {
   if (password !== confirmPassword) {
-    document.querySelector(`#signup-form input[name = confirm_password]`).setCustomValidity("Passwords do not match.");
+    document
+      .querySelector(`#signup-form input[name = confirm_password]`)
+      .setCustomValidity("Passwords do not match.");
   } else {
-    document.querySelector(`#signup-form input[name = confirm_password]`).setCustomValidity("");
+    document
+      .querySelector(`#signup-form input[name = confirm_password]`)
+      .setCustomValidity("");
   }
 }
 
@@ -120,7 +155,9 @@ function checkPasswordAndConfirmPassword(password, confirmPassword) {
  * @param {boolean} accept - The acceptance status of the privacy policy.
  */
 function checkAcceptPrivacyPolicyValidity() {
-  const accept = document.querySelector("#signup-form input[name = accept]").checked;
+  const accept = document.querySelector(
+    "#signup-form input[name = accept]"
+  ).checked;
   if (accept == false) {
     signUpFormErrors["accept"] = true;
   } else {
@@ -128,6 +165,11 @@ function checkAcceptPrivacyPolicyValidity() {
   }
 }
 
+/**
+ * Displays the validity of the acceptance of the privacy policy by adding or removing
+ * an error class and updating the corresponding message. If the 'accept' field has errors,
+ * the message is updated to 'Please'; otherwise, it is set to 'I'.
+ */
 function showAcceptPrivacyPolicyValidity() {
   if (signUpFormErrors["accept"]) {
     document.querySelector(`#signup-form .accept`).classList.add("error");
@@ -139,13 +181,14 @@ function showAcceptPrivacyPolicyValidity() {
 }
 
 /**
-* Generates a profile image string based on a user's name.
-* @param {string} name - The user's name.
-* @returns {string} The profile image string.
-*/
+ * Generates a profile image string based on a user's name.
+ * @param {string} name - The user's name.
+ * @returns {string} The profile image string.
+ */
 function getProfileImage(name) {
   const parts = name.trim().split(" ");
   const firstInitial = parts[0].charAt(0).toUpperCase();
-  const lastInitial = parts.length < 2 ? '' : parts[1].charAt(0).toUpperCase();
+  const lastInitial =
+    parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
   return firstInitial + lastInitial;
 }

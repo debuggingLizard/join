@@ -40,84 +40,128 @@ function logoAnimation() {
  * validates the login form, and calls the login function if there are no validation errors.
  */
 async function loginFormEvent() {
-  document.getElementById("login-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const email = document.querySelector("#login-form input[name = email]").value;
-    const password = document.querySelector("#login-form input[name = password]").value;
-    const remember = document.querySelector("#login-form input[name = remember]").checked;
-    checkLoginFormValidation();
-    if (Object.values(loginFormErrors).every((value) => value === false)) {
-      login(email, password, remember);
-    }
-  });
+  document
+    .getElementById("login-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const email = document.querySelector(
+        "#login-form input[name = email]"
+      ).value;
+      const password = document.querySelector(
+        "#login-form input[name = password]"
+      ).value;
+      const remember = document.querySelector(
+        "#login-form input[name = remember]"
+      ).checked;
+      checkLoginFormValidation();
+      if (Object.values(loginFormErrors).every((value) => value === false)) {
+        login(email, password, remember);
+      }
+    });
 }
 
+/**
+ * Checks the validity of all input fields in the login form.
+ * If all inputs have a value, enables the submit button; otherwise, disables it.
+ */
 function checkLoginButtonActivity() {
   const inputs = document.querySelectorAll("#login-form input");
   let allValid = true;
-
-  inputs.forEach(input => {
+  inputs.forEach((input) => {
     if (input.value.length < 1) {
       allValid = false;
     }
   });
-
   if (allValid) {
-    document.querySelector('#login-form button[type=submit]').disabled = false;
+    document.querySelector("#login-form button[type=submit]").disabled = false;
   } else {
-    document.querySelector('#login-form button[type=submit]').disabled = true;
+    document.querySelector("#login-form button[type=submit]").disabled = true;
   }
 }
 
 /**
- * Validates the login form by checking the input validity for email and password fields.
- * Updates the loginFormErrors object with error messages if the inputs are invalid.
+ * Validates the login form by checking the validity of email and password fields.
+ * If `showError` is true, displays the corresponding error messages for invalid fields.
+ *
+ * @param {boolean} [showError=true] - Determines whether to show error messages for invalid fields.
  */
 function checkLoginFormValidation(showError = true) {
   checkInputValidity("login-form", "email", loginFormErrors);
   checkInputValidity("login-form", "password", loginFormErrors);
-
   if (showError) {
-    showInputValidity("login-form", "email", loginFormErrors, "Enter a valid email address.");
-    showInputValidity("login-form", "password", loginFormErrors, "Enter a valid password.");
+    showInputValidity(
+      "login-form",
+      "email",
+      loginFormErrors,
+      "Enter a valid email address."
+    );
+    showInputValidity(
+      "login-form",
+      "password",
+      loginFormErrors,
+      "Enter a valid password."
+    );
   }
 }
 
 /**
- * Authenticates the user by checking the email and password against stored admin data.
- * If the credentials are valid, stores the login information in local storage and redirects to the specified page.
- * If the credentials are invalid, displays a login error message.
+ * Authenticates the user by verifying email and password, then stores login data
+ * and redirects to the specified page if successful. Shows an error message if authentication fails.
  *
  * @param {string} email - The email address of the user.
  * @param {string} password - The password of the user.
  * @param {boolean} remember - Whether to remember the login for future sessions.
  */
 async function login(email, password, remember) {
+  let foundAdmin = await findAdminByEmail(email);
+  if (!foundAdmin) {
+    showLoginError();
+    return;
+  }
+  const hashPassword = await hashingPassword(password, foundAdmin.salt);
+  if (hashPassword !== foundAdmin.password) {
+    showLoginError();
+    return;
+  }
+  storeLoginData(foundAdmin, remember)
+  window.location.href = redirectPage;
+}
+
+/**
+ * Searches for an admin by email within the retrieved admin data.
+ * Converts the admin data to an array of entries, then searches for an admin with a matching email.
+ * Returns the found admin object or null if no match is found.
+ *
+ * @param {string} email - The email address to search for.
+ * @returns {Object|null} - The admin object if found, otherwise null.
+ */
+async function findAdminByEmail(email) {
   const admins = await getData("admins");
   const adminsArray = Object.entries(admins);
-  let foundAdmin = adminsArray.filter((admin) => admin[1].email === email);
-  if (foundAdmin.length <= 0) {
-    showLoginError();
-    return;
-  }
-  const hashPassword = await hashingPassword(password, foundAdmin[0][1].salt);
-  if (hashPassword !== foundAdmin[0][1].password) {
-    showLoginError();
-    return;
-  }
+  let foundAdmin = adminsArray.find((admin) => admin[1].email === email);
+  return foundAdmin ? foundAdmin[1] : null; 
+}
+
+/**
+ * Stores the admin login data in local storage and removes any guest login valid time.
+ * Sets the login information, remember me status, login validity time, and a flag indicating redirection from login.
+ *
+ * @param {Object} admin - The admin object containing login information.
+ * @param {boolean} remember - Whether to remember the login for future sessions.
+ */
+function storeLoginData(admin, remember) {
   localStorage.removeItem("joinGuestLoginValidTime");
   localStorage.setItem(
     "joinLoginInfo",
     JSON.stringify({
-      name: foundAdmin[0][1].name,
-      email: foundAdmin[0][1].email,
-      profileImage: foundAdmin[0][1].profileImage,
+      name: admin.name,
+      email: admin.email,
+      profileImage: admin.profileImage,
     })
   );
   localStorage.setItem("joinLoginRemember", remember);
   localStorage.setItem("joinLoginValidTime", getNextOneHourTime());
   localStorage.setItem("redirectFromLogin", true);
-  window.location.href = redirectPage;
 }
 
 /**
@@ -125,10 +169,17 @@ async function login(email, password, remember) {
  * making the password error message visible, and updating the error message content.
  */
 function showLoginError() {
-  document.querySelector(`#login-form input[name = email]`).classList.add("input-error");
-  document.querySelector(`#login-form input[name = password]`).classList.add("input-error");
-  document.querySelector(`#login-form .password-error`).classList.remove("d-none");
-  document.querySelector(`#login-form .password-error`).innerHTML = "Check your email and password. Please try again.";
+  document
+    .querySelector(`#login-form input[name = email]`)
+    .classList.add("input-error");
+  document
+    .querySelector(`#login-form input[name = password]`)
+    .classList.add("input-error");
+  document
+    .querySelector(`#login-form .password-error`)
+    .classList.remove("d-none");
+  document.querySelector(`#login-form .password-error`).innerHTML =
+    "Check your email and password. Please try again.";
 }
 
 /**
