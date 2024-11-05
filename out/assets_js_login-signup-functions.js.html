@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: assets/js/task-view-templates.js</title>
+    <title>JSDoc: Source: assets/js/login-signup-functions.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: assets/js/task-view-templates.js</h1>
+    <h1 class="page-title">Source: assets/js/login-signup-functions.js</h1>
 
     
 
@@ -26,247 +26,172 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Generates the HTML template for displaying detailed information about a task.
- * Also provides buttons for editing and deleting of the task.
- *
- * @returns {string} The HTML string template for the task detail view.
- *
- * @description
- * This template includes:
- * - Task category with color-coded background.
- * - Task title, description, due date, and priority with icon.
- * - Assigned users, each with initials and background color.
- * - List of subtasks with checkboxes indicating completion status.
- * - Edit and delete buttons with confirmation for task deletion.
+            <pre class="prettyprint source linenums"><code>const redirectPage = "./index.html";
+
+/**
+ * Initializes the signup functionality by executing various setup functions.
  */
-function taskDetailTemplate() {
-  return `
-              &lt;div class="task-detail-header">
-                  &lt;div class="userStory" style="background-color:${
-                    taskCategory.color
-                  }">${taskCategory.title}&lt;/div>
-                  &lt;div class="close-btn-task-detail icon icon-close" onclick="closeTaskDetail()">&lt;/div>
-              &lt;/div>
-  
-              &lt;div class="task-detail-body">
-                  &lt;h1>${taskInformation.title}&lt;/h1>
-                  &lt;p>${taskInformation.description}&lt;/p>
-                  &lt;div class="task-term">
-                      &lt;div>
-                          &lt;p>Due date:&lt;/p>
-                          &lt;p>Priority:&lt;/p>
-                      &lt;/div>
-                      &lt;div>
-                          &lt;p>${taskInformation.date}&lt;/p>
-                          &lt;div class="detail-priority-container">
-                              &lt;span style="margin-right: 8px;">${
-                                taskPriority.title
-                              }&lt;/span>
-                              &lt;span class="icon ${
-                                taskPriority.icon
-                              }" style="color:${taskPriority.color}">&lt;/span>
-                          &lt;/div>
-                      &lt;/div>
-                  &lt;/div>
-                  &lt;div class="assigned">
-                      &lt;p>Assigned To:&lt;/p>
-                      &lt;div id="task-overlay-assigned-contacts">
-                          ${(assignedUsers || [])
-                            .map(
-                              (user) => `
-                              &lt;div class="contributor-placement">
-                                  &lt;div class="contributor" style="background-color: ${user.color};">${user.profileImage}&lt;/div>
-                                  &lt;p>${user.name}&lt;/p>
-                              &lt;/div>
-                          `
-                            )
-                            .join("")}
-                      &lt;/div>
-                  &lt;/div>
-                  &lt;div class="subtask">
-                      &lt;p style="margin-bottom: 10px;">Subtasks&lt;/p>
-                      &lt;div class="subtask-checkbox">
-                      ${
-                        taskInformation.subtasks &amp;&amp;
-                        taskInformation.subtasks.length > 0
-                          ? taskInformation.subtasks
-                              .map(
-                                (subtask, index) => `
-                              &lt;div class="check-subtask" id="subtask-${index}" onclick="toggleSubtask(${index})">
-                                  &lt;img id="unchecked-${index}" class="checkbox-img ${
-                                  subtask.done ? "d-none" : ""
-                                }" src="./assets/img/unchecked-button.svg" alt="checkbox">
-                                  &lt;img id="checked-${index}" class="checkbox-tick-img ${
-                                  subtask.done ? "" : "d-none"
-                                }" src="./assets/img/checked-button.svg" alt="checkbox">
-                                  &lt;span>${subtask.title}&lt;/span>
-                              &lt;/div>
-                          `
-                              )
-                              .join("")
-                          : "&lt;p>No subtasks available&lt;/p>"
-                      }
-                          &lt;/div>
-                  &lt;/div>
-              &lt;/div>
-  
-              &lt;div class="task-edit-delete" id="task-detail-edit-delete">
-                  &lt;div class="task-edit-delete-btn" onclick="showDeleteConfirm()">
-                      &lt;div class="icon icon-delete">&lt;/div>
-                      &lt;span>Delete&lt;/span>
-                  &lt;/div>
-                  &lt;div class="task-edit-delete-btn" onclick="openEditTaskForm()">
-                      &lt;div class="icon icon-edit">&lt;/div>
-                      &lt;span>Edit&lt;/span>
-                  &lt;/div>
-              &lt;/div>
-  
-              &lt;div class="task-edit-delete confirm-delete d-none" id="task-detail-delete-confirm">
-                  &lt;div>
-                      Are you sure you want delete this task?
-                  &lt;/div>
-                  &lt;div class="task-edit-delete-btn" onclick="hideDeleteConfirm()">
-                      &lt;div class="icon icon-close">&lt;/div>
-                      &lt;span>No&lt;/span>
-                  &lt;/div>
-                  &lt;div class="task-edit-delete-btn" onclick="confirmDelete()">
-                      &lt;div class="icon icon-check">&lt;/div>
-                      &lt;span>Yes&lt;/span>
-                  &lt;/div>
-              &lt;/div>
-              `;
+function initLoginSignupFunctions() {
+  typePassword();
+  togglePasswordVisible();
 }
 
 /**
- * Generates the HTML template for editing a task, allowing the user to modify
- * the title, description, due date, priority, assignees, and subtasks.
- * Includes validation for required fields and functionality for updating subtasks and assignees.
- *
- * @returns {string} The HTML string template for the task edit view.
- *
- * @description
- * This template includes:
- * - An editable task title with validation.
- * - A description field.
- * - A due date input with placeholder handling and date formatting.
- * - Priority selection buttons, with the currently selected priority highlighted.
- * - An assignees dropdown allowing the selection of contacts.
- * - A subtask input field with clear and add buttons, and a list of existing subtasks.
- * - A confirmation button to submit the edited task details.
+ * Displays the login form by hiding the sign-up form and showing the login form.
+ * Also ensures that the header-right element is visible.
  */
-function editTaskTemplate() {
-  return `
-          &lt;div class="edit-task-header">
-              &lt;div class="close-btn-task-detail icon icon-close" onclick="closeTaskDetail()">&lt;/div>
-          &lt;/div>
-  
-          &lt;form id="edit-task-form" novalidate>
-              &lt;div class="form-column edit-task-form-column">
-                  &lt;label for="title">
-                      &lt;div>Title&lt;/div>
-                      &lt;input type="text" id="title" name="title" placeholder="Enter a title" value="${
-                        taskInformation.title
-                      }" required>
-                      &lt;span class="title-error error d-none">&lt;/span>
-                  &lt;/label>
-  
-                  &lt;label for="description">
-                      &lt;div>Description&lt;/div>
-                      &lt;textarea id="description" name="description" rows="4"
-                          placeholder="Enter a Description">${
-                            taskInformation.description
-                          }&lt;/textarea>
-                  &lt;/label>
-  
-                  &lt;label for="due-date" class="date-label">
-                      &lt;div>Due date&lt;/div>
-                      &lt;input type="text" class="picker text-date" id="due-date" name="due-date" value="${
-                        taskInformation.date
-                      }" onfocus="clearPlaceholder('#edit-task-form')"
-                          onblur="setPlaceholder('#edit-task-form')" onchange="formatDate('#edit-task-form')" required>
-                      &lt;span class="due-date-error error d-none">&lt;/span>
-                  &lt;/label>
-  
-                  &lt;label>
-                      &lt;div>Priority&lt;/div>
-                      &lt;div class="prio-options">
-                          &lt;div class="prio-btn urgent ${
-                            taskPriority.title === "Urgent" ? "active" : ""
-                          }" onclick="selectPrio('#edit-task-form', 'urgent', '-O9M0Iky4rEYMLq5JwoZ')">
-                              Urgent&lt;span class="icon-urgent">&lt;/span>
-                          &lt;/div>
-                          &lt;div class="prio-btn medium ${
-                            taskPriority.title === "Medium" ? "active" : ""
-                          }"
-                              onclick="selectPrio('#edit-task-form', 'medium', '-O9M0Iky4rEYMLq5Jwo_')">
-                              Medium&lt;span class="icon-medium">&lt;/span>
-                          &lt;/div>
-                          &lt;div class="prio-btn low ${
-                            taskPriority.title === "Low" ? "active" : ""
-                          }" onclick="selectPrio('#edit-task-form', 'low', '-O9M0IlWMv7MvM-vtcJ-')">
-                              Low &lt;span class="icon-low">&lt;/span>
-                          &lt;/div>
-                      &lt;/div>
-                      &lt;input type="hidden" id="selectedPrio" name="prio" value="${
-                        taskInformation.priority
-                      }">
-                  &lt;/label>
-  
-                  &lt;label for="assignees" class="assign-label">
-                      &lt;div>Assigned to&lt;/div>
-                      &lt;div>
-                          &lt;input type="search" name="assignees" id="assignees"
-                              placeholder="Select contacts to assign" onclick="toggleContactDropdown('#edit-task-form')">
-                          &lt;div class="assignees-list d-none">&lt;/div>
-                          &lt;div id="assigned-to" class="assigned-to">
-                              ${assignedUsers
-                                .map(
-                                  (user) => `
-                                  &lt;span id="${user.id}" class="contact-profile-image" style="background-color:${user.color}">${user.profileImage}&lt;/span>
-                              `
-                                )
-                                .join("")}
-                          &lt;/div>
-                      &lt;/div>
-                  &lt;/label>
-  
-                  &lt;label for="subtasks">
-                      &lt;div>Subtasks&lt;/div>
-                      &lt;div class="subtask-row">
-                          &lt;input type="text" id="subtasks" name="subtasks" placeholder="Add new subtask">
-                          &lt;div class="subtask-buttons">
-                              &lt;span class="clear-subtask-btn icon-close" onclick="clearSubtaskInput('#edit-task-form')">&lt;/span>
-                              &lt;span class="add-subtask-btn icon-add" onclick="addSubtask('#edit-task-form')">&lt;/span>
-                          &lt;/div>
-                      &lt;/div>
-                      &lt;ul id="subtask-list" class="subtask-list">
-                          ${(taskInformation.subtasks || [])
-                            .map(
-                              (subtask, index) => `
-                              &lt;li class="subtask-item">
-                                  &lt;span class="subtask-dot">&lt;/span>
-                                  &lt;span ondbclick="editSubtask(this)" class="subtask-title" status="${subtask.done}">${subtask.title}&lt;/span>
-                                  &lt;div class="subtask-actions">
-                                      &lt;div class="edit-subtask-btn icon-edit" onclick="editSubtask(this)">&lt;/div>
-                                      &lt;div class="delete-subtask-btn icon-delete" onclick="deleteSubtask(this)">&lt;/div>
-                                  &lt;/div>
-                              &lt;/li>
-                          `
-                            )
-                            .join("")}
-                      &lt;/ul>
-                  &lt;/label>
-              &lt;/div>
-              &lt;div class="edit-task-confirm-btn">
-                  &lt;button id="editTaskBtn" type="submit" class="create-task-btn">
-                      Ok&lt;span class="icon-check">&lt;/span>
-                  &lt;/button>
-              &lt;/div> 
-          &lt;/form>                    
-      `;
+function showLoginForm() {
+  document.getElementById("signup-form").classList.add("d-none");
+  document.getElementById("login-form").classList.remove("d-none");
+  document.getElementById("header-right").classList.remove("d-none");
 }
-</code></pre>
+
+/**
+ * Displays the sign-up form by hiding the login form and header-right element,
+ * and showing the sign-up form.
+ */
+function showSignupForm() {
+  document.getElementById("login-form").classList.add("d-none");
+  document.getElementById("header-right").classList.add("d-none");
+  document.getElementById("signup-form").classList.remove("d-none");
+}
+
+/**
+ * Validates a specific input field within a form.
+ * If the input is invalid, updates the errorsObject, adds an error class to the input,
+ * displays an error message, and makes the error message visible.
+ * If the input is valid, removes the error class and hides the error message.
+ *
+ * @param {string} form - The ID of the form containing the input field.
+ * @param {string} input - The name of the input field to validate.
+ * @param {Object} errorsObject - An object to track validation errors.
+ * @param {string} message - The error message to display if the input is invalid.
+ */
+function checkInputValidity(form, input, errorsObject) {
+  if (
+    !document.querySelector(`#${form} input[name = ${input}]`).checkValidity()
+  ) {
+    errorsObject[input] = true;
+  } else {
+    errorsObject[input] = false;
+  }
+}
+
+function showInputValidity(form, input, errorsObject, message) {
+  if (errorsObject[input]) {
+    document.querySelector(`#${form} input[name = ${input}]`).classList.add("input-error");
+    document.querySelector(`#${form} .${input}-error`).classList.remove("d-none");
+    document.querySelector(`#${form} .${input}-error`).innerHTML = message;
+  } else {
+    document.querySelector(`#${form} input[name = ${input}]`).classList.remove("input-error");
+    document.querySelector(`#${form} .${input}-error`).classList.add("d-none");
+  }
+}
+
+/**
+* Toggles the visibility of password input fields when the lock icon is clicked.
+* Changes the input type between 'password' and 'text' based on the current state
+* and updates the icon to indicate the visibility status.
+*/
+function togglePasswordVisible() {
+  let iconLockInputElements = document.querySelectorAll(".icon-lock");
+  iconLockInputElements.forEach((iconLockInputElement) => {
+    iconLockInputElement.addEventListener("click", function () {
+      let passwordInputElement = iconLockInputElement.previousElementSibling;
+      if (passwordInputElement.value.length >= 1) {
+        if (passwordInputElement.type === "password") {
+          passwordInputElement.type = "text";
+          iconLockInputElement.classList.add("icon-visibility");
+          iconLockInputElement.classList.remove("icon-visibility-off");
+        } else {
+          passwordInputElement.type = "password";
+          iconLockInputElement.classList.add("icon-visibility-off");
+          iconLockInputElement.classList.remove("icon-visibility");
+        }
+      }
+    });
+  });
+}
+
+/**
+ * Adds event listeners to all password input fields to dynamically change the associated icon
+ * based on the input value's length. If the input value is not empty, updates the icon to show
+ * visibility options, otherwise resets to the lock icon.
+ */
+function typePassword() {
+  let passwordInputElements = document.querySelectorAll("input[type = password]");
+  passwordInputElements.forEach((passwordInputElement) => {
+    passwordInputElement.addEventListener("keyup", function () {
+      let iconElement = passwordInputElement.nextElementSibling;
+      if (passwordInputElement.value.length >= 1) {
+        showPasswordVisibilityIcon(passwordInputElement, iconElement);
+      } else {
+        resetPasswordIcon(passwordInputElement, iconElement);
+      }
+    });
+  });
+}
+
+/**
+ * Updates the icon next to a password input field to show password visibility options
+ * when the input value is not empty.
+ *
+ * @param {HTMLInputElement} passwordInputElement - The password input field element.
+ * @param {HTMLElement} iconElement - The icon element next to the password input field.
+ */
+function showPasswordVisibilityIcon(passwordInputElement, iconElement) {
+  iconElement.classList.remove("icon-lock");
+  iconElement.classList.add("c-pointer");
+  if (passwordInputElement.type === "password") {
+    iconElement.classList.add("icon-visibility-off");
+  } else {
+    iconElement.classList.add("icon-visibility");
+  }
+}
+
+/**
+ * Resets the icon next to a password input field to the lock icon
+ * when the input value is empty.
+ *
+ * @param {HTMLInputElement} passwordInputElement - The password input field element.
+ * @param {HTMLElement} iconElement - The icon element next to the password input field.
+ */
+function resetPasswordIcon(passwordInputElement, iconElement) {
+  passwordInputElement.type = "password";
+  iconElement.classList.remove("icon-visibility-off");
+  iconElement.classList.remove("icon-visibility");
+  iconElement.classList.remove("c-pointer");
+  iconElement.classList.add("icon-lock");
+}
+
+/**
+ * Hashes a password with a given salt using the SHA-256 algorithm.
+ * Encodes the password and salt, computes the hash, and returns the hash as a hex string.
+ *
+ * @param {string} password - The password to hash.
+ * @param {string} salt - The salt to use in the hashing process.
+ * @returns {Promise&lt;string>} - The hashed password as a hex string.
+ */
+async function hashingPassword(password, salt) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password + salt);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  // Convert ArrayBuffer to hex string
+  return Array.from(new Uint8Array(hashBuffer)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * Generates a cryptographic salt of the specified length using random values.
+ * Converts the generated byte array to a hex string.
+ *
+ * @param {number} [length=16] - The length of the salt in bytes. Defaults to 16.
+ * @returns {string} - The generated salt as a hex string.
+ */
+function generateSalt(length = 16) {
+  const array = new Uint8Array(length);
+  crypto.getRandomValues(array);
+  return Array.from(array).map((b) => b.toString(16).padStart(2, "0")).join("");
+}</code></pre>
         </article>
     </section>
 
