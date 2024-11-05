@@ -86,32 +86,54 @@ function togglePasswordVisible() {
 }
 
 /**
-* Adds event listeners to all password input fields to dynamically change the associated icon
-* based on the input value's length. If the input value is not empty, updates the icon to show
-* visibility options, otherwise resets to the lock icon.
-*/
+ * Adds event listeners to all password input fields to dynamically change the associated icon
+ * based on the input value's length. If the input value is not empty, updates the icon to show
+ * visibility options, otherwise resets to the lock icon.
+ */
 function typePassword() {
   let passwordInputElements = document.querySelectorAll("input[type = password]");
   passwordInputElements.forEach((passwordInputElement) => {
     passwordInputElement.addEventListener("keyup", function () {
       let iconElement = passwordInputElement.nextElementSibling;
       if (passwordInputElement.value.length >= 1) {
-        iconElement.classList.remove("icon-lock");
-        iconElement.classList.add("c-pointer");
-        if (passwordInputElement.type === "password") {
-          iconElement.classList.add("icon-visibility-off");
-        } else {
-          iconElement.classList.add("icon-visibility");
-        }
+        showPasswordVisibilityIcon(passwordInputElement, iconElement);
       } else {
-        passwordInputElement.type = "password";
-        iconElement.classList.remove("icon-visibility-off");
-        iconElement.classList.remove("icon-visibility");
-        iconElement.classList.remove("c-pointer");
-        iconElement.classList.add("icon-lock");
+        resetPasswordIcon(passwordInputElement, iconElement);
       }
     });
   });
+}
+
+/**
+ * Updates the icon next to a password input field to show password visibility options
+ * when the input value is not empty.
+ *
+ * @param {HTMLInputElement} passwordInputElement - The password input field element.
+ * @param {HTMLElement} iconElement - The icon element next to the password input field.
+ */
+function showPasswordVisibilityIcon(passwordInputElement, iconElement) {
+  iconElement.classList.remove("icon-lock");
+  iconElement.classList.add("c-pointer");
+  if (passwordInputElement.type === "password") {
+    iconElement.classList.add("icon-visibility-off");
+  } else {
+    iconElement.classList.add("icon-visibility");
+  }
+}
+
+/**
+ * Resets the icon next to a password input field to the lock icon
+ * when the input value is empty.
+ *
+ * @param {HTMLInputElement} passwordInputElement - The password input field element.
+ * @param {HTMLElement} iconElement - The icon element next to the password input field.
+ */
+function resetPasswordIcon(passwordInputElement, iconElement) {
+  passwordInputElement.type = "password";
+  iconElement.classList.remove("icon-visibility-off");
+  iconElement.classList.remove("icon-visibility");
+  iconElement.classList.remove("c-pointer");
+  iconElement.classList.add("icon-lock");
 }
 
 /**
