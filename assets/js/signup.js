@@ -70,31 +70,31 @@ function checkSignupButtonActivity() {
  * @param {boolean} [showError=true] - Determines whether to show error messages for invalid fields.
  */
 function checkSignUpFormValidation(showError = true) {
-  checkInputValidity("signup-form", "name", signUpFormErrors);
-  checkInputValidity("signup-form", "email", signUpFormErrors);
-  checkInputValidity("signup-form", "password", signUpFormErrors);
-  checkInputValidity("signup-form", "confirm_password", signUpFormErrors);
+  validateInputValidity("signup-form", "name", signUpFormErrors);
+  validateInputValidity("signup-form", "email", signUpFormErrors);
+  validateInputValidity("signup-form", "password", signUpFormErrors);
+  validateInputValidity("signup-form", "confirm_password", signUpFormErrors);
   checkAcceptPrivacyPolicyValidity();
   if (showError) {
-    showInputValidity(
+    checkInputValidity(
       "signup-form",
       "name",
       signUpFormErrors,
       "Enter a valid name."
     );
-    showInputValidity(
+    checkInputValidity(
       "signup-form",
       "email",
       signUpFormErrors,
       "Enter a valid email address."
     );
-    showInputValidity(
+    checkInputValidity(
       "signup-form",
       "password",
       signUpFormErrors,
       "Enter a valid password. Password must be at least 4 characters, with at least one letter and one number."
     );
-    showInputValidity(
+    checkInputValidity(
       "signup-form",
       "confirm_password",
       signUpFormErrors,

@@ -39,7 +39,7 @@ function showSignupForm() {
  * @param {Object} errorsObject - An object to track validation errors.
  * @param {string} message - The error message to display if the input is invalid.
  */
-function checkInputValidity(form, input, errorsObject) {
+function validateInputValidity(form, input, errorsObject) {
   if (
     !document.querySelector(`#${form} input[name = ${input}]`).checkValidity()
   ) {
@@ -49,22 +49,34 @@ function checkInputValidity(form, input, errorsObject) {
   }
 }
 
-function showInputValidity(form, input, errorsObject, message) {
+function checkInputValidity(form, input, errorsObject, message) {
   if (errorsObject[input]) {
-    document.querySelector(`#${form} input[name = ${input}]`).classList.add("input-error");
-    document.querySelector(`#${form} .${input}-error`).classList.remove("d-none");
-    document.querySelector(`#${form} .${input}-error`).innerHTML = message;
+    showInputValidation(form, input, message);
   } else {
-    document.querySelector(`#${form} input[name = ${input}]`).classList.remove("input-error");
-    document.querySelector(`#${form} .${input}-error`).classList.add("d-none");
+    hideInputValidation(form, input);
   }
 }
 
+function showInputValidation(form, input, message) {
+  document
+    .querySelector(`#${form} input[name = ${input}]`)
+    .classList.add("input-error");
+  document.querySelector(`#${form} .${input}-error`).classList.remove("d-none");
+  document.querySelector(`#${form} .${input}-error`).innerHTML = message;
+}
+
+function hideInputValidation(form, input) {
+  document
+    .querySelector(`#${form} input[name = ${input}]`)
+    .classList.remove("input-error");
+  document.querySelector(`#${form} .${input}-error`).classList.add("d-none");
+}
+
 /**
-* Toggles the visibility of password input fields when the lock icon is clicked.
-* Changes the input type between 'password' and 'text' based on the current state
-* and updates the icon to indicate the visibility status.
-*/
+ * Toggles the visibility of password input fields when the lock icon is clicked.
+ * Changes the input type between 'password' and 'text' based on the current state
+ * and updates the icon to indicate the visibility status.
+ */
 function togglePasswordVisible() {
   let iconLockInputElements = document.querySelectorAll(".icon-lock");
   iconLockInputElements.forEach((iconLockInputElement) => {
@@ -72,17 +84,31 @@ function togglePasswordVisible() {
       let passwordInputElement = iconLockInputElement.previousElementSibling;
       if (passwordInputElement.value.length >= 1) {
         if (passwordInputElement.type === "password") {
-          passwordInputElement.type = "text";
-          iconLockInputElement.classList.add("icon-visibility");
-          iconLockInputElement.classList.remove("icon-visibility-off");
+          convertToTextInput(passwordInputElement, iconLockInputElement);
         } else {
-          passwordInputElement.type = "password";
-          iconLockInputElement.classList.add("icon-visibility-off");
-          iconLockInputElement.classList.remove("icon-visibility");
+          convertToPasswordInput(passwordInputElement, iconLockInputElement);
         }
       }
     });
   });
+}
+
+/**
+ * Changes the input type from 'password' to 'text'
+ */
+function convertToTextInput(passwordInputElement, iconLockInputElement) {
+  passwordInputElement.type = "text";
+  iconLockInputElement.classList.add("icon-visibility");
+  iconLockInputElement.classList.remove("icon-visibility-off");
+}
+
+/**
+ * Changes the input type from 'text' to 'password'
+ */
+function convertToPasswordInput(passwordInputElement, iconLockInputElement) {
+  passwordInputElement.type = "password";
+  iconLockInputElement.classList.add("icon-visibility-off");
+  iconLockInputElement.classList.remove("icon-visibility");
 }
 
 /**
@@ -91,7 +117,9 @@ function togglePasswordVisible() {
  * visibility options, otherwise resets to the lock icon.
  */
 function typePassword() {
-  let passwordInputElements = document.querySelectorAll("input[type = password]");
+  let passwordInputElements = document.querySelectorAll(
+    "input[type = password]"
+  );
   passwordInputElements.forEach((passwordInputElement) => {
     passwordInputElement.addEventListener("keyup", function () {
       let iconElement = passwordInputElement.nextElementSibling;
@@ -149,7 +177,9 @@ async function hashingPassword(password, salt) {
   const data = encoder.encode(password + salt);
   const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   // Convert ArrayBuffer to hex string
-  return Array.from(new Uint8Array(hashBuffer)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  return Array.from(new Uint8Array(hashBuffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 /**
@@ -162,5 +192,7 @@ async function hashingPassword(password, salt) {
 function generateSalt(length = 16) {
   const array = new Uint8Array(length);
   crypto.getRandomValues(array);
-  return Array.from(array).map((b) => b.toString(16).padStart(2, "0")).join("");
+  return Array.from(array)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
