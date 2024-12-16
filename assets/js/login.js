@@ -65,33 +65,28 @@ async function loginFormEvent() {
  * If all inputs have a value, enables the submit button; otherwise, disables it.
  */
 function checkLoginButtonActivity() {
-  const inputs = document.querySelectorAll("#login-form input");
-  let allValid = true;
-  inputs.forEach((input) => {
+  let inputValidations = true;
+  document.querySelectorAll("#login-form input").forEach((input) => {
     validateInputValidity("login-form", input.name, loginFormErrors);
     if (loginFormErrors[input.name]) {
-      allValid = false;
+      inputValidations = false;
     }
   });
-  if (allValid) {
-    document.querySelector("#login-form button[type=submit]").disabled = false;
-  } else {
-    document.querySelector("#login-form button[type=submit]").disabled = true;
-  }
+  toggleButtonStatus(inputValidations, 'login-form');
 }
 
 /**
  * Validates the login form by checking the validity of email and password fields.
  */
 function checkLoginFormValidation() {
-  checkAndShowEmailInputValidation();
-  checkAndShowPasswordInputValidation();
+  checkAndShowEmailInputValidationLoginForm();
+  checkAndShowPasswordInputValidationLoginForm();
 }
 
 /**
  * Validate email input
  */
-function checkAndShowEmailInputValidation() {
+function checkAndShowEmailInputValidationLoginForm() {
   validateInputValidity("login-form", "email", loginFormErrors);
   checkInputValidity(
     "login-form",
@@ -104,7 +99,7 @@ function checkAndShowEmailInputValidation() {
 /**
  * Validate password input
  */
-function checkAndShowPasswordInputValidation() {
+function checkAndShowPasswordInputValidationLoginForm() {
   validateInputValidity("login-form", "password", loginFormErrors);
   checkInputValidity(
     "login-form",

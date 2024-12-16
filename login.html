@@ -35,12 +35,17 @@
                 </div>
                 <div class="form-elements">
                     <label class="email-label">
-                        <input type="email" name="email" onkeyup="checkLoginButtonActivity()" onblur="checkAndShowEmailInputValidation()" onkeydown="hideInputValidation('login-form', 'email')" placeholder="Email" autocomplete="email" required>
+                        <input type="email" name="email" onkeyup="checkLoginButtonActivity()"
+                            onblur="checkAndShowEmailInputValidationLoginForm()"
+                            onkeydown="hideInputValidation('login-form', 'email')" placeholder="Email"
+                            autocomplete="email" required>
                         <span class="icon icon-mail"></span>
                         <span class="error email-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="password" onkeyup="checkLoginButtonActivity()" onblur="checkAndShowPasswordInputValidation()" onkeydown="hideInputValidation('login-form', 'password')" placeholder="Password" required>
+                        <input type="password" name="password" onkeyup="checkLoginButtonActivity()"
+                            onblur="checkAndShowPasswordInputValidationLoginForm()"
+                            onkeydown="hideInputValidation('login-form', 'password')" placeholder="Password" required>
                         <span class="icon icon-lock"></span>
                         <span class="error password-error d-none"></span>
                     </label>
@@ -69,34 +74,47 @@
                 </div>
                 <div class="form-elements">
                     <label class="name-label">
-                        <input type="text" name="name" placeholder="Name" onkeyup="checkSignupButtonActivity()" autocomplete="name" required>
+                        <input type="text" name="name" placeholder="Name" onkeyup="checkSignupButtonActivity()"
+                            onblur="checkAndShowNameInputValidationSignUpForm()"
+                            onkeydown="hideInputValidation('signup-form', 'name')" autocomplete="name" required>
                         <span class="icon icon-person"></span>
                         <span class="error name-error d-none"></span>
                     </label>
                     <label class="email-label">
-                        <input type="email" name="email" placeholder="Email" onkeyup="checkSignupButtonActivity()" onblur="checkAndShowEmailInputValidation()" autocomplete="email" required>
+                        <input type="email" name="email" placeholder="Email" onkeyup="checkSignupButtonActivity()"
+                            onblur="checkAndShowEmailInputValidationSignUpForm()"
+                            onkeydown="hideInputValidation('signup-form', 'email')" autocomplete="email" required>
                         <span class="icon icon-mail"></span>
                         <span class="error email-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="password" placeholder="Password" onkeyup="checkSignupButtonActivity()" onblur="checkAndShowPasswordInputValidation()" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}" required>
+                        <input type="password" name="password" placeholder="Password"
+                            onkeyup="checkSignupButtonActivity()"
+                            onblur="checkAndShowPasswordInputValidationSignUpForm()"
+                            onkeydown="hideInputValidation('signup-form', 'password')"
+                            pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}" required>
                         <span class="icon icon-lock"></span>
                         <span class="error password-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="confirm_password" placeholder="Confirm Password" onkeyup="checkSignupButtonActivity()" required>
+                        <input type="password" name="confirm_password" placeholder="Confirm Password"
+                            onkeyup="checkSignupButtonActivity()"
+                            onblur="checkAndShowConfirmPasswordInputValidationSignUpForm()"
+                            onkeydown="hideInputValidation('signup-form', 'confirm_password')" required>
                         <span class="icon icon-lock"></span>
                         <span class="error confirm_password-error d-none"></span>
                     </label>
                 </div>
                 <div class="footer-login">
                     <label for="custom-checkbox-2">
-                        <input type="checkbox" name="accept" onchange="checkSignupButtonActivity()" id="custom-checkbox-2">
+                        <input type="checkbox" name="accept" onchange="checkSignupButtonActivity()"
+                            id="custom-checkbox-2" required>
                         <span class="custom-checkbox">
                             <img class="checkbox-img unchecked-button" src="./assets/img/unchecked-button.svg">
                             <img class="checkbox-img checked-button" src="./assets/img/checked-button.svg">
                         </span>
-                        <span class="accept"><span id="accept_change">I</span> accept the <a href="privacy-policy.html">Privacy policy</a></span>
+                        <span class="accept"><span id="accept_change">I</span> accept the <a
+                                href="privacy-policy.html">Privacy policy</a></span>
                     </label>
                     <div class="button-container">
                         <button class="login-button" type="submit" disabled>Sign up</button>

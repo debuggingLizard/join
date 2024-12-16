@@ -32,10 +32,6 @@ async function signUpFormEvent() {
       const password = document.querySelector(
         "#signup-form input[name = password]"
       ).value;
-      const confirmPassword = document.querySelector(
-        "#signup-form input[name = confirm_password]"
-      ).value;
-      checkPasswordAndConfirmPassword(password, confirmPassword);
       checkSignUpFormValidation();
       if (Object.values(signUpFormErrors).every((value) => value === false)) {
         signup(name, email, password);
@@ -48,60 +44,81 @@ async function signUpFormEvent() {
  * If all inputs have a value, enables the submit button; otherwise, disables it.
  */
 function checkSignupButtonActivity() {
-  const inputs = document.querySelectorAll("#signup-form input");
-  let allValid = true;
-  inputs.forEach((input) => {
-    if (input.value.length < 1) {
-      allValid = false;
+  let inputValidations = true;
+  checkPasswordAndConfirmPassword();
+  document.querySelectorAll("#signup-form input").forEach((input) => {
+    validateInputValidity("signup-form", input.name, signUpFormErrors);
+    if (signUpFormErrors[input.name]) {
+      inputValidations = false;
     }
   });
-  if (allValid) {
-    document.querySelector("#signup-form button[type=submit]").disabled = false;
-  } else {
-    document.querySelector("#signup-form button[type=submit]").disabled = true;
-  }
+  toggleButtonStatus(inputValidations, "signup-form");
 }
 
 /**
  * Validates the sign-up form by checking the validity of all input fields and
- * the acceptance of the privacy policy. If `showError` is true, displays the
- * corresponding error messages for invalid fields.
- *
- * @param {boolean} [showError=true] - Determines whether to show error messages for invalid fields.
+ * the acceptance of the privacy policy.
  */
-function checkSignUpFormValidation(showError = true) {
-  validateInputValidity("signup-form", "name", signUpFormErrors);
-  validateInputValidity("signup-form", "email", signUpFormErrors);
-  validateInputValidity("signup-form", "password", signUpFormErrors);
-  validateInputValidity("signup-form", "confirm_password", signUpFormErrors);
+function checkSignUpFormValidation() {
+  checkPasswordAndConfirmPassword();
+  checkAndShowNameInputValidationSignUpForm();
+  checkAndShowEmailInputValidationSignUpForm();
+  checkAndShowPasswordInputValidationSignUpForm();
+  checkAndShowConfirmPasswordInputValidationSignUpForm();
   checkAcceptPrivacyPolicyValidity();
-  if (showError) {
-    checkInputValidity(
-      "signup-form",
-      "name",
-      signUpFormErrors,
-      "Enter a valid name."
-    );
-    checkInputValidity(
-      "signup-form",
-      "email",
-      signUpFormErrors,
-      "Enter a valid email address."
-    );
-    checkInputValidity(
-      "signup-form",
-      "password",
-      signUpFormErrors,
-      "Enter a valid password. Password must be at least 4 characters, with at least one letter and one number."
-    );
-    checkInputValidity(
-      "signup-form",
-      "confirm_password",
-      signUpFormErrors,
-      "Your passwords don't match. Please try again."
-    );
-    showAcceptPrivacyPolicyValidity();
-  }
+  showAcceptPrivacyPolicyValidity();
+}
+
+/**
+ * Validate name input
+ */
+function checkAndShowNameInputValidationSignUpForm() {
+  validateInputValidity("signup-form", "name", signUpFormErrors);
+  checkInputValidity(
+    "signup-form",
+    "name",
+    signUpFormErrors,
+    "Enter a valid name."
+  );
+}
+
+/**
+ * Validate email input
+ */
+function checkAndShowEmailInputValidationSignUpForm() {
+  validateInputValidity("signup-form", "email", signUpFormErrors);
+  checkInputValidity(
+    "signup-form",
+    "email",
+    signUpFormErrors,
+    "Enter a valid email address."
+  );
+}
+
+/**
+ * Validate password input
+ */
+function checkAndShowPasswordInputValidationSignUpForm() {
+  validateInputValidity("signup-form", "password", signUpFormErrors);
+  checkInputValidity(
+    "signup-form",
+    "password",
+    signUpFormErrors,
+    "Enter a valid password. Password must be at least 4 characters, with at least one letter and one number."
+  );
+}
+
+/**
+ * Validate confirm_password input
+ */
+function checkAndShowConfirmPasswordInputValidationSignUpForm() {
+  validateInputValidity("signup-form", "confirm_password", signUpFormErrors);
+  checkInputValidity(
+    "signup-form",
+    "confirm_password",
+    signUpFormErrors,
+    "Your passwords don't match. Please try again."
+  );
 }
 
 /**
@@ -134,7 +151,14 @@ async function signup(name, email, password) {
  * @param {string} password - The password value.
  * @param {string} confirmPassword - The confirm password value.
  */
-function checkPasswordAndConfirmPassword(password, confirmPassword) {
+function checkPasswordAndConfirmPassword() {
+  const password = document.querySelector(
+    "#signup-form input[name = password]"
+  ).value;
+  const confirmPassword = document.querySelector(
+    "#signup-form input[name = confirm_password]"
+  ).value;
+
   if (password !== confirmPassword) {
     document
       .querySelector(`#signup-form input[name = confirm_password]`)
@@ -158,11 +182,8 @@ function checkAcceptPrivacyPolicyValidity() {
   const accept = document.querySelector(
     "#signup-form input[name = accept]"
   ).checked;
-  if (accept == false) {
-    signUpFormErrors["accept"] = true;
-  } else {
-    signUpFormErrors["accept"] = false;
-  }
+
+  signUpFormErrors["accept"] = accept == false ? true : false;
 }
 
 /**
