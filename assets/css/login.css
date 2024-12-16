@@ -214,7 +214,8 @@ main {
 .form-elements span.error {
     color: #FF8190;
     font-size: 11px;
-    margin-top: 5px;
+    margin-top: 4px;
+    padding-left: 8px;
     display: inline-block;
 }
 
