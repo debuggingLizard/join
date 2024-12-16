@@ -35,12 +35,12 @@
                 </div>
                 <div class="form-elements">
                     <label class="email-label">
-                        <input type="email" name="email" onkeyup="checkLoginButtonActivity()" placeholder="Email" autocomplete="email" required>
+                        <input type="email" name="email" onkeyup="checkLoginButtonActivity()" onblur="checkAndShowEmailInputValidation()" onkeydown="hideInputValidation('login-form', 'email')" placeholder="Email" autocomplete="email" required>
                         <span class="icon icon-mail"></span>
                         <span class="error email-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="password" onkeyup="checkLoginButtonActivity()" placeholder="Password" required>
+                        <input type="password" name="password" onkeyup="checkLoginButtonActivity()" onblur="checkAndShowPasswordInputValidation()" onkeydown="hideInputValidation('login-form', 'password')" placeholder="Password" required>
                         <span class="icon icon-lock"></span>
                         <span class="error password-error d-none"></span>
                     </label>
@@ -74,12 +74,12 @@
                         <span class="error name-error d-none"></span>
                     </label>
                     <label class="email-label">
-                        <input type="email" name="email" placeholder="Email" onkeyup="checkSignupButtonActivity()" autocomplete="email" required>
+                        <input type="email" name="email" placeholder="Email" onkeyup="checkSignupButtonActivity()" onblur="checkAndShowEmailInputValidation()" autocomplete="email" required>
                         <span class="icon icon-mail"></span>
                         <span class="error email-error d-none"></span>
                     </label>
                     <label class="password-label">
-                        <input type="password" name="password" placeholder="Password" onkeyup="checkSignupButtonActivity()" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}" required>
+                        <input type="password" name="password" placeholder="Password" onkeyup="checkSignupButtonActivity()" onblur="checkAndShowPasswordInputValidation()" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}" required>
                         <span class="icon icon-lock"></span>
                         <span class="error password-error d-none"></span>
                     </label>

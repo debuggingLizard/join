@@ -68,7 +68,8 @@ function checkLoginButtonActivity() {
   const inputs = document.querySelectorAll("#login-form input");
   let allValid = true;
   inputs.forEach((input) => {
-    if (input.value.length < 1) {
+    validateInputValidity("login-form", input.name, loginFormErrors);
+    if (loginFormErrors[input.name]) {
       allValid = false;
     }
   });
@@ -81,27 +82,36 @@ function checkLoginButtonActivity() {
 
 /**
  * Validates the login form by checking the validity of email and password fields.
- * If `showError` is true, displays the corresponding error messages for invalid fields.
- *
- * @param {boolean} [showError=true] - Determines whether to show error messages for invalid fields.
  */
-function checkLoginFormValidation(showError = true) {
-  checkInputValidity("login-form", "email", loginFormErrors);
-  checkInputValidity("login-form", "password", loginFormErrors);
-  if (showError) {
-    showInputValidity(
-      "login-form",
-      "email",
-      loginFormErrors,
-      "Enter a valid email address."
-    );
-    showInputValidity(
-      "login-form",
-      "password",
-      loginFormErrors,
-      "Enter a valid password."
-    );
-  }
+function checkLoginFormValidation() {
+  checkAndShowEmailInputValidation();
+  checkAndShowPasswordInputValidation();
+}
+
+/**
+ * Validate email input
+ */
+function checkAndShowEmailInputValidation() {
+  validateInputValidity("login-form", "email", loginFormErrors);
+  checkInputValidity(
+    "login-form",
+    "email",
+    loginFormErrors,
+    "Enter a valid email address."
+  );
+}
+
+/**
+ * Validate password input
+ */
+function checkAndShowPasswordInputValidation() {
+  validateInputValidity("login-form", "password", loginFormErrors);
+  checkInputValidity(
+    "login-form",
+    "password",
+    loginFormErrors,
+    "Enter a valid password."
+  );
 }
 
 /**
@@ -123,7 +133,7 @@ async function login(email, password, remember) {
     showLoginError();
     return;
   }
-  storeLoginData(foundAdmin, remember)
+  storeLoginData(foundAdmin, remember);
   window.location.href = redirectPage;
 }
 
@@ -139,7 +149,7 @@ async function findAdminByEmail(email) {
   const admins = await getData("admins");
   const adminsArray = Object.entries(admins);
   let foundAdmin = adminsArray.find((admin) => admin[1].email === email);
-  return foundAdmin ? foundAdmin[1] : null; 
+  return foundAdmin ? foundAdmin[1] : null;
 }
 
 /**
