@@ -72,6 +72,14 @@ function hideInputValidation(form, input) {
   document.querySelector(`#${form} .${input}-error`).classList.add("d-none");
 }
 
+function toggleButtonStatus(inputValidations, form) {
+  if (inputValidations) {
+    document.querySelector(`#${form} button[type=submit]`).disabled = false;
+  } else {
+    document.querySelector(`#${form} button[type=submit]`).disabled = true;
+  }
+}
+
 /**
  * Toggles the visibility of password input fields when the lock icon is clicked.
  * Changes the input type between 'password' and 'text' based on the current state
