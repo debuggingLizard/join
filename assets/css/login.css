@@ -211,12 +211,15 @@ main {
     border: 1px solid #FF001F !important;
 }
 
-.form-elements span.error {
+.form-elements span.error,
+.footer-login span.privacy-error {
     color: #FF8190;
     font-size: 11px;
     margin-top: 4px;
     padding-left: 8px;
     display: inline-block;
+    height: 10px;
+    box-sizing: border-box;
 }
 
 .footer-login label {
