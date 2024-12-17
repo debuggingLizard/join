@@ -106,16 +106,20 @@
                     </label>
                 </div>
                 <div class="footer-login">
-                    <label for="custom-checkbox-2">
-                        <input type="checkbox" name="accept" onchange="checkSignupButtonActivity()"
-                            id="custom-checkbox-2" required>
-                        <span class="custom-checkbox">
-                            <img class="checkbox-img unchecked-button" src="./assets/img/unchecked-button.svg">
-                            <img class="checkbox-img checked-button" src="./assets/img/checked-button.svg">
-                        </span>
-                        <span class="accept"><span id="accept_change">I</span> accept the <a
-                                href="privacy-policy.html">Privacy policy</a></span>
-                    </label>
+                    <div>
+                        <label for="custom-checkbox-2">
+                            <input type="checkbox" name="accept" onchange="checkSignupButtonActivity();checkAndShowPrivacyCheckboxValidationSignUpForm();"
+                                id="custom-checkbox-2" required>
+                            <span class="custom-checkbox">
+                                <img class="checkbox-img unchecked-button" src="./assets/img/unchecked-button.svg">
+                                <img class="checkbox-img checked-button" src="./assets/img/checked-button.svg">
+                            </span>
+                            <span class="accept"><span id="accept_change">I</span> accept the <a
+                                    href="privacy-policy.html">Privacy policy</a></span>
+                                   
+                        </label>
+                        <span id="privacy-error" class="privacy-error" style="padding-left: 0;">Please accept the privacy policy</span>
+                    </div>
                     <div class="button-container">
                         <button class="login-button" type="submit" disabled>Sign up</button>
                     </div>
