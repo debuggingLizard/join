@@ -65,8 +65,7 @@ function checkSignUpFormValidation() {
   checkAndShowEmailInputValidationSignUpForm();
   checkAndShowPasswordInputValidationSignUpForm();
   checkAndShowConfirmPasswordInputValidationSignUpForm();
-  checkAcceptPrivacyPolicyValidity();
-  showAcceptPrivacyPolicyValidity();
+  checkAndShowPrivacyCheckboxValidationSignUpForm();
 }
 
 /**
@@ -119,6 +118,14 @@ function checkAndShowConfirmPasswordInputValidationSignUpForm() {
     signUpFormErrors,
     "Your passwords don't match. Please try again."
   );
+}
+
+/**
+ * Validate privacy checkbox
+ */
+function checkAndShowPrivacyCheckboxValidationSignUpForm() {
+  checkAcceptPrivacyPolicyValidity();
+  showAcceptPrivacyPolicyValidity();
 }
 
 /**
