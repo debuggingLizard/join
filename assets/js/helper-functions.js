@@ -1,10 +1,10 @@
 /**
- * Zeigt einen Validierungsfehler für ein Eingabefeld an.
- * Fügt der Eingabe die Klasse "input-error" hinzu und zeigt die Fehlermeldung an.
- *
- * @param {string} form - Das Formular, in dem sich das Eingabefeld befindet.
- * @param {string} inputName - Der Name des Eingabefelds.
- * @param {string} message - Die anzuzeigende Fehlermeldung.
+ * Shows the validation error message for a specific input field in a form.
+ * Adds the error class to the input field and displays the error message element.
+ * 
+ * @param {string} form - The CSS selector for the form element.
+ * @param {string} inputName - The name attribute of the input field to show validation errors for.
+ * @param {string} message - The validation message to be displayed.
  */
 function showInputValidationError(form, inputName, message) {
   let inputElement = document.querySelector(`${form} *[name = ${inputName}]`);
@@ -17,11 +17,11 @@ function showInputValidationError(form, inputName, message) {
 }
 
 /**
- * Versteckt den Validierungsfehler eines Eingabefelds.
- * Entfernt die Fehlerklasse und versteckt die zugehörige Fehlermeldung.
- *
- * @param {string} form - Das Formular, in dem sich das Eingabefeld befindet.
- * @param {string} inputName - Der Name des Eingabefelds.
+ * Hides the validation error message for a specific input field in a form.
+ * Removes the error class from the input field and hides the error message element.
+ * 
+ * @param {string} form - The CSS selector for the form element.
+ * @param {string} inputName - The name attribute of the input field to hide validation errors for.
  */
 function hideInputValidationError(form, inputName) {
   let inputElement = document.querySelector(`${form} *[name = ${inputName}]`);
