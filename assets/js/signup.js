@@ -198,22 +198,10 @@ function checkAcceptPrivacyPolicyValidity() {
  * an error class and updating the corresponding message. If the 'accept' field has errors,
  * the message is updated to 'Please'; otherwise, it is set to 'I'.
  */
-// function showAcceptPrivacyPolicyValidity() {
-//   if (signUpFormErrors["accept"]) {
-//     document.querySelector(`#signup-form .accept`).classList.add("error");
-//     document.getElementById("accept_change").innerHTML = "Please";
-//   } else {
-//     document.querySelector(`#signup-form .accept`).classList.remove("error");
-//     document.getElementById("accept_change").innerHTML = "I";
-//   }
-// }
-
 function showAcceptPrivacyPolicyValidity() {
   if (signUpFormErrors["accept"]) {
-    // document.querySelector(`#signup-form .privacy-error`).classList.remove("d-none");
     document.getElementById("privacy-error").innerHTML = "Please accept the privacy policy";
   } else {
-    // document.querySelector(`#signup-form .privacy-error`).classList.add("d-none");
     document.getElementById("privacy-error").innerHTML = "";
   }
 }

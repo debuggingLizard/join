@@ -61,7 +61,6 @@ function showInputValidation(form, input, message) {
   document
     .querySelector(`#${form} input[name = ${input}]`)
     .classList.add("input-error");
-  document.querySelector(`#${form} .${input}-error`).classList.remove("d-none");
   document.querySelector(`#${form} .${input}-error`).innerHTML = message;
 }
 
@@ -69,7 +68,7 @@ function hideInputValidation(form, input) {
   document
     .querySelector(`#${form} input[name = ${input}]`)
     .classList.remove("input-error");
-  document.querySelector(`#${form} .${input}-error`).classList.add("d-none");
+  document.querySelector(`#${form} .${input}-error`).innerHTML = "";
 }
 
 function toggleButtonStatus(inputValidations, form) {
