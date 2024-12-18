@@ -1,5 +1,5 @@
 const BASE_URL =
-  "https://join-cb666-default-rtdb.europe-west1.firebasedatabase.app/";
+  "https://join-14857-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
  * Fetches data from the specified source.
