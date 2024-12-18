@@ -89,7 +89,5 @@
 @media (max-height: 668px) {
     .login-logo-after-init {
         height: 32px !important;
-        /* top: 24px !important;
-        left: 24px !important; */
     }
 }
