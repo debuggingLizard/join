@@ -49,6 +49,14 @@ function validateInputValidity(form, input, errorsObject) {
   }
 }
 
+/**
+ * Checks the validity of a specific form input and shows or hides validation messages based on the errorsObject.
+ * 
+ * @param {Object} form - The form element containing the input.
+ * @param {string} input - The name of the input field to be checked.
+ * @param {Object} errorsObject - An object containing validation errors for the input fields.
+ * @param {string} message - The validation message to be displayed if the input is invalid.
+ */
 function checkInputValidity(form, input, errorsObject, message) {
   if (errorsObject[input]) {
     showInputValidation(form, input, message);
@@ -57,21 +65,41 @@ function checkInputValidity(form, input, errorsObject, message) {
   }
 }
 
+/**
+ * Shows validation error messages for a specific input field in a form.
+ * Adds an error class to the input field and sets the error message.
+ * 
+ * @param {string} form - The ID of the form element containing the input.
+ * @param {string} input - The name of the input field to be validated.
+ * @param {string} message - The validation message to be displayed.
+ */
 function showInputValidation(form, input, message) {
   document
     .querySelector(`#${form} input[name = ${input}]`)
     .classList.add("input-error");
-  document.querySelector(`#${form} .${input}-error`).classList.remove("d-none");
   document.querySelector(`#${form} .${input}-error`).innerHTML = message;
 }
 
+/**
+ * Hides validation error messages for a specific input field in a form.
+ * Removes the error class from the input field and clears the error message.
+ * 
+ * @param {string} form - The ID of the form element containing the input.
+ * @param {string} input - The name of the input field for which validation is being hidden.
+ */
 function hideInputValidation(form, input) {
   document
     .querySelector(`#${form} input[name = ${input}]`)
     .classList.remove("input-error");
-  document.querySelector(`#${form} .${input}-error`).classList.add("d-none");
+  document.querySelector(`#${form} .${input}-error`).innerHTML = "";
 }
 
+/**
+ * Toggles the disabled status of a form's submit button based on input validations.
+ * 
+ * @param {boolean} inputValidations - The current state of input validations.
+ * @param {string} form - The ID of the form element containing the submit button.
+ */
 function toggleButtonStatus(inputValidations, form) {
   if (inputValidations) {
     document.querySelector(`#${form} button[type=submit]`).disabled = false;
@@ -102,7 +130,10 @@ function togglePasswordVisible() {
 }
 
 /**
- * Changes the input type from 'password' to 'text'
+ * Converts a password input field to a text input field and updates the visibility icon accordingly.
+ * 
+ * @param {HTMLInputElement} passwordInputElement - The password input element to be converted.
+ * @param {HTMLElement} iconLockInputElement - The icon element indicating the visibility status.
  */
 function convertToTextInput(passwordInputElement, iconLockInputElement) {
   passwordInputElement.type = "text";
@@ -111,7 +142,10 @@ function convertToTextInput(passwordInputElement, iconLockInputElement) {
 }
 
 /**
- * Changes the input type from 'text' to 'password'
+ * Converts a text input field to a password input field and updates the visibility icon accordingly.
+ * 
+ * @param {HTMLInputElement} passwordInputElement - The text input element to be converted back to password.
+ * @param {HTMLElement} iconLockInputElement - The icon element indicating the visibility status.
  */
 function convertToPasswordInput(passwordInputElement, iconLockInputElement) {
   passwordInputElement.type = "password";

@@ -40,14 +40,14 @@
                             onkeydown="hideInputValidation('login-form', 'email')" placeholder="Email"
                             autocomplete="email" required>
                         <span class="icon icon-mail"></span>
-                        <span class="error email-error d-none"></span>
+                        <span class="error email-error"></span>
                     </label>
                     <label class="password-label">
                         <input type="password" name="password" onkeyup="checkLoginButtonActivity()"
                             onblur="checkAndShowPasswordInputValidationLoginForm()"
                             onkeydown="hideInputValidation('login-form', 'password')" placeholder="Password" required>
                         <span class="icon icon-lock"></span>
-                        <span class="error password-error d-none"></span>
+                        <span class="error password-error"></span>
                     </label>
                 </div>
                 <div class="footer-login">
@@ -78,14 +78,14 @@
                             onblur="checkAndShowNameInputValidationSignUpForm()"
                             onkeydown="hideInputValidation('signup-form', 'name')" autocomplete="name" required>
                         <span class="icon icon-person"></span>
-                        <span class="error name-error d-none"></span>
+                        <span class="error name-error"></span>
                     </label>
                     <label class="email-label">
                         <input type="email" name="email" placeholder="Email" onkeyup="checkSignupButtonActivity()"
                             onblur="checkAndShowEmailInputValidationSignUpForm()"
                             onkeydown="hideInputValidation('signup-form', 'email')" autocomplete="email" required>
                         <span class="icon icon-mail"></span>
-                        <span class="error email-error d-none"></span>
+                        <span class="error email-error"></span>
                     </label>
                     <label class="password-label">
                         <input type="password" name="password" placeholder="Password"
@@ -94,7 +94,7 @@
                             onkeydown="hideInputValidation('signup-form', 'password')"
                             pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}" required>
                         <span class="icon icon-lock"></span>
-                        <span class="error password-error d-none"></span>
+                        <span class="error password-error"></span>
                     </label>
                     <label class="password-label">
                         <input type="password" name="confirm_password" placeholder="Confirm Password"
@@ -102,7 +102,7 @@
                             onblur="checkAndShowConfirmPasswordInputValidationSignUpForm()"
                             onkeydown="hideInputValidation('signup-form', 'confirm_password')" required>
                         <span class="icon icon-lock"></span>
-                        <span class="error confirm_password-error d-none"></span>
+                        <span class="error confirm_password-error"></span>
                     </label>
                 </div>
                 <div class="footer-login">
@@ -118,7 +118,7 @@
                                     href="privacy-policy.html">Privacy policy</a></span>
                                    
                         </label>
-                        <span id="privacy-error" class="privacy-error" style="padding-left: 0;">Please accept the privacy policy</span>
+                        <span id="privacy-error" class="privacy-error" style="padding-left: 0;"></span>
                     </div>
                     <div class="button-container">
                         <button class="login-button" type="submit" disabled>Sign up</button>

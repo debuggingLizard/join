@@ -161,18 +161,17 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 25px;
+    gap: 16px;
     width: 100%;
 }
 
 #signup-form .form-elements {
-    gap: 20px;
+    gap: 12px;
 }
 
 .form-elements input {
     border: 1px solid #D1D1D1;
     border-radius: 10px;
-    /* width: 315px; */
     width: 100%;
     box-sizing: border-box;
     font-size: 16px;

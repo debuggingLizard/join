@@ -1,34 +1,62 @@
 const loginPage = "./login.html";
 
 /**
- * Checks the login status of the user (admin or guest) and determines if the session should be kept alive or the user should be logged out.
- * It extends the login session if the remember me option is set, or if the current page is a privacy policy or legal notice.
+ * Checks the user's login status and updates it if necessary. 
+ * Logs the user out if they are not logged in and no exception applies.
  */
 function checkLogin() {
   const now = new Date();
   let keepLogin = false;
   if (isAdminLogin()) {
-    if (localStorage.getItem("joinLoginValidTime") > now.getTime()) {
-      keepLogin = true;
-    } else {
-      if (localStorage.getItem("joinLoginRemember") == "true") {
-        localStorage.setItem("joinLoginValidTime", getNextOneHourTime());
-        keepLogin = true;
-      }
-    }
+    keepLogin = checkAdminLogin(now);
   }
-  if (isGuestLogin()) {
-    if (localStorage.getItem("joinGuestLoginValidTime") > now.getTime()) {
-      keepLogin = true;
-    }
+  if (!keepLogin && isGuestLogin()) {
+    keepLogin = checkGuestLogin(now);
   }
-  const pageName = getPageName();
-  if (pageName === "privacy-policy.html" || pageName === "legal-notice.html") {
-    keepLogin = true;
+  if (!keepLogin) {
+    keepLogin = checkPageAuthorisation();
   }
   if (keepLogin === false) {
     logout();
   }
+}
+
+/**
+ * Checks if the admin login is still valid. If not, it extends the login time by one hour
+ * if the "Remember me" option is enabled.
+ * 
+ * @param {Date} now - The current date and time.
+ * @returns {boolean} - Returns true if the admin login is valid or has been extended, false otherwise.
+ */
+function checkAdminLogin(now) {
+  if (localStorage.getItem("joinLoginValidTime") > now.getTime()) {
+    return true;
+  }
+  if (localStorage.getItem("joinLoginRemember") == "true") {
+      localStorage.setItem("joinLoginValidTime", getNextOneHourTime());
+      return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if the guest login is still valid based on the current time.
+ * 
+ * @param {Date} now - The current date and time.
+ * @returns {boolean} - Returns true if the guest login is still valid, false otherwise.
+ */
+function checkGuestLogin(now) {
+  return localStorage.getItem("joinGuestLoginValidTime") > now.getTime();
+}
+
+/**
+ * Checks if the current page is either the privacy policy or the legal notice page.
+ * 
+ * @returns {boolean} - Returns true if the current page is "privacy-policy.html" or "legal-notice.html", false otherwise.
+ */
+function checkPageAuthorisation() {
+  const pageName = getPageName();
+  return pageName === "privacy-policy.html" || pageName === "legal-notice.html";
 }
 
 /**
