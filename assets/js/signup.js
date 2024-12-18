@@ -40,8 +40,8 @@ async function signUpFormEvent() {
 }
 
 /**
- * Checks the validity of all input fields in the sign-up form.
- * If all inputs have a value, enables the submit button; otherwise, disables it.
+ * Validates all input fields in the sign-up form and checks the password confirmation.
+ * Toggles the submit button's disabled status based on the validation results.
  */
 function checkSignupButtonActivity() {
   let inputValidations = true;
@@ -56,8 +56,8 @@ function checkSignupButtonActivity() {
 }
 
 /**
- * Validates the sign-up form by checking the validity of all input fields and
- * the acceptance of the privacy policy.
+ * Validates the entire sign-up form by checking and showing validation messages
+ * for each input field (name, email, password, confirm password) and the privacy policy checkbox.
  */
 function checkSignUpFormValidation() {
   checkPasswordAndConfirmPassword();
@@ -69,7 +69,8 @@ function checkSignUpFormValidation() {
 }
 
 /**
- * Validate name input
+ * Validates and shows the name input validation status in the sign-up form.
+ * Displays an error message if the name is not valid.
  */
 function checkAndShowNameInputValidationSignUpForm() {
   validateInputValidity("signup-form", "name", signUpFormErrors);
@@ -82,7 +83,8 @@ function checkAndShowNameInputValidationSignUpForm() {
 }
 
 /**
- * Validate email input
+ * Validates and shows the email input validation status in the sign-up form.
+ * Displays an error message if the email address is not valid.
  */
 function checkAndShowEmailInputValidationSignUpForm() {
   validateInputValidity("signup-form", "email", signUpFormErrors);
@@ -95,7 +97,8 @@ function checkAndShowEmailInputValidationSignUpForm() {
 }
 
 /**
- * Validate password input
+ * Validates and shows the password input validation status in the sign-up form.
+ * Displays an error message if the password is not valid.
  */
 function checkAndShowPasswordInputValidationSignUpForm() {
   validateInputValidity("signup-form", "password", signUpFormErrors);
@@ -108,7 +111,8 @@ function checkAndShowPasswordInputValidationSignUpForm() {
 }
 
 /**
- * Validate confirm_password input
+ * Validates and shows the confirmation password input validation status
+ * in the sign-up form.
  */
 function checkAndShowConfirmPasswordInputValidationSignUpForm() {
   validateInputValidity("signup-form", "confirm_password", signUpFormErrors);
@@ -121,7 +125,8 @@ function checkAndShowConfirmPasswordInputValidationSignUpForm() {
 }
 
 /**
- * Validate privacy checkbox
+ * Checks the validity of the privacy policy acceptance checkbox and shows the validation status
+ * in the sign-up form.
  */
 function checkAndShowPrivacyCheckboxValidationSignUpForm() {
   checkAcceptPrivacyPolicyValidity();

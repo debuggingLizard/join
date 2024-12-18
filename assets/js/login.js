@@ -84,7 +84,8 @@ function checkLoginFormValidation() {
 }
 
 /**
- * Validate email input
+ * Validates and shows the email input validation status in the login form.
+ * Displays an error message if the email address is not valid.
  */
 function checkAndShowEmailInputValidationLoginForm() {
   validateInputValidity("login-form", "email", loginFormErrors);
@@ -97,7 +98,8 @@ function checkAndShowEmailInputValidationLoginForm() {
 }
 
 /**
- * Validate password input
+ * Validates and shows the password input validation status in the login form.
+ * Displays an error message if the password is not valid.
  */
 function checkAndShowPasswordInputValidationLoginForm() {
   validateInputValidity("login-form", "password", loginFormErrors);
