@@ -148,6 +148,10 @@
     .confirm-delete .task-edit-delete-btn span {
         display: none;
     }
+
+    .task-detail {
+        padding: 30px 20px;
+    }
 }
 
 @media (max-width: 486px) {
